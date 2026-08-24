@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "A graph is two things: nodes and edges"
 description: The field guide's buzzword-free minimal definition, cast in knowledge terms — the things you know about, and the connections between them.
-tags: [definition, knowledge-representation, graph-engineering, era-agentic]
+tags: [knowledge-representation, graph-engineering, era-agentic]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

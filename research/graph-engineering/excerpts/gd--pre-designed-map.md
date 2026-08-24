@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "The AI moves within a pre-designed map"
 description: Gao Dalie's determinist definition — humans design the objectives, criteria, and the entire path; the AI does not wander.
-tags: [determinism, control-flow, graph-engineering, definition, era-agentic]
+tags: [determinism, control-flow, graph-engineering, era-agentic]
 speaker: "Gao Dalie (高達烈)"
 sources:
   - id: gd

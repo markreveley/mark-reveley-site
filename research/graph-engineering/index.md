@@ -22,4 +22,5 @@ A research bundle on **graph engineering**: the term's historical senses and its
 # Level 3 — Synthesis
 
 * [Graph engineering: what it was, what it just became](synthesis/graph-engineering.md) - The main synthesis document, annotated to the decomposed excerpts.
+* [Paradigm or hype train?](synthesis/paradigm-or-hype.md) - The verdict investigation: new paradigm vs. hype, the LangGraph capability audit, and the workflow-engine genealogy (2012 and further back).
 * [Timeline: 1736 → 2026](synthesis/timeline.md) - Dated genealogy from Euler to the July 2026 naming event.

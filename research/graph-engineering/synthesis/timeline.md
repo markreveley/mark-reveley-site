@@ -22,10 +22,17 @@ Dates in the deep sections are the conventionally cited ones; where sources disa
 | 1736 | Euler formalizes the Königsberg bridge problem; graph theory founded — delete the territory, keep the connectivity | mathematical | [Euler, 1736](../excerpts/wik--euler-1736.md) |
 | 1840s–1860s | Graphs enter engineering practice: Kirchhoff's circuit analysis; dot-and-line molecular diagrams in chemistry | mathematical | [Euler, 1736](../excerpts/wik--euler-1736.md) (chemistry note, unverified) |
 | 1956→ | Semantic networks; later ontology engineering (Protégé, METHONTOLOGY) — the pre-2026 discipline closest to owning the phrase "graph engineering" | knowledge | [bundle README §3, open question](../README.md) |
+| 1962 | Petri nets: typed bipartite graphs, tokens as state, concurrency as structure; workflow nets later give BPM its formal semantics | systems | [Places, transitions, tokens](../excerpts/pet--places-transitions.md) |
+| ~1970 | IBIS (Kunz & Rittel): typed argumentation graphs — issues/positions/arguments with attachment rules — for wicked problems; gIBIS makes it hypertext in 1988 | knowledge | [Issues, positions, arguments](../excerpts/ibis--wicked-problems.md) |
+| early 1970s | Blackboard architecture (Hearsay-II, CMU): specialist knowledge sources cooperating via shared state under a control shell | coordination | [Specialists at a blackboard](../excerpts/bb--specialists-at-a-blackboard.md) |
+| 1980 | Contract Net Protocol (Smith): managers announce tasks, contractors bid, work is delegated and subcontracted | coordination | [Managers, contractors, and bids](../excerpts/cnp--manager-and-contractors.md) |
 | 2001–2006 | Semantic Web program; Berners-Lee's linked data: links "so that a person or machine can explore the web of data" | knowledge | [Making links](../excerpts/tbl--making-links.md) |
 | 2010 | Google Pregel: coordination of large-scale computation as vertex-centric graph iteration | systems | [Vertex-centric iteration](../excerpts/pre--vertex-centric.md) |
+| 2010–2013 | The BPMN engine wave: Activiti (Dec 2010), BPMN 2.0 released (Jan 2011), jBPM, Camunda — executable process graphs with gateways *and human tasks* (interpretive nodes, at human cost) | systems | [Activities, gateways, events](../excerpts/bpmn--graphical-processes.md) |
+| 2012-02-21 | Amazon Simple Workflow Service: deciders + workers + durable execution state — the maintainer's hypothesized ancestor, confirmed | systems | [Deciders, workers, durable state](../excerpts/swf--durable-state-2012.md) |
 | 2012-05-16 | Google Knowledge Graph launches: "things, not strings" — 500M entities, 3.5B facts; the industrial knowledge graph | knowledge | [Things, not strings](../excerpts/gkg--things-not-strings.md) |
 | 2010s | DAG orchestration era (Airflow and kin): explicit graphs of deterministic tasks | systems | context in [Throw the DAG away](../excerpts/12fa--throw-the-dag-away.md) |
+| 2019 | Temporal founded (from SWF via Uber's Cadence, by SWF's own tech lead): "Durable Execution" named as a paradigm | systems | [The same two engineers, three times](../excerpts/tmp--shipped-it-three-times.md) |
 
 ## The agentic run-up
 
@@ -55,6 +62,7 @@ Dates in the deep sections are the conventionally cited ones; where sources disa
 | 2026-07-18→20 | Within 48 hours: three competing definitions; copycat wave; fabricated "$3.1M Stanford and Anthropic study" circulates (verified nonexistent); courses by the weekend | [Twelve words](../excerpts/aio--twelve-words.md) |
 | 2026-07-21/22 | The explainer wave: AI Operator field guide, Data Science Dojo, 36Kr (Jul 21); Bouchard, and LangChain's retro-claim "3 Years of Graph Engineering" (Jul 22) | [Treadmill](../excerpts/aio--treadmill-of-terms.md), [Already doing it](../excerpts/dsd--already-doing-it.md), [This week's name](../excerpts/lb--this-weeks-name.md), [Three years](../excerpts/lgblog--three-years.md) |
 | 2026-07-25/26 | Second-wave syntheses: Flowtivity (Jul 25), Gao Dalie's three-tier framing (Jul 26) | [Explicit graphs](../excerpts/ft--explicit-graphs-definition.md), [Three tiers](../excerpts/gd--three-tier-reliability.md) |
+| 2026-08-06 | LangChain positions its stack as an autonomy–determinism spectrum: "start with Deep Agents"; LangGraph as the "escape hatch" of maximal determinism | [Maximal determinism](../excerpts/da--maximal-determinism.md) |
 | 2026 (thread ids 1vwixw5 / 1vwazom) | The seed exchange: "What's up with new trend with graphs?" / "Is it just fancier way to do retrieval?" — and the FLARE graph-first-IDE thread it cites | [The skeptic's question](../excerpts/rl--just-fancier-retrieval.md) |
 
 ## Reading of the sequence

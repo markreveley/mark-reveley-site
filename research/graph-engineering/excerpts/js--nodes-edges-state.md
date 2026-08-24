@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "Boring nodes, typed edges, checkpointed state"
 description: Simmons' three commitments — the definitional core of graph engineering in its orchestration sense.
-tags: [graph-engineering, definition, control-flow, typed-edges, determinism, era-agentic]
+tags: [graph-engineering, control-flow, typed-edges, determinism, era-agentic]
 speaker: "Josh C. Simmons"
 sources:
   - id: js

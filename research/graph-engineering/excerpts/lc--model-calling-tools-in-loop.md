@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "A model calling tools in a loop until done"
 description: The loop era's minimal definition of an agent, from LangChain's June 2026 loop-engineering piece.
-tags: [loop-engineering, definition, era-agentic]
+tags: [loop-engineering, era-agentic]
 speaker: "Sydney Runkle (LangChain)"
 sources:
   - id: lc

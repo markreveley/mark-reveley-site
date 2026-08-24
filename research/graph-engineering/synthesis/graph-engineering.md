@@ -91,4 +91,4 @@ The OP's commenter, with the last word they didn't know they had: *"you're creat
 
 ---
 
-*Companion document: [Timeline 1736 → 2026](timeline.md). Method, format conventions, and open questions: [bundle README](../README.md).*
+*Companion documents: [Timeline 1736 → 2026](timeline.md) · [Paradigm or hype train?](paradigm-or-hype.md) (research push #2: the verdict, the LangGraph capability audit, and the workflow-engine genealogy). Method, format conventions, and open questions: [bundle README](../README.md).*

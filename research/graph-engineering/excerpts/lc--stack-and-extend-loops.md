@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "Stack and extend loops"
 description: Loop engineering defined as loop composition — agent, verification, event-driven, and hill-climbing loops stacked into systems.
-tags: [loop-engineering, verification, definition, era-agentic]
+tags: [loop-engineering, verification, era-agentic]
 speaker: "Sydney Runkle (LangChain)"
 sources:
   - id: lc

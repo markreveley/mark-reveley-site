@@ -1,9 +1,9 @@
 ---
 type: Excerpt
-subtype: claim
+subtype: definition
 title: "Things, not strings"
 description: Google's 2012 slogan — an intelligent model, "in geek-speak, a graph," of real-world entities and their relationships.
-tags: [history, knowledge-representation, era-knowledge-graph, definition]
+tags: [history, knowledge-representation, era-knowledge-graph]
 speaker: "Amit Singhal (Google)"
 sources:
   - id: gkg

@@ -1,36 +1,51 @@
 # Level 2 — Excerpts
 
-55 verbatim quotes, one OKF concept each, decomposed from the Level-1 sources. Each carries a `subtype` (its epistemic role), `tags` (topic/discourse/era clusters), a `speaker`, provenance into `../references/`, and typed `deps` to other excerpts. Grouped here by subtype; regroup by any tag by scanning frontmatter.
+Verbatim quotes, one OKF concept each, decomposed from the Level-1 sources. Each carries a `subtype` (its epistemic role, on the eight-value v2 enum: question / claim / definition / problem / solution / observation / inference / prescription), `tags` (topic/discourse/era clusters), a `speaker`, provenance into `../references/`, and typed `deps` to other excerpts. Grouped here by subtype; regroup by any tag by scanning frontmatter.
 
-# Claims (23)
+# Questions (1)
 
-* [Legible to humans and machines](rl--humans-and-machines.md) - Graphs express complex information for both audiences. *(seed thread)*
+* [The skeptic's question: just fancier retrieval?](rl--just-fancier-retrieval.md) - The trend's illegibility named, and the reduction hypothesis posed. *(seed thread)*
+
+# Claims (13)
+
 * [The loop exposed its own ceiling](js--loop-exposed-its-ceiling.md) - Loop engineering worked; the bottleneck moved, and it is graph-shaped. *(Simmons)*
-* [Boring nodes, typed edges, checkpointed state](js--nodes-edges-state.md) - The three commitments of orchestration-sense graph engineering. *(Simmons)*
-* [A graph is two things: nodes and edges](aio--nodes-and-edges.md) - The knowledge-sense minimal definition. *(AI Operator)*
 * [An untyped edge is one bit](aio--typed-edges-one-bit.md) - Typing is where knowledge enters the edge. *(AI Operator)*
-* [This week's name for an orchestrated system of loops](lb--this-weeks-name.md) - The deflationary definition, plus the treadmill and priority claims. *(Bouchard)*
 * [Graphs contain loops](lb--graphs-contain-loops.md) - Containment, not replacement; a further layer of delegated trust. *(Bouchard)*
-* [The AI moves within a pre-designed map](gd--pre-designed-map.md) - The maximal-control definition. *(Gao Dalie)*
 * [Three tiers of reliability](gd--three-tier-reliability.md) - Prompt/loop/graph as reliability layers for call/agent/group. *(Gao Dalie)*
 * [Loops live inside the nodes](gd--loops-inside-graphs.md) - The graph organizes, constrains, connects the loops. *(Gao Dalie)*
-* [Explicit graphs an agent can traverse](ft--explicit-graphs-definition.md) - The both-senses definition, plus the concurrency argument. *(Flowtivity)*
 * [The edge type IS the knowledge](ft--edge-type-is-knowledge.md) - The maximal typed-edge thesis. *(Flowtivity)*
 * [We've been doing it for three years](lgblog--three-years.md) - The vendor retro-claim. *(LangChain)*
+* [Deterministic and agentic steps in one graph](lg--stateful-orchestration.md) - The reference implementation's self-definition. *(LangGraph docs)*
+* [Structurization for agents](gmaa--structurization.md) - The academic survey's thesis. *(Bei et al.)*
+* [Compiled once, kept current](ka--compiled-once.md) - The LLM-wiki premise. *(Karpathy)*
+* [Making links, so a person or machine can explore](tbl--making-links.md) - The 2006 linked-data vision. *(Berners-Lee)*
+* [Maximal determinism, encoded in topology](da--maximal-determinism.md) - LangGraph as the "escape hatch"; topology as a knowledge medium. *(LangChain, Aug 2026)*
+* [Autonomy versus reliability](da--autonomy-reliability-tradeoff.md) - The stated exchange rate, and the harness-first default. *(LangChain, Aug 2026)*
+
+# Definitions (19)
+
+* [Legible to humans and machines](rl--humans-and-machines.md) - Graphs express complex information for both audiences. *(seed thread)*
+* [Boring nodes, typed edges, checkpointed state](js--nodes-edges-state.md) - The three commitments of orchestration-sense graph engineering. *(Simmons)*
+* [A graph is two things: nodes and edges](aio--nodes-and-edges.md) - The knowledge-sense minimal definition. *(AI Operator)*
+* [This week's name for an orchestrated system of loops](lb--this-weeks-name.md) - The deflationary definition, plus the treadmill and priority claims. *(Bouchard)*
+* [The AI moves within a pre-designed map](gd--pre-designed-map.md) - The maximal-control definition. *(Gao Dalie)*
+* [Explicit graphs an agent can traverse](ft--explicit-graphs-definition.md) - The both-senses definition, plus the concurrency argument. *(Flowtivity)*
 * [A model calling tools in a loop until done](lc--model-calling-tools-in-loop.md) - The loop era's axiom. *(LangChain)*
 * [Stack and extend loops](lc--stack-and-extend-loops.md) - Loop engineering as loop composition. *(LangChain)*
 * [Act, observe, decide, repeat](ms--act-observe-repeat.md) - The loop definition plus the ReAct lineage. *(MindStudio)*
 * [Anatomy of the agent loop](ora--anatomy-of-the-loop.md) - The harness-level definition. *(Oracle — unverified)*
 * [Workflows vs agents](anth--workflows-vs-agents.md) - The 2024 common ancestor of both camps. *(Anthropic)*
-* [Deterministic and agentic steps in one graph](lg--stateful-orchestration.md) - The reference implementation's self-definition. *(LangGraph docs)*
-* [Structurization for agents](gmaa--structurization.md) - The academic survey's thesis. *(Bei et al.)*
-* [Compiled once, kept current](ka--compiled-once.md) - The LLM-wiki premise. *(Karpathy)*
 * [Things, not strings](gkg--things-not-strings.md) - The 2012 industrial knowledge graph. *(Google)*
-* [Making links, so a person or machine can explore](tbl--making-links.md) - The 2006 linked-data vision. *(Berners-Lee)*
+* [Places, transitions, tokens](pet--places-transitions.md) - Petri nets, 1962; the control-flow lineage's deepest formalism. *(Wikipedia)*
+* [Specialists at a blackboard](bb--specialists-at-a-blackboard.md) - The 1970s shared-state coordination architecture. *(Wikipedia)*
+* [Managers, contractors, and bids](cnp--manager-and-contractors.md) - The Contract Net Protocol, 1980. *(Wikipedia)*
+* [Issues, positions, arguments](ibis--wicked-problems.md) - IBIS/gIBIS typed argumentation graphs. *(Wikipedia)*
+* [Activities, gateways, events — and human tasks](bpmn--graphical-processes.md) - BPMN 2.0, January 2011. *(Wikipedia)*
+* [Deciders, workers, durable state — 2012](swf--durable-state-2012.md) - Amazon SWF in its own words. *(AWS docs)*
+* [Durable Execution](tmp--durable-execution.md) - The workflow lineage's terminal abstraction. *(Temporal)*
 
 # Problems (9)
 
-* [The skeptic's question: just fancier retrieval?](rl--just-fancier-retrieval.md) - The trend's illegibility and the reduction hypothesis. *(seed thread)*
 * [Decision trees don't fit CSV rows](rl--decision-trees-vs-csv.md) - The flattening tax on structured knowledge. *(seed thread)*
 * [Three ceilings of the loop](js--three-ceilings.md) - Serial execution; transcript-as-state; no pause button. *(Simmons)*
 * [The decision lives in the structure](aio--decision-lives-in-structure.md) - Similarity search cannot answer "why." *(AI Operator)*
@@ -39,16 +54,19 @@
 * [Without a termination condition](ms--termination.md) - Run forever or stop arbitrarily. *(MindStudio)*
 * [RAG fails on global questions](grag--rag-fails-global.md) - Corpus-level questions are not retrieval tasks. *(Microsoft Research)*
 * [A buffer and a static knowledge base](neo--buffer-and-static-kb.md) - Why agent memory fails today. *(Neo4j)*
+* [Overhead exceeding the problem](dl--overhead-exceeded.md) - Graph machinery taxing a linear pipeline; "structured" mistaken for "complex." *(DEV practitioner)*
 
-# Solutions (5)
+# Solutions (7)
 
 * [The graph as abstraction layer](rl--abstraction-layer.md) - Self-interpreted structure over the storage format. *(seed thread)*
 * [An LLM-built graph index](grag--graph-index.md) - Entity graph + community summaries; the consumer becomes the producer. *(Microsoft Research)*
 * [A temporally-aware knowledge graph engine](zep--graphiti-temporal.md) - Graphiti; typing plus time. *(Zep)*
 * [Three memories, one context graph](neo--three-memories.md) - Knowledge + conversation + decision traces. *(Neo4j)*
 * [OKF formalizes the LLM-wiki pattern](okf--formalizes-llm-wiki.md) - Markdown directories as portable knowledge graphs. *(Google Cloud)*
+* [Send: edges unknown ahead of time](lgapi--send-unknown-edges.md) - Runtime-decided fan-out cardinality. *(LangGraph docs)*
+* [Checkpointers and stores](lgdocs--checkpointers-stores.md) - Durable execution for agent graphs; the knowledge-graph gap at the API surface. *(LangGraph docs)*
 
-# Observations (8)
+# Observations (11)
 
 * [Twelve words, 48 hours, one fabricated study](aio--twelve-words.md) - The naming event, documented. *(AI Operator)*
 * [The treadmill of terms](aio--treadmill-of-terms.md) - Prompt → context → loop → graph, dated. *(AI Operator)*
@@ -58,6 +76,9 @@
 * [A corpus continuously maintained by agents](spec--maintained-by-agents.md) - The OKF spec's motivating world-state, plus its five trust questions. *(OKF SPEC)*
 * [Euler, 1736, and the founding of graph theory](wik--euler-1736.md) - Delete the territory, keep the map. *(Wikipedia + Britannica)*
 * [Vertex-centric iteration](pre--vertex-centric.md) - Pregel's model; an agent framework minus the models. *(Malewicz et al.)*
+* [Supersteps and the vote to halt](lgapi--vote-to-halt.md) - Pregel's terms of art, verbatim, in the 2026 agent runtime. *(LangGraph docs)*
+* [The same two engineers, three times](tmp--shipped-it-three-times.md) - SWF → Cadence → Temporal, as employment history. *(Temporal)*
+* [The blackboard, revived](bbllm--blackboard-revival.md) - 2025 LLM-agents research citing the 1970s architecture. *(Salemi et al.)*
 
 # Inferences (6)
 

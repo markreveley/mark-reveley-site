@@ -1,6 +1,6 @@
 ---
 type: Excerpt
-subtype: problem
+subtype: question
 title: "The skeptic's question: just fancier retrieval?"
 description: The seed thread's OP names the trend's legibility problem and poses the reduction that the whole bundle answers — are graphs merely a fancier retrieval mechanism?
 tags: [skepticism, retrieval, hype-cycle, era-agentic]
@@ -17,7 +17,7 @@ status: stable
 
 > "What's up with new trend with graphs?" [^rl]
 
-**[problem]**
+**[question]** — the reduction hypothesis:
 
 > "Thanks, for such an eloquent response, however I still don't understand the purpose. It it just fancier way to do retrieval?" [^rl]
 
