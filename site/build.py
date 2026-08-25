@@ -2,9 +2,13 @@
 """Build the static site in site/ from the research bundle in research/.
 
 The site has one object: the quote. Every verbatim excerpt in the bundle
-becomes one card on quotes.html — the quote text, a note, its date, the URL
-it came from, and its labels. Sources, views and the level hierarchy are not
-rendered as pages of their own.
+becomes one card — the quote text, a note, its date, the URL it came from, and
+its labels. Sources, views and the level hierarchy are not rendered as pages of
+their own.
+
+Quotes are reached by topic. quotes.html lists every topic in the corpus;
+topics/<tag>.html holds the quotes carrying that tag, and topics/all.html holds
+the lot. A quote carries several tags, so it appears under each of them.
 
 Output is HTML + CSS only: no JavaScript, nothing to run to *view* the
 result. Building it needs PyYAML and Python-Markdown:
@@ -31,9 +35,11 @@ ROOT = Path(__file__).resolve().parent.parent
 BUNDLE = ROOT / "research" / "graph-engineering"
 OUT = ROOT / "site"
 
-# Pages an older, level-structured version of this site generated. The build
-# removes them so a rebuild does not leave orphans behind.
-STALE = ["reading.html", "sources.html", "excerpts.html", "views.html", "views"]
+# Directories and pages the build clears first, so a rebuild leaves no orphans:
+# the topic pages (a tag dropped from the bundle should lose its page) and the
+# pages an older, level-structured version of this site generated.
+STALE = ["topics", "reading.html", "sources.html", "excerpts.html",
+         "views.html", "views"]
 
 
 # --------------------------------------------------------------------------
@@ -150,13 +156,14 @@ def date_key(raw):
 # --------------------------------------------------------------------------
 # link resolution
 #
-# The only page that carries bundle content is quotes.html, so a link between
-# two excerpts becomes an anchor on that page. A link to anything else — a
-# source record, an issue, a view, the bundle README — has no page here, so it
-# keeps its text and loses its href rather than going dead.
+# A link between two excerpts becomes an anchor on topics/all.html, the one
+# page that is guaranteed to hold every quote — a topic page holds only its own.
+# A link to anything else — a source record, an issue, a view, the bundle README
+# — has no page here, so it keeps its text and loses its href rather than going
+# dead.
 # --------------------------------------------------------------------------
 
-def resolve(href, base=None):
+def resolve(href, depth, base=None):
     if href.startswith(("http://", "https://", "mailto:")):
         return href
     href = href.split("#")[0]
@@ -166,7 +173,7 @@ def resolve(href, base=None):
     kind, slug = m.group(1) or base, m.group(2)
     if kind != "excerpts" or slug == "index" or slug not in excs:
         return None
-    return f"quotes.html#q-{slug}"
+    return "../" * depth + f"topics/all.html#q-{slug}"
 
 
 # --------------------------------------------------------------------------
@@ -195,9 +202,9 @@ class StripFootnotes(Preprocessor):
 class RewriteLinks(Treeprocessor):
     """Point bundle markdown links at their anchor on this site."""
 
-    def __init__(self, md, base):
+    def __init__(self, md, depth, base):
         super().__init__(md)
-        self.base = base
+        self.depth, self.base = depth, base
 
     def run(self, root):
         for a in root.iter("a"):
@@ -205,7 +212,7 @@ class RewriteLinks(Treeprocessor):
             if href.startswith(("http://", "https://", "mailto:")):
                 a.set("rel", "noreferrer")
                 continue
-            target = resolve(href, self.base)
+            target = resolve(href, self.depth, self.base)
             if target is None:
                 a.tag = "span"
                 a.attrib.pop("href", None)
@@ -261,8 +268,8 @@ class SplitQuotes(Treeprocessor):
 
 
 class BundleExtension(Extension):
-    def __init__(self, heading_base, base):
-        self.heading_base, self.base = heading_base, base
+    def __init__(self, depth, heading_base, base):
+        self.depth, self.heading_base, self.base = depth, heading_base, base
         super().__init__()
 
     def extendMarkdown(self, md):
@@ -271,7 +278,7 @@ class BundleExtension(Extension):
         if '"' not in md.ESCAPED_CHARS:
             md.ESCAPED_CHARS.append('"')
         md.preprocessors.register(StripFootnotes(md), "strip_footnotes", 40)
-        md.treeprocessors.register(RewriteLinks(md, self.base), "bundle_links", 4)
+        md.treeprocessors.register(RewriteLinks(md, self.depth, self.base), "bundle_links", 4)
         md.treeprocessors.register(ShiftHeadings(md, self.heading_base), "shift_headings", 3)
         md.treeprocessors.register(WrapTables(md), "wrap_tables", 2)
         md.treeprocessors.register(SplitQuotes(md), "split_quotes", 1)
@@ -280,26 +287,26 @@ class BundleExtension(Extension):
 _converters = {}
 
 
-def _converter(heading_base, base):
-    key = (heading_base, base)
+def _converter(depth, heading_base, base):
+    key = (depth, heading_base, base)
     if key not in _converters:
         _converters[key] = Markdown(
-            extensions=["tables", BundleExtension(heading_base, base)],
+            extensions=["tables", BundleExtension(depth, heading_base, base)],
             output_format="html")
     return _converters[key].reset()
 
 
-def markdown(text, heading_base=3, base=None):
-    """Render a bundle markdown fragment as HTML.
+def markdown(text, depth=0, heading_base=3, base=None):
+    """Render a bundle markdown fragment as HTML for a page `depth` dirs down.
 
     `base` names the collection the fragment came from, for sibling links.
     """
-    return _converter(heading_base, base).convert(text.strip())
+    return _converter(depth, heading_base, base).convert(text.strip())
 
 
-def inline(text, base=None):
+def inline(text, depth=0, base=None):
     """Render a one-line fragment (a description, a label) without the <p>."""
-    out = markdown(text, base=base)
+    out = markdown(text, depth, base=base)
     m = re.fullmatch(r"<p>(.*)</p>", out, re.S)
     return m.group(1) if m else out
 
@@ -312,9 +319,11 @@ NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About
 
 
 def page(path, title, body, active=None, lede=None):
+    depth = path.count("/")
+    up = "../" * depth
     nav = "".join(
         '<a href="{href}"{cur}>{label}</a>'.format(
-            href=href, label=label,
+            href=up + href, label=label,
             cur=' aria-current="page"' if href == active else "")
         for href, label in NAV)
     doc = f"""<!DOCTYPE html>
@@ -324,12 +333,12 @@ def page(path, title, body, active=None, lede=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)} — Mark Reveley</title>
 {'<meta name="description" content="' + html.escape(lede or "", quote=True) + '">' if lede else ''}
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="{up}style.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="masthead">
-  <a class="brand" href="index.html">Mark Reveley</a>
+  <a class="brand" href="{up}index.html">Mark Reveley</a>
   <nav class="mainnav" aria-label="Sections">{nav}</nav>
 </header>
 <main id="main">
@@ -347,10 +356,17 @@ def page(path, title, body, active=None, lede=None):
     return dest
 
 
-def tags_html(kind, tags):
+def topic_href(tag, depth):
+    """Where a topic lives. Tags are already slug-shaped; this only guards it."""
+    slug = re.sub(r"[^a-z0-9._-]+", "-", str(tag).lower()).strip("-") or "untagged"
+    return "../" * depth + f"topics/{slug}.html"
+
+
+def tags_html(kind, tags, depth):
     """The card's bottom row: what kind of statement it is, then its topics."""
     items = [f'<li class="kind">{html.escape(str(kind))}</li>'] if kind else []
-    items += [f"<li>{html.escape(str(t))}</li>" for t in tags]
+    items += [f'<li><a href="{topic_href(t, depth)}">{html.escape(str(t))}</a></li>'
+              for t in tags]
     return f'<ul class="tags">{"".join(items)}</ul>' if items else ""
 
 
@@ -370,6 +386,22 @@ for e in excs.values():
             e["src"].append(m.group(1))
     # A quote is dated by the source it came from — the first one it cites.
     e["date"] = refs[e["src"][0]]["meta"].get("source_date", "") if e["src"] else ""
+
+# Newest first; undated quotes ("living document") fall to the end.
+ORDER = sorted(excs.values(),
+               key=lambda e: (tuple(-n for n in date_key(e["date"])),
+                              e["title"].lower()))
+
+# topic -> its quotes, in that same order. Topics come off the quotes alone:
+# a source's own tags describe the source, which this site no longer renders.
+topics = {}
+for e in ORDER:
+    for tag in e["tags"]:
+        topics.setdefault(str(tag), []).append(e)
+
+# Most-used first, alphabetical within a count — the order the old by-tag view
+# used, and the one that puts the useful topics at the top of the list.
+TOPIC_ORDER = sorted(topics, key=lambda tg: (-len(topics[tg]), tg))
 
 
 # --------------------------------------------------------------------------
@@ -391,19 +423,19 @@ def source_links(e):
     return f'<ul class="src">{"".join(rows)}</ul>' if rows else ""
 
 
-def quote_card(e):
-    quote = markdown(sec(e, "Quote", "Quotes"), base="excerpts")
-    note = markdown(sec(e, "Note"), base="excerpts")
+def quote_card(e, depth):
+    quote = markdown(sec(e, "Quote", "Quotes"), depth, base="excerpts")
+    note = markdown(sec(e, "Note"), depth, base="excerpts")
     speaker = str(e["meta"].get("speaker", "")).strip()
     when = pretty_date(e["date"])
     line = " · ".join(x for x in (html.escape(speaker), html.escape(when)) if x)
     return f"""<article class="card quote" id="q-{e['slug']}">
-  <h2><a class="self" href="quotes.html#q-{e['slug']}">{html.escape(e['title'])}</a></h2>
+  <h2><a class="self" href="#q-{e['slug']}">{html.escape(e['title'])}</a></h2>
   <div class="said">{quote}</div>
   <div class="note">{note}</div>
   <p class="attrib">{line}</p>
   {source_links(e)}
-  {tags_html(e['meta'].get('subtype'), e['tags'])}
+  {tags_html(e['meta'].get('subtype'), e['tags'], depth)}
 </article>"""
 
 
@@ -433,18 +465,45 @@ def build_posts():
 
 
 def build_quotes():
-    ordered = sorted(excs.values(),
-                     key=lambda e: (tuple(-n for n in date_key(e["date"])),
-                                    e["title"].lower()))
+    """The landing page: the sentence, then the list of topics."""
     n_src = len({s for e in excs.values() for s in e["src"]})
+    rows = "".join(
+        f'<li><a href="{topic_href(tg, 0)}">{html.escape(tg)}</a>'
+        f'<span class="count">{len(topics[tg])}</span></li>'
+        for tg in TOPIC_ORDER)
     body = f"""<section class="hero">
   <h1>Quotes</h1>
   <p class="lede">A collection of quotes from selected reading.</p>
-  <p class="counts">{len(ordered)} quotes from {n_src} sources, newest first.</p>
+  <p class="counts">{len(ORDER)} quotes from {n_src} sources, tagged with
+  {len(TOPIC_ORDER)} topics. Pick one below, or
+  <a href="topics/all.html">read them all</a>.</p>
 </section>
-{''.join(quote_card(e) for e in ordered)}"""
+
+<h2 class="topics-head">Topics</h2>
+<ul class="topics">{rows}</ul>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
          lede="A collection of quotes from selected reading.")
+
+
+def build_topic(heading, quotes, filename, lede):
+    body = f"""<section class="hero">
+  <h1>{html.escape(heading)}</h1>
+  <p class="lede">{lede}</p>
+  <p class="counts"><a href="../quotes.html">All topics</a></p>
+</section>
+{''.join(quote_card(e, 1) for e in quotes)}"""
+    page(f"topics/{filename}", heading, body, active="quotes.html", lede=lede)
+
+
+def build_topics():
+    build_topic("All quotes", ORDER, "all.html",
+                f"Every quote in the corpus, {len(ORDER)} of them, newest first.")
+    for tg in TOPIC_ORDER:
+        quotes = topics[tg]
+        n = len(quotes)
+        build_topic(tg, quotes, Path(topic_href(tg, 0)).name,
+                    f"{n} quote{'' if n == 1 else 's'} tagged "
+                    f"<em>{html.escape(tg)}</em>, newest first.")
 
 
 def build_about():
@@ -479,10 +538,12 @@ def main():
     clean()
     build_posts()
     build_quotes()
+    build_topics()
     build_about()
     pages = sorted(p.relative_to(OUT).as_posix() for p in OUT.rglob("*.html"))
-    print(f"{len(excs)} quotes · {len(refs)} sources indexed")
-    print(f"wrote {len(pages)} pages: " + ", ".join(pages))
+    print(f"{len(excs)} quotes · {len(refs)} sources indexed · "
+          f"{len(TOPIC_ORDER)} topics")
+    print(f"wrote {len(pages)} pages")
 
 
 if __name__ == "__main__":
