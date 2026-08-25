@@ -9,8 +9,6 @@ sources:
   - id: bb
     resource: /references/blackboard-system-wikipedia.md
     title: "Blackboard system (Wikipedia)"
-deps:
-  - { concept: /excerpts/bbllm--blackboard-revival.md, rel: precedes }
 generated: { by: research_agent/claude-code, at: 2026-08-24T23:55:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T23:50:00Z }
 status: stable

@@ -1,7 +1,7 @@
 ---
 type: Synthesis
 title: "Timeline: 1736 → 2026"
-description: Dated genealogy of graph engineering — the three lineages, the agentic run-up, and the June–July 2026 naming events — with each entry annotated to its evidence.
+description: "A view over the quote DAG: dated genealogy of graph engineering — the three lineages, the agentic run-up, and the June–July 2026 naming events — each entry linked to its evidence. No narrative conclusions; synthesis lives in ob6to8/direction."
 tags: [term-genealogy, history, synthesis]
 sources:
   - id: bundle
@@ -64,7 +64,3 @@ Dates in the deep sections are the conventionally cited ones; where sources disa
 | 2026-07-25/26 | Second-wave syntheses: Flowtivity (Jul 25), Gao Dalie's three-tier framing (Jul 26) | [Explicit graphs](../excerpts/ft--explicit-graphs-definition.md), [Three tiers](../excerpts/gd--three-tier-reliability.md) |
 | 2026-08-06 | LangChain positions its stack as an autonomy–determinism spectrum: "start with Deep Agents"; LangGraph as the "escape hatch" of maximal determinism | [Maximal determinism](../excerpts/da--maximal-determinism.md) |
 | 2026 (thread ids 1vwixw5 / 1vwazom) | The seed exchange: "What's up with new trend with graphs?" / "Is it just fancier way to do retrieval?" — and the FLARE graph-first-IDE thread it cites | [The skeptic's question](../excerpts/rl--just-fancier-retrieval.md) |
-
-## Reading of the sequence
-
-Two namings, five weeks apart, and the second contains the first: loop engineering (June) named the discipline of designing one agent's cycle; graph engineering (July) named the discipline of designing what happens **between and across** those cycles [[treadmill](../excerpts/aio--treadmill-of-terms.md)] — with the settled relation being containment, not succession [[graphs contain loops](../excerpts/lb--graphs-contain-loops.md), [simple version](../excerpts/lgblog--loops-simple-version.md)]. The deeper synchrony is between the *orchestration* naming (Simmons/Steinberger, July) and the *knowledge* standardization that immediately preceded it (Karpathy April → OKF June): the same season produced a discipline for graphs of agents and a format for graphs written by agents. The main synthesis argues these are one phenomenon — the consumer of structure became its producer — in [§5 of the main document](graph-engineering.md).

@@ -17,10 +17,8 @@ A research bundle on **graph engineering**: the term's historical senses and its
 
 # Level 2 — Excerpts
 
-* [Excerpts](excerpts/index.md) - Verbatim quotes decomposed into one concept per unit, each typed with a `subtype` enum (claim / problem / solution / observation / inference / prescription), tagged, and cross-linked with typed `deps`.
+* [Excerpts](excerpts/index.md) - Verbatim quotes decomposed into one concept per unit, each typed with the v2 `subtype` enum (question / claim / definition / problem / solution / observation / inference / prescription), tagged, and cross-linked with typed `deps` forming a verified DAG.
 
-# Level 3 — Synthesis
+# Level 3 — Views
 
-* [Graph engineering: what it was, what it just became](synthesis/graph-engineering.md) - The main synthesis document, annotated to the decomposed excerpts.
-* [Paradigm or hype train?](synthesis/paradigm-or-hype.md) - The verdict investigation: new paradigm vs. hype, the LangGraph capability audit, and the workflow-engine genealogy (2012 and further back).
-* [Timeline: 1736 → 2026](synthesis/timeline.md) - Dated genealogy from Euler to the July 2026 naming event.
+* [Views](views/index.md) - Non-narrative compositions over the quote DAG; currently the [timeline](views/timeline.md). Per the house rule ([README](README.md)), explicit synthesis lives in `ob6to8/direction`: [graph-engineering](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/graph-engineering.md) · [paradigm-or-hype](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/paradigm-or-hype.md).
