@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "The loop exposed its own ceiling"
 description: The genesis thesis (July 4, 2026) — loop engineering succeeded, which moved the bottleneck to a place shaped like a graph.
-tags: [graph-engineering, loop-engineering, term-genealogy, control-flow, era-agentic]
+tags: [graph-engineering, loop-engineering, term-genealogy, control-flow]
 speaker: "Josh C. Simmons"
 sources:
   - id: js

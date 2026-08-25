@@ -4,7 +4,7 @@ subtype: prescription
 role: position
 title: "Route by question type"
 description: The practitioner consensus — vector for lookups, graph for chains; hybrid, not conversion.
-tags: [retrieval, prescription-hybrid, era-agentic, practice]
+tags: [retrieval, practice]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

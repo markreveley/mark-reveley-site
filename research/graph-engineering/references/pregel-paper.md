@@ -3,7 +3,7 @@ type: Source Reference
 title: "Pregel: a system for large-scale graph processing (Google, SIGMOD 2010)"
 description: Google's vertex-centric graph-processing system — the acknowledged ancestor of LangGraph's runtime.
 resource: https://dl.acm.org/doi/10.1145/1807167.1807184
-tags: [level-1, era-classical, orchestration, history, academic]
+tags: [level-1, orchestration, history, academic]
 source_author: "Grzegorz Malewicz, Matthew H. Austern, Aart J.C. Bik, James C. Dehnert, Ilan Horn, Naty Leiser, Grzegorz Czajkowski"
 source_date: "2010 (SIGMOD, pp. 135–146)"
 retrieved: "2026-08-24"

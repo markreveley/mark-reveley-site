@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Managers, contractors, and bids"
 description: Smith's 1980 Contract Net Protocol — task announcement, bidding, delegation, and recursive subcontracting among autonomous agents.
-tags: [multi-agent, orchestration, history, era-classical]
+tags: [multi-agent, orchestration, history]
 speaker: "Wikipedia (Contract Net Protocol)"
 sources:
   - id: cnp

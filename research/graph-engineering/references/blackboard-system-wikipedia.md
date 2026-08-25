@@ -3,7 +3,7 @@ type: Source Reference
 title: "Blackboard system (Wikipedia)"
 description: The 1970s multi-specialist coordination architecture (Hearsay-II lineage) — independent knowledge sources cooperating through shared state under a control shell.
 resource: https://en.wikipedia.org/wiki/Blackboard_system
-tags: [level-1, era-classical, multi-agent, orchestration, memory, history]
+tags: [level-1, multi-agent, orchestration, memory, history]
 source_author: "Wikipedia contributors"
 source_date: "living document"
 retrieved: "2026-08-24"

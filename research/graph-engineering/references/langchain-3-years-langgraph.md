@@ -3,7 +3,7 @@ type: Source Reference
 title: "3 Years of Graph Engineering with LangGraph (LangChain)"
 description: The incumbent framework vendor claiming the new term — "we've been doing it for three years" — and folding loop engineering into graphs as "a simple version of them."
 resource: https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph
-tags: [level-1, era-agentic, graph-engineering, tooling, term-genealogy, orchestration]
+tags: [level-1, graph-engineering, tooling, term-genealogy, orchestration]
 source_author: "Sydney Runkle and Harrison Chase"
 source_date: "2026-07-22"
 retrieved: "2026-08-24"

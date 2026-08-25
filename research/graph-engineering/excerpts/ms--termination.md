@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Without a termination condition"
 description: The loop's definitional hazard — agents that run forever or stop arbitrarily.
-tags: [loop-engineering, risk, era-agentic]
+tags: [loop-engineering, risk]
 speaker: "Luis Chavez-Mattos (MindStudio)"
 sources:
   - id: ms

@@ -4,7 +4,7 @@ subtype: prescription
 role: position
 title: "Own your control flow"
 description: Factor 8 — build your own control structures around the loop; good agents are mostly just software.
-tags: [control-flow, prescription, practice, loop-engineering, era-agentic]
+tags: [control-flow, practice, loop-engineering]
 speaker: "Dex Horthy (12-Factor Agents)"
 sources:
   - id: fa

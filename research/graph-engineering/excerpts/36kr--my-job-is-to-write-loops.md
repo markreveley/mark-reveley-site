@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "My job is to write loops"
 description: Boris Cherny's first-person report of the practice shift — running loops that prompt Claude and decide what to do next.
-tags: [loop-engineering, practice, era-agentic]
+tags: [loop-engineering, practice]
 speaker: "Boris Cherny (as reported by 36Kr)"
 sources:
   - id: kr

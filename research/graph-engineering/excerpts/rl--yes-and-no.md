@@ -4,7 +4,7 @@ subtype: inference
 role: position
 title: "Yes and no: storage shapes retrieval"
 description: The commenter's direct answer to the reduction question — graphs are about data complexity, and the storage method determines the retrieval method.
-tags: [retrieval, knowledge-representation, era-agentic]
+tags: [retrieval, knowledge-representation]
 speaker: "responding commenter, r/LLMDevs"
 sources:
   - id: rl

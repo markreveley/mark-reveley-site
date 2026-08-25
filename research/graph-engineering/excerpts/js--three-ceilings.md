@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Three ceilings of the loop"
 description: Simmons' bill of particulars against the single agent loop — serial execution, transcript-as-state, and no pause button.
-tags: [loop-engineering, control-flow, concurrency, memory, risk, era-agentic]
+tags: [loop-engineering, control-flow, concurrency, memory, risk]
 speaker: "Josh C. Simmons"
 sources:
   - id: js

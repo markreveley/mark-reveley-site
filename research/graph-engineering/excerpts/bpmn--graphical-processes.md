@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Activities, gateways, events — and human tasks"
 description: BPMN — the workflow-engine era's standardized process graphs, version 2.0 released January 2011.
-tags: [workflow-engines, control-flow, history, era-classical]
+tags: [workflow-engines, control-flow, history]
 speaker: "Wikipedia (BPMN)"
 sources:
   - id: bpmn

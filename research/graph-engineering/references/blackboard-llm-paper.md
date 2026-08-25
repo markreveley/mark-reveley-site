@@ -3,7 +3,7 @@ type: Source Reference
 title: "LLM-Based Multi-Agent Blackboard System (arXiv)"
 description: A 2025 Google/UMass paper explicitly reviving the classical blackboard architecture for LLM multi-agent coordination — the ancestry acknowledged in current research.
 resource: https://arxiv.org/abs/2510.01285
-tags: [level-1, era-agentic, multi-agent, orchestration, academic, history]
+tags: [level-1, multi-agent, orchestration, academic, history]
 source_author: "Alireza Salemi, Mihir Parmar, Palash Goyal, Yiwen Song, Jinsung Yoon, Hamed Zamani, Tomas Pfister, Hamid Palangi"
 source_date: "2025-09-30 (v1); 2026-01-31 (v2)"
 retrieved: "2026-08-24"

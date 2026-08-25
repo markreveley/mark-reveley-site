@@ -4,7 +4,7 @@ subtype: inference
 role: position
 title: "Loop engineering is a simple version of graphs"
 description: LangChain's formal subsumption — loops are the one-node special case, and production agents need cycles anyway.
-tags: [control-flow, loop-engineering, graph-engineering, orchestration, era-agentic]
+tags: [control-flow, loop-engineering, graph-engineering, orchestration]
 speaker: "Sydney Runkle and Harrison Chase (LangChain)"
 sources:
   - id: lgb

@@ -4,7 +4,7 @@ subtype: definition
 role: position
 title: "Explicit graphs an agent can traverse"
 description: Flowtivity's definition uniting both senses — entities, decisions, and concepts as nodes; typed edges; traversal by the agent — plus the concurrency argument against loops.
-tags: [graph-engineering, typed-edges, concurrency, era-agentic]
+tags: [graph-engineering, typed-edges, concurrency]
 speaker: "Flowtivity (unattributed)"
 sources:
   - id: ft

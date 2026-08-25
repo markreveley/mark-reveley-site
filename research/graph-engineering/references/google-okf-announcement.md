@@ -3,7 +3,7 @@ type: Source Reference
 title: "Introducing the Open Knowledge Format (Google Cloud blog)"
 description: Google Cloud's June 12, 2026 announcement of OKF — the format this very bundle is written in — formalizing the LLM-wiki pattern as markdown-plus-frontmatter cross-linked into a graph.
 resource: https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing
-tags: [level-1, era-agentic, standards, knowledge-representation]
+tags: [level-1, standards, knowledge-representation]
 source_author: "Sam McVeety and Amir Hormati (Google Cloud)"
 source_date: "2026-06-12"
 retrieved: "2026-08-24"

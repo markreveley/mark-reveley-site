@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Supersteps and the vote to halt"
 description: LangGraph's execution semantics are Pregel's, verbatim — supersteps, message passing, and termination by inactive-node vote.
-tags: [tooling, orchestration, history, era-agentic, determinism]
+tags: [tooling, orchestration, history, determinism]
 speaker: "LangGraph documentation (Graph API)"
 sources:
   - id: lgapi

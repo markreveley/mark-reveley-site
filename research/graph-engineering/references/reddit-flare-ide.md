@@ -3,7 +3,7 @@ type: Source Reference
 title: "r/ArtificialInteligence: FLARE — a graph-first IDE for agentic coding"
 description: The thread the seed source's commenter linked as evidence that agentic-coding information needs graph visualization. Not retrievable from this environment.
 resource: https://www.reddit.com/r/ArtificialInteligence/comments/1vwazom/flare_a_graphfirst_ide_for_agentic_coding_watch/
-tags: [level-1, era-agentic, tooling, legibility]
+tags: [level-1, tooling, legibility]
 source_author: "anonymous Reddit user"
 source_date: "2026 (thread id 1vwazom)"
 retrieved: "2026-08-24"

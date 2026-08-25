@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Twelve words, 48 hours, one fabricated study"
 description: The documented anatomy of the naming event — Steinberger's joke tweet, three competing definitions within 48 hours, and a viral study that does not exist.
-tags: [hype-cycle, term-genealogy, era-agentic, risk]
+tags: [hype-cycle, term-genealogy, risk]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

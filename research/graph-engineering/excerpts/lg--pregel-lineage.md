@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Inspired by Pregel"
 description: The acknowledged descent of the era's dominant agent runtime from Google's 2010 graph-processing system.
-tags: [history, tooling, orchestration, era-agentic, era-classical]
+tags: [history, tooling, orchestration]
 speaker: "LangChain (LangGraph documentation)"
 sources:
   - id: lg

@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Maximal determinism, encoded in topology"
 description: LangChain's own characterization of LangGraph — domain knowledge encoded in the graph's shape instead of left to the model's judgment.
-tags: [tooling, determinism, control-flow, era-agentic]
+tags: [tooling, determinism, control-flow]
 speaker: "Sydney Runkle (LangChain)"
 sources:
   - id: da

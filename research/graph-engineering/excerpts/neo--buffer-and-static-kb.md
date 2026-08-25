@@ -4,7 +4,7 @@ subtype: problem
 role: position
 title: "A buffer and a static knowledge base"
 description: Neo4j's diagnosis of agent unreliability — memory that is only a conversation buffer plus a static store, losing the plan across loops.
-tags: [memory, risk, era-agentic]
+tags: [memory, risk]
 speaker: "Jim Webber (Neo4j)"
 sources:
   - id: neo

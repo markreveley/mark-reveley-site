@@ -3,7 +3,7 @@ type: Source Reference
 title: "What Is Graph Engineering? A Field Guide for Builders (The AI Operator)"
 description: The most historiographically careful of the July 2026 explainers — dates the term treadmill, documents the viral moment and the fabricated study, and gives benchmark-grounded tradeoffs.
 resource: https://theaioperator.io/p/what-is-graph-engineering-a-field
-tags: [level-1, era-agentic, graph-engineering, term-genealogy, hype-cycle, evaluation]
+tags: [level-1, graph-engineering, term-genealogy, hype-cycle, evaluation]
 source_author: "Eugeniu Ghelbur (The AI Operator)"
 source_date: "2026-07-21"
 retrieved: "2026-08-24"

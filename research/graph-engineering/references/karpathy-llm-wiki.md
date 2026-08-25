@@ -3,7 +3,7 @@ type: Source Reference
 title: "llm-wiki (Andrej Karpathy, gist)"
 description: The April 2026 gist proposing that an LLM incrementally build and maintain a persistent, cross-referenced markdown wiki instead of re-deriving knowledge per query — the pattern OKF later formalized.
 resource: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-tags: [level-1, era-agentic, knowledge-representation, memory, standards]
+tags: [level-1, knowledge-representation, memory, standards]
 source_author: "Andrej Karpathy"
 source_date: "2026-04"
 retrieved: "2026-08-24"

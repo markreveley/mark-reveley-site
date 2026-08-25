@@ -4,7 +4,7 @@ subtype: solution
 role: evidence
 title: "Checkpointers and stores"
 description: LangGraph's persistence — thread-scoped checkpoints for interrupts, time travel, and fault tolerance; cross-thread stores for durable knowledge.
-tags: [tooling, durable-execution, memory, era-agentic]
+tags: [tooling, durable-execution, memory]
 speaker: "LangGraph documentation (Persistence)"
 sources:
   - id: lgdocs

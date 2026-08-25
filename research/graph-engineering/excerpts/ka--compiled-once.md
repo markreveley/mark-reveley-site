@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Compiled once, kept current"
 description: Karpathy's LLM-wiki principle — knowledge as a persistent, compounding, cross-referenced artifact the model maintains, not something re-derived per query.
-tags: [knowledge-representation, memory, era-agentic, practice]
+tags: [knowledge-representation, memory, practice]
 speaker: "Andrej Karpathy"
 sources:
   - id: ka

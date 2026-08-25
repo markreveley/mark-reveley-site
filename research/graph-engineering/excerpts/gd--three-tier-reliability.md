@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Three tiers of reliability"
 description: The cleanest layering claim in the corpus — prompt engineering makes a call reliable, loop engineering an agent, graph engineering a group of agents.
-tags: [term-genealogy, orchestration, multi-agent, definition, era-agentic]
+tags: [term-genealogy, orchestration, multi-agent]
 speaker: "Gao Dalie (高達烈)"
 sources:
   - id: gd

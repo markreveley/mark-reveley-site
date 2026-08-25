@@ -4,7 +4,7 @@ subtype: solution
 role: position
 title: "The graph as abstraction layer"
 description: The commenter's constructive move — a graph plus the code that interprets it is a self-defined abstraction layer over the storage format, freeing representation from the format's limits.
-tags: [knowledge-representation, era-agentic, definition]
+tags: [knowledge-representation]
 speaker: "responding commenter, r/LLMDevs"
 sources:
   - id: rl

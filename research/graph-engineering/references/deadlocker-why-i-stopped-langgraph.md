@@ -3,7 +3,7 @@ type: Source Reference
 title: "Why I Stopped Using LangGraph (DEV Community)"
 description: A practitioner's exit report — framework overhead exceeding problem complexity; "structured" mistaken for "complex."
 resource: https://dev.to/deadlocker/why-i-stopped-using-langgraph-4jo2
-tags: [level-1, era-agentic, tooling, skepticism, simplicity]
+tags: [level-1, tooling, skepticism, simplicity]
 source_author: "DeadLocker (pseudonymous)"
 source_date: "2026-04-23 (posted \"Apr 23\")"
 retrieved: "2026-08-24"

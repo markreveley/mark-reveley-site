@@ -4,7 +4,7 @@ subtype: inference
 role: argument
 title: "Graphs force you to acknowledge the unmodeled"
 description: Luis Catacora's double-edged observation — loops are fault-tolerant precisely because they are vague; graphs surface how much of the workflow was never really modeled.
-tags: [control-flow, determinism, skepticism, era-agentic]
+tags: [control-flow, determinism, skepticism]
 speaker: "Luis Catacora (as reported by 36Kr)"
 sources:
   - id: kr

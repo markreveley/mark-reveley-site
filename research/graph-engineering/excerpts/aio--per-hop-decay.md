@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Per-hop accuracy compounds against you"
 description: The arithmetic that kills graph projects — at 95% per-hop accuracy a 5-hop chain is 77% trustworthy; at 85%, 44%.
-tags: [evaluation, risk, retrieval, era-agentic]
+tags: [evaluation, risk, retrieval]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

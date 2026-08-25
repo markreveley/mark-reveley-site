@@ -4,7 +4,7 @@ subtype: inference
 role: argument
 title: "The constraint moved to coordination"
 description: Why now — model capability moved the binding constraint from step competence to system coordination, and coordination is a graph problem.
-tags: [graph-engineering, orchestration, concurrency, era-agentic]
+tags: [graph-engineering, orchestration, concurrency]
 speaker: "Josh C. Simmons"
 sources:
   - id: js

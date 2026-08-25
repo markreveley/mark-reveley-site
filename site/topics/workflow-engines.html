@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>workflow-engines — Mark Reveley</title>
+<meta name="description" content="5 quotes tagged &lt;em&gt;workflow-engines&lt;/em&gt;, newest first.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../index.html">Posts</a><a href="../quotes.html" aria-current="page">Quotes</a><a href="../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>workflow-engines</h1>
+  <p class="lede">5 quotes tagged <em>workflow-engines</em>, newest first.</p>
+  <p class="counts"><a href="../quotes.html">All topics</a></p>
+</section>
+<article class="card quote" id="q-tmp--durable-execution">
+  <h2><a class="self" href="#q-tmp--durable-execution">Durable Execution</a></h2>
+  <div class="said"><blockquote><p>"At its core lies the concept of 'Durable Execution,' a groundbreaking abstraction that automatically preserves the full state of a Workflow"</p>
+</blockquote><blockquote><p>"You practically end up writing pure business logic without thinking about other things — no event handlers, callbacks, or explicit database interactions."</p>
+</blockquote></div>
+  <div class="note"><p>Curl-verified. The lineage's terminal abstraction; built for deterministic replay, which stochastic nodes strain — see the organized-nonsense argument.</p></div>
+  <p class="attrib">Tim Imkin (Temporal blog) · 25 April 2025</p>
+  <ul class="src"><li><a href="https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal" rel="noreferrer">https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal</a></li></ul>
+  <ul class="tags"><li class="kind">definition</li><li><a href="../topics/durable-execution.html">durable-execution</a></li><li><a href="../topics/workflow-engines.html">workflow-engines</a></li><li><a href="../topics/control-flow.html">control-flow</a></li></ul>
+</article><article class="card quote" id="q-tmp--shipped-it-three-times">
+  <h2><a class="self" href="#q-tmp--shipped-it-three-times">The same two engineers, three times</a></h2>
+  <div class="said"><blockquote><p>"In 2002, Max, now CTO of Temporal, joined Amazon amid a pivotal transition from monolithic applications to a service-oriented architecture" […] "Samar, CEO of Temporal, who had worked alongside Max at Amazon, carried these lessons to Microsoft."</p>
+</blockquote><blockquote><p>"Max and Samar reunited at Uber, creating Cadence — an orchestration framework designed from the outset as fully open source."</p>
+</blockquote><blockquote><p>"Temporal was born as a direct answer to the challenges Max and Samar encountered at Amazon, Microsoft, and Uber."</p>
+</blockquote></div>
+  <div class="note"><p>Curl-verified; vendor-authored, employment facts checkable. Personnel continuity: SWF → Cadence → Temporal, same two engineers.</p></div>
+  <p class="attrib">Tim Imkin (Temporal blog) · 25 April 2025</p>
+  <ul class="src"><li><a href="https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal" rel="noreferrer">https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal</a></li></ul>
+  <ul class="tags"><li class="kind">observation</li><li><a href="../topics/workflow-engines.html">workflow-engines</a></li><li><a href="../topics/durable-execution.html">durable-execution</a></li><li><a href="../topics/history.html">history</a></li></ul>
+</article><article class="card quote" id="q-bpmn--graphical-processes">
+  <h2><a class="self" href="#q-bpmn--graphical-processes">Activities, gateways, events — and human tasks</a></h2>
+  <div class="said"><blockquote><p>"Business Process Model and Notation (BPMN) is a standard for business process modeling that provides a graphical notation for specifying business processes in a Business Process Diagram (BPD), based on a flowcharting technique very similar to activity diagrams from Unified Modeling Language (UML)."</p>
+</blockquote><blockquote><p>"Version 2.0 of BPMN was released in January 2011."</p>
+</blockquote><blockquote><p>"An activity is represented with a rounded-corner rectangle and describes the kind of work which must be done." / "A gateway is represented with a diamond shape and determines forking and merging of paths."</p>
+</blockquote></div>
+  <div class="note"><p>Curl-verified against Wikipedia. The 2011 standard for executable process graphs — including human tasks: interpretive nodes at human cost, before model nodes.</p></div>
+  <p class="attrib">Wikipedia (BPMN) · living document</p>
+  <ul class="src"><li><a href="https://en.wikipedia.org/wiki/Business_Process_Model_and_Notation" rel="noreferrer">https://en.wikipedia.org/wiki/Business_Process_Model_and_Notation</a></li></ul>
+  <ul class="tags"><li class="kind">definition</li><li><a href="../topics/workflow-engines.html">workflow-engines</a></li><li><a href="../topics/control-flow.html">control-flow</a></li><li><a href="../topics/history.html">history</a></li></ul>
+</article><article class="card quote" id="q-swf--durable-state-2012">
+  <h2><a class="self" href="#q-swf--durable-state-2012">Deciders, workers, durable state — 2012</a></h2>
+  <div class="said"><blockquote><p>"With Amazon Simple Workflow Service (Amazon SWF) you can build, run, and scale background jobs that have parallel or sequential steps. You can coordinate work across distributed components and track the state of tasks."</p>
+</blockquote><blockquote><p>"To coordinate tasks, you write a program that gets the latest task state from Amazon SWF and uses that state to initiate subsequent tasks. Amazon SWF maintains an application's execution state durably, so your application is resilient to individual component failures."</p>
+</blockquote></div>
+  <div class="note"><p>Curl-verified against the current AWS developer guide; service announced 2012-02-21. The decider/worker split with durable state — the operator's hypothesized ancestor, in its own words.</p></div>
+  <p class="attrib">AWS documentation (Amazon SWF developer guide) · living document (service announced 2012-02-21)</p>
+  <ul class="src"><li><a href="https://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-welcome.html" rel="noreferrer">https://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-welcome.html</a></li></ul>
+  <ul class="tags"><li class="kind">definition</li><li><a href="../topics/workflow-engines.html">workflow-engines</a></li><li><a href="../topics/durable-execution.html">durable-execution</a></li><li><a href="../topics/history.html">history</a></li><li><a href="../topics/control-flow.html">control-flow</a></li></ul>
+</article><article class="card quote" id="q-pet--places-transitions">
+  <h2><a class="self" href="#q-pet--places-transitions">Places, transitions, tokens</a></h2>
+  <div class="said"><blockquote><p>"A Petri net is a directed bipartite graph that has two types of elements: places and transitions."</p>
+</blockquote><blockquote><p>"The German computer scientist Carl Adam Petri, after whom such structures are named, analyzed Petri nets extensively in his 1962 Ph.D. dissertation."</p>
+</blockquote><blockquote><p>"Workflow nets (WF-nets) are a subclass of Petri nets intending to model the workflow of process activities."</p>
+</blockquote></div>
+  <div class="note"><p>Curl-verified against Wikipedia. The 1962 root of the control-flow lineage; workflow nets carry it into the BPM wave.</p></div>
+  <p class="attrib">Wikipedia (Petri net) · living document</p>
+  <ul class="src"><li><a href="https://en.wikipedia.org/wiki/Petri_net" rel="noreferrer">https://en.wikipedia.org/wiki/Petri_net</a></li></ul>
+  <ul class="tags"><li class="kind">definition</li><li><a href="../topics/workflow-engines.html">workflow-engines</a></li><li><a href="../topics/history.html">history</a></li><li><a href="../topics/control-flow.html">control-flow</a></li><li><a href="../topics/academic.html">academic</a></li></ul>
+</article>
+</main>
+<footer class="foot">
+  <p>Static HTML and CSS. No JavaScript, no tracking, nothing to run.</p>
+</footer>
+</body>
+</html>

@@ -3,7 +3,7 @@ type: Source Reference
 title: "FORGET Loop Engineering. Graph Engineering is about THIS (Gao Dalie)"
 description: A pro-graph explainer with the crispest three-tier framing — prompt / loop / graph engineering as reliability at the call, agent, and collaboration levels.
 resource: https://gaodalie.substack.com/p/forget-loop-engineering-graph-engineering
-tags: [level-1, era-agentic, graph-engineering, orchestration, determinism]
+tags: [level-1, graph-engineering, orchestration, determinism]
 source_author: "Gao Dalie (高達烈)"
 source_date: "2026-07-26"
 retrieved: "2026-08-24"

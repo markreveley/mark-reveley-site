@@ -3,7 +3,7 @@ type: Source Reference
 title: "Graph theory (Encyclopaedia Britannica)"
 description: Reference article on graph theory's definition and history, including the 19th-century chemistry origin of dot-and-line diagrams.
 resource: https://www.britannica.com/topic/graph-theory
-tags: [level-1, era-classical, history]
+tags: [level-1, history]
 source_author: "Encyclopaedia Britannica (Stephan C. Carlson)"
 source_date: "living document"
 retrieved: "2026-08-24"

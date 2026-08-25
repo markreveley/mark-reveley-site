@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Making links, so a person or machine can explore"
 description: Berners-Lee's 2006 statement of the linked-data vision — the Semantic Web is about links that let people and machines explore a web of data.
-tags: [history, knowledge-representation, legibility, era-classical]
+tags: [history, knowledge-representation, legibility]
 speaker: "Tim Berners-Lee"
 sources:
   - id: tbl

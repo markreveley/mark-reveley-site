@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "The edge type IS the knowledge"
 description: The maximal typed-edge thesis — relatedness is trivial to detect; the typed edge is what answers "why did this change?"
-tags: [typed-edges, knowledge-representation, era-agentic]
+tags: [typed-edges, knowledge-representation]
 speaker: "Flowtivity (unattributed)"
 sources:
   - id: ft

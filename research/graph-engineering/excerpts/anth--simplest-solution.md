@@ -4,7 +4,7 @@ subtype: prescription
 role: position
 title: "Find the simplest solution possible"
 description: The standing counterweight to graph maximalism — add complexity only when needed; use agents only where paths can't be hardcoded.
-tags: [simplicity, prescription, control-flow, era-agentic]
+tags: [simplicity, control-flow]
 speaker: "Anthropic (Building Effective Agents)"
 sources:
   - id: anth

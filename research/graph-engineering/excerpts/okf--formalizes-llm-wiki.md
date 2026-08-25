@@ -4,7 +4,7 @@ subtype: solution
 role: evidence
 title: "OKF formalizes the LLM-wiki pattern"
 description: Google's June 2026 answer to knowledge-for-agents — an open spec turning directories of markdown into portable, interoperable graphs.
-tags: [standards, knowledge-representation, solution, era-agentic]
+tags: [standards, knowledge-representation]
 speaker: "Sam McVeety and Amir Hormati (Google Cloud)"
 sources:
   - id: okf

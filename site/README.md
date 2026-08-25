@@ -10,39 +10,55 @@ dependencies. Open `site/index.html` in a browser, or serve the directory:
 | Page | What it is |
 |---|---|
 | `index.html` | **Posts** — the blog itself. No posts yet; the markup for one is in an HTML comment on that page. |
-| `reading.html` | **Reading** — the hub for the three-level research bundle. |
+| `quotes.html` | **Quotes** — the topic list: every tag in the corpus, most-used first. |
+| `topics/<tag>.html` | The quotes carrying one tag. `topics/all.html` is the whole corpus. |
 | `about.html` | **About** — one sentence. |
 
-## The three levels
+## Quotes
 
-`reading.html` is a front door onto [`research/graph-engineering/`](../research/graph-engineering/),
-which keeps sources, excerpts and views as separate levels. Each level page
-links down to the next and back up again:
+The quote is the only object the site has: no source pages, no view pages, no
+levels. Every excerpt in
+[`research/graph-engineering/excerpts/`](../research/graph-engineering/excerpts/)
+becomes one card.
 
-* **Level 1 — `sources.html`** — every source, alphabetical, linking out to the
-  original and down to the excerpts taken from it.
-* **Level 2 — `excerpts.html`** — every verbatim excerpt, grouped under its
-  source, with its role, subtype, tags, and its typed edges to other excerpts
-  and to the open questions (collapsed behind `<details>`, which needs no
-  script).
-* **Level 3 — `views.html`** — compositions over the excerpt graph.
+Quotes are reached by topic. `quotes.html` is the landing page and holds
+nothing but the sentence and the topic list — every tag in the corpus with the
+number of quotes carrying it, most-used first. Each entry links to
+`topics/<tag>.html`, which lists those quotes; `topics/all.html` lists all of
+them. Quotes are ordered newest first everywhere, by the publication date of
+the source they came from. A quote carries one to five tags, so it appears
+under each of them.
 
-An excerpt that cites two sources is filed under the first and cross-referenced
-from the others, so every anchor id is unique.
+Each card holds, in this order:
 
-## Views
+1. the statement it makes, as a small heading — also its anchor, `#q-<slug>`;
+2. **the quote text**, verbatim, set as the largest thing on the card;
+3. the note on it;
+4. speaker and date;
+5. the URL it came from — the whole of what used to be the source record;
+6. its labels: what kind of statement it is, then its topics — each linking to
+   that topic's page.
 
-`views/timeline.html` is rendered from the bundle's own view document. The other
-four are **demo views** — labelled as such on the page — built from the same
-corpus to show what the level is for:
+Everything that describes the quote sits below the quote, so nothing competes
+with the text itself.
 
-| View | Arranged by |
-|---|---|
-| `views/timeline.html` | date (from `research/graph-engineering/views/timeline.md`) |
-| `views/by-issue.html` | the seven open questions, with the positions on record |
-| `views/by-role.html` | role in the argument: issue, position, argument, evidence |
-| `views/by-tag.html` | tag, most-used first |
-| `views/edges.html` | typed relation: supports, refines, objects-to, precedes… |
+Two things the bundle carries are deliberately not rendered: the typed edges
+between quotes, and the issues they answer. Both are graph structure rather
+than quotes, and the pages that displayed them are gone.
+
+### Labels
+
+The bundle types each excerpt on two facets — a `role` in the dialectic
+(issue / position / argument / evidence) and a `subtype` speech act (question /
+claim / definition / problem / solution / observation / inference /
+prescription). They are not orthogonal: only 14 of the 32 possible pairs occur,
+and most subtypes appear under a single role. The site shows `subtype` alone,
+since `role` is a fact about a quote's position in the argument graph, which
+this site no longer draws.
+
+The bundle's other tags are the site's topics, and are read off the quotes
+alone — a source's own tags describe the source, which this site no longer
+renders.
 
 ## Rebuilding
 
@@ -60,9 +76,9 @@ lasting changes in `build.py` (structure) or `style.css` (never generated).
 Markdown goes through [Python-Markdown](https://python-markdown.github.io/)
 with the `tables` extension. Four passes adapt its output to this site:
 
-* **`RewriteLinks`** — turns a bundle link (`../excerpts/foo.md`, or a bare
-  `foo.md` written between siblings) into the anchor for its page here. A link
-  with no page on this site — the bundle README, the update log — keeps its
+* **`RewriteLinks`** — turns a link between two excerpts into its anchor on
+  `topics/all.html`, the one page guaranteed to hold every quote. A link with no
+  page here — a source record, an issue, a view, the bundle README — keeps its
   text and loses its href rather than going dead.
 * **`ShiftHeadings`** — renumbers a fragment's headings so its `#` lands under
   the page's own `<h1>`.
@@ -73,5 +89,13 @@ with the `tables` extension. Four passes adapt its output to this site:
   apart into two quotations.
 
 Plus a preprocessor that drops footnote markers (every excerpt footnotes its
-own source, which each card already names), and `"` added to the escape set,
+own source, which each card already links), and `"` added to the escape set,
 since the bundle writes `\"` inside quoted passages.
+
+Source dates in the bundle are free text — an ISO date, a bare year, sometimes
+a parenthetical, sometimes `living document`. `build.py` reads the leading date
+off the front for display and ordering, and shows anything undated as written.
+
+`build.py` clears `topics/` before each run, along with the pages the earlier,
+level-structured version of this site generated, so a tag dropped from the
+bundle loses its page and a rebuild leaves no orphans behind.

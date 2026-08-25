@@ -4,7 +4,7 @@ subtype: definition
 role: position
 title: "Legible to humans and machines"
 description: The commenter's opening definition — graphs express complex information in a form both humans and machines can understand, and convert easily to visualization.
-tags: [legibility, knowledge-representation, era-agentic]
+tags: [legibility, knowledge-representation]
 speaker: "responding commenter, r/LLMDevs"
 sources:
   - id: rl

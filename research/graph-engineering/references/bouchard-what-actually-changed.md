@@ -3,7 +3,7 @@ type: Source Reference
 title: "Graph Engineering vs Loop Engineering: What Actually Changed (Louis-François Bouchard)"
 description: A deflationary-but-constructive read — graph engineering as "this week's name" for wiring agent loops together, with the real change located in what lives inside the nodes.
 resource: https://www.louisbouchard.ai/graph-engineering-explained/
-tags: [level-1, era-agentic, graph-engineering, term-genealogy, skepticism, risk]
+tags: [level-1, graph-engineering, term-genealogy, skepticism, risk]
 source_author: "Louis-François Bouchard"
 source_date: "2026-07-22"
 retrieved: "2026-08-24"

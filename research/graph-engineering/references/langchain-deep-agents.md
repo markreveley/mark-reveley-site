@@ -3,7 +3,7 @@ type: Source Reference
 title: "Deep Agents vs LangChain vs LangGraph (LangChain)"
 description: LangChain's August 2026 positioning of its own stack as an autonomy–determinism spectrum, with LangGraph as the "escape hatch" of maximal determinism.
 resource: https://www.langchain.com/blog/deep-agents-vs-langchain-vs-langgraph
-tags: [level-1, era-agentic, tooling, control-flow, determinism]
+tags: [level-1, tooling, control-flow, determinism]
 source_author: "Sydney Runkle (LangChain)"
 source_date: "2026-08-06"
 retrieved: "2026-08-24"

@@ -3,7 +3,7 @@ type: Source Reference
 title: "We Are Entering the Graph Engineering Phase (Josh C. Simmons)"
 description: The earliest documented use of "graph engineering" in the 2026 sense (July 4, 2026) — a substantive essay, not the viral moment.
 resource: https://www.drjoshcsimmons.com/writing/we-are-entering-the-graph-engineering-phase
-tags: [level-1, era-agentic, graph-engineering, term-genealogy, control-flow]
+tags: [level-1, graph-engineering, term-genealogy, control-flow]
 source_author: "Josh C. Simmons"
 source_date: "2026-07-04"
 retrieved: "2026-08-24"

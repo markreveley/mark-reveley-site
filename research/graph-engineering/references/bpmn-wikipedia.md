@@ -3,7 +3,7 @@ type: Source Reference
 title: "Business Process Model and Notation (Wikipedia)"
 description: The workflow-engine era's graph notation — activities, gateways, events; BPMN 2.0 released January 2011; executed by engines like Activiti (2010) and jBPM.
 resource: https://en.wikipedia.org/wiki/Business_Process_Model_and_Notation
-tags: [level-1, era-classical, workflow-engines, control-flow, history]
+tags: [level-1, workflow-engines, control-flow, history]
 source_author: "Wikipedia contributors"
 source_date: "living document"
 retrieved: "2026-08-24"

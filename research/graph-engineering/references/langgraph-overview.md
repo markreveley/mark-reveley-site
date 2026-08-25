@@ -3,7 +3,7 @@ type: Source Reference
 title: "LangGraph overview (LangChain docs)"
 description: The framework documentation for graph-based agent orchestration — stateful graphs mixing deterministic and agentic steps, with an acknowledged Pregel lineage.
 resource: https://docs.langchain.com/oss/python/langgraph/overview
-tags: [level-1, era-agentic, tooling, orchestration, determinism, history]
+tags: [level-1, tooling, orchestration, determinism, history]
 source_author: "LangChain (documentation)"
 source_date: "2026 (living document)"
 retrieved: "2026-08-24"

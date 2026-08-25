@@ -4,7 +4,7 @@ subtype: solution
 role: evidence
 title: "Send: edges unknown ahead of time"
 description: LangGraph's Send API — dynamic map-reduce fan-out where the number of branches is not known when the graph is written.
-tags: [tooling, concurrency, orchestration, control-flow, era-agentic]
+tags: [tooling, concurrency, orchestration, control-flow]
 speaker: "LangGraph documentation (Graph API)"
 sources:
   - id: lgapi

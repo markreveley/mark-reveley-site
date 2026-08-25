@@ -3,7 +3,7 @@ type: Source Reference
 title: "The Agent Loop Decoded (Oracle Developers blog)"
 description: A three-level anatomy of the agent loop (LLM+tools; lifecycle/memory inside the loop; operations inside and outside it).
 resource: https://blogs.oracle.com/developers/the-agent-loop-decoded-three-levels-every-agent-engineer-must-know
-tags: [level-1, era-agentic, loop-engineering, memory]
+tags: [level-1, loop-engineering, memory]
 source_author: "Richmond Alake"
 source_date: "2026-06-11"
 retrieved: "2026-08-24"

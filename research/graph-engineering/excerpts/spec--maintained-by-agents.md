@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "A corpus continuously maintained by agents"
 description: The OKF spec's motivating observation — knowledge is no longer authored once and read; agents write it continuously, which makes provenance, trust, freshness, lifecycle, and attestation first-class problems.
-tags: [standards, knowledge-representation, memory, era-agentic]
+tags: [standards, knowledge-representation, memory]
 speaker: "OKF SPEC.md v0.2 (Google Cloud)"
 sources:
   - id: spec

@@ -3,7 +3,7 @@ type: Source Reference
 title: "Contract Net Protocol (Wikipedia)"
 description: Reid G. Smith's 1980 task-sharing protocol — managers announce tasks, contractors bid, work is delegated and subcontracted — multi-agent task allocation, 45 years early.
 resource: https://en.wikipedia.org/wiki/Contract_Net_Protocol
-tags: [level-1, era-classical, multi-agent, orchestration, history]
+tags: [level-1, multi-agent, orchestration, history]
 source_author: "Wikipedia contributors"
 source_date: "living document (protocol: Smith, IEEE Trans. Computers 29(12), 1980)"
 retrieved: "2026-08-24"

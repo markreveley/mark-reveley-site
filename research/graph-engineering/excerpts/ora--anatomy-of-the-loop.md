@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Anatomy of the agent loop"
 description: The harness-level definition — assemble context, reason, act, repeat until stop — and why loops exist at all.
-tags: [loop-engineering, era-agentic]
+tags: [loop-engineering]
 speaker: "Richmond Alake (Oracle Developers blog)"
 sources:
   - id: ora

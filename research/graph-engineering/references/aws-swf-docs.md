@@ -3,7 +3,7 @@ type: Source Reference
 title: "Amazon Simple Workflow Service developer guide (AWS)"
 description: The 2012 cloud workflow engine — durable execution state, deciders and workers, coordination of distributed tasks — quoted from the current developer guide.
 resource: https://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-welcome.html
-tags: [level-1, era-classical, workflow-engines, durable-execution, history]
+tags: [level-1, workflow-engines, durable-execution, history]
 source_author: "Amazon Web Services (documentation)"
 source_date: "living document (service announced 2012-02-21)"
 retrieved: "2026-08-24"

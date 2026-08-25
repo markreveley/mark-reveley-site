@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Deciders, workers, durable state — 2012"
 description: Amazon SWF (announced February 2012) — coordinate distributed tasks, track state durably, and let a decider program choose each next step.
-tags: [workflow-engines, durable-execution, history, era-classical, control-flow]
+tags: [workflow-engines, durable-execution, history, control-flow]
 speaker: "AWS documentation (Amazon SWF developer guide)"
 sources:
   - id: swf

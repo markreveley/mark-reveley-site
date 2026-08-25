@@ -4,7 +4,7 @@ subtype: problem
 role: position
 title: "RAG fails on global questions"
 description: The GraphRAG paper's problem statement — retrieval cannot answer questions about a corpus as a whole, because they are summarization tasks, not retrieval tasks.
-tags: [retrieval, academic, era-agentic, knowledge-representation]
+tags: [retrieval, academic, knowledge-representation]
 speaker: "Edge et al. (Microsoft Research)"
 sources:
   - id: grag

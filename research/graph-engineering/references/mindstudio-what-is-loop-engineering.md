@@ -3,7 +3,7 @@ type: Source Reference
 title: "What Is Loop Engineering? The New Meta for AI Coding Agents (MindStudio)"
 description: An early-June 2026 definitional piece rooting agent loops in the ReAct pattern, with the anatomy of a loop (goal, tools, termination, error handling).
 resource: https://www.mindstudio.ai/blog/what-is-loop-engineering-ai-coding-agents
-tags: [level-1, era-agentic, loop-engineering, definition, history]
+tags: [level-1, loop-engineering, history]
 source_author: "Luis Chavez-Mattos (MindStudio)"
 source_date: "2026-06-09"
 retrieved: "2026-08-24"

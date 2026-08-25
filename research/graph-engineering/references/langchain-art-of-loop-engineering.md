@@ -3,7 +3,7 @@ type: Source Reference
 title: "The Art of Loop Engineering (LangChain)"
 description: "LangChain's June 2026 loop-engineering piece — four stacked loop levels: agent, verification, event-driven, hill-climbing."
 resource: https://www.langchain.com/blog/the-art-of-loop-engineering
-tags: [level-1, era-agentic, loop-engineering, verification]
+tags: [level-1, loop-engineering, verification]
 source_author: "Sydney Runkle"
 source_date: "2026-06-16"
 retrieved: "2026-08-24"

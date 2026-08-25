@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "An untyped edge is one bit"
 description: The typed-edge distinction — "related" carries one bit of information; supersedes / depends_on / decided_by / caused carry the meaning.
-tags: [typed-edges, knowledge-representation, definition, era-agentic]
+tags: [typed-edges, knowledge-representation]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

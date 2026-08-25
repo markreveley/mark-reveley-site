@@ -4,7 +4,7 @@ subtype: inference
 role: argument
 title: "You were already doing it"
 description: The frameworks argument — anyone using LangGraph, Microsoft Agent Framework, ADK, or CrewAI was doing "graph engineering" before the name existed.
-tags: [term-genealogy, tooling, skepticism, era-agentic]
+tags: [term-genealogy, tooling, skepticism]
 speaker: "Ayesha Aamir (Data Science Dojo)"
 sources:
   - id: dsd
