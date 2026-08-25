@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: problem
+role: argument
 title: "Three ceilings of the loop"
 description: Simmons' bill of particulars against the single agent loop — serial execution, transcript-as-state, and no pause button.
 tags: [loop-engineering, control-flow, concurrency, memory, risk, era-agentic]
@@ -11,7 +12,7 @@ sources:
     title: "We Are Entering the Graph Engineering Phase"
 deps:
   - { concept: /excerpts/js--loop-exposed-its-ceiling.md, rel: supports }
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:00:00Z }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T22:55:00Z }
 status: stable
 ---
@@ -24,13 +25,12 @@ status: stable
 
 > "There is no pause button, so an agent cannot take a human approval on Thursday and pick the work back up Friday without duct tape. And the moment you want a planner with three workers, or a builder with a critic checking its output, the loop has nothing to offer you. It is one process. It was always one process." [^js]
 
-# Analysis
+# Note
 
-The most concrete problem statement in the corpus, and each ceiling maps onto one of the [three competing meanings](aio--twelve-words.md) the term acquired days later: serial execution → orchestration graphs; transcript-as-state → knowledge/memory graphs (the same complaint as [Neo4j's buffer-and-static-KB](neo--buffer-and-static-kb.md), from the opposite vendor position); no pause/resume and no roles → multi-agent topology graphs. That mapping is evidence the "three competing definitions" are less competing than co-symptomatic — three ceilings of one artifact. Notice also that every ceiling is a *harness* property, not a model property: nothing here is fixed by a smarter LLM. That is the strongest version of the case that a new engineering layer (not a new model) was due — and it is the same flattening tax the seed thread found in [CSV rows](rl--decision-trees-vs-csv.md), paid in transcripts instead of tables.
+Simmons' bill of particulars; curl-verified. Each ceiling maps to one of the term's three competing meanings; the durable-execution and checkpointer evidence answer it.
 
 # Relations
 
-- **supports** → [The loop exposed its own ceiling](js--loop-exposed-its-ceiling.md)
-- **paralleled by** → [Decision trees don't fit CSV rows](rl--decision-trees-vs-csv.md), [A buffer and a static knowledge base](neo--buffer-and-static-kb.md)
+- **supports** → [The loop exposed its own ceiling](../excerpts/js--loop-exposed-its-ceiling.md)
 
 [^js]: We Are Entering the Graph Engineering Phase

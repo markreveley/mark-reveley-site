@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: definition
+role: evidence
 title: "Act, observe, decide, repeat"
 description: MindStudio's definition of the loop and of loop engineering, with the ReAct lineage claim.
 tags: [loop-engineering, history, era-agentic]
@@ -9,7 +10,7 @@ sources:
   - id: ms
     resource: /references/mindstudio-what-is-loop-engineering.md
     title: "What Is Loop Engineering? The New Meta for AI Coding Agents"
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:00:00Z }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T22:55:00Z }
 status: stable
 ---
@@ -24,13 +25,8 @@ status: stable
 
 > "Most modern agent loops trace back to the ReAct pattern (Reason + Act), introduced in research from Princeton and Google." [^ms]
 
-# Analysis
+# Note
 
-The definitional baseline of the June 2026 wave, useful for two datable facts. First, the lineage claim gives loop engineering a respectable pedigree — ReAct (Yao et al., 2022) — which quietly concedes the deflationary point that the *mechanism* predates the *discipline* by four years; what June 2026 named was the practice of designing these cycles deliberately, at the same lag that "prompt engineering" (2023) trailed prompting. Second, the emphasis on environmental feedback ("receives feedback from the environment") distinguishes the loop from mere iteration: the loop is a control system, closed through the world — which is exactly the property [Anthropic used](anth--workflows-vs-agents.md) to define agents in 2024. The definitions converge because they describe the same object at different distances.
-
-# Relations
-
-- **converges with** → [A model calling tools in a loop until done](lc--model-calling-tools-in-loop.md), [Workflows vs agents](anth--workflows-vs-agents.md)
-- **problem case** → [Without a termination condition](ms--termination.md)
+Curl-verified. Consensus definition of the loop with the ReAct lineage claim (Yao et al., 2022).
 
 [^ms]: What Is Loop Engineering? The New Meta for AI Coding Agents

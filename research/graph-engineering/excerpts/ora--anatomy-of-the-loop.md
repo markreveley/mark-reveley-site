@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: definition
+role: evidence
 title: "Anatomy of the agent loop"
 description: The harness-level definition — assemble context, reason, act, repeat until stop — and why loops exist at all.
 tags: [loop-engineering, era-agentic]
@@ -10,8 +11,8 @@ sources:
     resource: /references/oracle-agent-loop-decoded.md
     title: "The Agent Loop Decoded"
 deps:
-  - { concept: /excerpts/lc--model-calling-tools-in-loop.md, rel: supports }
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:00:00Z }
+  - { concept: /excerpts/lc--model-calling-tools-in-loop.md, rel: refines }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 status: stable
 ---
 
@@ -23,13 +24,12 @@ status: stable
 
 > "The agent loop exists because long-horizon tasks cannot be completed in a single forward pass." [^ora]
 
-# Analysis
+# Note
 
-**Trust note: unverified.** The Oracle page could not be re-fetched raw (firewall), so these quotes are as extracted on first read and carry no `verified` field — the only loop-definition excerpt in this bundle at the unverified tier; treat wording with corresponding care. Content-wise it adds one precision the other definitions blur: the loop belongs to the *harness*, not the model — "assemble context" is step one of every iteration, which locates context engineering *inside* the loop rather than beside it on the [treadmill](aio--treadmill-of-terms.md). The one-sentence rationale is the corpus's most compact answer to "why loops at all": the forward pass is bounded, tasks are not; the loop is how bounded computation covers unbounded horizons — and the graph, by the [same argument one level up](js--coordinate-a-thousand-steps.md), is how bounded loops cover unbounded coordination.
+UNVERIFIED: the Oracle page could not be re-fetched raw (firewall); quotes are as first extracted and carry no verified field. Locates the loop in the harness and context assembly inside each iteration.
 
 # Relations
 
-- **supports** → [A model calling tools in a loop until done](lc--model-calling-tools-in-loop.md)
-- **extended one level by** → [The constraint moved to coordination](js--coordinate-a-thousand-steps.md)
+- **refines** → [A model calling tools in a loop until done](../excerpts/lc--model-calling-tools-in-loop.md)
 
 [^ora]: The Agent Loop Decoded

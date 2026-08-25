@@ -2,6 +2,7 @@
 
 ## 2026-08-25
 
+* **Update**: Schema v3 (IBIS-hybrid) adopted at operator direction: primary `role` facet (issue / position / argument / evidence) added alongside the v2 subtype; [`issues/`](issues/index.md) introduced with 7 root issue nodes; edge vocabulary split into IBIS core (responds-to, supports, objects-to) and a retained genealogy layer (answers, refines, exemplifies, precedes). Per the house rule, excerpt `# Analysis` prose replaced by short provenance-and-connection `# Note`s. Role distribution: 1 issue-excerpt, 33 positions, 10 arguments, 26 evidence. See [README](README.md) § The role facet and issue layer.
 * **Update**: Architecture split at operator direction: synthesis documents ([graph-engineering](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/graph-engineering.md), [paradigm-or-hype](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/paradigm-or-hype.md)) moved to `ob6to8/direction` under `mark_reveley/2026-08-25-graph-engineering-synthesis/`; `synthesis/` renamed to [`views/`](views/index.md), retaining the [timeline](views/timeline.md) with its narrative closing section removed. House rule recorded in the [README](README.md): this bundle holds sources, the quote DAG, and non-narrative views only.
 * **Update**: Removed the one mutual dep pair (specialists-at-a-blackboard ⇄ blackboard-revival) so the excerpt dependency graph is verifiably acyclic (66 typed edges).
 

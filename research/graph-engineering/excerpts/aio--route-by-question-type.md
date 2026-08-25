@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: prescription
+role: position
 title: "Route by question type"
 description: The practitioner consensus — vector for lookups, graph for chains; hybrid, not conversion.
 tags: [retrieval, prescription-hybrid, era-agentic, practice]
@@ -10,9 +11,10 @@ sources:
     resource: /references/aioperator-field-guide.md
     title: "What Is Graph Engineering? A Field Guide for Builders"
 deps:
+  - { concept: /issues/is-it-just-retrieval.md, rel: responds-to }
   - { concept: /excerpts/aio--per-hop-decay.md, rel: answers }
   - { concept: /excerpts/rl--yes-and-no.md, rel: supports }
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:00:00Z }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T22:55:00Z }
 status: stable
 ---
@@ -21,14 +23,14 @@ status: stable
 
 > "The practitioner consensus: route by question type. Vector for lookups, graph for chains." [^aio]
 
-# Analysis
+# Note
 
-Eight words that settle the seed thread's argument better than either of its participants did. The OP's ["just fancier retrieval?"](rl--just-fancier-retrieval.md) presumes one retrieval mechanism with variable fanciness; the consensus answer is that there are (at least) two mechanisms with disjoint strengths — similarity answers "what is X," traversal answers "why/how/what-changed" — and the engineering is in the router, not in picking a winner. It operationalizes the commenter's ["well yes and no"](rl--yes-and-no.md) and prices in [per-hop decay](aio--per-hop-decay.md) (spend hops only where the question demands structure). Consonant with the guide's benchmark summary (graphs win multi-hop, temporal, corpus-synthesis; lose simple lookup and cost) and with [GraphRAG's](grag--graph-index.md) architecture, which keeps both indexes. The unresolved question the prescription hides: who classifies the question — a heuristic, a model, or another graph?
+Curl-verified. The hybrid consensus position: it prices per-hop decay and operationalizes yes-and-no.
 
 # Relations
 
-- **answers** → [Per-hop accuracy compounds against you](aio--per-hop-decay.md)
-- **supports** → [Yes and no: storage shapes retrieval](rl--yes-and-no.md)
-- **instantiated by** → [An LLM-built graph index](grag--graph-index.md)
+- **responds-to** → [Is it just fancier retrieval?](../issues/is-it-just-retrieval.md)
+- **answers** → [Per-hop accuracy compounds against you](../excerpts/aio--per-hop-decay.md)
+- **supports** → [Yes and no: storage shapes retrieval](../excerpts/rl--yes-and-no.md)
 
 [^aio]: What Is Graph Engineering? A Field Guide for Builders

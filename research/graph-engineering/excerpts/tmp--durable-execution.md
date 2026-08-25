@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: definition
+role: evidence
 title: "Durable Execution"
 description: The abstraction the workflow lineage converged on — automatically preserving a workflow's full state so execution survives failure.
 tags: [durable-execution, workflow-engines, control-flow, era-agentic]
@@ -11,7 +12,7 @@ sources:
     title: "Building resilient Workflows: from Azure to Cadence to Temporal"
 deps:
   - { concept: /excerpts/js--three-ceilings.md, rel: answers }
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:55:00Z }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T23:50:00Z }
 status: stable
 ---
@@ -22,14 +23,12 @@ status: stable
 
 > "You practically end up writing pure business logic without thinking about other things — no event handlers, callbacks, or explicit database interactions." [^tmp]
 
-# Analysis
+# Note
 
-The workflow lineage's terminal abstraction, and the load-bearing overlap with graph engineering's third commitment: [Simmons' "state is an object with a schema, checkpointed every time you cross an edge"](js--nodes-edges-state.md) is durable execution restated, and [LangGraph's checkpointer machinery](lgdocs--checkpointers-stores.md) is its implementation for agent graphs. That overlap cuts both ways for the paradigm question. Deflationary reading: the "new" discipline's most operationally valuable property — pause, resume, survive failure, audit ([the three ceilings](js--three-ceilings.md), answered) — is a 2012-lineage primitive with a 2019 brand name, not a 2026 invention. Substantive reading: durable execution was built for *deterministic* replay (re-run the code, get the same decisions), and stochastic nodes break that contract — replaying an LLM decider does not reproduce the run, so agent-era durability must checkpoint *outcomes* rather than assume re-derivability. Same word, subtly harder problem. That delta is one of the genuinely new engineering constraints this bundle's [verdict](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/paradigm-or-hype.md) weighs.
+Curl-verified. The lineage's terminal abstraction; built for deterministic replay, which stochastic nodes strain — see the organized-nonsense argument.
 
 # Relations
 
-- **answers** → [Three ceilings of the loop](js--three-ceilings.md)
-- **implemented for agent graphs by** → [Checkpointers and stores](lgdocs--checkpointers-stores.md)
-- **strained by** → stochastic nodes (see [Organized nonsense](lb--organized-nonsense.md))
+- **answers** → [Three ceilings of the loop](../excerpts/js--three-ceilings.md)
 
 [^tmp]: Building resilient Workflows: from Azure to Cadence to Temporal (Temporal blog)

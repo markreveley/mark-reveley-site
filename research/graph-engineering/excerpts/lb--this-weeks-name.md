@@ -1,6 +1,7 @@
 ---
 type: Excerpt
 subtype: definition
+role: position
 title: "This week's name for an orchestrated system of loops"
 description: Bouchard's deflationary definition — graph engineering as the newest label on a rename treadmill, for a practice that already existed.
 tags: [term-genealogy, skepticism, graph-engineering, era-agentic]
@@ -10,9 +11,10 @@ sources:
     resource: /references/bouchard-what-actually-changed.md
     title: "Graph Engineering vs Loop Engineering: What Actually Changed"
 deps:
-  - { concept: /excerpts/aio--treadmill-of-terms.md, rel: supports }
+  - { concept: /issues/what-is-graph-engineering.md, rel: responds-to }
+  - { concept: /issues/paradigm-or-hype.md, rel: responds-to }
   - { concept: /excerpts/anth--workflows-vs-agents.md, rel: supports }
-generated: { by: research_agent/claude-code, at: 2026-08-24T23:00:00Z }
+generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 verified: { by: "process:curl-quote-check", at: 2026-08-24T22:55:00Z }
 status: stable
 ---
@@ -29,13 +31,14 @@ status: stable
 
 > "the concept itself is not new. Anthropic's Building Effective Agents post from 2024 already drew every one of these patterns" [^lb]
 
-# Analysis
+# Note
 
-The most quotable deflationary position, and usefully *not* pure deflation: "connecting several agent loops into one orchestrated system" is a real definition (the orchestration sense, loops-as-nodes), and Bouchard elsewhere concedes the joke "points at something real." Two things to check against other sources. His treadmill inserts "harness engineering" between context and loop — a term [Ghelbur's dated list](aio--treadmill-of-terms.md) omits — and waves the whole sequence off as "mostly means the same," where Ghelbur insists each term marked a real shift; that disagreement is the live historiographic question, not a factual error. His priority claim is checkable and this bundle checked it: [Anthropic's 2024 post](anth--workflows-vs-agents.md) did define workflow patterns (routing, parallelization, orchestrator-workers) that are graph topologies in all but name — though it drew them as *predefined code paths* versus agents, without the 2026 move of typing the choice per-edge ([Simmons](js--nodes-edges-state.md)). Reporting variance recorded: "Nine words from Peter Steinberger… 2.6 million views" vs. [twelve words](aio--twelve-words.md) — both cannot be right about the count.
+Curl-verified. The deflationary position on two issues at once; the naming-event and installed-base evidence support it. Treadmill variance: this source inserts “harness engineering” and shrugs the sequence; the field guide dates each step as a real shift.
 
 # Relations
 
-- **supports** → [The treadmill of terms](aio--treadmill-of-terms.md) (while disputing its "real shift" reading), [Workflows vs agents](anth--workflows-vs-agents.md)
-- **kindred** → [You were already doing it](dsd--already-doing-it.md), [We've been doing it for three years](lgblog--three-years.md)
+- **responds-to** → [What is “graph engineering”?](../issues/what-is-graph-engineering.md)
+- **responds-to** → [Paradigm or hype?](../issues/paradigm-or-hype.md)
+- **supports** → [Workflows vs agents](../excerpts/anth--workflows-vs-agents.md)
 
 [^lb]: Graph Engineering vs Loop Engineering: What Actually Changed
