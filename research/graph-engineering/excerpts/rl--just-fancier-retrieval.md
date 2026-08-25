@@ -13,6 +13,7 @@ sources:
 deps:
   - { concept: /issues/is-it-just-retrieval.md, rel: exemplifies }
 generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
+verified: { by: "process:transcript-match", at: 2026-08-25T02:05:00Z }
 status: stable
 ---
 

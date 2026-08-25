@@ -83,7 +83,7 @@ Quote fidelity is the core risk of a bundle like this (quotes were initially ext
 
 - Verified verbatim: all excerpts from 34 of 38 sources (research push #2 — the [paradigm-or-hype investigation](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/paradigm-or-hype.md) — added 10 sources and 15 excerpts on 2026-08-24; all 10 new sources curl-verified).
 - **Unverified** (no `verified` key): [Oracle blog](references/oracle-agent-loop-decoded.md) (firewall page on raw fetch) and [Britannica](references/britannica-graph-theory.md) (bot challenge). Their quotes are as extracted on first fetch, flagged in each excerpt's analysis.
-- **User-attested**: the seed [Reddit thread transcript](references/reddit-llmdevs-graph-trend.md) (reddit.com is unfetchable from this environment; the repository owner supplied the exchange verbatim in-session).
+- **User-attested, twice, and matched**: the seed [Reddit thread transcript](references/reddit-llmdevs-graph-trend.md) (reddit.com is unfetchable from this environment) was supplied verbatim in-session by the repository owner on 2026-08-24 and re-supplied identically on 2026-08-25; the two supplies and all six seed excerpts were mechanically matched (`process:transcript-match`), so the seed excerpts now carry machine-confirmed stamps atop the double human attestation.
 - **Local-clone**: [OKF SPEC.md](references/okf-spec.md) (commit `9a15b13`) and [12-factor-agents](references/humanlayer-12-factor-agents.md) (commit `d20c728`) — quoted directly from files on disk.
 
 # Open questions for the maintainer
