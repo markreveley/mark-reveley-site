@@ -19,5 +19,5 @@ The reference documentation for the dominant graph-orchestration framework (per 
 
 # Excerpts in this bundle
 
-- [Deterministic and agentic steps in one graph](../excerpts/lg--stateful-orchestration.md)
-- [Inspired by Pregel](../excerpts/lg--pregel-lineage.md)
+- [Deterministic and agentic steps in one graph](../excerpts/deterministic-and-agentic-steps-in-one-graph.md)
+- [Inspired by Pregel](../excerpts/inspired-by-pregel.md)

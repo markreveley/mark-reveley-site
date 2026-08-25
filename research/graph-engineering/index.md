@@ -17,8 +17,7 @@ A research bundle on **graph engineering**: the term's historical senses and its
 
 # Level 2 — Excerpts
 
-* [Excerpts](excerpts/index.md) - Verbatim quotes, one concept per unit, each carrying a `role` in the dialectic (issue / position / argument / evidence — the v3 IBIS-hybrid facet) and a `subtype` speech-act flavor, tagged and cross-linked with typed `deps` forming a verified DAG.
-* [Issues](issues/index.md) - The seven root questions the position excerpts respond to; each lists its positions on record and takes no side.
+* [Excerpts](excerpts/index.md) - Verbatim quotes, one concept per unit, each carrying a `role` in the dialectic (position / argument / evidence — the v3 facet) and a `subtype` speech-act flavor, tagged and cross-linked with typed `deps` forming a verified DAG.
 
 # Level 3 — Views
 

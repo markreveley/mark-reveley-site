@@ -19,6 +19,6 @@ Bouchard treats the viral moment as a joke that "points at something real": the 
 
 # Excerpts in this bundle
 
-- [This week's name for an orchestrated system of loops](../excerpts/lb--this-weeks-name.md)
-- [Graphs contain loops](../excerpts/lb--graphs-contain-loops.md)
-- [Organized nonsense at industrial scale](../excerpts/lb--organized-nonsense.md)
+- [This week's name for an orchestrated system of loops](../excerpts/this-weeks-name-for-an-orchestrated-system-of-loops.md)
+- [Graphs contain loops](../excerpts/graphs-contain-loops.md)
+- [Organized nonsense at industrial scale](../excerpts/organized-nonsense-at-industrial-scale.md)

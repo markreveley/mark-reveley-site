@@ -19,4 +19,4 @@ Used for one verified sentence anchoring the deep history. Dating note: Wikipedi
 
 # Excerpts in this bundle
 
-- [Euler, 1736, and the founding of graph theory](../excerpts/wik--euler-1736.md)
+- [Euler, 1736, and the founding of graph theory](../excerpts/euler-1736-and-the-founding-of-graph-theory.md)

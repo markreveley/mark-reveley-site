@@ -19,5 +19,5 @@ The pre-history both camps cite. Workflows = LLMs orchestrated through predefine
 
 # Excerpts in this bundle
 
-- [Workflows vs agents](../excerpts/anth--workflows-vs-agents.md)
-- [Find the simplest solution possible](../excerpts/anth--simplest-solution.md)
+- [Workflows vs agents](../excerpts/workflows-vs-agents.md)
+- [Find the simplest solution possible](../excerpts/find-the-simplest-solution-possible.md)

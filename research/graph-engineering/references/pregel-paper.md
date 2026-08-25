@@ -19,4 +19,4 @@ The systems-lineage anchor: iterative, message-passing computation over graphs (
 
 # Excerpts in this bundle
 
-- [Vertex-centric iteration](../excerpts/pre--vertex-centric.md)
+- [Vertex-centric iteration](../excerpts/vertex-centric-iteration.md)

@@ -19,4 +19,4 @@ Added in research push #2 — the maintainer's "workflow engines in 2012" hypoth
 
 # Excerpts in this bundle
 
-- [Activities, gateways, events — and human tasks](../excerpts/bpmn--graphical-processes.md)
+- [Activities, gateways, events — and human tasks](../excerpts/activities-gateways-events-and-human-tasks.md)

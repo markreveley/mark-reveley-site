@@ -19,5 +19,5 @@ One of the first explainers of the loop-engineering wave. Contributes the act-ob
 
 # Excerpts in this bundle
 
-- [Act, observe, decide, repeat](../excerpts/ms--act-observe-repeat.md)
-- [Without a termination condition](../excerpts/ms--termination.md)
+- [Act, observe, decide, repeat](../excerpts/act-observe-decide-repeat.md)
+- [Without a termination condition](../excerpts/without-a-termination-condition.md)

@@ -19,4 +19,4 @@ Added in research push #2 — the specific 2012 workflow engine, in its own word
 
 # Excerpts in this bundle
 
-- [Deciders, workers, durable state — 2012](../excerpts/swf--durable-state-2012.md)
+- [Deciders, workers, durable state — 2012](../excerpts/deciders-workers-durable-state-2012.md)

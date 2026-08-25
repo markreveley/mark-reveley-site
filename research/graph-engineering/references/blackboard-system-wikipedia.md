@@ -19,4 +19,4 @@ Added in research push #2. The blackboard architecture (CMU, early 1970s; canoni
 
 # Excerpts in this bundle
 
-- [Specialists at a blackboard](../excerpts/bb--specialists-at-a-blackboard.md)
+- [Specialists at a blackboard](../excerpts/specialists-at-a-blackboard.md)

@@ -19,5 +19,5 @@ Added in research push #2. Vendor-authored but factually specific: Maxim Fateev 
 
 # Excerpts in this bundle
 
-- [The same two engineers, three times](../excerpts/tmp--shipped-it-three-times.md)
-- [Durable Execution](../excerpts/tmp--durable-execution.md)
+- [The same two engineers, three times](../excerpts/the-same-two-engineers-three-times.md)
+- [Durable Execution](../excerpts/durable-execution.md)

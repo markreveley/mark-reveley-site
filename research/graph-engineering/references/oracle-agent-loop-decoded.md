@@ -18,4 +18,4 @@ Read once via a rendering fetcher; the raw page could not be re-fetched for mech
 
 # Excerpts in this bundle
 
-- [Anatomy of the agent loop](../excerpts/ora--anatomy-of-the-loop.md)
+- [Anatomy of the agent loop](../excerpts/anatomy-of-the-agent-loop.md)

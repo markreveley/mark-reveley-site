@@ -19,4 +19,4 @@ Added in research push #2 (the paradigm-or-hype investigation). Carl Adam Petri'
 
 # Excerpts in this bundle
 
-- [Places, transitions, tokens](../excerpts/pet--places-transitions.md)
+- [Places, transitions, tokens](../excerpts/places-transitions-tokens.md)

@@ -19,4 +19,4 @@ The industrial coming-out of the knowledge graph: search moves from string match
 
 # Excerpts in this bundle
 
-- [Things, not strings](../excerpts/gkg--things-not-strings.md)
+- [Things, not strings](../excerpts/things-not-strings.md)

@@ -19,4 +19,4 @@ The canonical statement of the web-scale knowledge-graph vision, twenty years be
 
 # Excerpts in this bundle
 
-- [Making links, so a person or machine can explore](../excerpts/tbl--making-links.md)
+- [Making links, so a person or machine can explore](../excerpts/making-links-so-a-person-or-machine-can-explore.md)

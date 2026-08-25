@@ -19,4 +19,4 @@ The memory strand's flagship: static document retrieval doesn't serve agents tha
 
 # Excerpts in this bundle
 
-- [A temporally-aware knowledge graph engine](../excerpts/zep--graphiti-temporal.md)
+- [A temporally-aware knowledge graph engine](../excerpts/a-temporally-aware-knowledge-graph-engine.md)

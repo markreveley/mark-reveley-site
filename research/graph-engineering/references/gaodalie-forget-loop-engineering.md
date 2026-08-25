@@ -19,6 +19,6 @@ Argues graph engineering is about designing the relationships between processes:
 
 # Excerpts in this bundle
 
-- [The AI moves within a pre-designed map](../excerpts/gd--pre-designed-map.md)
-- [Three tiers of reliability](../excerpts/gd--three-tier-reliability.md)
-- [Loops live inside the nodes](../excerpts/gd--loops-inside-graphs.md)
+- [The AI moves within a pre-designed map](../excerpts/the-ai-moves-within-a-pre-designed-map.md)
+- [Three tiers of reliability](../excerpts/three-tiers-of-reliability.md)
+- [Loops live inside the nodes](../excerpts/loops-live-inside-the-nodes.md)

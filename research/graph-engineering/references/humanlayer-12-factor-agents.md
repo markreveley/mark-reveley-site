@@ -19,5 +19,5 @@ Principles for production-grade LLM software. Historically pivotal for this bund
 
 # Excerpts in this bundle
 
-- [Throw the DAG away (and what happened next)](../excerpts/12fa--throw-the-dag-away.md)
-- [Own your control flow](../excerpts/12fa--own-your-control-flow.md)
+- [Throw the DAG away (and what happened next)](../excerpts/throw-the-dag-away-and-what-happened-next.md)
+- [Own your control flow](../excerpts/own-your-control-flow.md)
