@@ -79,10 +79,11 @@ Registered for completeness; no excerpts were persisted from these.
 
 **OKF coverage**: [GitBook, "What is OKF?"](https://www.gitbook.com/blog/what-is-okf-open-knowledge-format) · [Search Engine Journal](https://www.searchenginejournal.com/google-cloud-announces-the-open-knowledge-format/579253/) · [Google Cloud Tech announcement post on X](https://x.com/GoogleCloudTech/status/2067012903337664886)
 
-# Standards' own definitions
+# Definitions of terms of art
 
-Seeded 2026-08-25 for the new `definitions` tag: how the major standards bodies define their own terms of art. First pair — the normative/informative distinction, as three bodies each draw it.
+Seeded 2026-08-25 for the new `definitions` tag: how a field defines its own recurring terms, standards body or not. First set — the normative/informative distinction as ISO/IEC, W3C, and IETF each draw it — plus, from evals, what a "golden" is.
 
 * [ISO/IEC Directives, Part 2 (8th edition, 2018)](iso-iec-directives-part2.md) - Terms-and-definitions clause 3.2: `normative element`, `informative element`.
 * [QA Framework: Specification Guidelines — W3C Recommendation, 17 August 2005](w3c-qaframe-spec.md) - The glossary every W3C spec's conformance section rests on.
 * [RFC 7322: RFC Style Guide — E. Flanagan & S. Ginoza, September 2014](ietf-rfc7322.md) - The RFC Editor's test for sorting a document's own references as normative or informative.
+* [Datasets — DeepEval: The LLM Evaluation Framework](deepeval-evaluation-datasets.md) - What a "golden" is, and how it differs from a fully-formed test case.

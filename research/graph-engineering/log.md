@@ -2,6 +2,7 @@
 
 ## 2026-08-25 (later)
 
+* **Update**: Extended the new `definitions` tag with a fourth term, from evals rather than a standards body — [what a "golden" is](excerpts/deepeval--goldens.md), per DeepEval's docs (a pending test case: input plus expected output, recorded before an LLM has run on it). Added 1 source reference ([deepeval-evaluation-datasets](references/deepeval-evaluation-datasets.md), `availability: fetched`, `verified: process:curl-quote-check`) and 1 excerpt, tagged `definitions, evaluation` rather than `standards`. Corpus now 42 sources / 74 excerpts.
 * **Creation**: New `definitions` tag (operator-directed) — a topical tag for standards bodies' own terms-and-definitions entries, distinct from the `definition` speech-act echo dropped earlier the same day (see [README](README.md) § Tag taxonomy). Seeded with the normative/informative distinction as three bodies draw it: added 3 source references ([ISO/IEC Directives Part 2](references/iso-iec-directives-part2.md), [W3C QA Framework](references/w3c-qaframe-spec.md), [IETF RFC 7322](references/ietf-rfc7322.md)) and 3 excerpts, all curl-verified raw against their live pages. Corpus now 41 sources / 73 excerpts.
 
 ## 2026-08-25

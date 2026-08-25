@@ -55,7 +55,7 @@ Verbatim quotes, one OKF concept each. Since v3 (IBIS-hybrid) every excerpt carr
 * [Without a termination condition](ms--termination.md) - The loop's definitional hazard — agents that run forever or stop arbitrarily. *(problem)*
 * [Decision trees don't fit CSV rows](rl--decision-trees-vs-csv.md) - The concrete failure case — decision structures for 10,000 behaviors can be flattened into linked rows, but reading and retrieval degrade because the encoding fights the shape of the data. *(problem)*
 
-# Evidence (29)
+# Evidence (30)
 
 * [Throw the DAG away (and what happened next)](12fa--throw-the-dag-away.md) - The 2023-era promise recorded by 12-factor-agents — give the agent a goal and skip the graph — followed immediately by the verdict: it doesn't quite work. *(observation)*
 * [My job is to write loops](36kr--my-job-is-to-write-loops.md) - Boris Cherny's first-person report of the practice shift — running loops that prompt Claude and decide what to do next. *(observation)*
@@ -65,6 +65,7 @@ Verbatim quotes, one OKF concept each. Since v3 (IBIS-hybrid) every excerpt carr
 * [The blackboard, revived](bbllm--blackboard-revival.md) - A 2025 LLM multi-agent paper explicitly inspired by the classical blackboard architecture — the ancestry acknowledged from inside current research. *(observation)*
 * [Activities, gateways, events — and human tasks](bpmn--graphical-processes.md) - BPMN — the workflow-engine era's standardized process graphs, version 2.0 released January 2011. *(definition)*
 * [Managers, contractors, and bids](cnp--manager-and-contractors.md) - Smith's 1980 Contract Net Protocol — task announcement, bidding, delegation, and recursive subcontracting among autonomous agents. *(definition)*
+* [Goldens: a pending test case](deepeval--goldens.md) - Evals' own term of art — a golden is an input plus expected output recorded before any model has run, so it can be replayed across models and prompt versions. *(definition)*
 * [Things, not strings](gkg--things-not-strings.md) - Google's 2012 slogan — an intelligent model, "in geek-speak, a graph," of real-world entities and their relationships. *(definition)*
 * [Issues, positions, arguments](ibis--wicked-problems.md) - Kunz & Rittel's IBIS — typed argumentation graphs for wicked problems (1960s–1970), made graphical hypertext by Conklin's gIBIS in the late 1980s. *(definition)*
 * [Normative and informative references](ietf--normative-informative-references.md) - The RFC Editor's test for sorting an RFC's own references — essential to implementing or understanding it, or merely additional. *(definition)*
