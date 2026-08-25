@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build the static site in site/ from the research bundle in research/.
 
-Output is HTML + CSS only: no JavaScript, no runtime dependencies, no build
-step needed to *view* the result. Run this after editing the bundle:
+Output is HTML + CSS only: no JavaScript, nothing to run to *view* the
+result. Building it needs PyYAML and Python-Markdown:
 
+    pip install pyyaml markdown
     python3 site/build.py
 """
 
@@ -14,8 +15,12 @@ from pathlib import Path
 
 try:
     import yaml
-except ImportError:  # pragma: no cover
-    sys.exit("this build script needs PyYAML: pip install pyyaml")
+    from markdown import Extension, Markdown
+    from markdown.preprocessors import Preprocessor
+    from markdown.treeprocessors import Treeprocessor
+    from xml.etree import ElementTree as etree
+except ImportError as exc:  # pragma: no cover
+    sys.exit(f"{exc}; this build script needs: pip install pyyaml markdown")
 
 ROOT = Path(__file__).resolve().parent.parent
 BUNDLE = ROOT / "research" / "graph-engineering"
@@ -107,118 +112,176 @@ def anchor(kind, slug):
     }[kind] if kind in ("excerpts", "references", "issues") else None
 
 
-def resolve(href, depth):
+LEVEL_PAGES = {"excerpts": "excerpts.html", "references": "sources.html",
+               "issues": "views/by-issue.html", "views": "views.html"}
+
+# Bundle views this site renders a page for (see VIEWS, further down).
+BUNDLE_VIEWS = {"timeline"}
+
+
+def resolve(href, depth, base=None):
     """Rewrite a bundle-relative markdown link for a page `depth` dirs down.
 
-    Returns None when the target has no page on this site, so the caller can
-    render the link text as plain prose instead of a dead link.
+    `base` is the collection the linking document lives in, so a sibling link
+    (`aioperator-field-guide.md`, written from inside references/) resolves.
+    Returns None when the target has no page on this site — the bundle README,
+    the update log — so the caller can drop the link and keep the text.
     """
     up = "../" * depth
     if href.startswith(("http://", "https://", "mailto:")):
         return href
     href = href.split("#")[0]
-    m = re.search(r"(excerpts|references|issues|views)/([\w.\-]+)\.md$", href)
+    m = re.search(r"(?:(excerpts|references|issues|views)/)?([\w.\-]+)\.md$", href)
     if not m:
         return None
-    kind, slug = m.group(1), m.group(2)
+    kind, slug = m.group(1) or base, m.group(2)
+    if kind not in LEVEL_PAGES:
+        return None
     if slug == "index":
-        page = {"excerpts": "excerpts.html", "references": "sources.html",
-                "issues": "views/by-issue.html", "views": "views.html"}[kind]
-        return up + page
+        return up + LEVEL_PAGES[kind]
     if kind == "views":
-        return up + f"views/{slug}.html"
+        return up + f"views/{slug}.html" if slug in BUNDLE_VIEWS else None
+    if slug not in {"excerpts": excs, "references": refs, "issues": issues}[kind]:
+        return None  # README, log, anything not decomposed into a page
     return up + anchor(kind, slug)
 
 
 # --------------------------------------------------------------------------
-# a small markdown renderer (only the constructs the bundle actually uses)
+# markdown rendering — Python-Markdown, plus three tree passes that adapt its
+# output to this site: bundle links become site anchors, headings are shifted
+# under the page's own <h1>, and tables get a scroll wrapper.
 # --------------------------------------------------------------------------
 
-INLINE_CODE = re.compile(r"`([^`]+)`")
-LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
-BOLD = re.compile(r"\*\*([^*]+)\*\*")
-ITALIC = re.compile(r"(?<![\w*])\*([^*\n]+)\*(?![\w*])")
-FOOTREF = re.compile(r"\[\^[\w.\-]+\]")
+FOOTNOTE_REF = re.compile(r"\[\^[\w.\-]+\]")
+FOOTNOTE_DEF = re.compile(r"^\[\^[\w.\-]+\]:.*$", re.M)
 
 
-def inline(text, depth):
-    text = FOOTREF.sub("", text)
-    text = html.escape(text, quote=False)
+class StripFootnotes(Preprocessor):
+    """Drop footnote markers and definitions.
 
-    def link(m):
-        label, href = m.group(1), html.unescape(m.group(2))
-        target = resolve(href, depth)
-        if target is None:
-            return label
-        ext = ' rel="noreferrer"' if target.startswith("http") else ""
-        return f'<a href="{html.escape(target, quote=True)}"{ext}>{label}</a>'
+    Every excerpt footnotes its own source, which the card already states in
+    full; rendering them again per card would repeat that a hundred times.
+    """
 
-    text = LINK.sub(link, text)
-    text = INLINE_CODE.sub(r"<code>\1</code>", text)
-    text = BOLD.sub(r"<strong>\1</strong>", text)
-    text = ITALIC.sub(r"<em>\1</em>", text)
-    # markdown backslash escapes (\" inside a quoted passage, \[ , ...)
-    text = re.sub(r'\\([\\`*_{}\[\]()#+\-.!"\'])', r"\1", text)
-    return text.strip()
+    def run(self, lines):
+        text = FOOTNOTE_DEF.sub("", "\n".join(lines))
+        return [ln.rstrip() for ln in FOOTNOTE_REF.sub("", text).splitlines()]
 
 
-def markdown(md, depth=0, heading_base=3):
-    """Render a markdown fragment. Supports headings, paragraphs, lists,
-    blockquotes and GFM tables — everything the bundle uses."""
-    lines = [ln for ln in md.splitlines() if not re.match(r"^\[\^[\w.\-]+\]:", ln)]
-    out, i = [], 0
-    while i < len(lines):
-        line = lines[i]
-        if not line.strip():
-            i += 1
-            continue
+class RewriteLinks(Treeprocessor):
+    """Point bundle markdown links at their page on this site.
 
-        if line.startswith("#"):
-            level = len(line) - len(line.lstrip("#"))
-            tag = f"h{min(6, heading_base + level - 1)}"
-            out.append(f"<{tag}>{inline(line.lstrip('#').strip(), depth)}</{tag}>")
-            i += 1
+    A link with no page here (the bundle README, the update log) keeps its
+    text and loses its href rather than becoming a dead link.
+    """
 
-        elif line.lstrip().startswith(("* ", "- ")) :
-            items = []
-            while i < len(lines) and lines[i].lstrip().startswith(("* ", "- ")):
-                items.append(inline(lines[i].lstrip()[2:], depth))
-                i += 1
-            out.append("<ul>" + "".join(f"<li>{it}</li>" for it in items) + "</ul>")
+    def __init__(self, md, depth, base):
+        super().__init__(md)
+        self.depth, self.base = depth, base
 
-        elif line.startswith(">"):
-            quote = []
-            while i < len(lines) and lines[i].startswith(">"):
-                quote.append(lines[i].lstrip("> ").rstrip())
-                i += 1
-            out.append(f"<blockquote><p>{inline(' '.join(quote), depth)}</p></blockquote>")
+    def run(self, root):
+        for a in root.iter("a"):
+            href = a.get("href", "")
+            if href.startswith(("http://", "https://", "mailto:")):
+                a.set("rel", "noreferrer")
+                continue
+            target = resolve(href, self.depth, self.base)
+            if target is None:
+                a.tag = "span"
+                a.attrib.pop("href", None)
+            else:
+                a.set("href", target)
 
-        elif "|" in line and i + 1 < len(lines) and re.match(r"^[\s|:\-]+$", lines[i + 1]) and "-" in lines[i + 1]:
-            head = [c.strip() for c in line.strip().strip("|").split("|")]
-            i += 2
-            rows = []
-            while i < len(lines) and "|" in lines[i] and lines[i].strip():
-                rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
-                i += 1
-            thead = "".join(f"<th>{inline(c, depth)}</th>" for c in head)
-            tbody = "".join(
-                "<tr>" + "".join(f"<td>{inline(c, depth)}</td>" for c in r) + "</tr>"
-                for r in rows
-            )
-            out.append(
-                '<div class="scroll"><table><thead><tr>' + thead
-                + "</tr></thead><tbody>" + tbody + "</tbody></table></div>"
-            )
 
-        else:
-            para = []
-            while i < len(lines) and lines[i].strip() and not lines[i].startswith(("#", ">")) \
-                    and not lines[i].lstrip().startswith(("* ", "- ")):
-                para.append(lines[i].strip())
-                i += 1
-            out.append(f"<p>{inline(' '.join(para), depth)}</p>")
-    return "\n".join(out)
+class ShiftHeadings(Treeprocessor):
+    """Renumber headings so a section's `#` sits under the page's own <h1>."""
 
+    def __init__(self, md, base):
+        super().__init__(md)
+        self.base = base
+
+    def run(self, root):
+        for el in root.iter():
+            if len(el.tag) == 2 and el.tag[0] == "h" and el.tag[1].isdigit():
+                el.tag = f"h{min(6, self.base + int(el.tag[1]) - 1)}"
+
+
+class WrapTables(Treeprocessor):
+    """Let a wide table scroll inside its own box instead of the page."""
+
+    def run(self, root):
+        for i, child in enumerate(list(root)):
+            if child.tag == "table":
+                box = etree.Element("div", {"class": "scroll"})
+                box.append(child)
+                root[i] = box
+
+
+class SplitQuotes(Treeprocessor):
+    """Give each quote its own quote mark.
+
+    An excerpt that quotes its source twice writes two blockquotes separated
+    by a blank line; Python-Markdown folds those into one. Split them back
+    apart so the card shows two quotations, not one two-paragraph quotation.
+    """
+
+    def run(self, root):
+        children = []
+        for child in root:
+            paras = list(child)
+            if child.tag == "blockquote" and len(paras) > 1 and \
+                    all(p.tag == "p" for p in paras):
+                for para in paras:
+                    quote = etree.Element("blockquote")
+                    quote.append(para)
+                    children.append(quote)
+            else:
+                children.append(child)
+        root[:] = children
+
+
+class BundleExtension(Extension):
+    def __init__(self, depth, heading_base, base):
+        self.depth, self.heading_base, self.base = depth, heading_base, base
+        super().__init__()
+
+    def extendMarkdown(self, md):
+        # \" is a markdown escape in the bundle's quoted passages; Python-
+        # Markdown's own escape set predates that convention.
+        if '"' not in md.ESCAPED_CHARS:
+            md.ESCAPED_CHARS.append('"')
+        md.preprocessors.register(StripFootnotes(md), "strip_footnotes", 40)
+        md.treeprocessors.register(RewriteLinks(md, self.depth, self.base), "bundle_links", 4)
+        md.treeprocessors.register(ShiftHeadings(md, self.heading_base), "shift_headings", 3)
+        md.treeprocessors.register(WrapTables(md), "wrap_tables", 2)
+        md.treeprocessors.register(SplitQuotes(md), "split_quotes", 1)
+
+
+_converters = {}
+
+
+def _converter(depth, heading_base, base):
+    key = (depth, heading_base, base)
+    if key not in _converters:
+        _converters[key] = Markdown(
+            extensions=["tables", BundleExtension(depth, heading_base, base)],
+            output_format="html")
+    return _converters[key].reset()
+
+
+def markdown(text, depth=0, heading_base=3, base=None):
+    """Render a bundle markdown fragment as HTML for a page `depth` dirs down.
+
+    `base` names the collection the fragment came from, for sibling links.
+    """
+    return _converter(depth, heading_base, base).convert(text.strip())
+
+
+def inline(text, depth=0, base=None):
+    """Render a one-line fragment (a description, a label) without the <p>."""
+    out = markdown(text, depth, base=base)
+    m = re.fullmatch(r"<p>(.*)</p>", out, re.S)
+    return m.group(1) if m else out
 
 # --------------------------------------------------------------------------
 # page shell
@@ -368,8 +431,8 @@ def relation_list(e, depth):
 
 
 def excerpt_card(e, depth=0, show_source=True):
-    quote = markdown(sec(e, "Quote", "Quotes"), depth)
-    note = markdown(sec(e, "Note"), depth)
+    quote = markdown(sec(e, "Quote", "Quotes"), depth, base="excerpts")
+    note = markdown(sec(e, "Note"), depth, base="excerpts")
     meta = e["meta"]
     bits = [badge("role", meta.get("role", "—")), badge("subtype", meta.get("subtype", "—"))]
     if meta.get("speaker"):
@@ -502,11 +565,11 @@ def build_sources():
                     kids, key=lambda s: excs[s]["title"].lower()))
                 + "</ul></details>"
             ) if kids else '<p class="none">No excerpts taken from this one yet.</p>'
-            about = markdown(sec(r, "About"), 0)
+            about = markdown(sec(r, "About"), 0, base="references")
             blocks.append(f"""<article class="card source" id="s-{r['slug']}">
   <h3>{head}</h3>
   <p class="badges">{' · '.join(meta_bits)}</p>
-  <p class="desc">{inline(r['description'], 0)}</p>
+  <p class="desc">{inline(r['description'], 0, base='references')}</p>
   <div class="about">{about}</div>
   {kid_html}
   {tags_html(r['tags'], 0)}
@@ -636,7 +699,8 @@ def build_views_index():
 
 def build_timeline():
     meta, body = load(BUNDLE / "views" / "timeline.md")
-    rendered = markdown(re.sub(r"^# .+\n", "", body.lstrip(), count=1), depth=1, heading_base=2)
+    rendered = markdown(re.sub(r"^# .+\n", "", body.lstrip(), count=1), depth=1,
+                        heading_base=2, base="views")
     view_page("timeline.html", meta.get("title", "Timeline"), rendered,
               "The dated genealogy of graph engineering, every row linked to the "
               "excerpt that evidences it. Rendered from the bundle's own view "
@@ -650,13 +714,13 @@ def build_by_issue():
         positions = sorted(it.get("positions", []), key=lambda p: excs[p[1]]["title"].lower())
         rows = "".join(
             f'<li><span class="rel">{REL_LABELS.get(rel, rel)}</span> '
-            f'{link_exc(s, 1)}<span class="say">{inline(excs[s]["description"], 1)}</span></li>'
+            f'{link_exc(s, 1)}<span class="say">{inline(excs[s]["description"], 1, "excerpts")}</span></li>'
             for rel, s in positions) or '<li class="none">Nothing on record yet.</li>'
         blocks.append(f"""<article class="card issue" id="i-{slug}">
   <h2>{html.escape(it['title'])}</h2>
   <p class="badges">{badge('role', 'issue')}{badge('status', it['meta'].get('status', 'open'))}
     <span class="speaker">{len(positions)} on record</span></p>
-  <div class="about">{markdown(sec(it, 'Issue'), 1)}</div>
+  <div class="about">{markdown(sec(it, 'Issue'), 1, base='issues')}</div>
   <ul class="edges answers">{rows}</ul>
   {tags_html(it['tags'], 1)}
 </article>""")
@@ -678,7 +742,7 @@ def build_by_role():
                          key=lambda e: e["title"].lower())
         rows = "".join(
             f'<li>{badge("subtype", e["meta"].get("subtype", "—"))} {link_exc(e["slug"], 1)}'
-            f'<span class="say">{inline(e["description"], 1)}</span></li>' for e in members)
+            f'<span class="say">{inline(e["description"], 1, "excerpts")}</span></li>' for e in members)
         blocks.append(f"""<section class="group">
   <h2>{role.title()} <span class="count">{len(members)}</span></h2>
   <p class="group-meta">{blurbs[role]}</p>

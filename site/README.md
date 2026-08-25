@@ -49,7 +49,29 @@ corpus to show what the level is for:
 Every page except `style.css` is generated from the bundle by `build.py`, so
 the site and the research never drift apart. Edit the markdown, then:
 
-    python3 site/build.py          # needs PyYAML, nothing else
+    pip install -r site/requirements.txt   # PyYAML, Python-Markdown
+    python3 site/build.py
 
 Editing the HTML directly works too, but the next build overwrites it — put
 lasting changes in `build.py` (structure) or `style.css` (never generated).
+
+### How build.py renders
+
+Markdown goes through [Python-Markdown](https://python-markdown.github.io/)
+with the `tables` extension. Four passes adapt its output to this site:
+
+* **`RewriteLinks`** — turns a bundle link (`../excerpts/foo.md`, or a bare
+  `foo.md` written between siblings) into the anchor for its page here. A link
+  with no page on this site — the bundle README, the update log — keeps its
+  text and loses its href rather than going dead.
+* **`ShiftHeadings`** — renumbers a fragment's headings so its `#` lands under
+  the page's own `<h1>`.
+* **`WrapTables`** — puts each table in an `overflow-x` box so a wide one
+  scrolls itself instead of the page.
+* **`SplitQuotes`** — an excerpt quoting its source twice writes two
+  blockquotes; Python-Markdown folds those into one, so this splits them back
+  apart into two quotations.
+
+Plus a preprocessor that drops footnote markers (every excerpt footnotes its
+own source, which each card already names), and `"` added to the escape set,
+since the bundle writes `\"` inside quoted passages.
