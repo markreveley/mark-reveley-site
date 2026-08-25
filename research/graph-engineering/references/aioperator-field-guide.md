@@ -19,10 +19,10 @@ A builder-oriented field guide written days after the term went viral. Distincti
 
 # Excerpts in this bundle
 
-- [A graph is two things: nodes and edges](../excerpts/aio--nodes-and-edges.md)
-- [The decision lives in the structure](../excerpts/aio--decision-lives-in-structure.md)
-- [An untyped edge is one bit](../excerpts/aio--typed-edges-one-bit.md)
-- [Twelve words, 48 hours, one fabricated study](../excerpts/aio--twelve-words.md)
-- [The treadmill of terms](../excerpts/aio--treadmill-of-terms.md)
-- [Per-hop accuracy compounds against you](../excerpts/aio--per-hop-decay.md)
-- [Route by question type](../excerpts/aio--route-by-question-type.md)
+- [A graph is two things: nodes and edges](../excerpts/a-graph-is-two-things-nodes-and-edges.md)
+- [The decision lives in the structure](../excerpts/the-decision-lives-in-the-structure.md)
+- [An untyped edge is one bit](../excerpts/an-untyped-edge-is-one-bit.md)
+- [Twelve words, 48 hours, one fabricated study](../excerpts/twelve-words-48-hours-one-fabricated-study.md)
+- [The treadmill of terms](../excerpts/the-treadmill-of-terms.md)
+- [Per-hop accuracy compounds against you](../excerpts/per-hop-accuracy-compounds-against-you.md)
+- [Route by question type](../excerpts/route-by-question-type.md)

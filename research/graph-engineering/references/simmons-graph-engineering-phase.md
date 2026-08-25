@@ -19,7 +19,7 @@ Per [the AI Operator field guide](aioperator-field-guide.md), this "quiet blog p
 
 # Excerpts in this bundle
 
-- [The loop exposed its own ceiling](../excerpts/js--loop-exposed-its-ceiling.md)
-- [Three ceilings of the loop](../excerpts/js--three-ceilings.md)
-- [Boring nodes, typed edges, checkpointed state](../excerpts/js--nodes-edges-state.md)
-- [The constraint moved to coordination](../excerpts/js--coordinate-a-thousand-steps.md)
+- [The loop exposed its own ceiling](../excerpts/the-loop-exposed-its-own-ceiling.md)
+- [Three ceilings of the loop](../excerpts/three-ceilings-of-the-loop.md)
+- [Boring nodes, typed edges, checkpointed state](../excerpts/boring-nodes-typed-edges-checkpointed-state.md)
+- [The constraint moved to coordination](../excerpts/the-constraint-moved-to-coordination.md)

@@ -19,5 +19,5 @@ Defines graph engineering as "designing AI systems around explicit graphs" with 
 
 # Excerpts in this bundle
 
-- [Explicit graphs an agent can traverse](../excerpts/ft--explicit-graphs-definition.md)
-- [The edge type IS the knowledge](../excerpts/ft--edge-type-is-knowledge.md)
+- [Explicit graphs an agent can traverse](../excerpts/explicit-graphs-an-agent-can-traverse.md)
+- [The edge type IS the knowledge](../excerpts/the-edge-type-is-the-knowledge.md)

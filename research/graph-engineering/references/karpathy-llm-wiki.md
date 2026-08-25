@@ -19,4 +19,4 @@ The idea file behind the "LLM-wiki pattern": raw sources → LLM-maintained wiki
 
 # Excerpts in this bundle
 
-- [Compiled once, kept current](../excerpts/ka--compiled-once.md)
+- [Compiled once, kept current](../excerpts/compiled-once-kept-current.md)

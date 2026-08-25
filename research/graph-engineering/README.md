@@ -15,7 +15,6 @@ A research push on **graph engineering** — as defined historically, and as the
 |---|---|---|
 | 1 | [`references/`](references/index.md) | Links to resources: one OKF concept per source, with availability, dates, and credibility notes |
 | 2 | [`excerpts/`](excerpts/index.md) | Verbatim quotes from those sources, persisted as OKF concepts with a `role` in the dialectic, a `subtype` speech-act flavor, tags, and typed `deps` |
-| 2 | [`issues/`](issues/index.md) | Root issue nodes (v3): the questions the position excerpts respond to |
 | 3 | [`views/`](views/index.md) | Non-narrative compositions over the quote DAG (currently: the timeline). Explicit synthesis moved to [`ob6to8/direction`](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/README.md) under the house rule below |
 
 **House rule (2026-08-25, operator-directed).** This repository contains only primary sources and the typed DAG of quotes extracted from them, plus non-narrative views over that DAG. Positions may be taken only *implicitly* — in which quotes are selected and how they are composed and connected. Explicit synthesis lives in `ob6to8/direction` (`mark_reveley/2026-08-25-graph-engineering-synthesis/`), so conclusions are drawn in the operator's own writing, and presentation stays composable. Accordingly, in the v3 migration (2026-08-25) excerpt `# Analysis` prose was replaced by short provenance-and-connection `# Note`s; the removed interpretive prose survives only in the direction synthesis docs.
@@ -24,7 +23,7 @@ A research push on **graph engineering** — as defined historically, and as the
 
 This bundle targets **OKF v0.2** as specified in [`okf/SPEC.md`](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) of Google's `knowledge-catalog` repository (read at commit `9a15b13`, 2026-08-24). OKF — the **Open Knowledge Format** — was introduced by Google Cloud on 2026-06-12; see the [source reference](references/okf-spec.md). Conformance choices:
 
-- Every non-reserved `.md` file carries YAML frontmatter with a required `type` (§4.1). Types used here: `Source Reference`, `Excerpt`, `Issue`, `Guide`.
+- Every non-reserved `.md` file carries YAML frontmatter with a required `type` (§4.1). Types used here: `Source Reference`, `Excerpt`, `Guide`.
 - `index.md` and `log.md` follow §8 and §9.
 - Provenance uses the `sources` family (§5.1); per-claim attribution uses footnotes keyed to `sources[].id` (§5.1). Excerpt concepts point their `sources[].resource` at the Level-1 reference concept (bundle-relative), and each reference concept's `resource` is the external URL — so lineage recursion (§5.1) works: excerpt → reference → external source.
 - Trust uses `generated` / `verified` (§5.2) with the actor convention (§7). `generated.by` is `research_agent/claude-code`. `verified.by` is `process:curl-quote-check` (quote fragments mechanically matched against raw fetched page text), `process:local-clone-read` / `process:local-file-extract` (quotes taken directly from a locally cloned file or extracted PDF), `process:transcript-match` (quotes matched against the operator-supplied transcript), or `human:mreveley` (the repository owner's in-session attestation of that transcript, given twice). Concepts whose source pages could not be re-fetched raw have **no** `verified` key — per §5.3 they are honestly *unverified* rather than silently trusted.
@@ -34,10 +33,10 @@ This bundle targets **OKF v0.2** as specified in [`okf/SPEC.md`](https://github.
 
 | Field | On | Meaning |
 |---|---|---|
-| `role` | Excerpt, Issue | **Primary facet (v3, IBIS-hybrid, adopted 2026-08-25)**: the unit's place in the dialectic. Enum: `issue` \| `position` \| `argument` \| `evidence` (see the v3 section below) |
+| `role` | Excerpt | **Primary facet (v3, adopted 2026-08-25)**: the unit's place in the dialectic. Enum: `position` \| `argument` \| `evidence` (see the v3 section below) |
 | `subtype` | Excerpt | Secondary facet: the quote's speech-act flavor. Enum (v2): `question` \| `claim` \| `definition` \| `problem` \| `solution` \| `observation` \| `inference` \| `prescription` (definitions below) |
 | `speaker` | Excerpt | Who said/wrote the quoted words (may differ from the page author, e.g. a quoted tweet) |
-| `deps` | Excerpt | Typed relations forming the corpus DAG: list of `{ concept, rel }`. IBIS core: `responds-to` (position → issue) \| `supports` \| `objects-to`. Retained genealogy layer (non-IBIS): `answers` (directly addresses/resolves) \| `refines` \| `exemplifies` \| `precedes` |
+| `deps` | Excerpt | Typed relations forming the corpus DAG: list of `{ concept, rel }`. IBIS-descended core: `supports` \| `objects-to`. Genealogy layer: `answers` (directly addresses/resolves) \| `refines` \| `exemplifies` \| `precedes` |
 | `availability` | Source Reference | `fetched` \| `blocked` \| `user-supplied` \| `local-clone` |
 | `source_author`, `source_date` | Source Reference | Author and publication date of the external source |
 | `retrieved` | Source Reference | When this research accessed it |
@@ -46,7 +45,7 @@ A concept's frontmatter `subtype` classifies its **primary** quote. Where a conc
 
 ## The subtype enum (v2)
 
-- **question** — an interrogative unit: the quote's work is to open an issue, not settle one.
+- **question** — an interrogative unit: the quote's work is to open a question, not settle one.
 - **claim** — an assertion about how things are.
 - **definition** — a statement whose primary work is to fix what a term or thing *is* (including deflationary and functional definitions).
 - **problem** — an articulated limitation, failure mode, or difficulty.
@@ -55,18 +54,19 @@ A concept's frontmatter `subtype` classifies its **primary** quote. Where a conc
 - **inference** — a conclusion explicitly reasoned from other statements; the reasoning step is the point of the quote.
 - **prescription** — normative guidance: what one *should* do.
 
-v1 of this enum lacked `question` and `definition`; both were added 2026-08-24 at the maintainer's direction and the corpus re-typed (12 claims → `definition`; the seed thread's OP → `question`). The tag `definition` now marks *only* concepts whose primary subtype is something else but which contain definitional content (currently: [typed-edges-one-bit](excerpts/aio--typed-edges-one-bit.md), [three-tier-reliability](excerpts/gd--three-tier-reliability.md), [abstraction-layer](excerpts/rl--abstraction-layer.md)). The dual-role caveat stands: a prescription usually implies a claim; the primary subtype is a judgment call recorded per-concept, with secondary roles labeled inline in multi-quote bodies.
+v1 of this enum lacked `question` and `definition`; both were added 2026-08-24 at the maintainer's direction and the corpus re-typed (12 claims → `definition`; the seed thread's OP → `question`). The tag `definition` now marks *only* concepts whose primary subtype is something else but which contain definitional content (currently: [typed-edges-one-bit](excerpts/an-untyped-edge-is-one-bit.md), [three-tier-reliability](excerpts/three-tiers-of-reliability.md), [abstraction-layer](excerpts/the-graph-as-abstraction-layer.md)). The dual-role caveat stands: a prescription usually implies a claim; the primary subtype is a judgment call recorded per-concept, with secondary roles labeled inline in multi-quote bodies.
 
-## The role facet and issue layer (v3, IBIS-hybrid)
+## The role facet (v3)
 
-Adopted 2026-08-25 at the operator's direction, after the format discussion: the grammar of IBIS — Kunz & Rittel's issue-based information systems (1970; gIBIS 1988 — see [the excerpt](excerpts/ibis--wicked-problems.md), which documents this schema's own ancestry) — carried on the OKF markdown+frontmatter substrate, with OKF's provenance and trust fields retained in full.
+Adopted 2026-08-25 at the operator's direction, after the format discussion: a loose grammar descended from IBIS — Kunz & Rittel's issue-based information systems (1970; gIBIS 1988 — see [the excerpt](excerpts/issues-positions-arguments.md), which documents this schema's own ancestry) — carried on the OKF markdown+frontmatter substrate, with OKF's provenance and trust fields retained in full.
 
-- **issue** — an open question. Root issue nodes live in [`issues/`](issues/index.md) (`type: Issue`); an excerpt may also carry `role: issue` when a source states the question verbatim (currently one: [the skeptic's question](excerpts/rl--just-fancier-retrieval.md)). Issue nodes state questions and list positions; they never take a side.
-- **position** — a contestable stance responding to an issue (`responds-to`). Competing definitions are competing positions.
+- **position** — a contestable stance. Competing definitions are competing positions.
 - **argument** — reasoning offered for or against a position (`supports` / `objects-to`).
-- **evidence** — descriptive, historical, or documentary material (consensus definitions, capability documentation, dated events). Evidence attaches to positions via `supports`/`objects-to`/`exemplifies`, or bears on issues through the genealogy layer (`precedes`) and the views.
+- **evidence** — descriptive, historical, or documentary material (consensus definitions, capability documentation, dated events). Evidence attaches to positions via `supports`/`objects-to`/`exemplifies`, or connects through the genealogy layer (`precedes`) and the views.
 
-Assignment heuristic: contested → position; consensus or historical → evidence; interrogative → issue; reasoning that attacks or supports → argument. The IBIS attachment discipline is enforced for `responds-to` (positions to issues); the retained genealogy relations may connect any roles, and are what pure IBIS cannot express (see the format discussion's downside list — this hybrid is the answer to it). One deviation from classic IBIS is deliberate: like the original, this corpus **never concludes** — verdict prose lives in `ob6to8/direction`, per the house rule.
+Assignment heuristic: contested → position; consensus or historical → evidence; reasoning that attacks or supports → argument. Like the original IBIS, this corpus **never concludes** — verdict prose lives in `ob6to8/direction`, per the house rule.
+
+**Issues retired 2026-08-25 (operator-directed, UI simplification).** v3 originally added a fourth role, `issue`, plus a Level-2 `issues/` directory of root question nodes and a `responds-to` (position → issue) relation — the full IBIS-hybrid, not just a role descended from it. The `issues/` directory was never rendered on the site (the built pages are Posts/Quotes/About, reached by tag, not by issue), so removing it changed no page; it did leave a few excerpt `# Note`s that pointed at a named issue, which were reworded to point at the responding excerpt directly instead. The one excerpt that had carried `role: issue` — [the skeptic's question](excerpts/the-skeptics-question-just-fancier-retrieval.md), the seed thread's verbatim opening question — is now `role: evidence` (a documentary record of what was asked, per the heuristic above). `responds-to` is retired with it, since its only valid target was an issue node.
 
 # Tag taxonomy (the "like sorting mechanism")
 
@@ -83,7 +83,7 @@ Tags group perspectives across sources so a consumer can synthesize a tag view b
 
 Expect the surviving tags to stay lopsided toward this bundle's subject — that is what a single research push produces. The test is not evenness but whether a tag splits the corpus into a set worth reading on its own.
 
-**`definitions`, added 2026-08-25 (operator-directed), is not the dropped `definition` speech-act echo above.** That tag sat on every excerpt whose `subtype` was `definition` regardless of content — a restatement of a field the excerpt already carried. `definitions` is narrower and topical: it marks excerpts whose content is a field's own terms-and-definitions entry for a recurring term of art — not limited to standards bodies, though it started there. Seeded with the normative/informative distinction as drawn by [ISO/IEC](excerpts/iso--normative-informative-elements.md), [W3C](excerpts/w3c--normative-informative.md), and [IETF](excerpts/ietf--normative-informative-references.md); extended the same day with evals' own definition of a [golden](excerpts/deepeval--goldens.md) — no standards body legislates that one, but the field converges on the same shape of term anyway.
+**`definitions`, added 2026-08-25 (operator-directed), is not the dropped `definition` speech-act echo above.** That tag sat on every excerpt whose `subtype` was `definition` regardless of content — a restatement of a field the excerpt already carried. `definitions` is narrower and topical: it marks excerpts whose content is a field's own terms-and-definitions entry for a recurring term of art — not limited to standards bodies, though it started there. Seeded with the normative/informative distinction as drawn by [ISO/IEC](excerpts/normative-and-informative-elements.md), [W3C](excerpts/normative-and-informative-text.md), and [IETF](excerpts/normative-and-informative-references.md); extended the same day with evals' own definition of a [golden](excerpts/goldens-a-pending-test-case.md) — no standards body legislates that one, but the field converges on the same shape of term anyway.
 
 # Verification
 

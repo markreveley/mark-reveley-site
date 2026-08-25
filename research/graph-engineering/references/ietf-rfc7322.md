@@ -19,4 +19,4 @@ The IETF/RFC Editor's own style guide. Section 4.8.6 requires every RFC's refere
 
 # Excerpts in this bundle
 
-- [Normative and informative references](../excerpts/ietf--normative-informative-references.md)
+- [Normative and informative references](../excerpts/normative-and-informative-references.md)

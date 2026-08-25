@@ -19,4 +19,4 @@ Added in research push #2, with a double relevance. Genealogically: IBIS and gIB
 
 # Excerpts in this bundle
 
-- [Issues, positions, arguments](../excerpts/ibis--wicked-problems.md)
+- [Issues, positions, arguments](../excerpts/issues-positions-arguments.md)

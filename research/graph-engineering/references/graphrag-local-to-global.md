@@ -19,5 +19,5 @@ The academic anchor of the retrieval strand: vanilla RAG fails on corpus-global 
 
 # Excerpts in this bundle
 
-- [RAG fails on global questions](../excerpts/grag--rag-fails-global.md)
-- [An LLM-built graph index](../excerpts/grag--graph-index.md)
+- [RAG fails on global questions](../excerpts/rag-fails-on-global-questions.md)
+- [An LLM-built graph index](../excerpts/an-llm-built-graph-index.md)

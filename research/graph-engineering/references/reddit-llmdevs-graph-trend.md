@@ -50,9 +50,9 @@ reddit.com is not fetchable from this research environment. The full exchange wa
 
 # Excerpts in this bundle
 
-- [The skeptic's question: just fancier retrieval?](../excerpts/rl--just-fancier-retrieval.md)
-- [Legible to humans and machines](../excerpts/rl--humans-and-machines.md)
-- [Yes and no: storage shapes retrieval](../excerpts/rl--yes-and-no.md)
-- [Decision trees don't fit CSV rows](../excerpts/rl--decision-trees-vs-csv.md)
-- [The graph as abstraction layer](../excerpts/rl--abstraction-layer.md)
-- [A map of how something works](../excerpts/rl--map-metaphor.md)
+- [The skeptic's question: just fancier retrieval?](../excerpts/the-skeptics-question-just-fancier-retrieval.md)
+- [Legible to humans and machines](../excerpts/legible-to-humans-and-machines.md)
+- [Yes and no: storage shapes retrieval](../excerpts/yes-and-no-storage-shapes-retrieval.md)
+- [Decision trees don't fit CSV rows](../excerpts/decision-trees-dont-fit-csv-rows.md)
+- [The graph as abstraction layer](../excerpts/the-graph-as-abstraction-layer.md)
+- [A map of how something works](../excerpts/a-map-of-how-something-works.md)

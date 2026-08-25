@@ -19,4 +19,4 @@ The announcement post for the Open Knowledge Format. Positions OKF as the formal
 
 # Excerpts in this bundle
 
-- [OKF formalizes the LLM-wiki pattern](../excerpts/okf--formalizes-llm-wiki.md)
+- [OKF formalizes the LLM-wiki pattern](../excerpts/okf-formalizes-the-llm-wiki-pattern.md)

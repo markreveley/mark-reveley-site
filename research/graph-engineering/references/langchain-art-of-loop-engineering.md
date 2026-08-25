@@ -19,5 +19,5 @@ Written at loop engineering's peak month, one month before the graph turn. Defin
 
 # Excerpts in this bundle
 
-- [A model calling tools in a loop until done](../excerpts/lc--model-calling-tools-in-loop.md)
-- [Stack and extend loops](../excerpts/lc--stack-and-extend-loops.md)
+- [A model calling tools in a loop until done](../excerpts/a-model-calling-tools-in-a-loop-until-done.md)
+- [Stack and extend loops](../excerpts/stack-and-extend-loops.md)

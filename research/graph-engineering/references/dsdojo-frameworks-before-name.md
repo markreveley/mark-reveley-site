@@ -19,4 +19,4 @@ Surveys the orchestration frameworks whose node/edge/state models predate the Ju
 
 # Excerpts in this bundle
 
-- [You were already doing it](../excerpts/dsd--already-doing-it.md)
+- [You were already doing it](../excerpts/you-were-already-doing-it.md)

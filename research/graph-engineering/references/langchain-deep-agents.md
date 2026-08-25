@@ -19,5 +19,5 @@ Added in research push #2 — three weeks after the naming event, the vendor's o
 
 # Excerpts in this bundle
 
-- [Maximal determinism, encoded in topology](../excerpts/da--maximal-determinism.md)
-- [Autonomy versus reliability](../excerpts/da--autonomy-reliability-tradeoff.md)
+- [Maximal determinism, encoded in topology](../excerpts/maximal-determinism-encoded-in-topology.md)
+- [Autonomy versus reliability](../excerpts/autonomy-versus-reliability.md)

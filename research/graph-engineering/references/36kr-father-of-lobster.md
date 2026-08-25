@@ -19,6 +19,6 @@ status: stable
 
 # Excerpts in this bundle
 
-- [Design loops that prompt agents](../excerpts/36kr--design-loops-not-prompts.md)
-- [My job is to write loops](../excerpts/36kr--my-job-is-to-write-loops.md)
-- [Graphs force you to acknowledge the unmodeled](../excerpts/36kr--graphs-force-acknowledgment.md)
+- [Design loops that prompt agents](../excerpts/design-loops-that-prompt-agents.md)
+- [My job is to write loops](../excerpts/my-job-is-to-write-loops.md)
+- [Graphs force you to acknowledge the unmodeled](../excerpts/graphs-force-you-to-acknowledge-the-unmodeled.md)

@@ -19,4 +19,4 @@ Added in research push #2. Evidence that the [blackboard lineage](blackboard-sys
 
 # Excerpts in this bundle
 
-- [The blackboard, revived](../excerpts/bbllm--blackboard-revival.md)
+- [The blackboard, revived](../excerpts/the-blackboard-revived.md)

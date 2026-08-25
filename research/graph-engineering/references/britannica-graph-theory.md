@@ -18,4 +18,4 @@ Read once via a rendering fetcher; raw re-fetch hit a bot challenge, so its quot
 
 # Excerpts in this bundle
 
-Quoted secondarily in [Euler, 1736](../excerpts/wik--euler-1736.md) (chemistry origin, flagged unverified there).
+Quoted secondarily in [Euler, 1736](../excerpts/euler-1736-and-the-founding-of-graph-theory.md) (chemistry origin, flagged unverified there).

@@ -19,5 +19,5 @@ Vendor position paper, but a clear articulation of the memory strand: agents are
 
 # Excerpts in this bundle
 
-- [A buffer and a static knowledge base](../excerpts/neo--buffer-and-static-kb.md)
-- [Three memories, one context graph](../excerpts/neo--three-memories.md)
+- [A buffer and a static knowledge base](../excerpts/a-buffer-and-a-static-knowledge-base.md)
+- [Three memories, one context graph](../excerpts/three-memories-one-context-graph.md)

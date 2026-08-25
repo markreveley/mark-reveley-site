@@ -19,4 +19,4 @@ Academic confirmation — a year before the naming event — that "graphs for ag
 
 # Excerpts in this bundle
 
-- [Structurization for agents](../excerpts/gmaa--structurization.md)
+- [Structurization for agents](../excerpts/structurization-for-agents.md)

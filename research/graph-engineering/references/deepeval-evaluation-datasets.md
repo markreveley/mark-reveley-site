@@ -19,4 +19,4 @@ Docs for `deepeval`, a widely used open-source LLM-evaluation framework (Confide
 
 # Excerpts in this bundle
 
-- [Goldens: a pending test case](../excerpts/deepeval--goldens.md)
+- [Goldens: a pending test case](../excerpts/goldens-a-pending-test-case.md)

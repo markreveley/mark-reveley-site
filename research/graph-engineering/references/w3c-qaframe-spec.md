@@ -19,4 +19,4 @@ Guidance for W3C spec editors, promoted to full Recommendation status. Its gloss
 
 # Excerpts in this bundle
 
-- [Normative and informative text](../excerpts/w3c--normative-informative.md)
+- [Normative and informative text](../excerpts/normative-and-informative-text.md)

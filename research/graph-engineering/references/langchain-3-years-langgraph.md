@@ -19,5 +19,5 @@ LangChain's response to the viral term, four days after the tweet: sardonic abou
 
 # Excerpts in this bundle
 
-- [We've been doing it for three years](../excerpts/lgblog--three-years.md)
-- [Loop engineering is a simple version of graphs](../excerpts/lgblog--loops-simple-version.md)
+- [We've been doing it for three years](../excerpts/weve-been-doing-it-for-three-years.md)
+- [Loop engineering is a simple version of graphs](../excerpts/loop-engineering-is-a-simple-version-of-graphs.md)

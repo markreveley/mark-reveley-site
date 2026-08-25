@@ -19,4 +19,4 @@ OKF v0.2: "an open, human- and agent-friendly format for representing knowledge,
 
 # Excerpts in this bundle
 
-- [A corpus continuously maintained by agents](../excerpts/spec--maintained-by-agents.md)
+- [A corpus continuously maintained by agents](../excerpts/a-corpus-continuously-maintained-by-agents.md)

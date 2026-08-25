@@ -19,4 +19,4 @@ The directive that governs how every ISO and IEC standard is written. Clause 3.2
 
 # Excerpts in this bundle
 
-- [Normative and informative elements](../excerpts/iso--normative-informative-elements.md)
+- [Normative and informative elements](../excerpts/normative-and-informative-elements.md)
