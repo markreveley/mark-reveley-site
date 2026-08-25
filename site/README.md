@@ -1,9 +1,31 @@
 # site/
 
-A static dev blog: HTML and CSS, no JavaScript, no framework, no runtime
-dependencies. Open `site/index.html` in a browser, or serve the directory:
+A static dev blog: HTML and CSS, no JavaScript, no framework, nothing to run in
+order to view it.
+
+## Running it locally
+
+The built pages are committed, so the quickest look needs no tooling at all —
+open `site/index.html` in a browser. Every link is relative, so the whole site,
+topic pages included, works over `file://`.
+
+To serve it over HTTP instead, from the repository root:
 
     python3 -m http.server -d site 8000
+
+then open <http://localhost:8000/>. Ctrl-C stops it. Nothing is cached between
+runs, so a rebuild shows up on the next page load.
+
+To regenerate the pages from the research bundle, install the two build-time
+dependencies once, then build:
+
+    pip install -r site/requirements.txt   # PyYAML, Python-Markdown
+    python3 site/build.py
+
+That prints a one-line summary — how many quotes, sources and topics it found,
+and how many pages it wrote. It is safe to re-run at any time; see
+[Rebuilding](#rebuilding). Those two packages are needed only to *build* the
+site, never to view it.
 
 ## Sections
 
@@ -63,13 +85,12 @@ renders.
 ## Rebuilding
 
 Every page except `style.css` is generated from the bundle by `build.py`, so
-the site and the research never drift apart. Edit the markdown, then:
+the site and the research never drift apart: edit the markdown under
+[`research/`](../research/), then run the build (commands above).
 
-    pip install -r site/requirements.txt   # PyYAML, Python-Markdown
-    python3 site/build.py
-
-Editing the HTML directly works too, but the next build overwrites it — put
-lasting changes in `build.py` (structure) or `style.css` (never generated).
+Editing the generated HTML directly works for a quick experiment, but the next
+build overwrites it — put lasting changes in `build.py` (structure) or
+`style.css` (never generated).
 
 ### How build.py renders
 
