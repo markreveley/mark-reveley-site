@@ -3,7 +3,7 @@ type: Source Reference
 title: "Context graphs: Why AI agents need three types of memory (Neo4j)"
 description: The graph-database incumbent's June 2026 agent-memory position — long-term, short-term, and reasoning memory as one context graph.
 resource: https://neo4j.com/blog/agentic-ai/context-graph-ai-agent-memory/
-tags: [level-1, era-agentic, memory, tooling]
+tags: [level-1, memory, tooling]
 source_author: "Jim Webber (Chief Scientist, Neo4j)"
 source_date: "2026-06-01"
 retrieved: "2026-08-24"

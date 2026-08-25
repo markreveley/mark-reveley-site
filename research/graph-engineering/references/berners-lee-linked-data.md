@@ -3,7 +3,7 @@ type: Source Reference
 title: "Linked Data — Design Issues (Tim Berners-Lee, 2006)"
 description: The linked-data note — the Semantic Web is "about making links, so that a person or machine can explore the web of data."
 resource: https://www.w3.org/DesignIssues/LinkedData.html
-tags: [level-1, era-classical, knowledge-representation, legibility, history]
+tags: [level-1, knowledge-representation, legibility, history]
 source_author: "Tim Berners-Lee"
 source_date: "2006-07-27 (last change 2009-06-18)"
 retrieved: "2026-08-24"

@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Euler, 1736, and the founding of graph theory"
 description: The deep origin — Euler's formalization and impossibility proof for the Königsberg bridges founded graph theory and foreshadowed topology.
-tags: [history, era-classical]
+tags: [history]
 speaker: "Wikipedia (Seven Bridges of Königsberg)"
 sources:
   - id: wik

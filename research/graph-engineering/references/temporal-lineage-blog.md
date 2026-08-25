@@ -3,7 +3,7 @@ type: Source Reference
 title: "Building resilient Workflows: from Azure to Cadence to Temporal (Temporal blog)"
 description: The personnel-level continuity of the workflow-engine lineage — Amazon (SWF) → Microsoft (Durable Task) → Uber (Cadence) → Temporal (2019), by the same two engineers.
 resource: https://temporal.io/blog/building-resilient-workflows-from-azure-to-cadence-to-temporal
-tags: [level-1, era-agentic, workflow-engines, durable-execution, history]
+tags: [level-1, workflow-engines, durable-execution, history]
 source_author: "Tim Imkin (Temporal)"
 source_date: "2025-04-25"
 retrieved: "2026-08-24"

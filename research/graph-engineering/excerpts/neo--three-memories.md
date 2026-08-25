@@ -4,7 +4,7 @@ subtype: solution
 role: position
 title: "Three memories, one context graph"
 description: Neo4j's proposal — long-term knowledge, short-term conversation, and reasoning memory for decision traces, unified in a graph grounded in the data's entities.
-tags: [memory, solution, era-agentic]
+tags: [memory]
 speaker: "Jim Webber (Neo4j)"
 sources:
   - id: neo

@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Places, transitions, tokens"
 description: The 1962 formalism — Petri nets as directed bipartite graphs whose token flow models concurrency, later specialized into workflow nets.
-tags: [workflow-engines, history, era-classical, control-flow, academic]
+tags: [workflow-engines, history, control-flow, academic]
 speaker: "Wikipedia (Petri net)"
 sources:
   - id: pet

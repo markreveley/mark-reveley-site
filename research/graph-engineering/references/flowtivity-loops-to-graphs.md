@@ -3,7 +3,7 @@ type: Source Reference
 title: "From Loops to Graphs: The Next Paradigm in AI Agent Engineering (Flowtivity)"
 description: A practitioner guide tying graph engineering to OpenClaw Code Mode and Codex, with a strong typed-edges thesis and cost/accuracy caveats.
 resource: https://flowtivity.ai/blog/graph-engineering-2026-guide-openclaw-codex/
-tags: [level-1, era-agentic, graph-engineering, typed-edges, concurrency, evaluation]
+tags: [level-1, graph-engineering, typed-edges, concurrency, evaluation]
 source_author: "Flowtivity (unattributed)"
 source_date: "2026-07-25 (last updated)"
 retrieved: "2026-08-24"

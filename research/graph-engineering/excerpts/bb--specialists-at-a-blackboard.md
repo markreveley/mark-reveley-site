@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Specialists at a blackboard"
 description: The 1970s coordination architecture — independent knowledge sources cooperating through shared state under a control shell, with a moderator to keep them from trampling each other.
-tags: [multi-agent, orchestration, memory, history, era-classical]
+tags: [multi-agent, orchestration, memory, history]
 speaker: "Wikipedia (Blackboard system)"
 sources:
   - id: bb

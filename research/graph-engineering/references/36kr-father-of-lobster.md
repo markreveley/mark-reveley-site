@@ -3,7 +3,7 @@ type: Source Reference
 title: "Father of Lobster's Viral Tweet: Has the Loop Era Officially Ended? (36Kr EU)"
 description: Chinese tech-press account (English edition) of the Steinberger moment, valuable for its collection of practitioner voices on loop engineering — Steinberger, Boris Cherny, Addy Osmani, Luis Catacora.
 resource: https://eu.36kr.com/en/p/3904771418867330
-tags: [level-1, era-agentic, loop-engineering, graph-engineering, term-genealogy, practice]
+tags: [level-1, loop-engineering, graph-engineering, term-genealogy, practice]
 source_author: "36Kr (EU edition)"
 source_date: "2026-07-21"
 retrieved: "2026-08-24"

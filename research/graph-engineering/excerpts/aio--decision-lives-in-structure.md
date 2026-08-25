@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "The decision lives in the structure"
 description: The field guide's case against similarity search — the ten most similar chunks cannot explain a decision whose meaning is carried by relationships.
-tags: [retrieval, knowledge-representation, era-agentic, skepticism]
+tags: [retrieval, knowledge-representation, skepticism]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

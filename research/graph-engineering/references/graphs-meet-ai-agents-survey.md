@@ -3,7 +3,7 @@ type: Source Reference
 title: "Graphs Meet AI Agents: Taxonomy, Progress, and Future Opportunities (survey)"
 description: The first systematic academic survey (June 2025) of how graphs empower AI agents — planning, memory, coordination.
 resource: https://arxiv.org/abs/2506.18019
-tags: [level-1, era-agentic, academic, knowledge-representation, orchestration, memory]
+tags: [level-1, academic, knowledge-representation, orchestration, memory]
 source_author: "Yuanchen Bei, Weizhi Zhang, et al. (13 authors incl. Shirui Pan, Irwin King, Philip S. Yu)"
 source_date: "2025-06-22 (v1); 2025-07-04 (v3)"
 retrieved: "2026-08-24"

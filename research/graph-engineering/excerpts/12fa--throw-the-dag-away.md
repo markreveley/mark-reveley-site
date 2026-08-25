@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Throw the DAG away (and what happened next)"
 description: "The 2023-era promise recorded by 12-factor-agents — give the agent a goal and skip the graph — followed immediately by the verdict: it doesn't quite work."
-tags: [control-flow, history, loop-engineering, era-agentic]
+tags: [control-flow, history, loop-engineering]
 speaker: "Dex Horthy (12-Factor Agents)"
 sources:
   - id: fa

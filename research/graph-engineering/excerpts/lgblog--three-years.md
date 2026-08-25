@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "We've been doing it for three years"
 description: LangChain's retro-claim on the viral term — sardonic about the name, possessive about the practice.
-tags: [term-genealogy, tooling, graph-engineering, hype-cycle, era-agentic]
+tags: [term-genealogy, tooling, graph-engineering, hype-cycle]
 speaker: "Sydney Runkle and Harrison Chase (LangChain)"
 sources:
   - id: lgb

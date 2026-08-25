@@ -26,7 +26,7 @@ nothing but the sentence and the topic list — every tag in the corpus with the
 number of quotes carrying it, most-used first. Each entry links to
 `topics/<tag>.html`, which lists those quotes; `topics/all.html` lists all of
 them. Quotes are ordered newest first everywhere, by the publication date of
-the source they came from. A quote carries four to six tags, so it appears
+the source they came from. A quote carries one to five tags, so it appears
 under each of them.
 
 Each card holds, in this order:

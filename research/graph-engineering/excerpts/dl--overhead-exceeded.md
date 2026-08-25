@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Overhead exceeding the problem"
 description: A practitioner's exit report — the graph framework taxed a linear pipeline; "structured" mistaken for "complex."
-tags: [tooling, skepticism, simplicity, era-agentic, practice]
+tags: [tooling, skepticism, simplicity, practice]
 speaker: "DeadLocker (DEV Community)"
 sources:
   - id: dl

@@ -3,7 +3,7 @@ type: Source Reference
 title: "r/LLMDevs: What's up with new trend with graphs?"
 description: The seed source — a Reddit exchange in which an OP asks why graphs are suddenly everywhere and a commenter defends graphs as representation, not just retrieval.
 resource: https://www.reddit.com/r/LLMDevs/comments/1vwixw5/whats_up_with_new_trend_with_graphs/
-tags: [level-1, era-agentic, skepticism, knowledge-representation, community]
+tags: [level-1, skepticism, knowledge-representation, community]
 source_author: "anonymous Reddit users (OP + one responding commenter)"
 source_date: "2026 (thread id 1vwixw5)"
 retrieved: "2026-08-24"

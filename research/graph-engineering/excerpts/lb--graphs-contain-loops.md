@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Graphs contain loops"
 description: Bouchard's containment claim — the graph is not a replacement for the loop but an extra layer of delegated trust above it.
-tags: [control-flow, loop-engineering, graph-engineering, era-agentic]
+tags: [control-flow, loop-engineering, graph-engineering]
 speaker: "Louis-François Bouchard"
 sources:
   - id: lb

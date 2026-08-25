@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Autonomy versus reliability"
 description: The spectrum stated plainly — more autonomy, more potential value, less reliability; determinism for sensitive or preset workflows.
-tags: [control-flow, determinism, risk, era-agentic]
+tags: [control-flow, determinism, risk]
 speaker: "Sydney Runkle (LangChain)"
 sources:
   - id: da

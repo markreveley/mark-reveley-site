@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "The blackboard, revived"
 description: A 2025 LLM multi-agent paper explicitly inspired by the classical blackboard architecture — the ancestry acknowledged from inside current research.
-tags: [multi-agent, orchestration, academic, history, era-agentic]
+tags: [multi-agent, orchestration, academic, history]
 speaker: "Salemi et al. (arXiv 2510.01285)"
 sources:
   - id: bbllm

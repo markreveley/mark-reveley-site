@@ -3,7 +3,7 @@ type: Source Reference
 title: "The frameworks that were doing \"graph engineering\" before it had a name (Data Science Dojo)"
 description: Framework survey (LangGraph, Microsoft Agent Framework, Google ADK, CrewAI) arguing practitioners were already doing graph engineering under other names.
 resource: https://datasciencedojo.com/blog/graph-engineering-frameworks/
-tags: [level-1, era-agentic, graph-engineering, tooling, term-genealogy]
+tags: [level-1, graph-engineering, tooling, term-genealogy]
 source_author: "Ayesha Aamir"
 source_date: "2026-07-21"
 retrieved: "2026-08-24"

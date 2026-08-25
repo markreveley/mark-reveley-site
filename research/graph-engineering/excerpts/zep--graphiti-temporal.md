@@ -4,7 +4,7 @@ subtype: solution
 role: position
 title: "A temporally-aware knowledge graph engine"
 description: Zep's Graphiti — agent memory as a temporal knowledge graph synthesizing conversation and business data while keeping historical relationships.
-tags: [memory, temporal, academic, solution, era-agentic]
+tags: [memory, temporal, academic]
 speaker: "Rasmussen et al. (Zep)"
 sources:
   - id: zep

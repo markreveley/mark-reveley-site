@@ -4,7 +4,7 @@ subtype: prescription
 role: position
 title: "Design loops that prompt agents"
 description: Steinberger's loop-era standing reminder — stop prompting agents yourself; design the loops that do — with Osmani's definitional gloss.
-tags: [loop-engineering, prescription, practice, era-agentic]
+tags: [loop-engineering, practice]
 speaker: "Peter Steinberger (as reported by 36Kr)"
 sources:
   - id: kr

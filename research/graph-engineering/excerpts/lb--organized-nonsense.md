@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Organized nonsense at industrial scale"
 description: The graph era's characteristic failure mode — agent nodes interpret rather than execute, so a graph of agents checking agents can compound error with perfect structure.
-tags: [risk, multi-agent, control-flow, skepticism, era-agentic]
+tags: [risk, multi-agent, control-flow, skepticism]
 speaker: "Louis-François Bouchard"
 sources:
   - id: lb

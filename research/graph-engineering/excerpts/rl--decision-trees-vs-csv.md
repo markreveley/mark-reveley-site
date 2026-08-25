@@ -4,7 +4,7 @@ subtype: problem
 role: argument
 title: "Decision trees don't fit CSV rows"
 description: The concrete failure case — decision structures for 10,000 behaviors can be flattened into linked rows, but reading and retrieval degrade because the encoding fights the shape of the data.
-tags: [knowledge-representation, retrieval, era-agentic, legibility]
+tags: [knowledge-representation, retrieval, legibility]
 speaker: "responding commenter, r/LLMDevs"
 sources:
   - id: rl

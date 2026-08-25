@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Durable Execution"
 description: The abstraction the workflow lineage converged on — automatically preserving a workflow's full state so execution survives failure.
-tags: [durable-execution, workflow-engines, control-flow, era-agentic]
+tags: [durable-execution, workflow-engines, control-flow]
 speaker: "Tim Imkin (Temporal blog)"
 sources:
   - id: tmp

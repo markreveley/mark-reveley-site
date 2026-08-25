@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Issues, positions, arguments"
 description: Kunz & Rittel's IBIS — typed argumentation graphs for wicked problems (1960s–1970), made graphical hypertext by Conklin's gIBIS in the late 1980s.
-tags: [knowledge-representation, argumentation, history, era-classical, typed-edges]
+tags: [knowledge-representation, argumentation, history, typed-edges]
 speaker: "Wikipedia (Issue-based information system)"
 sources:
   - id: ibis

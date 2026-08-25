@@ -4,7 +4,7 @@ subtype: definition
 role: evidence
 title: "Act, observe, decide, repeat"
 description: MindStudio's definition of the loop and of loop engineering, with the ReAct lineage claim.
-tags: [loop-engineering, history, era-agentic]
+tags: [loop-engineering, history]
 speaker: "Luis Chavez-Mattos (MindStudio)"
 sources:
   - id: ms

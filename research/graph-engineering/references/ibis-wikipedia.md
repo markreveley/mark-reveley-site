@@ -3,7 +3,7 @@ type: Source Reference
 title: "Issue-based information system (Wikipedia)"
 description: Kunz & Rittel's argumentation structure for wicked problems (1960s; canonical 1970 working paper) and Conklin's gIBIS (1988) — typed discourse graphs, two generations before knowledge graphs.
 resource: https://en.wikipedia.org/wiki/Issue-based_information_system
-tags: [level-1, era-classical, knowledge-representation, argumentation, history]
+tags: [level-1, knowledge-representation, argumentation, history]
 source_author: "Wikipedia contributors"
 source_date: "living document"
 retrieved: "2026-08-24"

@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "The treadmill of terms"
 description: The dated genealogy — prompt (2023), context (mid-2025), loop (June 2026), graph (July 2026) — each naming a real shift, each turned into content slop within weeks.
-tags: [term-genealogy, hype-cycle, era-agentic, history]
+tags: [term-genealogy, hype-cycle, history]
 speaker: "Eugeniu Ghelbur (The AI Operator)"
 sources:
   - id: aio

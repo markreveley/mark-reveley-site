@@ -4,7 +4,7 @@ subtype: inference
 role: position
 title: "A map of how something works"
 description: The commenter's closing distillation — the graph is a map you create of how something works, then read back.
-tags: [legibility, knowledge-representation, era-agentic]
+tags: [legibility, knowledge-representation]
 speaker: "responding commenter, r/LLMDevs"
 sources:
   - id: rl

@@ -3,7 +3,7 @@ type: Issue
 role: issue
 title: "What is “graph engineering”?"
 description: "The contested definition — knowledge sense, orchestration sense, both, or merely a new name."
-tags: [issue, definition, graph-engineering]
+tags: [issue, graph-engineering]
 status: open
 generated: { by: research_agent/claude-code, at: 2026-08-25T01:10:00Z }
 ---

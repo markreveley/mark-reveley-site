@@ -3,7 +3,7 @@ type: Source Reference
 title: "Seven Bridges of Königsberg (Wikipedia)"
 description: The origin story — Euler's 1736 impossibility proof as the founding act of graph theory.
 resource: https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg
-tags: [level-1, era-classical, history]
+tags: [level-1, history]
 source_author: "Wikipedia contributors"
 source_date: "living document"
 retrieved: "2026-08-24"

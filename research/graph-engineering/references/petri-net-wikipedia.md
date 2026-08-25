@@ -3,7 +3,7 @@ type: Source Reference
 title: "Petri net (Wikipedia)"
 description: The 1962 formalism beneath workflow modeling — directed bipartite graphs of places and transitions, specialized later into workflow nets.
 resource: https://en.wikipedia.org/wiki/Petri_net
-tags: [level-1, era-classical, workflow-engines, history, academic]
+tags: [level-1, workflow-engines, history, academic]
 source_author: "Wikipedia contributors"
 source_date: "living document"
 retrieved: "2026-08-24"

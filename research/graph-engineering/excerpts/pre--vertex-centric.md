@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "Vertex-centric iteration"
 description: Pregel's computational model (2010) — programs as iterations in which vertices receive messages, send messages, and mutate state — the systems ancestor of agent-graph runtimes.
-tags: [history, orchestration, era-classical, academic]
+tags: [history, orchestration, academic]
 speaker: "Malewicz et al. (Google)"
 sources:
   - id: pre

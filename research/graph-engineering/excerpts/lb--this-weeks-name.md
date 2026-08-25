@@ -4,7 +4,7 @@ subtype: definition
 role: position
 title: "This week's name for an orchestrated system of loops"
 description: Bouchard's deflationary definition — graph engineering as the newest label on a rename treadmill, for a practice that already existed.
-tags: [term-genealogy, skepticism, graph-engineering, era-agentic]
+tags: [term-genealogy, skepticism, graph-engineering]
 speaker: "Louis-François Bouchard"
 sources:
   - id: lb

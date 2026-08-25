@@ -4,7 +4,7 @@ subtype: definition
 role: position
 title: "Workflows vs agents"
 description: The December 2024 distinction both 2026 camps descend from — predefined code paths versus LLMs directing their own process, in a loop.
-tags: [control-flow, history, loop-engineering, era-agentic]
+tags: [control-flow, history, loop-engineering]
 speaker: "Anthropic (Building Effective Agents)"
 sources:
   - id: anth

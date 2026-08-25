@@ -4,7 +4,7 @@ subtype: claim
 role: evidence
 title: "Deterministic and agentic steps in one graph"
 description: LangGraph's self-definition — a low-level orchestration runtime whose core strength is mixing hand-coded and LLM-driven steps in a single stateful graph.
-tags: [tooling, orchestration, determinism, control-flow, era-agentic]
+tags: [tooling, orchestration, determinism, control-flow]
 speaker: "LangChain (LangGraph documentation)"
 sources:
   - id: lg

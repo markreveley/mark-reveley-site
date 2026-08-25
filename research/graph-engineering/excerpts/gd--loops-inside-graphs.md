@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Loops live inside the nodes"
 description: "The nesting claim — important nodes still contain loops; the graph organizes, constrains, and connects them. Plus the restraint prescription: graph only the necessary relationships."
-tags: [control-flow, orchestration, loop-engineering, simplicity, era-agentic]
+tags: [control-flow, orchestration, loop-engineering, simplicity]
 speaker: "Gao Dalie (高達烈)"
 sources:
   - id: gd

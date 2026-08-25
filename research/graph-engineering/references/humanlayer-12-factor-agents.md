@@ -3,7 +3,7 @@ type: Source Reference
 title: "12-Factor Agents (HumanLayer / Dex Horthy)"
 description: The 2025 production-agents manifesto — "own your control flow" — quoted here directly from a local clone of the repository.
 resource: https://github.com/humanlayer/12-factor-agents
-tags: [level-1, era-agentic, control-flow, loop-engineering, practice]
+tags: [level-1, control-flow, loop-engineering, practice]
 source_author: "Dex Horthy (HumanLayer)"
 source_date: "2025 (repository; read at commit d20c728)"
 retrieved: "2026-08-24"

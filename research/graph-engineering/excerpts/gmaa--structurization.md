@@ -4,7 +4,7 @@ subtype: claim
 role: position
 title: "Structurization for agents"
 description: The academic survey's thesis — graphs are the natural data paradigm for structuring the intricate information agent capabilities depend on.
-tags: [academic, knowledge-representation, orchestration, memory, era-agentic]
+tags: [academic, knowledge-representation, orchestration, memory]
 speaker: "Bei et al. (survey authors)"
 sources:
   - id: gmaa

@@ -3,7 +3,7 @@ type: Source Reference
 title: "Building Effective Agents (Anthropic)"
 description: The December 2024 essay that fixed the workflows-vs-agents vocabulary and the tools-in-a-loop definition later claimed as loop/graph engineering's common ancestor.
 resource: https://www.anthropic.com/research/building-effective-agents
-tags: [level-1, era-agentic, control-flow, loop-engineering, history, simplicity]
+tags: [level-1, control-flow, loop-engineering, history, simplicity]
 source_author: "Anthropic (Erik Schluntz and Barry Zhang)"
 source_date: "2024-12-19"
 retrieved: "2026-08-24"

@@ -4,7 +4,7 @@ subtype: observation
 role: evidence
 title: "The same two engineers, three times"
 description: The personnel continuity of the workflow lineage — Amazon (SWF) → Microsoft (Durable Task) → Uber (Cadence) → Temporal.
-tags: [workflow-engines, durable-execution, history, era-agentic]
+tags: [workflow-engines, durable-execution, history]
 speaker: "Tim Imkin (Temporal blog)"
 sources:
   - id: tmp

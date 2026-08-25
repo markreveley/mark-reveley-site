@@ -73,9 +73,15 @@ Assignment heuristic: contested → position; consensus or historical → eviden
 Tags group perspectives across sources so a consumer can synthesize a tag view by scanning frontmatter (SPEC §3.1).
 
 - **Topic**: `knowledge-representation`, `retrieval`, `memory`, `orchestration`, `control-flow`, `typed-edges`, `temporal`, `concurrency`, `legibility`, `determinism`, `verification`
-- **Discourse**: `definition`, `term-genealogy`, `hype-cycle`, `skepticism`, `practice`, `evaluation`, `risk`, `simplicity`, `prescription-hybrid`
-- **Practice era**: `era-classical` (1736–2011: graph theory, semantic web, graph systems), `era-knowledge-graph` (2012–2023: Google KG through GraphRAG's antecedents), `era-agentic` (2024– : agents, loops, and the 2026 naming events)
+- **Discourse**: `term-genealogy`, `hype-cycle`, `skepticism`, `practice`, `evaluation`, `risk`, `simplicity`
 - **Discipline**: `loop-engineering`, `graph-engineering`, `standards`, `tooling`, `multi-agent`, `history`, `academic`, `workflow-engines`, `durable-execution`, `argumentation` (the last three added in research push #2 for the workflow-engine and coordination lineages)
+
+**A tag has to divide the corpus.** Two families were dropped on 2026-08-25 (operator-directed) because they did not:
+
+- The **practice era** family — `era-agentic`, `era-classical`, `era-knowledge-graph`. `era-agentic` sat on 60 of 70 excerpts, which is not a sorting mechanism but a restatement of what the bundle is about. The period distinction it was meant to draw is already carried by `history` (on all ten former `era-classical` excerpts) and by each source's `source_date`.
+- The **speech-act echoes** — `definition`, `prescription`, `solution`, `prescription-hybrid`. These duplicated values of the `subtype` enum, which every excerpt already carries as a first-class field; `prescription` and `solution` were never in this taxonomy to begin with. Sort by `subtype` instead.
+
+Expect the surviving tags to stay lopsided toward this bundle's subject — that is what a single research push produces. The test is not evenness but whether a tag splits the corpus into a set worth reading on its own.
 
 # Verification
 

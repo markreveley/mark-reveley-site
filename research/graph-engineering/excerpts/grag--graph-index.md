@@ -4,7 +4,7 @@ subtype: solution
 role: position
 title: "An LLM-built graph index"
 description: GraphRAG's mechanism — derive an entity knowledge graph from documents, pre-generate community summaries, answer global questions by map-reduce over communities.
-tags: [retrieval, solution, academic, knowledge-representation, era-agentic]
+tags: [retrieval, academic, knowledge-representation]
 speaker: "Edge et al. (Microsoft Research)"
 sources:
   - id: grag
