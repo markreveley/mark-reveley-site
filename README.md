@@ -14,3 +14,18 @@ Working repository for research artifacts.
   - **Level 3** — [`views/`](research/graph-engineering/views/): non-narrative compositions over the quote DAG (synthesis documents live in `ob6to8/direction`).
 
 Start at [`research/graph-engineering/index.md`](research/graph-engineering/index.md).
+
+## Running the site locally
+
+The built pages are committed, so opening `site/index.html` in a browser is
+enough to read it. To serve it over HTTP instead:
+
+    python3 -m http.server -d site 8000     # then open http://localhost:8000/
+
+To regenerate the pages from the research bundle:
+
+    pip install -r site/requirements.txt    # PyYAML, Python-Markdown
+    python3 site/build.py
+
+Those two packages are needed only to build the site, never to view it. See
+[`site/README.md`](site/README.md) for what the build does.
