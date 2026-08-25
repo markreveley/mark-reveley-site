@@ -1,5 +1,9 @@
 # Bundle Update Log
 
+## 2026-08-25 (later)
+
+* **Creation**: New `definitions` tag (operator-directed) — a topical tag for standards bodies' own terms-and-definitions entries, distinct from the `definition` speech-act echo dropped earlier the same day (see [README](README.md) § Tag taxonomy). Seeded with the normative/informative distinction as three bodies draw it: added 3 source references ([ISO/IEC Directives Part 2](references/iso-iec-directives-part2.md), [W3C QA Framework](references/w3c-qaframe-spec.md), [IETF RFC 7322](references/ietf-rfc7322.md)) and 3 excerpts, all curl-verified raw against their live pages. Corpus now 41 sources / 73 excerpts.
+
 ## 2026-08-25
 
 * **Update**: Tag taxonomy pruned at operator direction — a tag has to divide the corpus, and seven did not. Dropped the **practice era** family (`era-agentic` 87 uses, `era-classical` 20, `era-knowledge-graph` 2): `era-agentic` sat on 60 of 70 excerpts, restating the bundle's subject rather than sorting it, and the period distinction survives in `history` (carried by all ten former `era-classical` excerpts) and in each source's `source_date`. Dropped the **speech-act echoes** (`definition` 5, `solution` 4, `prescription` 3, `prescription-hybrid` 1), which duplicated values of the `subtype` enum every excerpt already carries as a field — including the `definition`-on-non-definition-subtypes convention recorded below, now superseded; `prescription` and `solution` were never in the documented taxonomy at all. 109 files rewritten, no excerpt left untagged, 35 site topics down to 28. See [README](README.md) § Tag taxonomy.

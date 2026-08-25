@@ -55,7 +55,7 @@ Verbatim quotes, one OKF concept each. Since v3 (IBIS-hybrid) every excerpt carr
 * [Without a termination condition](ms--termination.md) - The loop's definitional hazard — agents that run forever or stop arbitrarily. *(problem)*
 * [Decision trees don't fit CSV rows](rl--decision-trees-vs-csv.md) - The concrete failure case — decision structures for 10,000 behaviors can be flattened into linked rows, but reading and retrieval degrade because the encoding fights the shape of the data. *(problem)*
 
-# Evidence (26)
+# Evidence (29)
 
 * [Throw the DAG away (and what happened next)](12fa--throw-the-dag-away.md) - The 2023-era promise recorded by 12-factor-agents — give the agent a goal and skip the graph — followed immediately by the verdict: it doesn't quite work. *(observation)*
 * [My job is to write loops](36kr--my-job-is-to-write-loops.md) - Boris Cherny's first-person report of the practice shift — running loops that prompt Claude and decide what to do next. *(observation)*
@@ -67,6 +67,8 @@ Verbatim quotes, one OKF concept each. Since v3 (IBIS-hybrid) every excerpt carr
 * [Managers, contractors, and bids](cnp--manager-and-contractors.md) - Smith's 1980 Contract Net Protocol — task announcement, bidding, delegation, and recursive subcontracting among autonomous agents. *(definition)*
 * [Things, not strings](gkg--things-not-strings.md) - Google's 2012 slogan — an intelligent model, "in geek-speak, a graph," of real-world entities and their relationships. *(definition)*
 * [Issues, positions, arguments](ibis--wicked-problems.md) - Kunz & Rittel's IBIS — typed argumentation graphs for wicked problems (1960s–1970), made graphical hypertext by Conklin's gIBIS in the late 1980s. *(definition)*
+* [Normative and informative references](ietf--normative-informative-references.md) - The RFC Editor's test for sorting an RFC's own references — essential to implementing or understanding it, or merely additional. *(definition)*
+* [Normative and informative elements](iso--normative-informative-elements.md) - ISO/IEC's own terms-and-definitions entries for what makes part of a standard normative versus informative. *(definition)*
 * [A model calling tools in a loop until done](lc--model-calling-tools-in-loop.md) - The loop era's minimal definition of an agent, from LangChain's June 2026 loop-engineering piece. *(definition)*
 * [Inspired by Pregel](lg--pregel-lineage.md) - The acknowledged descent of the era's dominant agent runtime from Google's 2010 graph-processing system. *(observation)*
 * [Deterministic and agentic steps in one graph](lg--stateful-orchestration.md) - LangGraph's self-definition — a low-level orchestration runtime whose core strength is mixing hand-coded and LLM-driven steps in a single stateful graph. *(claim)*
@@ -82,4 +84,5 @@ Verbatim quotes, one OKF concept each. Since v3 (IBIS-hybrid) every excerpt carr
 * [Deciders, workers, durable state — 2012](swf--durable-state-2012.md) - Amazon SWF (announced February 2012) — coordinate distributed tasks, track state durably, and let a decider program choose each next step. *(definition)*
 * [Durable Execution](tmp--durable-execution.md) - The abstraction the workflow lineage converged on — automatically preserving a workflow's full state so execution survives failure. *(definition)*
 * [The same two engineers, three times](tmp--shipped-it-three-times.md) - The personnel continuity of the workflow lineage — Amazon (SWF) → Microsoft (Durable Task) → Uber (Cadence) → Temporal. *(observation)*
+* [Normative and informative text](w3c--normative-informative.md) - The W3C glossary definition every technical specification's conformance sections rest on. *(definition)*
 * [Euler, 1736, and the founding of graph theory](wik--euler-1736.md) - The deep origin — Euler's formalization and impossibility proof for the Königsberg bridges founded graph theory and foreshadowed topology. *(observation)*

@@ -72,7 +72,7 @@ Assignment heuristic: contested → position; consensus or historical → eviden
 
 Tags group perspectives across sources so a consumer can synthesize a tag view by scanning frontmatter (SPEC §3.1).
 
-- **Topic**: `knowledge-representation`, `retrieval`, `memory`, `orchestration`, `control-flow`, `typed-edges`, `temporal`, `concurrency`, `legibility`, `determinism`, `verification`
+- **Topic**: `knowledge-representation`, `retrieval`, `memory`, `orchestration`, `control-flow`, `typed-edges`, `temporal`, `concurrency`, `legibility`, `determinism`, `verification`, `definitions`
 - **Discourse**: `term-genealogy`, `hype-cycle`, `skepticism`, `practice`, `evaluation`, `risk`, `simplicity`
 - **Discipline**: `loop-engineering`, `graph-engineering`, `standards`, `tooling`, `multi-agent`, `history`, `academic`, `workflow-engines`, `durable-execution`, `argumentation` (the last three added in research push #2 for the workflow-engine and coordination lineages)
 
@@ -82,6 +82,8 @@ Tags group perspectives across sources so a consumer can synthesize a tag view b
 - The **speech-act echoes** — `definition`, `prescription`, `solution`, `prescription-hybrid`. These duplicated values of the `subtype` enum, which every excerpt already carries as a first-class field; `prescription` and `solution` were never in this taxonomy to begin with. Sort by `subtype` instead.
 
 Expect the surviving tags to stay lopsided toward this bundle's subject — that is what a single research push produces. The test is not evenness but whether a tag splits the corpus into a set worth reading on its own.
+
+**`definitions`, added 2026-08-25 (operator-directed), is not the dropped `definition` speech-act echo above.** That tag sat on every excerpt whose `subtype` was `definition` regardless of content — a restatement of a field the excerpt already carried. `definitions` is narrower and topical: it marks excerpts whose content is a standards body's own terms-and-definitions entry for a term of art — the kind of thing that keeps recurring across ISO, W3C, and IETF documents and is worth reading as its own set regardless of which bundle happens to cite it. Seeded with the normative/informative distinction as drawn by [ISO/IEC](excerpts/iso--normative-informative-elements.md), [W3C](excerpts/w3c--normative-informative.md), and [IETF](excerpts/ietf--normative-informative-references.md).
 
 # Verification
 
