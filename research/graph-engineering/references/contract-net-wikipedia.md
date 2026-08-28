@@ -19,4 +19,4 @@ Added in research push #2. The orchestrator-worker pattern of 2026 agent systems
 
 # Excerpts in this bundle
 
-- [Managers, contractors, and bids](../excerpts/managers-contractors-and-bids.md)
+- [Managers, contractors, and bids](../excerpts/cnp--manager-and-contractors.md)
