@@ -1,338 +1,197 @@
 #!/usr/bin/env python3
-"""Build the static site in site/ from the research bundle in research/.
-
-The site has one object: the quote. Every verbatim excerpt in the bundle
-becomes one card — the quote text, a note, its date, the URL it came from, and
-its labels. Sources, views and the level hierarchy are not rendered as pages of
-their own.
-
-Quotes are reached by topic. quotes.html lists every topic in the corpus;
-topics/<tag>.html holds the quotes carrying that tag, and topics/all.html holds
-the lot. A quote carries several tags, so it appears under each of them.
-
-Output is HTML + CSS only: no JavaScript, nothing to run to *view* the
-result. Building it needs PyYAML and Python-Markdown:
-
-    pip install pyyaml markdown
-    python3 site/build.py
-"""
+"""Build the static site from the OKF-style records in quotes/."""
 
 import html
 import re
+import shutil
 import sys
+from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 try:
     import yaml
-    from markdown import Extension, Markdown
-    from markdown.preprocessors import Preprocessor
-    from markdown.treeprocessors import Treeprocessor
-    from xml.etree import ElementTree as etree
 except ImportError as exc:  # pragma: no cover
-    sys.exit(f"{exc}; this build script needs: pip install pyyaml markdown")
+    sys.exit(f"{exc}; install the build dependency: pip install -r site/requirements.txt")
+
 
 ROOT = Path(__file__).resolve().parent.parent
-BUNDLE = ROOT / "research" / "graph-engineering"
+QUOTE_DB = ROOT / "quotes"
 OUT = ROOT / "site"
+TOPICS = OUT / "topics"
 
-# Directories and pages the build clears first, so a rebuild leaves no orphans:
-# the topic pages (a tag dropped from the bundle should lose its page) and the
-# pages an older, level-structured version of this site generated.
-STALE = ["topics", "reading.html", "sources.html", "excerpts.html",
-         "views.html", "views"]
+NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About")]
+MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+]
+VERIFICATION_STATUSES = {"verified", "unverified", "not-found", "source-unavailable"}
 
 
-# --------------------------------------------------------------------------
-# loading
-# --------------------------------------------------------------------------
-
-def load(path):
-    """Split a bundle document into (frontmatter dict, body text)."""
+def load_frontmatter(path):
+    """Return YAML frontmatter from a Markdown record."""
     text = path.read_text(encoding="utf-8")
-    meta = {}
-    body = text
-    if text.startswith("---\n"):
-        end = text.find("\n---\n", 4)
-        if end != -1:
-            raw, body = text[4:end], text[end + 5:]
-            try:
-                meta = yaml.safe_load(raw) or {}
-            except yaml.YAMLError:
-                meta = dict(re.findall(r"^(\w+): (.+)$", raw, re.M))
-    return meta, body
-
-
-def sections(body):
-    """Map '# Heading' -> the markdown under it (top-level headings only)."""
-    out, name, buf = {}, None, []
-    for line in body.splitlines():
-        if line.startswith("# "):
-            if name is not None:
-                out[name] = "\n".join(buf).strip()
-            name, buf = line[2:].strip(), []
-        else:
-            buf.append(line)
-    if name is not None:
-        out[name] = "\n".join(buf).strip()
-    return out
-
-
-def sec(doc, *names):
-    """First matching body section — headings vary (Quote vs Quotes)."""
-    for n in names:
-        if n in doc["sec"]:
-            return doc["sec"][n]
-    return ""
-
-
-def collect(dirname):
-    docs = {}
-    for path in sorted((BUNDLE / dirname).glob("*.md")):
-        if path.name == "index.md":
-            continue
-        meta, body = load(path)
-        docs[path.stem] = {
-            "slug": path.stem,
-            "path": f"{dirname}/{path.name}",
-            "meta": meta,
-            "body": body,
-            "sec": sections(body),
-            "title": meta.get("title") or path.stem,
-            "description": meta.get("description", ""),
-            "tags": meta.get("tags") or [],
-        }
-    return docs
-
-
-# --------------------------------------------------------------------------
-# dates
-#
-# The bundle writes source dates as free text: an ISO date, sometimes a year
-# only, sometimes with a parenthetical ("2010 (SIGMOD, pp. 135-146)"), and
-# sometimes no date at all ("living document"). Read the leading date off the
-# front for display and sorting; keep the rest as-is when there is none.
-# --------------------------------------------------------------------------
-
-MONTHS = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"]
-
-LEAD_DATE = re.compile(r"^\s*(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?")
-
-
-def parse_date(raw):
-    """(y, m, d) as ints with 0 for the parts a date string omits, or None."""
-    m = LEAD_DATE.match(str(raw or ""))
-    if not m:
+    if not text.startswith("---\n"):
         return None
-    y, mo, d = m.group(1), m.group(2), m.group(3)
-    return int(y), int(mo or 0), int(d or 0)
+    end = text.find("\n---\n", 4)
+    if end == -1:
+        raise ValueError(f"{path}: frontmatter is missing its closing ---")
+    meta = yaml.safe_load(text[4:end]) or {}
+    if not isinstance(meta, dict):
+        raise ValueError(f"{path}: frontmatter must be a mapping")
+    return meta
+
+
+def slugify(value):
+    return re.sub(r"[^a-z0-9._-]+", "-", str(value).lower()).strip("-") or "untagged"
+
+
+def quote_title(quote):
+    words = re.sub(r"\s+", " ", quote).strip().split()
+    title = " ".join(words[:9]).strip("\"'“”‘’.,:;!?—–-")
+    if len(words) > 9:
+        title += "…"
+    return title or "Quote"
+
+
+def valid_web_url(value):
+    parsed = urlparse(value)
+    return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
+
+
+def valid_iso_date(value, partial=False):
+    patterns = (r"\d{4}", r"\d{4}-\d{2}", r"\d{4}-\d{2}-\d{2}") if partial else (r"\d{4}-\d{2}-\d{2}",)
+    if not any(re.fullmatch(pattern, value) for pattern in patterns):
+        return False
+    try:
+        if len(value) == 4:
+            date(int(value), 1, 1)
+        elif len(value) == 7:
+            date(int(value[:4]), int(value[5:]), 1)
+        else:
+            date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
+def optional_text(meta, key, path):
+    value = meta.get(key)
+    if value is None:
+        return ""
+    if not isinstance(value, (str, date)):
+        raise ValueError(f"{path}: {key} must be text")
+    return str(value).strip()
+
+
+def collect_quotes():
+    records = []
+    identities = {}
+    if not QUOTE_DB.exists():
+        return records
+    for path in sorted(QUOTE_DB.glob("*.md")):
+        meta = load_frontmatter(path)
+        if not meta or str(meta.get("type", "")).lower() != "quote":
+            continue
+        missing = [
+            key for key in ("resource", "quote", "date_added", "tags")
+            if key not in meta or meta[key] is None
+            or (isinstance(meta[key], str) and not meta[key].strip())
+        ]
+        if missing:
+            raise ValueError(f"{path}: missing required field(s): {', '.join(missing)}")
+        resource = optional_text(meta, "resource", path)
+        quote = optional_text(meta, "quote", path)
+        date_added = optional_text(meta, "date_added", path)
+        if not valid_web_url(resource):
+            raise ValueError(f"{path}: resource must be an absolute http:// or https:// URL")
+        if not valid_iso_date(date_added):
+            raise ValueError(f"{path}: date_added must be a valid YYYY-MM-DD date")
+        tags = meta["tags"]
+        if not isinstance(tags, list) or not tags or not all(isinstance(tag, str) for tag in tags):
+            raise ValueError(f"{path}: tags must be a non-empty list of strings")
+        normalized_tags = [slugify(tag) for tag in tags]
+        if any(tag != normalized for tag, normalized in zip(tags, normalized_tags)):
+            raise ValueError(f"{path}: tags must be lowercase and hyphenated")
+        if len(set(normalized_tags)) != len(normalized_tags):
+            raise ValueError(f"{path}: tags must not contain duplicates")
+
+        source_date = optional_text(meta, "source_date", path)
+        if source_date and not valid_iso_date(source_date, partial=True):
+            raise ValueError(f"{path}: source_date must be YYYY, YYYY-MM, or YYYY-MM-DD")
+        verification_status = optional_text(meta, "verification_status", path) or "unverified"
+        if verification_status not in VERIFICATION_STATUSES:
+            allowed = ", ".join(sorted(VERIFICATION_STATUSES))
+            raise ValueError(f"{path}: verification_status must be one of: {allowed}")
+        verification_date = optional_text(meta, "verification_date", path)
+        if verification_date and not valid_iso_date(verification_date):
+            raise ValueError(f"{path}: verification_date must be a valid YYYY-MM-DD date")
+        if verification_status != "unverified" and not verification_date:
+            raise ValueError(
+                f"{path}: verification_date is required when verification_status is {verification_status}"
+            )
+
+        identity = (resource, quote)
+        if identity in identities:
+            raise ValueError(
+                f"{path}: duplicates the URL and quote in {identities[identity]}"
+            )
+        identities[identity] = path
+        records.append({
+            "slug": path.stem,
+            "resource": resource,
+            "quote": quote,
+            "date_added": date_added,
+            "tags": normalized_tags,
+            "title": optional_text(meta, "title", path) or quote_title(quote),
+            "source_title": optional_text(meta, "source_title", path),
+            "source_author": optional_text(meta, "source_author", path),
+            "source_date": source_date,
+            "speaker": optional_text(meta, "speaker", path),
+            "verification_status": verification_status,
+            "verification_date": verification_date,
+        })
+    return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
 
 
 def pretty_date(raw):
-    """'2026-07-04' -> '4 July 2026'; '2026-04' -> 'April 2026'; '2026' -> '2026'.
-
-    A string with no leading date ('living document') is shown as written.
-    """
-    parts = parse_date(raw)
-    if not parts:
-        return str(raw or "").strip()
-    y, mo, d = parts
-    if d:
-        return f"{d} {MONTHS[mo - 1]} {y}"
-    if mo:
-        return f"{MONTHS[mo - 1]} {y}"
-    return str(y)
-
-
-def date_key(raw):
-    """Sort key, newest first; undated entries sort to the end."""
-    parts = parse_date(raw)
-    if not parts:
-        return (0, 0, 0, 0)
-    y, mo, d = parts
-    return (1, y, mo, d)
-
-
-# --------------------------------------------------------------------------
-# link resolution
-#
-# A link between two excerpts becomes an anchor on topics/all.html, the one
-# page that is guaranteed to hold every quote — a topic page holds only its own.
-# A link to anything else — a source record, an issue, a view, the bundle README
-# — has no page here, so it keeps its text and loses its href rather than going
-# dead.
-# --------------------------------------------------------------------------
-
-def resolve(href, depth, base=None):
-    if href.startswith(("http://", "https://", "mailto:")):
-        return href
-    href = href.split("#")[0]
-    m = re.search(r"(?:(excerpts|references|issues|views)/)?([\w.\-]+)\.md$", href)
-    if not m:
-        return None
-    kind, slug = m.group(1) or base, m.group(2)
-    if kind != "excerpts" or slug == "index" or slug not in excs:
-        return None
-    return "../" * depth + f"topics/all.html#q-{slug}"
-
-
-# --------------------------------------------------------------------------
-# markdown rendering — Python-Markdown, plus tree passes that adapt its output
-# to this site: bundle links become site anchors, headings are shifted under
-# the page's own <h1>, and tables get a scroll wrapper.
-# --------------------------------------------------------------------------
-
-FOOTNOTE_REF = re.compile(r"\[\^[\w.\-]+\]")
-FOOTNOTE_DEF = re.compile(r"^\[\^[\w.\-]+\]:.*$", re.M)
-
-
-class StripFootnotes(Preprocessor):
-    """Drop footnote markers and definitions.
-
-    Every excerpt footnotes its own source, which the card already links at
-    the bottom; rendering them again per card would repeat that a hundred
-    times.
-    """
-
-    def run(self, lines):
-        text = FOOTNOTE_DEF.sub("", "\n".join(lines))
-        return [ln.rstrip() for ln in FOOTNOTE_REF.sub("", text).splitlines()]
-
-
-class RewriteLinks(Treeprocessor):
-    """Point bundle markdown links at their anchor on this site."""
-
-    def __init__(self, md, depth, base):
-        super().__init__(md)
-        self.depth, self.base = depth, base
-
-    def run(self, root):
-        for a in root.iter("a"):
-            href = a.get("href", "")
-            if href.startswith(("http://", "https://", "mailto:")):
-                a.set("rel", "noreferrer")
-                continue
-            target = resolve(href, self.depth, self.base)
-            if target is None:
-                a.tag = "span"
-                a.attrib.pop("href", None)
-            else:
-                a.set("href", target)
-
-
-class ShiftHeadings(Treeprocessor):
-    """Renumber headings so a section's `#` sits under the page's own <h1>."""
-
-    def __init__(self, md, base):
-        super().__init__(md)
-        self.base = base
-
-    def run(self, root):
-        for el in root.iter():
-            if len(el.tag) == 2 and el.tag[0] == "h" and el.tag[1].isdigit():
-                el.tag = f"h{min(6, self.base + int(el.tag[1]) - 1)}"
-
-
-class WrapTables(Treeprocessor):
-    """Let a wide table scroll inside its own box instead of the page."""
-
-    def run(self, root):
-        for i, child in enumerate(list(root)):
-            if child.tag == "table":
-                box = etree.Element("div", {"class": "scroll"})
-                box.append(child)
-                root[i] = box
-
-
-class SplitQuotes(Treeprocessor):
-    """Give each statement its own quote mark.
-
-    An excerpt that quotes its source twice writes two blockquotes separated
-    by a blank line; Python-Markdown folds those into one. Split them back
-    apart so the card shows two quotations, not one two-paragraph quotation.
-    """
-
-    def run(self, root):
-        children = []
-        for child in root:
-            paras = list(child)
-            if child.tag == "blockquote" and len(paras) > 1 and \
-                    all(p.tag == "p" for p in paras):
-                for para in paras:
-                    quote = etree.Element("blockquote")
-                    quote.append(para)
-                    children.append(quote)
-            else:
-                children.append(child)
-        root[:] = children
-
-
-class BundleExtension(Extension):
-    def __init__(self, depth, heading_base, base):
-        self.depth, self.heading_base, self.base = depth, heading_base, base
-        super().__init__()
-
-    def extendMarkdown(self, md):
-        # \" is a markdown escape in the bundle's quoted passages; Python-
-        # Markdown's own escape set predates that convention.
-        if '"' not in md.ESCAPED_CHARS:
-            md.ESCAPED_CHARS.append('"')
-        md.preprocessors.register(StripFootnotes(md), "strip_footnotes", 40)
-        md.treeprocessors.register(RewriteLinks(md, self.depth, self.base), "bundle_links", 4)
-        md.treeprocessors.register(ShiftHeadings(md, self.heading_base), "shift_headings", 3)
-        md.treeprocessors.register(WrapTables(md), "wrap_tables", 2)
-        md.treeprocessors.register(SplitQuotes(md), "split_quotes", 1)
-
-
-_converters = {}
-
-
-def _converter(depth, heading_base, base):
-    key = (depth, heading_base, base)
-    if key not in _converters:
-        _converters[key] = Markdown(
-            extensions=["tables", BundleExtension(depth, heading_base, base)],
-            output_format="html")
-    return _converters[key].reset()
-
-
-def markdown(text, depth=0, heading_base=3, base=None):
-    """Render a bundle markdown fragment as HTML for a page `depth` dirs down.
-
-    `base` names the collection the fragment came from, for sibling links.
-    """
-    return _converter(depth, heading_base, base).convert(text.strip())
-
-
-def inline(text, depth=0, base=None):
-    """Render a one-line fragment (a description, a label) without the <p>."""
-    out = markdown(text, depth, base=base)
-    m = re.fullmatch(r"<p>(.*)</p>", out, re.S)
-    return m.group(1) if m else out
-
-
-# --------------------------------------------------------------------------
-# page shell
-# --------------------------------------------------------------------------
-
-NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About")]
+    year_match = re.fullmatch(r"\d{4}", raw)
+    if year_match:
+        return raw
+    month_match = re.fullmatch(r"(\d{4})-(\d{2})", raw)
+    if month_match:
+        year, month = map(int, month_match.groups())
+        return f"{MONTHS[month - 1]} {year}"
+    match = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", raw)
+    if not match:
+        return raw
+    year, month, day = map(int, match.groups())
+    if not 1 <= month <= 12:
+        return raw
+    return f"{day} {MONTHS[month - 1]} {year}"
 
 
 def page(path, title, body, active=None, lede=None):
     depth = path.count("/")
     up = "../" * depth
     nav = "".join(
-        '<a href="{href}"{cur}>{label}</a>'.format(
+        '<a href="{href}"{current}>{label}</a>'.format(
             href=up + href, label=label,
-            cur=' aria-current="page"' if href == active else "")
-        for href, label in NAV)
-    doc = f"""<!DOCTYPE html>
+            current=' aria-current="page"' if href == active else "",
+        )
+        for href, label in NAV
+    )
+    description = (
+        f'<meta name="description" content="{html.escape(lede, quote=True)}">'
+        if lede else ""
+    )
+    document = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)} — Mark Reveley</title>
-{'<meta name="description" content="' + html.escape(lede or "", quote=True) + '">' if lede else ''}
+{description}
 <link rel="stylesheet" href="{up}style.css">
 </head>
 <body>
@@ -350,92 +209,52 @@ def page(path, title, body, active=None, lede=None):
 </body>
 </html>
 """
-    dest = OUT / path
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(doc, encoding="utf-8")
-    return dest
+    destination = OUT / path
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(document, encoding="utf-8")
 
 
 def topic_href(tag, depth):
-    """Where a topic lives. Tags are already slug-shaped; this only guards it."""
-    slug = re.sub(r"[^a-z0-9._-]+", "-", str(tag).lower()).strip("-") or "untagged"
-    return "../" * depth + f"topics/{slug}.html"
+    return "../" * depth + f"topics/{slugify(tag)}.html"
 
 
-def tags_html(kind, tags, depth):
-    """The card's bottom row: what kind of statement it is, then its topics."""
-    items = [f'<li class="kind">{html.escape(str(kind))}</li>'] if kind else []
-    items += [f'<li><a href="{topic_href(t, depth)}">{html.escape(str(t))}</a></li>'
-              for t in tags]
-    return f'<ul class="tags">{"".join(items)}</ul>' if items else ""
+def quote_text_html(text):
+    paragraphs = []
+    for paragraph in re.split(r"\n\s*\n", text.strip()):
+        escaped = html.escape(paragraph).replace("\n", "<br>\n")
+        paragraphs.append(f"<p>{escaped}</p>")
+    return "".join(paragraphs)
 
 
-# --------------------------------------------------------------------------
-# index the bundle
-# --------------------------------------------------------------------------
-
-refs = collect("references")
-excs = collect("excerpts")
-
-# quote -> the sources it was taken from
-for e in excs.values():
-    e["src"] = []
-    for s in (e["meta"].get("sources") or []):
-        m = re.search(r"references/([\w.\-]+)\.md", str(s.get("resource", "")))
-        if m and m.group(1) in refs:
-            e["src"].append(m.group(1))
-    # A quote is dated by the source it came from — the first one it cites.
-    e["date"] = refs[e["src"][0]]["meta"].get("source_date", "") if e["src"] else ""
-
-# Newest first; undated quotes ("living document") fall to the end.
-ORDER = sorted(excs.values(),
-               key=lambda e: (tuple(-n for n in date_key(e["date"])),
-                              e["title"].lower()))
-
-# topic -> its quotes, in that same order. Topics come off the quotes alone:
-# a source's own tags describe the source, which this site no longer renders.
-topics = {}
-for e in ORDER:
-    for tag in e["tags"]:
-        topics.setdefault(str(tag), []).append(e)
-
-# Most-used first, alphabetical within a count — the order the old by-tag view
-# used, and the one that puts the useful topics at the top of the list.
-TOPIC_ORDER = sorted(topics, key=lambda tg: (-len(topics[tg]), tg))
-
-
-# --------------------------------------------------------------------------
-# pages
-# --------------------------------------------------------------------------
-
-def source_links(e):
-    """The URLs this quote came from, one per line, bare."""
-    rows = []
-    for slug in e["src"]:
-        url = str(refs[slug]["meta"].get("resource", "")).strip()
-        if not url:
-            continue
-        safe = html.escape(url, quote=True)
-        if url.startswith(("http://", "https://")):
-            rows.append(f'<li><a href="{safe}" rel="noreferrer">{html.escape(url)}</a></li>')
-        else:
-            rows.append(f"<li>{html.escape(url)}</li>")
-    return f'<ul class="src">{"".join(rows)}</ul>' if rows else ""
-
-
-def quote_card(e, depth):
-    quote = markdown(sec(e, "Quote", "Quotes"), depth, base="excerpts")
-    note = markdown(sec(e, "Note"), depth, base="excerpts")
-    speaker = str(e["meta"].get("speaker", "")).strip()
-    when = pretty_date(e["date"])
-    line = " · ".join(x for x in (html.escape(speaker), html.escape(when)) if x)
-    return f"""<article class="card quote" id="q-{e['slug']}">
-  <h2><a class="self" href="#q-{e['slug']}">{html.escape(e['title'])}</a></h2>
-  <div class="said">{quote}</div>
-  <div class="note">{note}</div>
-  <p class="attrib">{line}</p>
-  {source_links(e)}
-  {tags_html(e['meta'].get('subtype'), e['tags'], depth)}
+def quote_card(record, depth):
+    tags = "".join(
+        f'<li><a href="{topic_href(tag, depth)}">{html.escape(tag)}</a></li>'
+        for tag in record["tags"]
+    )
+    resource = html.escape(record["resource"], quote=True)
+    attribution_html = (
+        f'<p class="attrib">{html.escape(record["speaker"])}</p>'
+        if record["speaker"] else ""
+    )
+    source_details = " · ".join(
+        html.escape(value) for value in (
+            record["source_title"],
+            record["source_author"],
+            pretty_date(record["source_date"]) if record["source_date"] else "",
+        ) if value
+    )
+    source_title_html = (
+        f'<p class="source-title">{source_details}</p>' if source_details else ""
+    )
+    verification = record["verification_status"].replace("-", " ")
+    return f"""<article class="card quote" id="q-{record['slug']}">
+  <h2><a class="self" href="#q-{record['slug']}">{html.escape(record['title'])}</a></h2>
+  <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
+  {attribution_html}
+  {source_title_html}
+  <ul class="src"><li><a href="{resource}" rel="noreferrer">{html.escape(record['resource'])}</a></li></ul>
+  <p class="record-meta">Added <time datetime="{html.escape(record['date_added'], quote=True)}">{html.escape(pretty_date(record['date_added']))}</time> · {html.escape(verification)}</p>
+  <ul class="tags">{tags}</ul>
 </article>"""
 
 
@@ -464,46 +283,50 @@ def build_posts():
          lede="Mark Reveley — dev blog. Posts, quotes, and about.")
 
 
-def build_quotes():
-    """The landing page: the sentence, then the list of topics."""
-    n_src = len({s for e in excs.values() for s in e["src"]})
+def build_quotes(records, topics):
+    topic_order = sorted(topics, key=lambda tag: (-len(topics[tag]), tag))
     rows = "".join(
-        f'<li><a href="{topic_href(tg, 0)}">{html.escape(tg)}</a>'
-        f'<span class="count">{len(topics[tg])}</span></li>'
-        for tg in TOPIC_ORDER)
+        f'<li><a href="{topic_href(tag, 0)}">{html.escape(tag)}</a>'
+        f'<span class="count">{len(topics[tag])}</span></li>'
+        for tag in topic_order
+    )
+    sources = len({record["resource"] for record in records})
+    source_word = "source" if sources == 1 else "sources"
+    topic_list = f'<h2 class="topics-head">Topics</h2><ul class="topics">{rows}</ul>' if rows else ""
+    empty = '<p class="empty">No quotes yet.</p>' if not records else ""
     body = f"""<section class="hero">
   <h1>Quotes</h1>
   <p class="lede">A collection of quotes from selected reading.</p>
-  <p class="counts">{len(ORDER)} quotes from {n_src} sources, tagged with
-  {len(TOPIC_ORDER)} topics. Pick one below, or
-  <a href="topics/all.html">read them all</a>.</p>
+  <p class="counts">{len(records)} quotes from {sources} {source_word}, tagged with
+  {len(topic_order)} topics. <a href="topics/all.html">Read them all</a>.</p>
 </section>
-
-<h2 class="topics-head">Topics</h2>
-<ul class="topics">{rows}</ul>"""
+{empty}{topic_list}"""
     page("quotes.html", "Quotes", body, active="quotes.html",
          lede="A collection of quotes from selected reading.")
 
 
-def build_topic(heading, quotes, filename, lede):
+def build_topic(heading, records, filename, lede):
+    cards = "".join(quote_card(record, 1) for record in records)
+    if not cards:
+        cards = '<p class="empty">No quotes yet.</p>'
     body = f"""<section class="hero">
   <h1>{html.escape(heading)}</h1>
   <p class="lede">{lede}</p>
   <p class="counts"><a href="../quotes.html">All topics</a></p>
 </section>
-{''.join(quote_card(e, 1) for e in quotes)}"""
-    page(f"topics/{filename}", heading, body, active="quotes.html", lede=lede)
+{cards}"""
+    page(f"topics/{filename}", heading, body, active="quotes.html", lede=re.sub("<[^>]+>", "", lede))
 
 
-def build_topics():
-    build_topic("All quotes", ORDER, "all.html",
-                f"Every quote in the corpus, {len(ORDER)} of them, newest first.")
-    for tg in TOPIC_ORDER:
-        quotes = topics[tg]
-        n = len(quotes)
-        build_topic(tg, quotes, Path(topic_href(tg, 0)).name,
-                    f"{n} quote{'' if n == 1 else 's'} tagged "
-                    f"<em>{html.escape(tg)}</em>, newest first.")
+def build_topics(records, topics):
+    build_topic("All quotes", records, "all.html",
+                f"Every quote in the collection, {len(records)} of them, newest first.")
+    for tag in sorted(topics, key=lambda value: (-len(topics[value]), value)):
+        count = len(topics[tag])
+        build_topic(
+            tag, topics[tag], f"{slugify(tag)}.html",
+            f"{count} quote{'' if count == 1 else 's'} tagged <em>{html.escape(tag)}</em>, newest first.",
+        )
 
 
 def build_about():
@@ -514,37 +337,35 @@ def build_about():
 
 <section class="about-more">
   <p>This site is three things: <a href="index.html">posts</a> when there are
-  any, a <a href="quotes.html">quotes</a> section — one quote per statement,
-  each with the date and the URL it came from — and this page.</p>
+  any, a <a href="quotes.html">quotes</a> section — one quote per record,
+  each with the date it was added and the URL it came from — and this page.</p>
   <p>It is static HTML and CSS — no JavaScript, no framework, no analytics.</p>
 </section>"""
     page("about.html", "About", body, active="about.html",
          lede="Mark Reveley is a musician developer living in Berkeley.")
 
 
-def clean():
-    """Remove pages the level-structured version of this site used to write."""
-    for name in STALE:
-        target = OUT / name
-        if target.is_dir():
-            for child in sorted(target.rglob("*"), reverse=True):
-                child.unlink() if child.is_file() else child.rmdir()
-            target.rmdir()
-        elif target.exists():
-            target.unlink()
-
-
 def main():
-    clean()
+    records = collect_quotes()
+    topics = {}
+    for record in records:
+        for tag in record["tags"]:
+            topics.setdefault(tag, []).append(record)
+    if TOPICS.exists():
+        shutil.rmtree(TOPICS)
     build_posts()
-    build_quotes()
-    build_topics()
+    build_quotes(records, topics)
+    build_topics(records, topics)
     build_about()
-    pages = sorted(p.relative_to(OUT).as_posix() for p in OUT.rglob("*.html"))
-    print(f"{len(excs)} quotes · {len(refs)} sources indexed · "
-          f"{len(TOPIC_ORDER)} topics")
+    pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))
+    sources = len({record["resource"] for record in records})
+    source_word = "source" if sources == 1 else "sources"
+    print(f"{len(records)} quotes · {sources} {source_word} · {len(topics)} topics")
     print(f"wrote {len(pages)} pages")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except ValueError as exc:
+        sys.exit(str(exc))

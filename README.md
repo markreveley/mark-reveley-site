@@ -1,31 +1,59 @@
 # mark-reveley
 
-Working repository for research artifacts.
+A static personal site with posts, selected quotes, and an about page.
 
-## Contents
+## Add a quote
 
-- [`site/`](site/) — the website: a static dev blog (posts, quotes, about) in
-  HTML and CSS only. Its quotes section is a front door onto the research
-  bundle below — one card per quote, reached by topic, the levels left behind.
-  Open `site/index.html`, or see [`site/README.md`](site/README.md).
-- [`research/graph-engineering/`](research/graph-engineering/) — evidence bundle on **graph engineering**: primary sources and the typed DAG of verbatim quotes extracted from them (OKF v0.2 carrier). Per the house rule, explicit synthesis lives in `ob6to8/direction`.
-  - **Level 1** — [`references/`](research/graph-engineering/references/): annotated links to primary sources.
-  - **Level 2** — [`excerpts/`](research/graph-engineering/excerpts/): verbatim quotes decomposed into typed, tagged, cross-linked knowledge units.
-  - **Level 3** — [`views/`](research/graph-engineering/views/): non-narrative compositions over the quote DAG (synthesis documents live in `ob6to8/direction`).
+Invoke the repository skill and provide the resource URL and exact quote text:
 
-Start at [`research/graph-engineering/index.md`](research/graph-engineering/index.md).
+    $quote-curator
 
-## Running the site locally
+The skill asks only for whichever of those two inputs is missing. It inspects
+the source, verifies the quotation when possible, records supported source
+metadata, assigns topics, writes an OKF-style Markdown record under
+[`quotes/`](quotes/), and rebuilds and tests the site.
 
-The built pages are committed, so opening `site/index.html` in a browser is
-enough to read it. To serve it over HTTP instead:
+The URL is intentionally not unique. Different quotes may point to the same
+resource; only an exact repeat of both URL and quote is rejected.
 
-    python3 -m http.server -d site 8000     # then open http://localhost:8000/
+## Quote records
 
-To regenerate the pages from the research bundle:
+The Markdown files in [`quotes/`](quotes/) are the quote database and the only
+source of truth. Each record has these YAML frontmatter attributes:
 
-    pip install -r site/requirements.txt    # PyYAML, Python-Markdown
+```yaml
+---
+type: Quote
+resource: "https://example.com/article"
+quote: "The selected passage."
+date_added: "2026-08-28"
+tags: ["example-topic"]
+source_title: "Example article"
+source_author: "Example Author"
+source_date: "2026-08-20"
+verification_status: "verified"
+verification_date: "2026-08-28"
+---
+```
+
+See [`quotes/README.md`](quotes/README.md) for the complete schema. The
+repository-scoped skill lives at
+[`quote-curator/SKILL.md`](.agents/skills/quote-curator/SKILL.md).
+
+The former graph-engineering research bundle and its demo quotes are preserved
+under [`removed/research/`](removed/research/).
+
+## Run and rebuild the site
+
+The generated pages are committed, so they can be opened directly or served:
+
+    python3 -m http.server -d site 8000
+
+To rebuild without adding a quote:
+
+    pip install -r site/requirements.txt
     python3 site/build.py
 
-Those two packages are needed only to build the site, never to view it. See
-[`site/README.md`](site/README.md) for what the build does.
+Run the tests with:
+
+    python3 -m unittest discover -s tests -v

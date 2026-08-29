@@ -103,7 +103,7 @@ p { margin: 0 0 .9rem; }
 .lede { font-size: 1.08rem; color: var(--ink-soft); }
 .lede strong { color: var(--ink); font-weight: 600; }
 
-.counts, .attrib, .empty-note, .foot p {
+.counts, .attrib, .record-meta, .source-title, .empty-note, .foot p {
   font-family: var(--sans); font-size: .8rem;
 }
 .counts { color: var(--ink-faint); margin-bottom: 0; }
@@ -170,6 +170,8 @@ a.self:hover { text-decoration: underline; }
 .note p:last-child { margin-bottom: 0; }
 
 .attrib { color: var(--ink-faint); margin: .7rem 0 .2rem; }
+.source-title { color: var(--ink-soft); margin: .25rem 0 .15rem; }
+.record-meta { color: var(--ink-faint); margin: .45rem 0 0; }
 
 ul.src {
   list-style: none; margin: 0; padding: 0;
