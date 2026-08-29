@@ -6,7 +6,7 @@ A static personal site with posts, selected quotes, and an about page.
 
 Invoke the repository skill and provide the resource URL and exact quote text:
 
-    $quote-curator
+    $quote
 
 The skill asks only for whichever of those two inputs is missing. It inspects
 the source, verifies the quotation when possible, records supported source
@@ -38,7 +38,7 @@ verification_date: "2026-08-28"
 
 See [`quotes/README.md`](quotes/README.md) for the complete schema. The
 repository-scoped skill lives at
-[`quote-curator/SKILL.md`](.agents/skills/quote-curator/SKILL.md).
+[`quote/SKILL.md`](.agents/skills/quote/SKILL.md).
 
 The former graph-engineering research bundle and its demo quotes are preserved
 under [`removed/research/`](removed/research/).

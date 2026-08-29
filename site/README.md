@@ -23,7 +23,7 @@ quote database. `build.py` reads their `resource`, `quote`, `date_added`, and
 
 The same resource URL may occur in any number of quote records.
 
-Add a quote by invoking `$quote-curator` with a resource URL and exact quote.
+Add a quote by invoking `$quote` with a resource URL and exact quote.
 The repository skill researches and authors the record, then rebuilds these
 pages automatically.
 

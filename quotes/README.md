@@ -46,6 +46,6 @@ combination of complete URL and exact quote text must be unique.
 
 ## Intake
 
-Invoke `$quote-curator` and provide a URL and quote. The repository skill reads
+Invoke `$quote` and provide a URL and quote. The repository skill reads
 the source, assigns tags, records supported metadata and verification state,
 authors the Markdown file directly, then rebuilds and tests the site.

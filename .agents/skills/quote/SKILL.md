@@ -1,9 +1,9 @@
 ---
-name: quote-curator
+name: quote
 description: Add a selected quotation to this site's quote collection from a URL and exact quote text. Use when the user asks to save, collect, intake, or add a quote; research its source metadata, classify it, author the OKF-style record, and rebuild the site. Do not use for general quotation lookup or unrelated research.
 ---
 
-# Quote curator
+# Quote
 
 Treat the skill invocation as the only intake interface. The user supplies a
 resource URL and quote text; ask only for whichever of those two is missing.
