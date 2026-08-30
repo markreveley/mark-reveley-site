@@ -25,6 +25,8 @@ quote database. `build.py` reads their `resource`, `quote`, `date_added`, and
 
 - `quotes.html`: every quote as a newest-first vertical feed
 - `tags.html`: multi-column index of quote tags
+- `writers.html`: index of quote writers
+- `writers/<writer>.html`: quotes by a selected writer
 - `topics/all.html`: every quote, newest added first
 - `topics/<tag>.html`: quotes grouped by assigned topic
 

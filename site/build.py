@@ -20,6 +20,7 @@ QUOTE_DB = ROOT / "quotes"
 POST_DB = ROOT / "posts"
 OUT = ROOT / "site"
 TOPICS = OUT / "topics"
+WRITERS = OUT / "writers"
 
 NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About")]
 MONTHS = [
@@ -236,9 +237,6 @@ def page(path, title, body, active=None, lede=None):
 <main id="main">
 {body}
 </main>
-<footer class="foot">
-  <p>Static HTML and CSS</p>
-</footer>
 </body>
 </html>
 """
@@ -249,6 +247,10 @@ def page(path, title, body, active=None, lede=None):
 
 def topic_href(tag, depth):
     return "../" * depth + f"topics/{slugify(tag)}.html"
+
+
+def writer_href(writer, depth):
+    return "../" * depth + f"writers/{slugify(writer)}.html"
 
 
 def quote_text_html(text):
@@ -273,14 +275,15 @@ def quote_card(record, depth):
         f'<a href="{resource}" rel="noreferrer">'
         f'{html.escape(record["source_title"] or "Source")}</a>'
     )
-    source_details = " · ".join(
-        [source_link] + [
-            html.escape(value) for value in (
-            record["source_author"],
-            pretty_date(record["source_date"]) if record["source_date"] else "",
-            ) if value
-        ]
-    )
+    writer_details = []
+    if record["source_author"]:
+        writer_details.append(
+            f'<a href="{writer_href(record["source_author"], depth)}">'
+            f'{html.escape(record["source_author"])}</a>'
+        )
+    if record["source_date"]:
+        writer_details.append(pretty_date(record["source_date"]))
+    source_details = " · ".join([source_link] + writer_details)
     source_title_html = f'  <p class="source-title">{source_details}</p>\n'
     return f"""<article class="card quote" id="q-{record['slug']}">
   <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
@@ -342,7 +345,7 @@ def build_quotes(records, topics):
     body = f"""<section class="hero">
   <h1>Quotes</h1>
   <p class="lede">{lede}</p>
-  <p class="counts"><a href="tags.html">Tags</a></p>
+  <p class="counts"><a href="tags.html">Tags</a> · <a href="writers.html">Writer</a></p>
 </section>
 <section class="quote-feed" aria-label="Quotes">{feed}</section>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
@@ -357,6 +360,42 @@ def build_quotes(records, topics):
 <section aria-label="All tags">{tag_list}</section>"""
     page("tags.html", "Tags", tags_body, active="quotes.html",
          lede="Browse the quote collection by tag.")
+
+
+def build_writers(records):
+    writers = {}
+    for record in records:
+        if record["source_author"]:
+            writers.setdefault(record["source_author"], []).append(record)
+    rows = "".join(
+        f'<li><a href="writers/{slugify(writer)}.html">{html.escape(writer)}</a></li>'
+        for writer in sorted(writers, key=str.casefold)
+    )
+    writer_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No writers yet.</p>'
+    index_body = f"""<section class="hero">
+  <h1>Writer</h1>
+  <p class="lede">Browse the quote collection by writer.</p>
+  <p class="counts"><a href="quotes.html">Quotes</a></p>
+</section>
+<section aria-label="All writers">{writer_list}</section>"""
+    page("writers.html", "Writer", index_body, active="quotes.html",
+         lede="Browse the quote collection by writer.")
+
+    for writer, writer_records in sorted(writers.items(), key=lambda item: item[0].casefold()):
+        selected = html.escape(writer)
+        cards = "".join(quote_card(record, 1) for record in writer_records)
+        body = f"""<section class="hero">
+  <h1>{selected}</h1>
+  <p class="counts"><a href="../quotes.html">Quotes</a></p>
+</section>
+{cards or '<p class="empty">No quotes yet.</p>'}"""
+        page(
+            f"writers/{slugify(writer)}.html",
+            f"Writer — {writer}",
+            body,
+            active="quotes.html",
+            lede=f"Quotes by {writer}.",
+        )
 
 
 def build_topic(heading, records, filename, lede):
@@ -387,6 +426,10 @@ def build_about():
     body = """<section class="hero">
   <h1>About</h1>
   <p class="lede">Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a (no-longer-touring) member of the band Dirtwire. I write here about AI, agents, dev, and music</p>
+</section>
+
+<section class="about-more">
+  <img class="about-photo" src="assets/mark-headshot.jpg" alt="Mark Reveley">
 </section>"""
     page("about.html", "About", body, active="about.html",
          lede="Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a (no-longer-touring) member of the band Dirtwire. I write here about AI, agents, dev, and music")
@@ -401,8 +444,11 @@ def main():
             topics.setdefault(tag, []).append(record)
     if TOPICS.exists():
         shutil.rmtree(TOPICS)
+    if WRITERS.exists():
+        shutil.rmtree(WRITERS)
     build_posts(posts)
     build_quotes(records, topics)
+    build_writers(records)
     build_topics(records, topics)
     build_about()
     pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))

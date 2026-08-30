@@ -50,24 +50,27 @@ def isolated_site():
         output = root / "site"
         quote_db.mkdir()
         post_db.mkdir()
-        old_db, old_posts, old_out, old_topics = (
+        old_db, old_posts, old_out, old_topics, old_writers = (
             site_build.QUOTE_DB,
             site_build.POST_DB,
             site_build.OUT,
             site_build.TOPICS,
+            site_build.WRITERS,
         )
         try:
             site_build.QUOTE_DB = quote_db
             site_build.POST_DB = post_db
             site_build.OUT = output
             site_build.TOPICS = output / "topics"
+            site_build.WRITERS = output / "writers"
             yield quote_db, output
         finally:
-            site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS = (
+            site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS, site_build.WRITERS = (
                 old_db,
                 old_posts,
                 old_out,
                 old_topics,
+                old_writers,
             )
 
 
@@ -115,6 +118,8 @@ class SiteBuildTests(unittest.TestCase):
 
             landing = (output / "quotes.html").read_text(encoding="utf-8")
             tags_page = (output / "tags.html").read_text(encoding="utf-8")
+            writers_page = (output / "writers.html").read_text(encoding="utf-8")
+            writer_page = (output / "writers" / "example-author.html").read_text(encoding="utf-8")
             all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
             self.assertIn(
                 "A collection of decent-probability human authored quotes from selected reading, "
@@ -122,6 +127,7 @@ class SiteBuildTests(unittest.TestCase):
                 landing,
             )
             self.assertIn('<a href="tags.html">Tags</a>', landing)
+            self.assertIn('<a href="writers.html">Writer</a>', landing)
             self.assertIn('class="quote-feed"', landing)
             self.assertLess(
                 landing.index("Design &lt;systems&gt; carefully."),
@@ -132,6 +138,11 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn("software-engineering", tags_page)
             self.assertNotIn('<article class="card quote"', tags_page)
             self.assertNotIn("A software quote.", tags_page)
+            self.assertIn('<a href="writers/example-author.html">Example Author</a>', landing)
+            self.assertIn('<a href="writers/example-author.html">Example Author</a>', writers_page)
+            self.assertIn("<h1>Example Author</h1>", writer_page)
+            self.assertIn("A software quote.", writer_page)
+            self.assertIn('<a href="../quotes.html">Quotes</a>', writer_page)
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
