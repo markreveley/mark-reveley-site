@@ -117,8 +117,8 @@ class SiteBuildTests(unittest.TestCase):
             tags_page = (output / "tags.html").read_text(encoding="utf-8")
             all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
             self.assertIn(
-                "A collection of decent-probability human authored quotes from selected "
-                "reading, most recent first",
+                "A collection of decent-probability human authored quotes from selected reading, "
+                "sorted by date added",
                 landing,
             )
             self.assertIn('<a href="tags.html">Tags</a>', landing)
