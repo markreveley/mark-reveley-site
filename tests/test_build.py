@@ -80,6 +80,27 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def test_about_links_to_social_profiles_with_icons(self):
+        with isolated_site() as (_, output):
+            build()
+
+            about = (output / "about.html").read_text(encoding="utf-8")
+            profiles = {
+                "Substack": "https://substack.com/@markreveley1",
+                "GitHub": "https://github.com/markreveley",
+                "X": "https://x.com/markreveley",
+                "LinkedIn": "https://www.linkedin.com/in/mark-r-9aab133/",
+            }
+            for service, profile in profiles.items():
+                with self.subTest(service=service):
+                    self.assertIn(f'href="{profile}"', about)
+                    self.assertIn(f'aria-label="{service}"', about)
+            self.assertEqual(about.count('rel="me noreferrer"'), len(profiles))
+            self.assertIn('class="about-heading"', about)
+            self.assertIn('class="about-social-links"', about)
+            self.assertEqual(about.count('class="social-icon"'), len(profiles))
+            self.assertNotIn("Elsewhere", about)
+
     def test_builds_posts_from_markdown_records(self):
         with isolated_site() as (quote_db, output):
             write_post(
