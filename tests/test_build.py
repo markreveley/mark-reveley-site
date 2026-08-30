@@ -123,6 +123,7 @@ class SiteBuildTests(unittest.TestCase):
                 source_title="An example article",
                 source_author="Example Author",
                 source_date="2026-08-20",
+                hacker_news_url="https://news.ycombinator.com/item?id=12345678",
                 verification_status="verified",
                 verification_date="2026-08-28",
             )
@@ -173,6 +174,10 @@ class SiteBuildTests(unittest.TestCase):
                 '<a href="https://example.com/article" rel="noreferrer">An example article</a>',
                 all_quotes,
             )
+            source_link = '<a href="https://example.com/article" rel="noreferrer">An example article</a>'
+            hn_link = '<a href="https://news.ycombinator.com/item?id=12345678" rel="noreferrer">hn</a>'
+            author_link = '<a href="../writers/example-author.html">Example Author</a>'
+            self.assertIn(f"{source_link} · {hn_link} · {author_link}", all_quotes)
             self.assertNotIn(">https://example.com/article</a>", all_quotes)
             self.assertNotIn("source unavailable", all_quotes)
             self.assertNotIn('class="record-meta"', all_quotes)
@@ -192,6 +197,7 @@ class SiteBuildTests(unittest.TestCase):
             ({"date_added": "2026-02-30"}, "date_added must be a valid"),
             ({"tags": []}, "tags must be a non-empty"),
             ({"tags": ["Software Engineering"]}, "lowercase and hyphenated"),
+            ({"hacker_news_url": "news.ycombinator.com/item?id=123"}, "hacker_news_url must be an absolute"),
         )
         for overrides, message in cases:
             with self.subTest(overrides=overrides), isolated_site() as (quote_db, _):

@@ -129,6 +129,9 @@ def collect_quotes():
             raise ValueError(
                 f"{path}: verification_date is required when verification_status is {verification_status}"
             )
+        hacker_news_url = optional_text(meta, "hacker_news_url", path)
+        if hacker_news_url and not valid_web_url(hacker_news_url):
+            raise ValueError(f"{path}: hacker_news_url must be an absolute http:// or https:// URL")
 
         identity = (resource, quote)
         if identity in identities:
@@ -146,6 +149,7 @@ def collect_quotes():
             "source_author": optional_text(meta, "source_author", path),
             "source_date": source_date,
             "speaker": optional_text(meta, "speaker", path),
+            "hacker_news_url": hacker_news_url,
             "verification_status": verification_status,
             "verification_date": verification_date,
         })
@@ -277,6 +281,11 @@ def quote_card(record, depth):
         f'{html.escape(record["source_title"] or "Source")}</a>'
     )
     writer_details = []
+    if record["hacker_news_url"]:
+        hacker_news_url = html.escape(record["hacker_news_url"], quote=True)
+        writer_details.append(
+            f'<a href="{hacker_news_url}" rel="noreferrer">hn</a>'
+        )
     if record["source_author"]:
         writer_details.append(
             f'<a href="{writer_href(record["source_author"], depth)}">'
