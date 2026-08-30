@@ -323,8 +323,6 @@ def build_posts(records):
     post_list = "".join(cards) or '<p class="empty">No posts yet.</p>'
     body = f"""<section class="hero">
   <h1>Posts</h1>
-  <p class="lede">Notes on building things — agents, graphs, and the occasional
-  detour through a sampler. Written when there is something worth writing down.</p>
 </section>
 
 <section class="posts">
@@ -342,7 +340,7 @@ def build_quotes(records, topics):
     )
     cards = "".join(quote_card(record, 0) for record in records)
     feed = cards or '<p class="empty">No quotes yet.</p>'
-    lede = "A collection of decent-probability human authored quotes from selected reading, sorted by date added"
+    lede = "A collection of decent-probability human authored quotes from selected reading, added by hand, sorted by date added"
     body = f"""<section class="hero">
   <h1>Quotes</h1>
   <p class="lede">{lede}</p>
@@ -421,14 +419,14 @@ def build_topics(records, topics):
 def build_about():
     body = """<section class="hero">
   <h1>About</h1>
-  <p class="lede">Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a (no-longer-touring) member of the band Dirtwire. I write here about AI, agents, dev, and music</p>
+  <p class="lede">Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a member of the band Dirtwire. I write here about AI, agents, dev, and music.</p>
 </section>
 
 <section class="about-more">
   <img class="about-photo" src="assets/mark-headshot.jpg" alt="Mark Reveley">
 </section>"""
     page("about.html", "About", body, active="about.html",
-         lede="Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a (no-longer-touring) member of the band Dirtwire. I write here about AI, agents, dev, and music")
+         lede="Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a member of the band Dirtwire. I write here about AI, agents, dev, and music.")
 
 
 def main():

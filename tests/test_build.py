@@ -123,7 +123,7 @@ class SiteBuildTests(unittest.TestCase):
             all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
             self.assertIn(
                 "A collection of decent-probability human authored quotes from selected reading, "
-                "sorted by date added",
+                "added by hand, sorted by date added",
                 landing,
             )
             self.assertNotIn('<a href="tags.html">Tags</a>', landing)
