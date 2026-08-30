@@ -46,14 +46,6 @@ def slugify(value):
     return re.sub(r"[^a-z0-9._-]+", "-", str(value).lower()).strip("-") or "untagged"
 
 
-def quote_title(quote):
-    words = re.sub(r"\s+", " ", quote).strip().split()
-    title = " ".join(words[:9]).strip("\"'“”‘’.,:;!?—–-")
-    if len(words) > 9:
-        title += "…"
-    return title or "Quote"
-
-
 def valid_web_url(value):
     parsed = urlparse(value)
     return parsed.scheme in {"http", "https"} and bool(parsed.netloc)
@@ -143,7 +135,6 @@ def collect_quotes():
             "quote": quote,
             "date_added": date_added,
             "tags": normalized_tags,
-            "title": optional_text(meta, "title", path) or quote_title(quote),
             "source_title": optional_text(meta, "source_title", path),
             "source_author": optional_text(meta, "source_author", path),
             "source_date": source_date,
@@ -233,7 +224,7 @@ def quote_card(record, depth):
     )
     resource = html.escape(record["resource"], quote=True)
     attribution_html = (
-        f'<p class="attrib">{html.escape(record["speaker"])}</p>'
+        f'  <p class="attrib">{html.escape(record["speaker"])}</p>\n'
         if record["speaker"] else ""
     )
     source_details = " · ".join(
@@ -244,16 +235,12 @@ def quote_card(record, depth):
         ) if value
     )
     source_title_html = (
-        f'<p class="source-title">{source_details}</p>' if source_details else ""
+        f'  <p class="source-title">{source_details}</p>\n' if source_details else ""
     )
-    verification = record["verification_status"].replace("-", " ")
     return f"""<article class="card quote" id="q-{record['slug']}">
-  <h2><a class="self" href="#q-{record['slug']}">{html.escape(record['title'])}</a></h2>
   <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
-  {attribution_html}
-  {source_title_html}
+{attribution_html}{source_title_html}\
   <ul class="src"><li><a href="{resource}" rel="noreferrer">{html.escape(record['resource'])}</a></li></ul>
-  <p class="record-meta">Added <time datetime="{html.escape(record['date_added'], quote=True)}">{html.escape(pretty_date(record['date_added']))}</time> · {html.escape(verification)}</p>
   <ul class="tags">{tags}</ul>
 </article>"""
 

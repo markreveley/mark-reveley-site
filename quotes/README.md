@@ -15,7 +15,6 @@ Required OKF-style frontmatter fields:
 
 Optional enriched fields:
 
-- `title`: a short label for the quote card
 - `source_title`: title of the page or work
 - `source_author`: author of the source
 - `source_date`: publication date at known ISO precision
@@ -27,7 +26,6 @@ Optional enriched fields:
 ```yaml
 ---
 type: Quote
-title: "A short descriptive label"
 resource: "https://example.com/article"
 quote: "The exact selected passage."
 date_added: "2026-08-28"

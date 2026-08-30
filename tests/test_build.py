@@ -79,7 +79,9 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
             self.assertIn("Example Author", all_quotes)
-            self.assertIn("source unavailable", all_quotes)
+            self.assertNotIn("source unavailable", all_quotes)
+            self.assertNotIn('class="record-meta"', all_quotes)
+            self.assertNotIn('<a class="self"', all_quotes)
             self.assertTrue((output / "topics" / "software-engineering.html").exists())
 
     def test_rejects_an_exact_url_and_quote_duplicate(self):

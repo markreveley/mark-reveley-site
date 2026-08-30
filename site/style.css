@@ -103,7 +103,7 @@ p { margin: 0 0 .9rem; }
 .lede { font-size: 1.08rem; color: var(--ink-soft); }
 .lede strong { color: var(--ink); font-weight: 600; }
 
-.counts, .attrib, .record-meta, .source-title, .empty-note, .foot p {
+.counts, .attrib, .source-title, .empty-note, .foot p {
   font-family: var(--sans); font-size: .8rem;
 }
 .counts { color: var(--ink-faint); margin-bottom: 0; }
@@ -126,9 +126,6 @@ p { margin: 0 0 .9rem; }
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-a.self { color: inherit; text-decoration: none; }
-a.self:hover { text-decoration: underline; }
-
 /* ---------- posts ---------- */
 
 .empty {
@@ -139,16 +136,8 @@ a.self:hover { text-decoration: underline; }
 .empty-note { color: var(--ink-faint); text-align: center; }
 
 /* ---------- a quote ----------
-   The quote text is the card. Its title sits above it as a small label, and
-   everything that describes the quote — note, attribution, source, labels —
-   sits under it, in descending weight. */
-
-.quote > h2 {
-  font-family: var(--sans);
-  font-size: .82rem; font-weight: 600; letter-spacing: .02em;
-  line-height: 1.35; color: var(--ink-faint);
-  margin: 0 0 .6rem;
-}
+   The quote text is the card. Everything that describes the quote — note,
+   attribution, source, labels — sits under it, in descending weight. */
 
 .said blockquote {
   margin: 0 0 .7rem; padding-left: 1rem;
@@ -171,8 +160,6 @@ a.self:hover { text-decoration: underline; }
 
 .attrib { color: var(--ink-faint); margin: .7rem 0 .2rem; }
 .source-title { color: var(--ink-soft); margin: .25rem 0 .15rem; }
-.record-meta { color: var(--ink-faint); margin: .45rem 0 0; }
-
 ul.src {
   list-style: none; margin: 0; padding: 0;
   font-family: var(--mono); font-size: .72rem; line-height: 1.5;
