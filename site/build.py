@@ -345,7 +345,6 @@ def build_quotes(records, topics):
     body = f"""<section class="hero">
   <h1>Quotes</h1>
   <p class="lede">{lede}</p>
-  <p class="counts"><a href="tags.html">Tags</a> · <a href="writers.html">Writer</a></p>
 </section>
 <section class="quote-feed" aria-label="Quotes">{feed}</section>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
@@ -355,7 +354,6 @@ def build_quotes(records, topics):
     tags_body = f"""<section class="hero">
   <h1>Tags</h1>
   <p class="lede">Browse the quote collection by tag.</p>
-  <p class="counts"><a href="quotes.html">Quotes</a></p>
 </section>
 <section aria-label="All tags">{tag_list}</section>"""
     page("tags.html", "Tags", tags_body, active="quotes.html",
@@ -375,7 +373,6 @@ def build_writers(records):
     index_body = f"""<section class="hero">
   <h1>Writer</h1>
   <p class="lede">Browse the quote collection by writer.</p>
-  <p class="counts"><a href="quotes.html">Quotes</a></p>
 </section>
 <section aria-label="All writers">{writer_list}</section>"""
     page("writers.html", "Writer", index_body, active="quotes.html",
@@ -386,7 +383,6 @@ def build_writers(records):
         cards = "".join(quote_card(record, 1) for record in writer_records)
         body = f"""<section class="hero">
   <h1>{selected}</h1>
-  <p class="counts"><a href="../quotes.html">Quotes</a></p>
 </section>
 {cards or '<p class="empty">No quotes yet.</p>'}"""
         page(

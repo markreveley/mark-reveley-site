@@ -126,14 +126,14 @@ class SiteBuildTests(unittest.TestCase):
                 "sorted by date added",
                 landing,
             )
-            self.assertIn('<a href="tags.html">Tags</a>', landing)
-            self.assertIn('<a href="writers.html">Writer</a>', landing)
+            self.assertNotIn('<a href="tags.html">Tags</a>', landing)
+            self.assertNotIn('<a href="writers.html">Writer</a>', landing)
             self.assertIn('class="quote-feed"', landing)
             self.assertLess(
                 landing.index("Design &lt;systems&gt; carefully."),
                 landing.index("A software quote."),
             )
-            self.assertIn('<a href="quotes.html">Quotes</a>', tags_page)
+            self.assertNotIn('<a href="quotes.html">Quotes</a>', tags_page)
             self.assertIn('<ul class="topics">', tags_page)
             self.assertIn("software-engineering", tags_page)
             self.assertNotIn('<article class="card quote"', tags_page)
@@ -142,7 +142,7 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('<a href="writers/example-author.html">Example Author</a>', writers_page)
             self.assertIn("<h1>Example Author</h1>", writer_page)
             self.assertIn("A software quote.", writer_page)
-            self.assertIn('<a href="../quotes.html">Quotes</a>', writer_page)
+            self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
