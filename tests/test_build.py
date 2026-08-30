@@ -73,12 +73,33 @@ class SiteBuildTests(unittest.TestCase):
             build()
 
             landing = (output / "quotes.html").read_text(encoding="utf-8")
+            tags_page = (output / "tags.html").read_text(encoding="utf-8")
             all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
-            self.assertIn("2 quotes from 1 source", landing)
+            self.assertIn(
+                "A collection of decent-probability human authored quotes from selected "
+                "reading, most recent first",
+                landing,
+            )
+            self.assertIn('<a href="tags.html">Tags</a>', landing)
+            self.assertIn('class="quote-feed"', landing)
+            self.assertLess(
+                landing.index("Design &lt;systems&gt; carefully."),
+                landing.index("A software quote."),
+            )
+            self.assertIn('<a href="quotes.html">Quotes</a>', tags_page)
+            self.assertIn('<ul class="topics">', tags_page)
+            self.assertIn("software-engineering", tags_page)
+            self.assertNotIn('<article class="card quote"', tags_page)
+            self.assertNotIn("A software quote.", tags_page)
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
             self.assertIn("Example Author", all_quotes)
+            self.assertIn(
+                '<a href="https://example.com/article" rel="noreferrer">An example article</a>',
+                all_quotes,
+            )
+            self.assertNotIn(">https://example.com/article</a>", all_quotes)
             self.assertNotIn("source unavailable", all_quotes)
             self.assertNotIn('class="record-meta"', all_quotes)
             self.assertNotIn('<a class="self"', all_quotes)

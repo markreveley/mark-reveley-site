@@ -227,20 +227,22 @@ def quote_card(record, depth):
         f'  <p class="attrib">{html.escape(record["speaker"])}</p>\n'
         if record["speaker"] else ""
     )
+    source_link = (
+        f'<a href="{resource}" rel="noreferrer">'
+        f'{html.escape(record["source_title"] or "Source")}</a>'
+    )
     source_details = " · ".join(
-        html.escape(value) for value in (
-            record["source_title"],
+        [source_link] + [
+            html.escape(value) for value in (
             record["source_author"],
             pretty_date(record["source_date"]) if record["source_date"] else "",
-        ) if value
+            ) if value
+        ]
     )
-    source_title_html = (
-        f'  <p class="source-title">{source_details}</p>\n' if source_details else ""
-    )
+    source_title_html = f'  <p class="source-title">{source_details}</p>\n'
     return f"""<article class="card quote" id="q-{record['slug']}">
   <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
 {attribution_html}{source_title_html}\
-  <ul class="src"><li><a href="{resource}" rel="noreferrer">{html.escape(record['resource'])}</a></li></ul>
   <ul class="tags">{tags}</ul>
 </article>"""
 
@@ -273,23 +275,33 @@ def build_posts():
 def build_quotes(records, topics):
     topic_order = sorted(topics, key=lambda tag: (-len(topics[tag]), tag))
     rows = "".join(
-        f'<li><a href="{topic_href(tag, 0)}">{html.escape(tag)}</a>'
-        f'<span class="count">{len(topics[tag])}</span></li>'
+        f'<li><a href="{topic_href(tag, 0)}">{html.escape(tag)}</a></li>'
         for tag in topic_order
     )
-    sources = len({record["resource"] for record in records})
-    source_word = "source" if sources == 1 else "sources"
-    topic_list = f'<h2 class="topics-head">Topics</h2><ul class="topics">{rows}</ul>' if rows else ""
-    empty = '<p class="empty">No quotes yet.</p>' if not records else ""
+    cards = "".join(quote_card(record, 0) for record in records)
+    feed = cards or '<p class="empty">No quotes yet.</p>'
+    lede = (
+        "A collection of decent-probability human authored quotes from selected "
+        "reading, most recent first"
+    )
     body = f"""<section class="hero">
   <h1>Quotes</h1>
-  <p class="lede">A collection of quotes from selected reading.</p>
-  <p class="counts">{len(records)} quotes from {sources} {source_word}, tagged with
-  {len(topic_order)} topics. <a href="topics/all.html">Read them all</a>.</p>
+  <p class="lede">{lede}</p>
+  <p class="counts"><a href="tags.html">Tags</a></p>
 </section>
-{empty}{topic_list}"""
+<section class="quote-feed" aria-label="Quotes">{feed}</section>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
-         lede="A collection of quotes from selected reading.")
+         lede=lede)
+
+    tag_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No tags yet.</p>'
+    tags_body = f"""<section class="hero">
+  <h1>Tags</h1>
+  <p class="lede">Browse the quote collection by tag.</p>
+  <p class="counts"><a href="quotes.html">Quotes</a></p>
+</section>
+<section aria-label="All tags">{tag_list}</section>"""
+    page("tags.html", "Tags", tags_body, active="quotes.html",
+         lede="Browse the quote collection by tag.")
 
 
 def build_topic(heading, records, filename, lede):
@@ -299,7 +311,7 @@ def build_topic(heading, records, filename, lede):
     body = f"""<section class="hero">
   <h1>{html.escape(heading)}</h1>
   <p class="lede">{lede}</p>
-  <p class="counts"><a href="../quotes.html">All topics</a></p>
+  <p class="counts"><a href="../tags.html">All tags</a></p>
 </section>
 {cards}"""
     page(f"topics/{filename}", heading, body, active="quotes.html", lede=re.sub("<[^>]+>", "", lede))

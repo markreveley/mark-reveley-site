@@ -17,7 +17,8 @@ The OKF-style Markdown files in [`../quotes/`](../quotes/) are the canonical
 quote database. `build.py` reads their `resource`, `quote`, `date_added`, and
 `tags` attributes and generates:
 
-- `quotes.html`: topic index and collection counts
+- `quotes.html`: every quote as a newest-first vertical feed
+- `tags.html`: multi-column index of quote tags
 - `topics/all.html`: every quote, newest added first
 - `topics/<tag>.html`: quotes grouped by assigned topic
 
