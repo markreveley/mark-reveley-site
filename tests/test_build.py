@@ -142,6 +142,8 @@ class SiteBuildTests(unittest.TestCase):
             tags_page = (output / "tags.html").read_text(encoding="utf-8")
             writers_page = (output / "writers.html").read_text(encoding="utf-8")
             writer_page = (output / "writers" / "example-author.html").read_text(encoding="utf-8")
+            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
+            topic_page = (output / "topics" / "software-engineering.html").read_text(encoding="utf-8")
             all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
             self.assertIn(
                 "A collection of decent-probability human authored quotes from selected reading, "
@@ -151,6 +153,14 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn('<a href="tags.html">Tags</a>', landing)
             self.assertNotIn('<a href="writers.html">Writer</a>', landing)
             self.assertIn('class="quote-feed"', landing)
+            self.assertIn('class="filter-toggle"', landing)
+            self.assertIn('href="quotes-expanded.html"', landing)
+            self.assertNotIn('class="filter-rail ', landing)
+            self.assertIn('class="filter-toggle is-on"', expanded)
+            self.assertIn('href="quotes.html"', expanded)
+            self.assertIn('class="filter-rail filter-rail-tags"', expanded)
+            self.assertIn('class="filter-rail filter-rail-sources"', expanded)
+            self.assertIn('aria-current="page">all</a>', expanded)
             self.assertLess(
                 landing.index("Design &lt;systems&gt; carefully."),
                 landing.index("A software quote."),
@@ -165,6 +175,9 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn("<h1>Example Author</h1>", writer_page)
             self.assertIn("A software quote.", writer_page)
             self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
+            self.assertIn('class="filter-toggle is-on"', writer_page)
+            self.assertIn('aria-current="page">Example Author</a>', writer_page)
+            self.assertIn('aria-current="page">software-engineering</a>', topic_page)
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
             self.assertIn('<a href="../topics/all.html">all</a></li>', all_quotes)
             self.assertIn("Example Speaker", all_quotes)
@@ -183,6 +196,77 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn('class="record-meta"', all_quotes)
             self.assertNotIn('<a class="self"', all_quotes)
             self.assertTrue((output / "topics" / "software-engineering.html").exists())
+
+    def test_builds_a_drill_down_topic_taxonomy(self):
+        with isolated_site() as (quote_db, output):
+            write_record(
+                quote_db,
+                "architecture.md",
+                quote="Agent architecture matters.",
+                tags=["agent-architecture"],
+            )
+            write_record(
+                quote_db,
+                "instructions.md",
+                resource="https://example.com/instructions",
+                quote="Agent instructions matter.",
+                tags=["agent-instructions"],
+            )
+            (quote_db / "taxonomy.yml").write_text(
+                """agent:
+  label: agent
+  children:
+    agent-architecture:
+      label: architecture
+      tags: [agent-architecture]
+    agent-instructions:
+      label: instruction
+      tags: [agent-instructions]
+software:
+  label: software
+""",
+                encoding="utf-8",
+            )
+            build()
+
+            landing = (output / "quotes.html").read_text(encoding="utf-8")
+            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
+            agent_page = (output / "topics" / "agent.html").read_text(encoding="utf-8")
+            architecture_page = (
+                output / "topics" / "agent-architecture.html"
+            ).read_text(encoding="utf-8")
+
+            self.assertIn(
+                '<a href="topics/agent.html">agent</a></li>'
+                '<li><a href="topics/agent-architecture.html">architecture</a>',
+                landing,
+            )
+            expanded_tags = expanded.split('class="filter-rail filter-rail-tags"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('href="topics/agent.html">agent</a>', expanded_tags)
+            self.assertIn('href="topics/software.html">software</a>', expanded_tags)
+            self.assertNotIn('>architecture</a>', expanded_tags)
+
+            agent_tags = agent_page.split('class="filter-rail filter-rail-tags"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn(
+                'href="../topics/agent.html" aria-current="page">agent</a>', agent_tags
+            )
+            self.assertIn('>architecture</a>', agent_tags)
+            self.assertIn('>instruction</a>', agent_tags)
+            self.assertNotIn('>software</a>', agent_tags)
+
+            architecture_tags = architecture_page.split(
+                'class="filter-rail filter-rail-tags"', 1
+            )[1].split("</aside>", 1)[0]
+            self.assertIn(
+                'aria-current="page">architecture</a>', architecture_tags
+            )
+            self.assertIn('class="filter-back"', architecture_tags)
+            self.assertIn('>← agent</a>', architecture_tags)
+            self.assertNotIn('>instruction</a>', architecture_tags)
 
     def test_rejects_an_exact_url_and_quote_duplicate(self):
         with isolated_site() as (quote_db, _):

@@ -44,6 +44,13 @@ verification_date: "2026-08-28"
 The URL is not a key: several records may point to the same resource. The
 combination of complete URL and exact quote text must be unique.
 
+## Taxonomy
+
+`taxonomy.yml` maps the flat tags stored in quote records onto the hierarchy
+shown by the site. Each raw tag must appear exactly once in a node's `tags`
+list. Node keys are stable page slugs; `label` is the shorter name displayed
+on quote cards and in the drill-down filter.
+
 ## Intake
 
 Invoke `$quote` and provide a URL and quote. The repository skill reads

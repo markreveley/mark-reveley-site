@@ -1,0 +1,169 @@
+agent:
+  label: agent
+  children:
+    agent-architecture:
+      label: architecture
+      tags: [agent-architecture]
+    agent-instructions:
+      label: instruction
+      tags: [agent-instructions]
+    agent-systems:
+      label: systems
+      tags: [agent-systems]
+    model-harnesses:
+      label: harnesses
+      tags: [model-harnesses]
+    tool-use:
+      label: tools
+      tags: [tool-use]
+    agent-workflow:
+      label: workflow
+      children:
+        workflow-orchestration:
+          label: orchestration
+          tags: [workflow-orchestration]
+        durable-execution:
+          label: durable-execution
+          tags: [durable-execution]
+        parallel-execution:
+          label: parallel-execution
+          tags: [parallel-execution]
+    guardrails:
+      label: guardrails
+      tags: [guardrails]
+
+model:
+  label: model
+  children:
+    ai-alignment:
+      label: alignment
+      tags: [ai-alignment]
+    ai-generated-code:
+      label: generated-code
+      tags: [ai-generated-code]
+    context-engineering:
+      label: context
+      tags: [context-engineering]
+    evaluation:
+      label: evaluation
+      tags: [evaluation]
+    model-inference:
+      label: inference
+      children:
+        inference-costs:
+          label: costs
+          tags: [inference-costs]
+        model-routing:
+          label: routing
+          tags: [model-routing]
+    model-training:
+      label: training
+      tags: [model-training]
+      children:
+        reinforcement-learning:
+          label: reinforcement
+          tags: [reinforcement-learning]
+
+software:
+  label: software
+  children:
+    software-architecture:
+      label: architecture
+      tags: [software-architecture]
+    software-engineering:
+      label: engineering
+      tags: [software-engineering]
+    requirements-engineering:
+      label: requirements
+      tags: [requirements-engineering]
+    software-testing:
+      label: testing
+      tags: [software-testing]
+      children:
+        test-driven-development:
+          label: test-driven
+          tags: [test-driven-development]
+    verification:
+      label: verification
+      tags: [verification]
+      children:
+        formal-methods:
+          label: formal-methods
+          tags: [formal-methods]
+    version-control:
+      label: version-control
+      tags: [version-control]
+      children:
+        git:
+          label: git
+          tags: [git]
+          children:
+            commit-messages:
+              label: commits
+              tags: [commit-messages]
+
+development:
+  label: development
+  children:
+    developer-infrastructure:
+      label: infrastructure
+      tags: [developer-infrastructure]
+    developer-tools:
+      label: tools
+      tags: [developer-tools]
+    editor-workflows:
+      label: editors
+      tags: [editor-workflows]
+      children:
+        neovim:
+          label: neovim
+          tags: [neovim]
+          children:
+            macros:
+              label: macros
+              tags: [macros]
+    unix:
+      label: unix
+      tags: [unix]
+
+design:
+  label: design
+  children:
+    design-systems:
+      label: design-systems
+      tags: [design-systems]
+      children:
+        asset-management:
+          label: assets
+          tags: [asset-management]
+    human-computer-interaction:
+      label: interfaces
+      tags: [human-computer-interaction]
+
+business:
+  label: business
+  children:
+    saas:
+      label: saas
+      tags: [saas]
+      children:
+        network-effects:
+          label: network-effects
+          tags: [network-effects]
+        vendor-lock-in:
+          label: vendor-lock-in
+          tags: [vendor-lock-in]
+
+human:
+  label: human
+  children:
+    human-in-the-loop:
+      label: oversight
+      tags: [human-in-the-loop]
+    feedback-loops:
+      label: feedback
+      tags: [feedback-loops]
+      children:
+        generalization:
+          label: generalization
+          tags: [generalization]

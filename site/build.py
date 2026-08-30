@@ -156,6 +156,81 @@ def collect_quotes():
     return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
 
 
+def build_taxonomy(records):
+    """Load the topic hierarchy, annotate records, and aggregate each node."""
+    raw_tags = {tag for record in records for tag in record["tags"]}
+    taxonomy_path = QUOTE_DB / "taxonomy.yml"
+    if taxonomy_path.exists():
+        definition = yaml.safe_load(taxonomy_path.read_text(encoding="utf-8")) or {}
+    else:
+        definition = {
+            tag: {"label": tag, "tags": [tag]}
+            for tag in sorted(raw_tags)
+        }
+    if not isinstance(definition, dict):
+        raise ValueError(f"{taxonomy_path}: taxonomy must be a mapping")
+
+    nodes = {}
+    tag_nodes = {}
+
+    def visit(branch, parent="", ancestors=()):
+        if not isinstance(branch, dict):
+            raise ValueError(f"{taxonomy_path}: children must be a mapping")
+        for slug, value in branch.items():
+            if not isinstance(slug, str) or slugify(slug) != slug:
+                raise ValueError(f"{taxonomy_path}: node keys must be lowercase and hyphenated")
+            if slug in nodes:
+                raise ValueError(f"{taxonomy_path}: duplicate node key {slug}")
+            spec = value or {}
+            if not isinstance(spec, dict):
+                raise ValueError(f"{taxonomy_path}: node {slug} must be a mapping")
+            label = spec.get("label", slug)
+            if not isinstance(label, str) or not label.strip():
+                raise ValueError(f"{taxonomy_path}: node {slug} needs a text label")
+            mapped_tags = spec.get("tags", [])
+            if not isinstance(mapped_tags, list) or not all(
+                isinstance(tag, str) and slugify(tag) == tag for tag in mapped_tags
+            ):
+                raise ValueError(f"{taxonomy_path}: node {slug} tags must be lowercase and hyphenated")
+            children = spec.get("children", {}) or {}
+            if not isinstance(children, dict):
+                raise ValueError(f"{taxonomy_path}: node {slug} children must be a mapping")
+            path = ancestors + (slug,)
+            nodes[slug] = {
+                "slug": slug,
+                "label": label.strip(),
+                "parent": parent,
+                "children": tuple(children),
+                "path": path,
+            }
+            for tag in mapped_tags:
+                if tag in tag_nodes:
+                    raise ValueError(f"{taxonomy_path}: tag {tag} is mapped more than once")
+                tag_nodes[tag] = slug
+            visit(children, slug, path)
+
+    visit(definition)
+    missing = sorted(raw_tags - set(tag_nodes))
+    if missing:
+        raise ValueError(f"{taxonomy_path}: unmapped quote tag(s): {', '.join(missing)}")
+
+    topic_records = {slug: [] for slug in nodes}
+    for record in records:
+        visible = []
+        visible_slugs = set()
+        memberships = set()
+        for tag in record["tags"]:
+            for slug in nodes[tag_nodes[tag]]["path"]:
+                memberships.add(slug)
+                if slug not in visible_slugs:
+                    visible.append((slug, nodes[slug]["label"]))
+                    visible_slugs.add(slug)
+        record["display_topics"] = visible
+        for slug in memberships:
+            topic_records[slug].append(record)
+    return nodes, topic_records
+
+
 def collect_posts():
     records = []
     if not POST_DB.exists():
@@ -212,13 +287,15 @@ def pretty_date(raw):
 def page(path, title, body, active=None, lede=None):
     depth = path.count("/")
     up = "../" * depth
-    nav = "".join(
-        '<a href="{href}"{current}>{label}</a>'.format(
-            href=up + href, label=label,
-            current=' aria-current="page"' if href == active else "",
+    nav_items = []
+    for href, label in NAV:
+        nav_items.append(
+            '<a href="{href}"{current}>{label}</a>'.format(
+                href=up + href, label=label,
+                current=' aria-current="page"' if href == active else "",
+            )
         )
-        for href, label in NAV
-    )
+    nav = "".join(nav_items)
     description = (
         f'<meta name="description" content="{html.escape(lede, quote=True)}">'
         if lede else ""
@@ -257,6 +334,98 @@ def writer_href(writer, depth):
     return "../" * depth + f"writers/{slugify(writer)}.html"
 
 
+def source_filter_name(record):
+    """Return the best available human-readable source identity."""
+    if record["source_author"]:
+        return record["source_author"]
+    if record["source_title"]:
+        return record["source_title"]
+    return urlparse(record["resource"]).netloc
+
+
+def quote_filter_toggle(depth, filters_on):
+    up = "../" * depth
+    href = up + ("quotes.html" if filters_on else "quotes-expanded.html")
+    label = "Hide quote filters" if filters_on else "Show quote filters"
+    state = " is-on" if filters_on else ""
+    return (
+        f'<a class="filter-toggle{state}" href="{href}" '
+        f'aria-label="{label}" title="{label}">'
+        '<svg viewBox="0 0 24 24" aria-hidden="true">'
+        '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>'
+        '<circle cx="12" cy="12" r="2.75"/></svg></a>'
+    )
+
+
+def quote_hero(title, lede, depth, filters_on):
+    lede_html = f'\n  <p class="lede">{lede}</p>' if lede else ""
+    return f"""<section class="hero">
+  <div class="quote-heading">
+    <h1>{html.escape(title)}</h1>
+    {quote_filter_toggle(depth, filters_on)}
+  </div>{lede_html}
+</section>"""
+
+
+def quote_filter_browser(feed, records, taxonomy, depth, selected_tag="", selected_source=""):
+    """Wrap a quote feed with static tag and source filter rails."""
+    tag_rows = []
+
+    if selected_tag and selected_tag != "all":
+        selected = taxonomy[selected_tag]
+        tag_rows.append(
+            f'<li><a href="{topic_href(selected_tag, depth)}" aria-current="page">'
+            f'{html.escape(selected["label"])}</a></li>'
+        )
+        for child_slug in selected["children"]:
+            child = taxonomy[child_slug]
+            tag_rows.append(
+                f'<li><a href="{topic_href(child_slug, depth)}">'
+                f'{html.escape(child["label"])}</a></li>'
+            )
+        parent_slug = selected["parent"]
+        parent_href = (
+            topic_href(parent_slug, depth)
+            if parent_slug else "../" * depth + "topics/all.html"
+        )
+        parent_label = taxonomy[parent_slug]["label"] if parent_slug else "all"
+        tag_rows.append(
+            f'<li class="filter-back"><a href="{parent_href}">'
+            f'← {html.escape(parent_label)}</a></li>'
+        )
+    else:
+        current = ' aria-current="page"' if selected_tag == "all" else ""
+        tag_rows.append(
+            f'<li><a href="{"../" * depth}topics/all.html"{current}>all</a></li>'
+        )
+        roots = [node for node in taxonomy.values() if not node["parent"]]
+        for node in sorted(roots, key=lambda item: item["label"].casefold()):
+            tag_rows.append(
+                f'<li><a href="{topic_href(node["slug"], depth)}">'
+                f'{html.escape(node["label"])}</a></li>'
+            )
+
+    sources = sorted({source_filter_name(record) for record in records}, key=str.casefold)
+    source_rows = []
+    for source in sources:
+        current = ' aria-current="page"' if source == selected_source else ""
+        source_rows.append(
+            f'<li><a href="{writer_href(source, depth)}"{current}>{html.escape(source)}</a></li>'
+        )
+
+    return f"""<section class="quote-browser" aria-label="Quote filters and results">
+  <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
+    <h2>Tags</h2>
+    <ul>{''.join(tag_rows)}</ul>
+  </aside>
+  <div class="quote-browser-feed">{feed}</div>
+  <aside class="filter-rail filter-rail-sources" aria-label="Filter by author or source">
+    <h2>Authors / sources</h2>
+    <ul>{''.join(source_rows)}</ul>
+  </aside>
+</section>"""
+
+
 def quote_text_html(text):
     paragraphs = []
     for paragraph in re.split(r"\n\s*\n", text.strip()):
@@ -267,8 +436,8 @@ def quote_text_html(text):
 
 def quote_card(record, depth):
     tags = "".join(
-        f'<li><a href="{topic_href(tag, depth)}">{html.escape(tag)}</a></li>'
-        for tag in record["tags"]
+        f'<li><a href="{topic_href(slug, depth)}">{html.escape(label)}</a></li>'
+        for slug, label in record["display_topics"]
     )
     tags += f'<li><a href="{"../" * depth}topics/all.html">all</a></li>'
     resource = html.escape(record["resource"], quote=True)
@@ -341,21 +510,27 @@ def build_posts(records):
          lede="Mark Reveley — dev blog. Posts, quotes, and about.")
 
 
-def build_quotes(records, topics):
-    topic_order = sorted(topics, key=lambda tag: (-len(topics[tag]), tag))
+def build_quotes(records, taxonomy):
+    roots = sorted(
+        (node for node in taxonomy.values() if not node["parent"]),
+        key=lambda node: node["label"].casefold(),
+    )
     rows = "".join(
-        f'<li><a href="{topic_href(tag, 0)}">{html.escape(tag)}</a></li>'
-        for tag in topic_order
+        f'<li><a href="{topic_href(node["slug"], 0)}">{html.escape(node["label"])}</a></li>'
+        for node in roots
     )
     cards = "".join(quote_card(record, 0) for record in records)
     feed = cards or '<p class="empty">No quotes yet.</p>'
     lede = "A collection of decent-probability human authored quotes from selected reading, added by hand, sorted by date added"
-    body = f"""<section class="hero">
-  <h1>Quotes</h1>
-  <p class="lede">{lede}</p>
-</section>
+    body = f"""{quote_hero("Quotes", lede, 0, False)}
 <section class="quote-feed" aria-label="Quotes">{feed}</section>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
+         lede=lede)
+
+    expanded_feed = quote_filter_browser(feed, records, taxonomy, 0, selected_tag="all")
+    expanded_body = f"""{quote_hero("Quotes", lede, 0, True)}
+{expanded_feed}"""
+    page("quotes-expanded.html", "Quotes", expanded_body, active="quotes.html",
          lede=lede)
 
     tag_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No tags yet.</p>'
@@ -368,11 +543,10 @@ def build_quotes(records, topics):
          lede="Browse the quote collection by tag.")
 
 
-def build_writers(records):
+def build_writers(records, taxonomy):
     writers = {}
     for record in records:
-        if record["source_author"]:
-            writers.setdefault(record["source_author"], []).append(record)
+        writers.setdefault(source_filter_name(record), []).append(record)
     rows = "".join(
         f'<li><a href="writers/{slugify(writer)}.html">{html.escape(writer)}</a></li>'
         for writer in sorted(writers, key=str.casefold)
@@ -387,12 +561,13 @@ def build_writers(records):
          lede="Browse the quote collection by writer.")
 
     for writer, writer_records in sorted(writers.items(), key=lambda item: item[0].casefold()):
-        selected = html.escape(writer)
         cards = "".join(quote_card(record, 1) for record in writer_records)
-        body = f"""<section class="hero">
-  <h1>{selected}</h1>
-</section>
-{cards or '<p class="empty">No quotes yet.</p>'}"""
+        feed = cards or '<p class="empty">No quotes yet.</p>'
+        browser = quote_filter_browser(
+            feed, records, taxonomy, 1, selected_source=writer
+        )
+        body = f"""{quote_hero(writer, "", 1, True)}
+{browser}"""
         page(
             f"writers/{slugify(writer)}.html",
             f"Writer — {writer}",
@@ -402,26 +577,34 @@ def build_writers(records):
         )
 
 
-def build_topic(heading, records, filename, lede):
-    cards = "".join(quote_card(record, 1) for record in records)
+def build_topic(heading, filtered_records, all_records, taxonomy, filename, lede, selected_tag):
+    cards = "".join(quote_card(record, 1) for record in filtered_records)
     if not cards:
         cards = '<p class="empty">No quotes yet.</p>'
-    body = f"""<section class="hero">
-  <h1>{html.escape(heading)}</h1>
-  <p class="lede">{lede}</p>
-</section>
-{cards}"""
-    page(f"topics/{filename}", heading, body, active="quotes.html", lede=re.sub("<[^>]+>", "", lede))
+    browser = quote_filter_browser(cards, all_records, taxonomy, 1, selected_tag=selected_tag)
+    body = f"""{quote_hero(heading, lede, 1, True)}
+{browser}"""
+    page(
+        f"topics/{filename}", heading, body, active="quotes.html",
+        lede=re.sub("<[^>]+>", "", lede),
+    )
 
 
-def build_topics(records, topics):
-    build_topic("All quotes", records, "all.html",
-                f"Every quote in the collection, {len(records)} of them, newest first.")
-    for tag in sorted(topics, key=lambda value: (-len(topics[value]), value)):
-        count = len(topics[tag])
+def build_topics(records, taxonomy, topic_records):
+    build_topic(
+        "All quotes", records, records, taxonomy, "all.html",
+        f"Every quote in the collection, {len(records)} of them, newest first.", "all",
+    )
+    for slug, node in sorted(
+        taxonomy.items(), key=lambda item: (len(item[1]["path"]), item[1]["label"].casefold())
+    ):
+        count = len(topic_records[slug])
+        path_label = " / ".join(taxonomy[item]["label"] for item in node["path"])
         build_topic(
-            tag, topics[tag], f"{slugify(tag)}.html",
-            f"{count} quote{'' if count == 1 else 's'} tagged <em>{html.escape(tag)}</em>, newest first.",
+            node["label"], topic_records[slug], records, taxonomy, f"{slug}.html",
+            f"{count} quote{'' if count == 1 else 's'} filed under "
+            f"<em>{html.escape(path_label)}</em>, newest first.",
+            slug,
         )
 
 
@@ -449,23 +632,20 @@ def build_about():
 def main():
     records = collect_quotes()
     posts = collect_posts()
-    topics = {}
-    for record in records:
-        for tag in record["tags"]:
-            topics.setdefault(tag, []).append(record)
+    taxonomy, topic_records = build_taxonomy(records)
     if TOPICS.exists():
         shutil.rmtree(TOPICS)
     if WRITERS.exists():
         shutil.rmtree(WRITERS)
     build_posts(posts)
-    build_quotes(records, topics)
-    build_writers(records)
-    build_topics(records, topics)
+    build_quotes(records, taxonomy)
+    build_writers(records, taxonomy)
+    build_topics(records, taxonomy, topic_records)
     build_about()
     pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))
     sources = len({record["resource"] for record in records})
     source_word = "source" if sources == 1 else "sources"
-    print(f"{len(records)} quotes · {sources} {source_word} · {len(topics)} topics")
+    print(f"{len(records)} quotes · {sources} {source_word} · {len(taxonomy)} topics")
     print(f"wrote {len(pages)} pages")
 
 
