@@ -144,6 +144,7 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn("A software quote.", writer_page)
             self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
+            self.assertIn('<a href="../topics/all.html">all</a></li>', all_quotes)
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
             self.assertIn("Example Author", all_quotes)

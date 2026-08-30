@@ -266,6 +266,7 @@ def quote_card(record, depth):
         f'<li><a href="{topic_href(tag, depth)}">{html.escape(tag)}</a></li>'
         for tag in record["tags"]
     )
+    tags += f'<li><a href="{"../" * depth}topics/all.html">all</a></li>'
     resource = html.escape(record["resource"], quote=True)
     attribution_html = (
         f'  <p class="attrib">{html.escape(record["speaker"])}</p>\n'
@@ -401,7 +402,6 @@ def build_topic(heading, records, filename, lede):
     body = f"""<section class="hero">
   <h1>{html.escape(heading)}</h1>
   <p class="lede">{lede}</p>
-  <p class="counts"><a href="../tags.html">All tags</a></p>
 </section>
 {cards}"""
     page(f"topics/{filename}", heading, body, active="quotes.html", lede=re.sub("<[^>]+>", "", lede))
