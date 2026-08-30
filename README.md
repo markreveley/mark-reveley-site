@@ -2,6 +2,12 @@
 
 A static personal site with posts, selected quotes, and an about page.
 
+## Add a post
+
+Create a Markdown record under [`posts/`](posts/) with a title, publication
+date, and body, then rebuild the site. See [`posts/README.md`](posts/README.md)
+for the schema.
+
 ## Add a quote
 
 Invoke the repository skill and provide the resource URL and exact quote text:

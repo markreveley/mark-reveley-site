@@ -11,6 +11,12 @@ directory from the repository root:
 
 Then open <http://localhost:8000/>.
 
+## Posts
+
+The Markdown files in [`../posts/`](../posts/) are the canonical post source.
+`build.py` generates the Posts feed and one page under `posts/` for each
+record, newest first.
+
 ## Quotes
 
 The OKF-style Markdown files in [`../quotes/`](../quotes/) are the canonical

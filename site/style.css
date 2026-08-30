@@ -205,8 +205,6 @@ ul.tags li.kind::before { content: none; }
 
 /* ---------- about ---------- */
 
-.about-more p { color: var(--ink-soft); }
-
 /* ---------- tables ---------- */
 
 .scroll { overflow-x: auto; margin: 0 0 1.5rem; }

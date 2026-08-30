@@ -27,21 +27,48 @@ def write_record(directory, name, **overrides):
     (directory / name).write_text(f"---\n{frontmatter}---\n", encoding="utf-8")
 
 
+def write_post(directory, name="example-post.md", **overrides):
+    record = {
+        "type": "Post",
+        "title": "Example post",
+        "date_published": "2026-08-29",
+        **overrides,
+    }
+    frontmatter = yaml.safe_dump(record, sort_keys=False)
+    (directory / name).write_text(
+        f"---\n{frontmatter}---\nA post body. Another sentence.\n",
+        encoding="utf-8",
+    )
+
+
 @contextlib.contextmanager
 def isolated_site():
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)
         quote_db = root / "quotes"
+        post_db = root / "posts"
         output = root / "site"
         quote_db.mkdir()
-        old_db, old_out, old_topics = site_build.QUOTE_DB, site_build.OUT, site_build.TOPICS
+        post_db.mkdir()
+        old_db, old_posts, old_out, old_topics = (
+            site_build.QUOTE_DB,
+            site_build.POST_DB,
+            site_build.OUT,
+            site_build.TOPICS,
+        )
         try:
             site_build.QUOTE_DB = quote_db
+            site_build.POST_DB = post_db
             site_build.OUT = output
             site_build.TOPICS = output / "topics"
             yield quote_db, output
         finally:
-            site_build.QUOTE_DB, site_build.OUT, site_build.TOPICS = old_db, old_out, old_topics
+            site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS = (
+                old_db,
+                old_posts,
+                old_out,
+                old_topics,
+            )
 
 
 def build():
@@ -50,6 +77,20 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def test_builds_posts_from_markdown_records(self):
+        with isolated_site() as (quote_db, output):
+            write_post(
+                quote_db.parent / "posts",
+                excerpt="A custom post-card excerpt.",
+            )
+            build()
+
+            landing = (output / "index.html").read_text(encoding="utf-8")
+            post = (output / "posts" / "example-post.html").read_text(encoding="utf-8")
+            self.assertIn('<a href="posts/example-post.html">Example post</a>', landing)
+            self.assertIn("A custom post-card excerpt.", landing)
+            self.assertIn("A post body. Another sentence.", post)
+
     def test_builds_enriched_quotes_and_allows_a_repeated_resource(self):
         with isolated_site() as (quote_db, output):
             write_record(

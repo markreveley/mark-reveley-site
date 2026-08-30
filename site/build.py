@@ -17,6 +17,7 @@ except ImportError as exc:  # pragma: no cover
 
 ROOT = Path(__file__).resolve().parent.parent
 QUOTE_DB = ROOT / "quotes"
+POST_DB = ROOT / "posts"
 OUT = ROOT / "site"
 TOPICS = OUT / "topics"
 
@@ -28,18 +29,23 @@ MONTHS = [
 VERIFICATION_STATUSES = {"verified", "unverified", "not-found", "source-unavailable"}
 
 
-def load_frontmatter(path):
-    """Return YAML frontmatter from a Markdown record."""
+def load_document(path):
+    """Return YAML frontmatter and body from a Markdown record."""
     text = path.read_text(encoding="utf-8")
     if not text.startswith("---\n"):
-        return None
+        return None, text
     end = text.find("\n---\n", 4)
     if end == -1:
         raise ValueError(f"{path}: frontmatter is missing its closing ---")
     meta = yaml.safe_load(text[4:end]) or {}
     if not isinstance(meta, dict):
         raise ValueError(f"{path}: frontmatter must be a mapping")
-    return meta
+    return meta, text[end + 5:].strip()
+
+
+def load_frontmatter(path):
+    """Return YAML frontmatter from a Markdown record."""
+    return load_document(path)[0]
 
 
 def slugify(value):
@@ -145,6 +151,42 @@ def collect_quotes():
     return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
 
 
+def collect_posts():
+    records = []
+    if not POST_DB.exists():
+        return records
+    for path in sorted(POST_DB.glob("*.md")):
+        meta, body = load_document(path)
+        if not meta or str(meta.get("type", "")).lower() != "post":
+            continue
+        missing = [
+            key for key in ("title", "date_published")
+            if key not in meta or meta[key] is None
+            or (isinstance(meta[key], str) and not meta[key].strip())
+        ]
+        if missing:
+            raise ValueError(f"{path}: missing required field(s): {', '.join(missing)}")
+        title = optional_text(meta, "title", path)
+        date_published = optional_text(meta, "date_published", path)
+        excerpt = optional_text(meta, "excerpt", path)
+        if not valid_iso_date(date_published):
+            raise ValueError(f"{path}: date_published must be a valid YYYY-MM-DD date")
+        if not body:
+            raise ValueError(f"{path}: post body must not be empty")
+        records.append({
+            "slug": path.stem,
+            "title": title,
+            "date_published": date_published,
+            "excerpt": excerpt,
+            "body": body,
+        })
+    return sorted(
+        records,
+        key=lambda record: (record["date_published"], record["slug"]),
+        reverse=True,
+    )
+
+
 def pretty_date(raw):
     year_match = re.fullmatch(r"\d{4}", raw)
     if year_match:
@@ -195,7 +237,7 @@ def page(path, title, body, active=None, lede=None):
 {body}
 </main>
 <footer class="foot">
-  <p>Static HTML and CSS. No JavaScript, no tracking, nothing to run.</p>
+  <p>Static HTML and CSS</p>
 </footer>
 </body>
 </html>
@@ -247,26 +289,42 @@ def quote_card(record, depth):
 </article>"""
 
 
-def build_posts():
-    body = """<section class="hero">
+def build_posts(records):
+    cards = []
+    for record in records:
+        title = html.escape(record["title"])
+        published = html.escape(record["date_published"], quote=True)
+        date_label = html.escape(pretty_date(record["date_published"]))
+        first_sentence = record["excerpt"] or re.split(r"(?<=\.)\s+", record["body"], maxsplit=1)[0]
+        cards.append(f"""<article class="card post">
+  <h2><a href="posts/{record['slug']}.html">{title}</a></h2>
+  <p class="attrib"><time datetime="{published}">{date_label}</time></p>
+  <p>{html.escape(first_sentence)}</p>
+</article>""")
+        post_body = f"""<article class="post-body">
+  <header class="hero">
+    <h1>{title}</h1>
+    <p class="attrib"><time datetime="{published}">{date_label}</time></p>
+  </header>
+  {quote_text_html(record['body'])}
+</article>"""
+        page(
+            f"posts/{record['slug']}.html",
+            record["title"],
+            post_body,
+            active="index.html",
+            lede=first_sentence,
+        )
+
+    post_list = "".join(cards) or '<p class="empty">No posts yet.</p>'
+    body = f"""<section class="hero">
   <h1>Posts</h1>
   <p class="lede">Notes on building things — agents, graphs, and the occasional
   detour through a sampler. Written when there is something worth writing down.</p>
 </section>
 
 <section class="posts">
-  <!-- A post goes here. Copy this block, fill it in, newest first:
-
-  <article class="card post">
-    <h2><a href="posts/slug.html">Post title</a></h2>
-    <p class="attrib"><time datetime="2026-09-01">1 September 2026</time></p>
-    <p>One-paragraph summary.</p>
-  </article>
-
-  -->
-  <p class="empty">No posts yet.</p>
-  <p class="empty-note">Nothing published so far. In the meantime, the
-  <a href="quotes.html">quotes</a> section has what I have been reading.</p>
+{post_list}
 </section>"""
     page("index.html", "Posts", body, active="index.html",
          lede="Mark Reveley — dev blog. Posts, quotes, and about.")
@@ -332,13 +390,6 @@ def build_about():
     body = """<section class="hero">
   <h1>About</h1>
   <p class="lede">Mark Reveley is a musician developer living in Berkeley.</p>
-</section>
-
-<section class="about-more">
-  <p>This site is three things: <a href="index.html">posts</a> when there are
-  any, a <a href="quotes.html">quotes</a> section — one quote per record,
-  each with the date it was added and the URL it came from — and this page.</p>
-  <p>It is static HTML and CSS — no JavaScript, no framework, no analytics.</p>
 </section>"""
     page("about.html", "About", body, active="about.html",
          lede="Mark Reveley is a musician developer living in Berkeley.")
@@ -346,13 +397,14 @@ def build_about():
 
 def main():
     records = collect_quotes()
+    posts = collect_posts()
     topics = {}
     for record in records:
         for tag in record["tags"]:
             topics.setdefault(tag, []).append(record)
     if TOPICS.exists():
         shutil.rmtree(TOPICS)
-    build_posts()
+    build_posts(posts)
     build_quotes(records, topics)
     build_topics(records, topics)
     build_about()
