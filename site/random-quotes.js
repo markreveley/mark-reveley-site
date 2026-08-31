@@ -8,7 +8,19 @@
   const root = button.dataset.root || "";
   const filtersOn = button.dataset.filters === "on";
   const pageName = filtersOn ? "quotes-expanded.html" : "quotes.html";
-  const requestedSlug = new URLSearchParams(window.location.search).get("quote");
+  const parameters = new URLSearchParams(window.location.search);
+  const requestedSlug = parameters.get("quote");
+  const requestedFace = Number(parameters.get("die"));
+  const hasRequestedFace = Number.isInteger(requestedFace)
+    && requestedFace >= 1 && requestedFace <= 6;
+
+  function showDieFace(value) {
+    for (const face of button.querySelectorAll("[data-die-face]")) {
+      face.classList.toggle("is-visible", face.dataset.dieFace === String(value));
+    }
+  }
+
+  if (hasRequestedFace) showDieFace(requestedFace);
 
   function showAssociatedFilters(card) {
     if (!filtersOn) return;
@@ -47,7 +59,9 @@
       const eye = document.querySelector(".filter-toggle");
       if (eye) {
         const eyePage = filtersOn ? "quotes.html" : "quotes-expanded.html";
-        eye.href = `${root}${eyePage}?quote=${encodeURIComponent(requestedSlug)}`;
+        const eyeParameters = new URLSearchParams({ quote: requestedSlug });
+        if (hasRequestedFace) eyeParameters.set("die", String(requestedFace));
+        eye.href = `${root}${eyePage}?${eyeParameters}`;
       }
     }
   }
@@ -57,6 +71,12 @@
       ? quoteSlugs.filter((slug) => slug !== requestedSlug)
       : quoteSlugs;
     const chosen = choices[Math.floor(Math.random() * choices.length)];
-    window.location.assign(`${root}${pageName}?quote=${encodeURIComponent(chosen)}`);
+    const rolledFace = Math.floor(Math.random() * 6) + 1;
+    showDieFace(rolledFace);
+    const nextParameters = new URLSearchParams({
+      quote: chosen,
+      die: String(rolledFace),
+    });
+    window.location.assign(`${root}${pageName}?${nextParameters}`);
   });
 })();

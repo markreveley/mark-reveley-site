@@ -106,7 +106,7 @@ p { margin: 0 0 .9rem; }
 .filter-toggle { color: var(--ink-faint); }
 .random-toggle {
   appearance: none; border: 0; background: transparent;
-  color: var(--ink); cursor: pointer;
+  color: var(--ink-soft); cursor: pointer;
 }
 .filter-toggle:hover,
 .filter-toggle:focus-visible,
@@ -121,6 +121,8 @@ p { margin: 0 0 .9rem; }
   stroke-linecap: round; stroke-linejoin: round;
 }
 .random-toggle circle { fill: currentColor; stroke: none; }
+.random-toggle .die-face { display: none; }
+.random-toggle .die-face.is-visible { display: inline; }
 
 .about-photo {
   display: block; width: min(100%, 24rem); height: auto;

@@ -371,9 +371,12 @@ def quote_random_toggle(depth, filters_on):
         'aria-label="Load a random quote" title="Load a random quote">'
         '<svg viewBox="0 0 24 24" aria-hidden="true">'
         '<rect x="3" y="3" width="18" height="18" rx="2.5"/>'
-        '<circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/>'
-        '<circle cx="12" cy="12" r="1"/>'
-        '<circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/>'
+        '<g class="die-face" data-die-face="1"><circle cx="12" cy="12" r="1"/></g>'
+        '<g class="die-face" data-die-face="2"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="3"><circle cx="8" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="4"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face is-visible" data-die-face="5"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="6"><circle cx="8" cy="7.5" r="1"/><circle cx="16" cy="7.5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16.5" r="1"/><circle cx="16" cy="16.5" r="1"/></g>'
         '</svg></button>'
     )
 
@@ -510,7 +513,19 @@ def build_random_quote_script(records):
   const root = button.dataset.root || "";
   const filtersOn = button.dataset.filters === "on";
   const pageName = filtersOn ? "quotes-expanded.html" : "quotes.html";
-  const requestedSlug = new URLSearchParams(window.location.search).get("quote");
+  const parameters = new URLSearchParams(window.location.search);
+  const requestedSlug = parameters.get("quote");
+  const requestedFace = Number(parameters.get("die"));
+  const hasRequestedFace = Number.isInteger(requestedFace)
+    && requestedFace >= 1 && requestedFace <= 6;
+
+  function showDieFace(value) {{
+    for (const face of button.querySelectorAll("[data-die-face]")) {{
+      face.classList.toggle("is-visible", face.dataset.dieFace === String(value));
+    }}
+  }}
+
+  if (hasRequestedFace) showDieFace(requestedFace);
 
   function showAssociatedFilters(card) {{
     if (!filtersOn) return;
@@ -549,7 +564,9 @@ def build_random_quote_script(records):
       const eye = document.querySelector(".filter-toggle");
       if (eye) {{
         const eyePage = filtersOn ? "quotes.html" : "quotes-expanded.html";
-        eye.href = `${{root}}${{eyePage}}?quote=${{encodeURIComponent(requestedSlug)}}`;
+        const eyeParameters = new URLSearchParams({{ quote: requestedSlug }});
+        if (hasRequestedFace) eyeParameters.set("die", String(requestedFace));
+        eye.href = `${{root}}${{eyePage}}?${{eyeParameters}}`;
       }}
     }}
   }}
@@ -559,7 +576,13 @@ def build_random_quote_script(records):
       ? quoteSlugs.filter((slug) => slug !== requestedSlug)
       : quoteSlugs;
     const chosen = choices[Math.floor(Math.random() * choices.length)];
-    window.location.assign(`${{root}}${{pageName}}?quote=${{encodeURIComponent(chosen)}}`);
+    const rolledFace = Math.floor(Math.random() * 6) + 1;
+    showDieFace(rolledFace);
+    const nextParameters = new URLSearchParams({{
+      quote: chosen,
+      die: String(rolledFace),
+    }});
+    window.location.assign(`${{root}}${{pageName}}?${{nextParameters}}`);
   }});
 }})();
 """

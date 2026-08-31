@@ -155,6 +155,7 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('class="quote-feed"', landing)
             self.assertIn('class="random-toggle"', landing)
             self.assertIn('data-filters="off"', landing)
+            self.assertEqual(landing.count('data-die-face="'), 6)
             self.assertIn('src="random-quotes.js"', landing)
             self.assertIn('class="filter-toggle"', landing)
             self.assertIn('href="quotes-expanded.html"', landing)
@@ -216,6 +217,9 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('eye.href =', random_script)
             self.assertIn('window.location.assign', random_script)
             self.assertIn('quoteSlugs.filter((slug) => slug !== requestedSlug)', random_script)
+            self.assertIn('Math.floor(Math.random() * 6) + 1', random_script)
+            self.assertIn('showDieFace(rolledFace)', random_script)
+            self.assertIn('eyeParameters.set("die", String(requestedFace))', random_script)
 
             self.assertIn('data-quote-slug="first"', landing)
             self.assertIn('data-source-filter="Example Author"', landing)
