@@ -44,6 +44,9 @@ model:
     context-engineering:
       label: context
       tags: [context-engineering]
+    model-architecture:
+      label: architecture
+      tags: [model-architecture]
     evaluation:
       label: evaluation
       tags: [evaluation]
@@ -80,6 +83,15 @@ software:
       label: testing
       tags: [software-testing]
       children:
+        black-box-testing:
+          label: black-box
+          tags: [black-box-testing]
+        data-driven-testing:
+          label: data-driven
+          tags: [data-driven-testing]
+        test-purity:
+          label: purity
+          tags: [test-purity]
         test-driven-development:
           label: test-driven
           tags: [test-driven-development]
@@ -87,6 +99,12 @@ software:
       label: verification
       tags: [verification]
       children:
+        code-review:
+          label: code-review
+          tags: [code-review]
+        deterministic-verification:
+          label: deterministic
+          tags: [deterministic-verification]
         formal-methods:
           label: formal-methods
           tags: [formal-methods]
@@ -125,6 +143,10 @@ development:
     unix:
       label: unix
       tags: [unix]
+      children:
+        shell-configuration:
+          label: shell
+          tags: [shell-configuration]
 
 design:
   label: design
@@ -143,6 +165,9 @@ design:
 business:
   label: business
   children:
+    organizational-design:
+      label: organization
+      tags: [organizational-design]
     saas:
       label: saas
       tags: [saas]
@@ -157,6 +182,16 @@ business:
 human:
   label: human
   children:
+    cognitive-debt:
+      label: cognitive-debt
+      tags: [cognitive-debt]
+      children:
+        program-comprehension:
+          label: comprehension
+          tags: [program-comprehension]
+        skill-formation:
+          label: skill-formation
+          tags: [skill-formation]
     human-in-the-loop:
       label: oversight
       tags: [human-in-the-loop]

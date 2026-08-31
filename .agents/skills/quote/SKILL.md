@@ -1,13 +1,18 @@
 ---
 name: quote
-description: Add a selected quotation to this site's quote collection from a URL and exact quote text. Use when the user asks to save, collect, intake, or add a quote; research its source metadata, classify it, author the OKF-style record, and rebuild the site. Do not use for general quotation lookup or unrelated research.
+description: Add a selected quotation to this site's quote collection from exact quote text and its URL. Use when the user asks to save, collect, intake, or add a quote; research its source metadata, classify it, author the OKF-style record, and rebuild the site. Do not use for general quotation lookup or unrelated research.
 ---
 
 # Quote
 
-Treat the skill invocation as the only intake interface. The user supplies a
-resource URL and quote text; ask only for whichever of those two is missing.
-Author the Markdown record directly—do not call or recreate an intake CLI.
+Treat the skill invocation as the only intake interface. The intake order is:
+
+1. Exact quote text
+2. Resource URL
+
+Accept legacy URL-first input when its meaning is already clear; ask only for
+whichever of the two values is missing. Author the Markdown record directly—do
+not call or recreate an intake CLI.
 
 Before writing, read `quotes/README.md` for the current schema and inspect the
 existing records in `quotes/` for vocabulary and duplicates.

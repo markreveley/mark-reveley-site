@@ -153,9 +153,14 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn('<a href="tags.html">Tags</a>', landing)
             self.assertNotIn('<a href="writers.html">Writer</a>', landing)
             self.assertIn('class="quote-feed"', landing)
+            self.assertIn('class="random-toggle"', landing)
+            self.assertIn('data-filters="off"', landing)
+            self.assertIn('src="random-quotes.js"', landing)
             self.assertIn('class="filter-toggle"', landing)
             self.assertIn('href="quotes-expanded.html"', landing)
             self.assertNotIn('class="filter-rail ', landing)
+            self.assertIn('class="random-toggle"', expanded)
+            self.assertIn('data-filters="on"', expanded)
             self.assertIn('class="filter-toggle is-on"', expanded)
             self.assertIn('href="quotes.html"', expanded)
             self.assertIn('class="filter-rail filter-rail-tags"', expanded)
@@ -176,6 +181,8 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn("A software quote.", writer_page)
             self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
             self.assertIn('class="filter-toggle is-on"', writer_page)
+            self.assertIn('data-root="../" data-filters="on"', writer_page)
+            self.assertIn('src="../random-quotes.js"', writer_page)
             self.assertIn('aria-current="page">Example Author</a>', writer_page)
             self.assertIn(
                 'href="../quotes-expanded.html" '
@@ -200,6 +207,19 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn('class="record-meta"', all_quotes)
             self.assertNotIn('<a class="self"', all_quotes)
             self.assertTrue((output / "topics" / "software-engineering.html").exists())
+
+            random_script = (output / "random-quotes.js").read_text(encoding="utf-8")
+            self.assertIn('"first"', random_script)
+            self.assertIn('"second"', random_script)
+            self.assertIn('card.hidden = card !== selectedCard', random_script)
+            self.assertIn('showAssociatedFilters(selectedCard)', random_script)
+            self.assertIn('eye.href =', random_script)
+            self.assertIn('window.location.assign', random_script)
+            self.assertIn('quoteSlugs.filter((slug) => slug !== requestedSlug)', random_script)
+
+            self.assertIn('data-quote-slug="first"', landing)
+            self.assertIn('data-source-filter="Example Author"', landing)
+            self.assertIn('data-source-filter-href="writers/example-author.html"', landing)
 
     def test_builds_a_drill_down_topic_taxonomy(self):
         with isolated_site() as (quote_db, output):

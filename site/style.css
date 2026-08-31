@@ -1,4 +1,4 @@
-/* Mark Reveley — one stylesheet, no JavaScript. */
+/* Mark Reveley — site styles. */
 
 :root {
   --bg: #090d0c;
@@ -94,19 +94,33 @@ p { margin: 0 0 .9rem; }
   gap: .8rem; margin: 0 0 .6rem;
 }
 .quote-heading h1 { margin: 0; }
-.filter-toggle {
+.quote-controls {
+  display: flex; align-items: center; gap: .45rem;
+}
+.filter-toggle,
+.random-toggle {
   display: inline-flex; align-items: center; justify-content: center;
   width: 2rem; height: 2rem; padding: 0;
-  color: var(--ink-faint); text-decoration: none; line-height: 1;
+  text-decoration: none; line-height: 1;
+}
+.filter-toggle { color: var(--ink-faint); }
+.random-toggle {
+  appearance: none; border: 0; background: transparent;
+  color: var(--ink); cursor: pointer;
 }
 .filter-toggle:hover,
-.filter-toggle:focus-visible { color: var(--accent-strong); }
+.filter-toggle:focus-visible,
+.random-toggle:hover,
+.random-toggle:focus-visible,
+.random-toggle:active { color: var(--accent-strong); }
 .filter-toggle.is-on { color: var(--accent-strong); }
-.filter-toggle svg {
+.filter-toggle svg,
+.random-toggle svg {
   display: block; width: 2rem; height: 2rem;
   fill: none; stroke: currentColor; stroke-width: 1.65;
   stroke-linecap: round; stroke-linejoin: round;
 }
+.random-toggle circle { fill: currentColor; stroke: none; }
 
 .about-photo {
   display: block; width: min(100%, 24rem); height: auto;
@@ -310,7 +324,8 @@ th {
 @media (max-width: 34rem) {
   body { font-size: 16px; padding: 0 1rem 3rem; }
   h1 { font-size: 1.65rem; }
-  .filter-toggle, .filter-toggle svg { width: 1.65rem; height: 1.65rem; }
+  .filter-toggle, .filter-toggle svg,
+  .random-toggle, .random-toggle svg { width: 1.65rem; height: 1.65rem; }
   .said blockquote { font-size: 1.08rem; }
   ul.topics { columns: 1; }
   .quote-browser { grid-template-columns: 1fr; gap: .75rem; }

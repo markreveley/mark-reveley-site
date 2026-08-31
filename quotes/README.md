@@ -53,6 +53,6 @@ on quote cards and in the drill-down filter.
 
 ## Intake
 
-Invoke `$quote` and provide a URL and quote. The repository skill reads
+Invoke `$quote` and provide the exact quote text first, followed by its URL. The repository skill reads
 the source, assigns tags, records supported metadata and verification state,
 authors the Markdown file directly, then rebuilds and tests the site.

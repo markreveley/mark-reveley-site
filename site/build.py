@@ -2,6 +2,7 @@
 """Build the static site from the OKF-style records in quotes/."""
 
 import html
+import json
 import re
 import shutil
 import sys
@@ -284,7 +285,7 @@ def pretty_date(raw):
     return f"{day} {MONTHS[month - 1]} {year}"
 
 
-def page(path, title, body, active=None, lede=None):
+def page(path, title, body, active=None, lede=None, quote_controls=False):
     depth = path.count("/")
     up = "../" * depth
     nav_items = []
@@ -300,6 +301,10 @@ def page(path, title, body, active=None, lede=None):
         f'<meta name="description" content="{html.escape(lede, quote=True)}">'
         if lede else ""
     )
+    quote_script = (
+        f'\n<script defer src="{up}random-quotes.js"></script>'
+        if quote_controls else ""
+    )
     document = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -307,7 +312,7 @@ def page(path, title, body, active=None, lede=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)} — Mark Reveley</title>
 {description}
-<link rel="stylesheet" href="{up}style.css">
+<link rel="stylesheet" href="{up}style.css">{quote_script}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -357,12 +362,31 @@ def quote_filter_toggle(depth, filters_on):
     )
 
 
+def quote_random_toggle(depth, filters_on):
+    up = "../" * depth
+    state = "on" if filters_on else "off"
+    return (
+        '<button class="random-toggle" type="button" '
+        f'data-random-quote data-root="{up}" data-filters="{state}" '
+        'aria-label="Load a random quote" title="Load a random quote">'
+        '<svg viewBox="0 0 24 24" aria-hidden="true">'
+        '<rect x="3" y="3" width="18" height="18" rx="2.5"/>'
+        '<circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/>'
+        '<circle cx="12" cy="12" r="1"/>'
+        '<circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/>'
+        '</svg></button>'
+    )
+
+
 def quote_hero(title, lede, depth, filters_on):
     lede_html = f'\n  <p class="lede">{lede}</p>' if lede else ""
     return f"""<section class="hero">
   <div class="quote-heading">
     <h1>{html.escape(title)}</h1>
-    {quote_filter_toggle(depth, filters_on)}
+    <div class="quote-controls">
+      {quote_random_toggle(depth, filters_on)}
+      {quote_filter_toggle(depth, filters_on)}
+    </div>
   </div>{lede_html}
 </section>"""
 
@@ -461,11 +485,85 @@ def quote_card(record, depth):
         writer_details.append(pretty_date(record["source_date"]))
     source_details = " · ".join([source_link] + writer_details)
     source_title_html = f'  <p class="source-title">{source_details}</p>\n'
-    return f"""<article class="card quote" id="q-{record['slug']}">
+    record_slug = html.escape(record["slug"], quote=True)
+    source_filter = source_filter_name(record)
+    source_filter_label = html.escape(source_filter, quote=True)
+    source_filter_url = html.escape(writer_href(source_filter, depth), quote=True)
+    return f"""<article class="card quote" id="q-{record_slug}" data-quote-slug="{record_slug}" data-source-filter="{source_filter_label}" data-source-filter-href="{source_filter_url}">
   <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
 {attribution_html}{source_title_html}\
   <ul class="tags">{tags}</ul>
 </article>"""
+
+
+def build_random_quote_script(records):
+    """Write the small client-side helper used by the random quote control."""
+    OUT.mkdir(parents=True, exist_ok=True)
+    slugs = json.dumps([record["slug"] for record in records], ensure_ascii=False)
+    script = f"""(() => {{
+  "use strict";
+
+  const quoteSlugs = {slugs};
+  const button = document.querySelector("[data-random-quote]");
+  if (!button || quoteSlugs.length === 0) return;
+
+  const root = button.dataset.root || "";
+  const filtersOn = button.dataset.filters === "on";
+  const pageName = filtersOn ? "quotes-expanded.html" : "quotes.html";
+  const requestedSlug = new URLSearchParams(window.location.search).get("quote");
+
+  function showAssociatedFilters(card) {{
+    if (!filtersOn) return;
+
+    const tagList = document.querySelector(".filter-rail-tags ul");
+    if (tagList) {{
+      const rows = Array.from(card.querySelectorAll(".tags a"), (link) => {{
+        const item = document.createElement("li");
+        const associatedLink = link.cloneNode(true);
+        associatedLink.setAttribute("aria-current", "page");
+        item.append(associatedLink);
+        return item;
+      }});
+      tagList.replaceChildren(...rows);
+    }}
+
+    const sourceList = document.querySelector(".filter-rail-sources ul");
+    if (sourceList) {{
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = card.dataset.sourceFilterHref;
+      link.textContent = card.dataset.sourceFilter;
+      link.setAttribute("aria-current", "page");
+      item.append(link);
+      sourceList.replaceChildren(item);
+    }}
+  }}
+
+  if (requestedSlug) {{
+    const cards = Array.from(document.querySelectorAll(".card.quote"));
+    const selectedCard = cards.find((card) => card.dataset.quoteSlug === requestedSlug);
+    if (selectedCard) {{
+      for (const card of cards) card.hidden = card !== selectedCard;
+      showAssociatedFilters(selectedCard);
+
+      const eye = document.querySelector(".filter-toggle");
+      if (eye) {{
+        const eyePage = filtersOn ? "quotes.html" : "quotes-expanded.html";
+        eye.href = `${{root}}${{eyePage}}?quote=${{encodeURIComponent(requestedSlug)}}`;
+      }}
+    }}
+  }}
+
+  button.addEventListener("click", () => {{
+    const choices = quoteSlugs.length > 1
+      ? quoteSlugs.filter((slug) => slug !== requestedSlug)
+      : quoteSlugs;
+    const chosen = choices[Math.floor(Math.random() * choices.length)];
+    window.location.assign(`${{root}}${{pageName}}?quote=${{encodeURIComponent(chosen)}}`);
+  }});
+}})();
+"""
+    (OUT / "random-quotes.js").write_text(script, encoding="utf-8")
 
 
 def build_posts(records):
@@ -522,13 +620,13 @@ def build_quotes(records, taxonomy):
     body = f"""{quote_hero("Quotes", lede, 0, False)}
 <section class="quote-feed" aria-label="Quotes">{feed}</section>"""
     page("quotes.html", "Quotes", body, active="quotes.html",
-         lede=lede)
+         lede=lede, quote_controls=True)
 
     expanded_feed = quote_filter_browser(feed, records, taxonomy, 0)
     expanded_body = f"""{quote_hero("Quotes", lede, 0, True)}
 {expanded_feed}"""
     page("quotes-expanded.html", "Quotes", expanded_body, active="quotes.html",
-         lede=lede)
+         lede=lede, quote_controls=True)
 
     tag_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No tags yet.</p>'
     tags_body = f"""<section class="hero">
@@ -571,6 +669,7 @@ def build_writers(records, taxonomy):
             body,
             active="quotes.html",
             lede=f"Quotes by {writer}.",
+            quote_controls=True,
         )
 
 
@@ -584,6 +683,7 @@ def build_topic(heading, filtered_records, all_records, taxonomy, filename, lede
     page(
         f"topics/{filename}", heading, body, active="quotes.html",
         lede=re.sub("<[^>]+>", "", lede),
+        quote_controls=True,
     )
 
 
@@ -634,6 +734,7 @@ def main():
         shutil.rmtree(TOPICS)
     if WRITERS.exists():
         shutil.rmtree(WRITERS)
+    build_random_quote_script(records)
     build_posts(posts)
     build_quotes(records, taxonomy)
     build_writers(records, taxonomy)
