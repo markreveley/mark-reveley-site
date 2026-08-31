@@ -70,12 +70,28 @@ model:
 software:
   label: software
   children:
+    code-maintainability:
+      label: maintainability
+      tags: [code-maintainability]
+      children:
+        code-duplication:
+          label: duplication
+          tags: [code-duplication]
+        technical-debt:
+          label: technical-debt
+          tags: [technical-debt]
+    software-delivery:
+      label: delivery
+      tags: [software-delivery]
     software-architecture:
       label: architecture
       tags: [software-architecture]
     software-engineering:
       label: engineering
       tags: [software-engineering]
+    software-security:
+      label: security
+      tags: [software-security]
     requirements-engineering:
       label: requirements
       tags: [requirements-engineering]
@@ -123,6 +139,9 @@ software:
 development:
   label: development
   children:
+    developer-productivity:
+      label: productivity
+      tags: [developer-productivity]
     developer-infrastructure:
       label: infrastructure
       tags: [developer-infrastructure]
