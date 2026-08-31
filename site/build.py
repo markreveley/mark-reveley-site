@@ -373,31 +373,29 @@ def quote_filter_browser(feed, records, taxonomy, depth, selected_tag="", select
 
     if selected_tag and selected_tag != "all":
         selected = taxonomy[selected_tag]
-        tag_rows.append(
-            f'<li><a href="{topic_href(selected_tag, depth)}" aria-current="page">'
-            f'{html.escape(selected["label"])}</a></li>'
-        )
+        for index, path_slug in enumerate(selected["path"]):
+            node = taxonomy[path_slug]
+            parent_slug = node["parent"]
+            exit_href = (
+                topic_href(parent_slug, depth)
+                if parent_slug else "../" * depth + "quotes-expanded.html"
+            )
+            tag_rows.append(
+                f'<li class="filter-path"><a href="{exit_href}" '
+                f'aria-label="Exit {html.escape(node["label"], quote=True)} filter">'
+                f'{html.escape(node["label"])}</a></li>'
+            )
+            if index < len(selected["path"]) - 1:
+                tag_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
+        if selected["children"]:
+            tag_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
         for child_slug in selected["children"]:
             child = taxonomy[child_slug]
             tag_rows.append(
                 f'<li><a href="{topic_href(child_slug, depth)}">'
                 f'{html.escape(child["label"])}</a></li>'
             )
-        parent_slug = selected["parent"]
-        parent_href = (
-            topic_href(parent_slug, depth)
-            if parent_slug else "../" * depth + "topics/all.html"
-        )
-        parent_label = taxonomy[parent_slug]["label"] if parent_slug else "all"
-        tag_rows.append(
-            f'<li class="filter-back"><a href="{parent_href}">'
-            f'← {html.escape(parent_label)}</a></li>'
-        )
     else:
-        current = ' aria-current="page"' if selected_tag == "all" else ""
-        tag_rows.append(
-            f'<li><a href="{"../" * depth}topics/all.html"{current}>all</a></li>'
-        )
         roots = [node for node in taxonomy.values() if not node["parent"]]
         for node in sorted(roots, key=lambda item: item["label"].casefold()):
             tag_rows.append(
@@ -439,7 +437,6 @@ def quote_card(record, depth):
         f'<li><a href="{topic_href(slug, depth)}">{html.escape(label)}</a></li>'
         for slug, label in record["display_topics"]
     )
-    tags += f'<li><a href="{"../" * depth}topics/all.html">all</a></li>'
     resource = html.escape(record["resource"], quote=True)
     attribution_html = (
         f'  <p class="attrib">{html.escape(record["speaker"])}</p>\n'
@@ -527,7 +524,7 @@ def build_quotes(records, taxonomy):
     page("quotes.html", "Quotes", body, active="quotes.html",
          lede=lede)
 
-    expanded_feed = quote_filter_browser(feed, records, taxonomy, 0, selected_tag="all")
+    expanded_feed = quote_filter_browser(feed, records, taxonomy, 0)
     expanded_body = f"""{quote_hero("Quotes", lede, 0, True)}
 {expanded_feed}"""
     page("quotes-expanded.html", "Quotes", expanded_body, active="quotes.html",

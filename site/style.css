@@ -90,7 +90,8 @@ p { margin: 0 0 .9rem; }
 .lede strong { color: var(--ink); font-weight: 600; }
 
 .quote-heading {
-  display: flex; align-items: center; gap: .8rem; margin: 0 0 .6rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .8rem; margin: 0 0 .6rem;
 }
 .quote-heading h1 { margin: 0; }
 .filter-toggle {
@@ -220,14 +221,15 @@ ul.topics a:hover { color: var(--accent-strong); text-decoration: underline; }
   color: var(--ink); font-size: .75rem; text-decoration: none;
   overflow-wrap: anywhere;
 }
-.filter-rail-tags li:not(.filter-back) a::before { content: "#"; color: var(--ink-faint); }
+.filter-rail-tags a::before { content: "#"; color: var(--ink-faint); }
 .filter-rail a:hover { color: var(--accent-strong); text-decoration: underline; }
 .filter-rail a[aria-current="page"] { color: var(--accent-strong); }
 .filter-rail-tags a[aria-current="page"]::before { color: var(--accent-strong); }
-.filter-rail .filter-back {
-  margin-top: .65rem; padding-top: .5rem; border-top: 1px solid var(--rule-soft);
+.filter-rail-tags .filter-path a,
+.filter-rail-tags .filter-path a::before { color: var(--accent-strong); }
+.filter-rail .filter-divider {
+  height: 0; margin: .55rem 0 .65rem; border-top: 1px solid var(--rule);
 }
-.filter-rail .filter-back a { color: var(--ink-faint); }
 /* ---------- labels ---------- */
 
 ul.tags {

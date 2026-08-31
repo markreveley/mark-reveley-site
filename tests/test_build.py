@@ -160,7 +160,7 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('href="quotes.html"', expanded)
             self.assertIn('class="filter-rail filter-rail-tags"', expanded)
             self.assertIn('class="filter-rail filter-rail-sources"', expanded)
-            self.assertIn('aria-current="page">all</a>', expanded)
+            self.assertNotIn('>all</a>', expanded)
             self.assertLess(
                 landing.index("Design &lt;systems&gt; carefully."),
                 landing.index("A software quote."),
@@ -177,9 +177,13 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
             self.assertIn('class="filter-toggle is-on"', writer_page)
             self.assertIn('aria-current="page">Example Author</a>', writer_page)
-            self.assertIn('aria-current="page">software-engineering</a>', topic_page)
+            self.assertIn(
+                'href="../quotes-expanded.html" '
+                'aria-label="Exit software-engineering filter">software-engineering</a>',
+                topic_page,
+            )
             self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
-            self.assertIn('<a href="../topics/all.html">all</a></li>', all_quotes)
+            self.assertNotIn('>all</a>', all_quotes)
             self.assertIn("Example Speaker", all_quotes)
             self.assertIn("An example article", all_quotes)
             self.assertIn("Example Author", all_quotes)
@@ -252,8 +256,10 @@ software:
                 "</aside>", 1
             )[0]
             self.assertIn(
-                'href="../topics/agent.html" aria-current="page">agent</a>', agent_tags
+                'href="../quotes-expanded.html" aria-label="Exit agent filter">agent</a>',
+                agent_tags,
             )
+            self.assertEqual(agent_tags.count('class="filter-divider"'), 1)
             self.assertIn('>architecture</a>', agent_tags)
             self.assertIn('>instruction</a>', agent_tags)
             self.assertNotIn('>software</a>', agent_tags)
@@ -262,10 +268,14 @@ software:
                 'class="filter-rail filter-rail-tags"', 1
             )[1].split("</aside>", 1)[0]
             self.assertIn(
-                'aria-current="page">architecture</a>', architecture_tags
+                'href="../topics/agent.html" aria-label="Exit architecture filter">architecture</a>',
+                architecture_tags,
             )
-            self.assertIn('class="filter-back"', architecture_tags)
-            self.assertIn('>← agent</a>', architecture_tags)
+            self.assertIn(
+                'href="../quotes-expanded.html" aria-label="Exit agent filter">agent</a>',
+                architecture_tags,
+            )
+            self.assertEqual(architecture_tags.count('class="filter-divider"'), 1)
             self.assertNotIn('>instruction</a>', architecture_tags)
 
     def test_rejects_an_exact_url_and_quote_duplicate(self):
