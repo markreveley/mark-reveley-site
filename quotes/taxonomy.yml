@@ -47,6 +47,9 @@ model:
     model-architecture:
       label: architecture
       tags: [model-architecture]
+    symbolic-reasoning:
+      label: symbolic-reasoning
+      tags: [symbolic-reasoning]
     evaluation:
       label: evaluation
       tags: [evaluation]
