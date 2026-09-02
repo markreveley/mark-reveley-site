@@ -40,11 +40,15 @@ existing records in `quotes/` for vocabulary and duplicates.
 6. Use the current local date for `date_added` and, when a source check was
    attempted, `verification_date`. Preserve only the known precision of
    `source_date`: `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
-7. Write one file under `quotes/`, named
+7. Ensure the source host is mapped in `quotes/source-taxonomy.yml`. Add it to
+   the most specific source format, creating a new format only when warranted.
+   Do not classify a Hacker News discussion link as the source when the quote
+   was taken from the linked resource.
+8. Write one file under `quotes/`, named
    `YYYY-MM-DD-<concise-quote-slug>.md`. If that name exists, make the slug more
    specific rather than overwriting it. Use valid YAML frontmatter and no
    duplicated quote body.
-8. Run `python3 site/build.py` and
+9. Run `python3 site/build.py` and
    `python3 -m unittest discover -s tests -v`. Fix record errors before
    finishing; do not weaken validation to admit a bad record.
 

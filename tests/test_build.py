@@ -302,6 +302,85 @@ software:
             self.assertEqual(architecture_tags.count('class="filter-divider"'), 1)
             self.assertNotIn('>instruction</a>', architecture_tags)
 
+    def test_builds_writers_by_source_type(self):
+        with isolated_site() as (quote_db, output):
+            write_record(
+                quote_db,
+                "paper.md",
+                resource="https://papers.example.org/one",
+                source_author="Researcher",
+            )
+            write_record(
+                quote_db,
+                "blog.md",
+                resource="https://blog.example.org/two",
+                quote="A blog quote.",
+                source_author="Blogger",
+            )
+            (quote_db / "source-taxonomy.yml").write_text(
+                """writing:
+  label: Writing
+  children:
+    blogs:
+      label: Blogs
+      hosts: [blog.example.org]
+research:
+  label: Research
+  children:
+    papers:
+      label: Papers
+      hosts: [papers.example.org]
+""",
+                encoding="utf-8",
+            )
+            build()
+
+            writers = (output / "writers.html").read_text(encoding="utf-8")
+            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
+            writing = (output / "writers" / "types" / "writing.html").read_text(encoding="utf-8")
+            blogs = (output / "writers" / "types" / "blogs.html").read_text(encoding="utf-8")
+            papers = (output / "writers" / "types" / "papers.html").read_text(encoding="utf-8")
+            blogger = (output / "writers" / "blogger.html").read_text(encoding="utf-8")
+            self.assertIn('href="writers/types/writing.html">Writing</a>', writers)
+            self.assertIn('href="writers/types/research.html">Research</a>', writers)
+            source_rail = expanded.split('class="filter-rail filter-rail-sources"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('href="writers/types/writing.html">Writing</a>', source_rail)
+            self.assertNotIn('>Blogs</a>', source_rail)
+            self.assertNotIn('>Blogger</a>', source_rail)
+
+            writing_rail = writing.split('class="filter-rail filter-rail-sources"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('aria-label="Exit Writing filter">Writing</a>', writing_rail)
+            self.assertIn('href="../../writers/types/blogs.html">Blogs</a>', writing_rail)
+            self.assertNotIn('>Blogger</a>', writing_rail)
+
+            blogs_rail = blogs.split('class="filter-rail filter-rail-sources"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('aria-label="Exit Writing filter">Writing</a>', blogs_rail)
+            self.assertIn('aria-label="Exit Blogs filter">Blogs</a>', blogs_rail)
+            self.assertIn('href="../../writers/blogger.html">Blogger</a>', blogs_rail)
+            self.assertIn("A blog quote.", blogs)
+
+            papers_rail = papers.split('class="filter-rail filter-rail-sources"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('href="../../writers/researcher.html">Researcher</a>', papers_rail)
+
+            blogger_rail = blogger.split('class="filter-rail filter-rail-sources"', 1)[1].split(
+                "</aside>", 1
+            )[0]
+            self.assertIn('aria-label="Exit Writing filter">Writing</a>', blogger_rail)
+            self.assertIn('aria-label="Exit Blogs filter">Blogs</a>', blogger_rail)
+            self.assertIn(
+                'href="../writers/blogger.html" aria-current="page">Blogger</a>',
+                blogger_rail,
+            )
+            self.assertNotIn('>Researcher</a>', blogger_rail)
+
     def test_rejects_an_exact_url_and_quote_duplicate(self):
         with isolated_site() as (quote_db, _):
             write_record(quote_db, "first.md")

@@ -19,6 +19,7 @@ Optional enriched fields:
 - `source_author`: author of the source
 - `source_date`: publication date at known ISO precision
 - `speaker`: quoted speaker when distinct from the source author
+- `source-taxonomy.yml`: maps source hosts to the source-format hierarchy used by the Writers index
 - `hacker_news_url`: Hacker News discussion URL for the source
 - `verification_status`: `verified`, `unverified`, `not-found`, or
   `source-unavailable`
@@ -50,6 +51,10 @@ combination of complete URL and exact quote text must be unique.
 shown by the site. Each raw tag must appear exactly once in a node's `tags`
 list. Node keys are stable page slugs; `label` is the shorter name displayed
 on quote cards and in the drill-down filter.
+
+`source-taxonomy.yml` maps each quote source host to a source format used by
+the Writers index. Add a new host to the most specific existing format, or add
+a new format when needed, before building the site.
 
 ## Intake
 

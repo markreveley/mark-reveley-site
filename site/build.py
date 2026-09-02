@@ -232,6 +232,67 @@ def build_taxonomy(records):
     return nodes, topic_records
 
 
+def build_source_taxonomy(records):
+    """Load the source-format hierarchy and group records by source host."""
+    taxonomy_path = QUOTE_DB / "source-taxonomy.yml"
+    if not taxonomy_path.exists():
+        return {}, {}
+    definition = yaml.safe_load(taxonomy_path.read_text(encoding="utf-8")) or {}
+    if not isinstance(definition, dict):
+        raise ValueError(f"{taxonomy_path}: taxonomy must be a mapping")
+
+    nodes = {}
+    host_nodes = {}
+
+    def visit(branch, parent="", ancestors=()):
+        if not isinstance(branch, dict):
+            raise ValueError(f"{taxonomy_path}: children must be a mapping")
+        for slug, value in branch.items():
+            if not isinstance(slug, str) or slugify(slug) != slug:
+                raise ValueError(f"{taxonomy_path}: node keys must be lowercase and hyphenated")
+            if slug in nodes:
+                raise ValueError(f"{taxonomy_path}: duplicate node key {slug}")
+            spec = value or {}
+            if not isinstance(spec, dict):
+                raise ValueError(f"{taxonomy_path}: node {slug} must be a mapping")
+            label = spec.get("label", slug)
+            if not isinstance(label, str) or not label.strip():
+                raise ValueError(f"{taxonomy_path}: node {slug} needs a text label")
+            hosts = spec.get("hosts", [])
+            if not isinstance(hosts, list) or not all(
+                isinstance(host, str) and host.strip() for host in hosts
+            ):
+                raise ValueError(f"{taxonomy_path}: node {slug} hosts must be a list of host names")
+            children = spec.get("children", {}) or {}
+            if not isinstance(children, dict):
+                raise ValueError(f"{taxonomy_path}: node {slug} children must be a mapping")
+            path = ancestors + (slug,)
+            nodes[slug] = {
+                "slug": slug,
+                "label": label.strip(),
+                "parent": parent,
+                "children": tuple(children),
+                "path": path,
+            }
+            for host in hosts:
+                hostname = host.strip().lower()
+                if hostname in host_nodes:
+                    raise ValueError(f"{taxonomy_path}: host {hostname} is mapped more than once")
+                host_nodes[hostname] = slug
+            visit(children, slug, path)
+
+    visit(definition)
+    source_records = {slug: [] for slug in nodes}
+    for record in records:
+        host = urlparse(record["resource"]).netloc.lower()
+        if host not in host_nodes:
+            raise ValueError(f"{taxonomy_path}: unmapped source host: {host}")
+        record["source_type"] = host_nodes[host]
+        for slug in nodes[record["source_type"]]["path"]:
+            source_records[slug].append(record)
+    return nodes, source_records
+
+
 def collect_posts():
     records = []
     if not POST_DB.exists():
@@ -339,6 +400,10 @@ def writer_href(writer, depth):
     return "../" * depth + f"writers/{slugify(writer)}.html"
 
 
+def writer_type_href(source_type, depth):
+    return "../" * depth + f"writers/types/{slugify(source_type)}.html"
+
+
 def source_filter_name(record):
     """Return the best available human-readable source identity."""
     if record["source_author"]:
@@ -394,49 +459,110 @@ def quote_hero(title, lede, depth, filters_on):
 </section>"""
 
 
-def quote_filter_browser(feed, records, taxonomy, depth, selected_tag="", selected_source=""):
-    """Wrap a quote feed with static tag and source filter rails."""
-    tag_rows = []
+def taxonomy_filter_rows(taxonomy, selected_slug, depth, href_builder, terminal_rows=()):
+    """Render a taxonomy rail at its root or at one selected drill-down node."""
+    if not selected_slug:
+        roots = sorted(
+            (node for node in taxonomy.values() if not node["parent"]),
+            key=lambda node: node["label"].casefold(),
+        )
+        return [
+            f'<li><a href="{href_builder(node["slug"], depth)}">'
+            f'{html.escape(node["label"])}</a></li>'
+            for node in roots
+        ]
 
-    if selected_tag and selected_tag != "all":
-        selected = taxonomy[selected_tag]
-        for index, path_slug in enumerate(selected["path"]):
-            node = taxonomy[path_slug]
-            parent_slug = node["parent"]
-            exit_href = (
-                topic_href(parent_slug, depth)
-                if parent_slug else "../" * depth + "quotes-expanded.html"
+    selected = taxonomy[selected_slug]
+    rows = []
+    for index, path_slug in enumerate(selected["path"]):
+        node = taxonomy[path_slug]
+        parent_slug = node["parent"]
+        exit_href = (
+            href_builder(parent_slug, depth)
+            if parent_slug else "../" * depth + "quotes-expanded.html"
+        )
+        rows.append(
+            f'<li class="filter-path"><a href="{exit_href}" '
+            f'aria-label="Exit {html.escape(node["label"], quote=True)} filter">'
+            f'{html.escape(node["label"])}</a></li>'
+        )
+        if index < len(selected["path"]) - 1:
+            rows.append('<li class="filter-divider" aria-hidden="true"></li>')
+
+    if selected["children"] or terminal_rows:
+        rows.append('<li class="filter-divider" aria-hidden="true"></li>')
+    for child_slug in selected["children"]:
+        child = taxonomy[child_slug]
+        rows.append(
+            f'<li><a href="{href_builder(child_slug, depth)}">'
+            f'{html.escape(child["label"])}</a></li>'
+        )
+    rows.extend(terminal_rows)
+    return rows
+
+
+def quote_filter_browser(
+    feed, records, taxonomy, source_taxonomy, depth, selected_tag="", selected_source="",
+    selected_source_type="",
+):
+    """Wrap a quote feed with static tag and source filter rails."""
+    active_tag = selected_tag if selected_tag != "all" else ""
+    tag_rows = taxonomy_filter_rows(taxonomy, active_tag, depth, topic_href)
+
+    source_rows = []
+    if source_taxonomy:
+        if selected_source_type:
+            selected = source_taxonomy[selected_source_type]
+            terminal_rows = []
+            if not selected["children"]:
+                sources = sorted(
+                    {
+                        source_filter_name(record)
+                        for record in records
+                        if record.get("source_type") == selected_source_type
+                    },
+                    key=str.casefold,
+                )
+                for source in sources:
+                    current = ' aria-current="page"' if source == selected_source else ""
+                    terminal_rows.append(
+                        f'<li><a href="{writer_href(source, depth)}"{current}>'
+                        f'{html.escape(source)}</a></li>'
+                    )
+            source_rows = taxonomy_filter_rows(
+                source_taxonomy, selected_source_type, depth, writer_type_href, terminal_rows
             )
-            tag_rows.append(
-                f'<li class="filter-path"><a href="{exit_href}" '
-                f'aria-label="Exit {html.escape(node["label"], quote=True)} filter">'
-                f'{html.escape(node["label"])}</a></li>'
+        elif selected_source:
+            source_types = sorted(
+                {
+                    record.get("source_type")
+                    for record in records
+                    if source_filter_name(record) == selected_source
+                    and record.get("source_type")
+                },
+                key=lambda slug: source_taxonomy[slug]["label"].casefold(),
             )
-            if index < len(selected["path"]) - 1:
-                tag_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
-        if selected["children"]:
-            tag_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
-        for child_slug in selected["children"]:
-            child = taxonomy[child_slug]
-            tag_rows.append(
-                f'<li><a href="{topic_href(child_slug, depth)}">'
-                f'{html.escape(child["label"])}</a></li>'
+            selected_row = (
+                    f'<li><a href="{writer_href(selected_source, depth)}" aria-current="page">'
+                    f'{html.escape(selected_source)}</a></li>'
+            )
+            for index, source_type in enumerate(source_types):
+                if index:
+                    source_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
+                source_rows.extend(taxonomy_filter_rows(
+                    source_taxonomy, source_type, depth, writer_type_href, (selected_row,)
+                ))
+        else:
+            source_rows = taxonomy_filter_rows(
+                source_taxonomy, "", depth, writer_type_href
             )
     else:
-        roots = [node for node in taxonomy.values() if not node["parent"]]
-        for node in sorted(roots, key=lambda item: item["label"].casefold()):
-            tag_rows.append(
-                f'<li><a href="{topic_href(node["slug"], depth)}">'
-                f'{html.escape(node["label"])}</a></li>'
+        sources = sorted({source_filter_name(record) for record in records}, key=str.casefold)
+        for source in sources:
+            current = ' aria-current="page"' if source == selected_source else ""
+            source_rows.append(
+                f'<li><a href="{writer_href(source, depth)}"{current}>{html.escape(source)}</a></li>'
             )
-
-    sources = sorted({source_filter_name(record) for record in records}, key=str.casefold)
-    source_rows = []
-    for source in sources:
-        current = ' aria-current="page"' if source == selected_source else ""
-        source_rows.append(
-            f'<li><a href="{writer_href(source, depth)}"{current}>{html.escape(source)}</a></li>'
-        )
 
     return f"""<section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
@@ -628,7 +754,7 @@ def build_posts(records):
          lede="Mark Reveley — dev blog. Posts, quotes, and about.")
 
 
-def build_quotes(records, taxonomy):
+def build_quotes(records, taxonomy, source_taxonomy):
     roots = sorted(
         (node for node in taxonomy.values() if not node["parent"]),
         key=lambda node: node["label"].casefold(),
@@ -645,7 +771,7 @@ def build_quotes(records, taxonomy):
     page("quotes.html", "Quotes", body, active="quotes.html",
          lede=lede, quote_controls=True)
 
-    expanded_feed = quote_filter_browser(feed, records, taxonomy, 0)
+    expanded_feed = quote_filter_browser(feed, records, taxonomy, source_taxonomy, 0)
     expanded_body = f"""{quote_hero("Quotes", lede, 0, True)}
 {expanded_feed}"""
     page("quotes-expanded.html", "Quotes", expanded_body, active="quotes.html",
@@ -661,28 +787,68 @@ def build_quotes(records, taxonomy):
          lede="Browse the quote collection by tag.")
 
 
-def build_writers(records, taxonomy):
+def writer_list(records, depth):
+    writers = sorted(
+        {source_filter_name(record) for record in records}, key=str.casefold
+    )
+    rows = "".join(
+        f'<li><a href="{writer_href(writer, depth)}">{html.escape(writer)}</a></li>'
+        for writer in writers
+    )
+    return f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No writers yet.</p>'
+
+
+def build_writers(records, taxonomy, source_taxonomy, source_records):
     writers = {}
     for record in records:
         writers.setdefault(source_filter_name(record), []).append(record)
-    rows = "".join(
-        f'<li><a href="writers/{slugify(writer)}.html">{html.escape(writer)}</a></li>'
-        for writer in sorted(writers, key=str.casefold)
+    roots = sorted(
+        (node for node in source_taxonomy.values() if not node["parent"]),
+        key=lambda node: node["label"].casefold(),
     )
-    writer_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No writers yet.</p>'
+    category_rows = "".join(
+        f'<li><a href="writers/types/{node["slug"]}.html">{html.escape(node["label"])}</a></li>'
+        for node in roots
+    )
+    category_list = (
+        f'<ul class="topics">{category_rows}</ul>'
+        if category_rows else writer_list(records, 0)
+    )
     index_body = f"""<section class="hero">
-  <h1>Writer</h1>
-  <p class="lede">Browse the quote collection by writer.</p>
+  <h1>Writers</h1>
+  <p class="lede">Browse the quote collection by source format and writer.</p>
 </section>
-<section aria-label="All writers">{writer_list}</section>"""
-    page("writers.html", "Writer", index_body, active="quotes.html",
-         lede="Browse the quote collection by writer.")
+<section aria-label="Writer categories">{category_list}</section>"""
+    page("writers.html", "Writers", index_body, active="quotes.html",
+         lede="Browse the quote collection by source format and writer.")
+
+    for source_type, node in sorted(
+        source_taxonomy.items(), key=lambda item: (len(item[1]["path"]), item[1]["label"].casefold())
+    ):
+        records_for_type = source_records[source_type]
+        cards = "".join(quote_card(record, 2) for record in records_for_type)
+        feed = cards or '<p class="empty">No quotes yet.</p>'
+        path_label = " / ".join(source_taxonomy[item]["label"] for item in node["path"])
+        lede = (
+            f"{len(records_for_type)} quote{'' if len(records_for_type) == 1 else 's'} from "
+            f"<em>{html.escape(path_label)}</em>, newest first."
+        )
+        browser = quote_filter_browser(
+            feed, records, taxonomy, source_taxonomy, 2,
+            selected_source_type=source_type,
+        )
+        body = f"""{quote_hero(node['label'], lede, 2, True)}
+{browser}"""
+        page(
+            f"writers/types/{source_type}.html", f"Writers — {node['label']}", body,
+            active="quotes.html", lede=re.sub("<[^>]+>", "", lede), quote_controls=True,
+        )
 
     for writer, writer_records in sorted(writers.items(), key=lambda item: item[0].casefold()):
         cards = "".join(quote_card(record, 1) for record in writer_records)
         feed = cards or '<p class="empty">No quotes yet.</p>'
         browser = quote_filter_browser(
-            feed, records, taxonomy, 1, selected_source=writer
+            feed, records, taxonomy, source_taxonomy, 1, selected_source=writer
         )
         body = f"""{quote_hero(writer, "", 1, True)}
 {browser}"""
@@ -696,11 +862,15 @@ def build_writers(records, taxonomy):
         )
 
 
-def build_topic(heading, filtered_records, all_records, taxonomy, filename, lede, selected_tag):
+def build_topic(
+    heading, filtered_records, all_records, taxonomy, source_taxonomy, filename, lede, selected_tag
+):
     cards = "".join(quote_card(record, 1) for record in filtered_records)
     if not cards:
         cards = '<p class="empty">No quotes yet.</p>'
-    browser = quote_filter_browser(cards, all_records, taxonomy, 1, selected_tag=selected_tag)
+    browser = quote_filter_browser(
+        cards, all_records, taxonomy, source_taxonomy, 1, selected_tag=selected_tag
+    )
     body = f"""{quote_hero(heading, lede, 1, True)}
 {browser}"""
     page(
@@ -710,9 +880,9 @@ def build_topic(heading, filtered_records, all_records, taxonomy, filename, lede
     )
 
 
-def build_topics(records, taxonomy, topic_records):
+def build_topics(records, taxonomy, source_taxonomy, topic_records):
     build_topic(
-        "All quotes", records, records, taxonomy, "all.html",
+        "All quotes", records, records, taxonomy, source_taxonomy, "all.html",
         f"Every quote in the collection, {len(records)} of them, newest first.", "all",
     )
     for slug, node in sorted(
@@ -721,7 +891,7 @@ def build_topics(records, taxonomy, topic_records):
         count = len(topic_records[slug])
         path_label = " / ".join(taxonomy[item]["label"] for item in node["path"])
         build_topic(
-            node["label"], topic_records[slug], records, taxonomy, f"{slug}.html",
+            node["label"], topic_records[slug], records, taxonomy, source_taxonomy, f"{slug}.html",
             f"{count} quote{'' if count == 1 else 's'} filed under "
             f"<em>{html.escape(path_label)}</em>, newest first.",
             slug,
@@ -753,15 +923,16 @@ def main():
     records = collect_quotes()
     posts = collect_posts()
     taxonomy, topic_records = build_taxonomy(records)
+    source_taxonomy, source_records = build_source_taxonomy(records)
     if TOPICS.exists():
         shutil.rmtree(TOPICS)
     if WRITERS.exists():
         shutil.rmtree(WRITERS)
     build_random_quote_script(records)
     build_posts(posts)
-    build_quotes(records, taxonomy)
-    build_writers(records, taxonomy)
-    build_topics(records, taxonomy, topic_records)
+    build_quotes(records, taxonomy, source_taxonomy)
+    build_writers(records, taxonomy, source_taxonomy, source_records)
+    build_topics(records, taxonomy, source_taxonomy, topic_records)
     build_about()
     pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))
     sources = len({record["resource"] for record in records})

@@ -243,6 +243,7 @@ ul.topics a:hover { color: var(--accent-strong); text-decoration: underline; }
 .filter-rail-tags a[aria-current="page"]::before { color: var(--accent-strong); }
 .filter-rail-tags .filter-path a,
 .filter-rail-tags .filter-path a::before { color: var(--accent-strong); }
+.filter-rail-sources .filter-path a { color: var(--accent-strong); }
 .filter-rail .filter-divider {
   height: 0; margin: .55rem 0 .65rem; border-top: 1px solid var(--rule);
 }

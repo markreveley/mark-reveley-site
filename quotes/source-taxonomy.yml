@@ -1,0 +1,59 @@
+writing:
+  label: Writing
+  children:
+    personal-blogs:
+      label: Personal blogs
+      hosts:
+        - addyosmani.com
+        - blog.kunchenguid.com
+        - blog.sshh.io
+        - eardatasci.github.io
+        - margaretstorey.com
+        - matklad.github.io
+        - michelletilley.net
+        - mvakde.github.io
+        - rohankgeorge.substack.com
+        - simonwillison.net
+        - sumnerevans.com
+        - www.dbreunig.com
+        - www.lpalmieri.com
+        - wicksipedia.com
+    organization-blogs:
+      label: Organization blogs
+      hosts:
+        - blog.cloudflare.com
+        - dora.dev
+        - www.faros.ai
+        - www.gitclear.com
+        - www.mindstudio.ai
+        - www.veracode.com
+        - www.warp.dev
+    newsletters:
+      label: Newsletters
+      hosts:
+        - substack.com
+    editorial-articles:
+      label: Editorial articles
+      hosts:
+        - leaddev.com
+        - time.com
+        - www.brookings.edu
+
+research:
+  label: Research
+  children:
+    papers:
+      label: Papers
+      hosts:
+        - arxiv.org
+        - ckrybus.com
+        - pages.cs.wisc.edu
+
+social:
+  label: Social
+  children:
+    social-posts:
+      label: Social posts
+      hosts:
+        - www.reddit.com
+        - x.com
