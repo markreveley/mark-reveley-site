@@ -1,3 +1,9 @@
+---
+type: Post
+title: "Complexity Escape"
+date_published: "2026-09-03"
+excerpt: "Complexity escape is the point where understanding a system would take more effort than rebuilding it from scratch."
+---
 For a hot minute this summer I was working on a second-brain type repo called [Elixir-mind](https://github.com/markreveley/elixir-mind), which was an attempt to rein in my agent-driven development (ok vibe coded) workflow which spun out of control building a different epistemic knowledge base called [Composable-beliefs](https://github.com/markreveley/composable-beliefs). Both fell pray to the same phonomenon, which is something I call complexity escape. 
 
 Complexity escape, in my world, means the complexity of the system has escaped my understanding of it, and gaining understanding would take more effort than it would take to rebuild the thing from scratch. Like Calhoun's mouse utopia experiments, once the civilization has begun its descent into self-elimination there is no saving it.
