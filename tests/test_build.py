@@ -28,6 +28,7 @@ def write_record(directory, name, **overrides):
 
 
 def write_post(directory, name="example-post.md", **overrides):
+    body = overrides.pop("body", "A post body. Another sentence.")
     record = {
         "type": "Post",
         "title": "Example post",
@@ -36,7 +37,7 @@ def write_post(directory, name="example-post.md", **overrides):
     }
     frontmatter = yaml.safe_dump(record, sort_keys=False)
     (directory / name).write_text(
-        f"---\n{frontmatter}---\nA post body. Another sentence.\n",
+        f"---\n{frontmatter}---\n{body}\n",
         encoding="utf-8",
     )
 
@@ -106,6 +107,10 @@ class SiteBuildTests(unittest.TestCase):
             write_post(
                 quote_db.parent / "posts",
                 excerpt="A custom post-card excerpt.",
+                body=(
+                    "A post body with an [example](https://example.com/path?a=1&b=2). "
+                    "Another sentence."
+                ),
             )
             build()
 
@@ -113,7 +118,11 @@ class SiteBuildTests(unittest.TestCase):
             post = (output / "posts" / "example-post.html").read_text(encoding="utf-8")
             self.assertIn('<a href="posts/example-post.html">Example post</a>', landing)
             self.assertIn("A custom post-card excerpt.", landing)
-            self.assertIn("A post body. Another sentence.", post)
+            self.assertIn(
+                '<a href="https://example.com/path?a=1&amp;b=2" rel="noreferrer">example</a>',
+                post,
+            )
+            self.assertNotIn("[example]", post)
 
     def test_builds_enriched_quotes_and_allows_a_repeated_resource(self):
         with isolated_site() as (quote_db, output):

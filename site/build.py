@@ -585,6 +585,32 @@ def quote_text_html(text):
     return "".join(paragraphs)
 
 
+def post_inline_html(text):
+    """Render escaped post text with safe Markdown-style web links."""
+    fragments = []
+    cursor = 0
+    for match in re.finditer(r"\[([^\]\n]+)\]\((https?://[^\s)]+)\)", text):
+        fragments.append(html.escape(text[cursor:match.start()]))
+        label, url = match.groups()
+        if valid_web_url(url):
+            fragments.append(
+                f'<a href="{html.escape(url, quote=True)}" rel="noreferrer">'
+                f'{html.escape(label)}</a>'
+            )
+        else:
+            fragments.append(html.escape(match.group(0)))
+        cursor = match.end()
+    fragments.append(html.escape(text[cursor:]))
+    return "".join(fragments).replace("\n", "<br>\n")
+
+
+def post_text_html(text):
+    paragraphs = []
+    for paragraph in re.split(r"\n\s*\n", text.strip()):
+        paragraphs.append(f"<p>{post_inline_html(paragraph)}</p>")
+    return "".join(paragraphs)
+
+
 def quote_card(record, depth):
     tags = "".join(
         f'<li><a href="{topic_href(slug, depth)}">{html.escape(label)}</a></li>'
@@ -732,7 +758,7 @@ def build_posts(records):
     <h1>{title}</h1>
     <p class="attrib"><time datetime="{published}">{date_label}</time></p>
   </header>
-  {quote_text_html(record['body'])}
+  {post_text_html(record['body'])}
 </article>"""
         page(
             f"posts/{record['slug']}.html",
