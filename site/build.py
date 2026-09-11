@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the static site from the OKF-style records in quotes/."""
+"""Build the static site from Markdown posts, quotes, and definitions."""
 
 import html
 import json
@@ -19,11 +19,12 @@ except ImportError as exc:  # pragma: no cover
 ROOT = Path(__file__).resolve().parent.parent
 QUOTE_DB = ROOT / "quotes"
 POST_DB = ROOT / "posts"
+DEF_DB = ROOT / "defs"
 OUT = ROOT / "site"
 TOPICS = OUT / "topics"
 WRITERS = OUT / "writers"
 
-NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About")]
+NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("defs.html", "Defs"), ("about.html", "About")]
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
@@ -157,10 +158,10 @@ def collect_quotes():
     return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
 
 
-def build_taxonomy(records):
+def build_taxonomy(records, taxonomy_path=None, field="tags"):
     """Load the topic hierarchy, annotate records, and aggregate each node."""
-    raw_tags = {tag for record in records for tag in record["tags"]}
-    taxonomy_path = QUOTE_DB / "taxonomy.yml"
+    raw_tags = {tag for record in records for tag in record[field]}
+    taxonomy_path = taxonomy_path or QUOTE_DB / "taxonomy.yml"
     if taxonomy_path.exists():
         definition = yaml.safe_load(taxonomy_path.read_text(encoding="utf-8")) or {}
     else:
@@ -213,14 +214,15 @@ def build_taxonomy(records):
     visit(definition)
     missing = sorted(raw_tags - set(tag_nodes))
     if missing:
-        raise ValueError(f"{taxonomy_path}: unmapped quote tag(s): {', '.join(missing)}")
+        label = "quote tag(s)" if field == "tags" else field
+        raise ValueError(f"{taxonomy_path}: unmapped {label}: {', '.join(missing)}")
 
     topic_records = {slug: [] for slug in nodes}
     for record in records:
         visible = []
         visible_slugs = set()
         memberships = set()
-        for tag in record["tags"]:
+        for tag in record[field]:
             for slug in nodes[tag_nodes[tag]]["path"]:
                 memberships.add(slug)
                 if slug not in visible_slugs:
@@ -327,6 +329,41 @@ def collect_posts():
         key=lambda record: (record["date_published"], record["slug"]),
         reverse=True,
     )
+
+
+def collect_defs():
+    records = []
+    for path in sorted(DEF_DB.glob("*.md")):
+        meta, body = load_document(path)
+        if not meta or str(meta.get("type", "")).lower() != "definition":
+            continue
+        term = optional_text(meta, "term", path)
+        date_added = optional_text(meta, "date_added", path)
+        if not term or not body:
+            raise ValueError(f"{path}: term and definition body must not be empty")
+        if not valid_iso_date(date_added):
+            raise ValueError(f"{path}: date_added must be a valid YYYY-MM-DD date")
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", path.stem):
+            raise ValueError(f"{path}: filename must be lowercase and hyphenated")
+        categories = meta.get("categories")
+        if not isinstance(categories, list) or not categories or not all(
+            isinstance(category, str) and category and slugify(category) == category
+            for category in categories
+        ):
+            raise ValueError(f"{path}: categories must be a non-empty list of lowercase slugs")
+        if len(set(categories)) != len(categories):
+            raise ValueError(f"{path}: categories must not contain duplicates")
+        aliases = meta.get("aliases", [])
+        if not isinstance(aliases, list) or not all(
+            isinstance(alias, str) and alias.strip() for alias in aliases
+        ):
+            raise ValueError(f"{path}: aliases must be a list of non-empty strings")
+        records.append({
+            "slug": path.stem, "term": term, "date_added": date_added,
+            "categories": categories, "body": body,
+            "aliases": [alias.strip() for alias in aliases],
+        })
+    return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
 
 
 def pretty_date(raw):
@@ -585,12 +622,12 @@ def quote_text_html(text):
     return "".join(paragraphs)
 
 
-def post_inline_html(text):
+def post_inline_html(text, render_text=html.escape):
     """Render escaped post text with safe Markdown-style web links."""
     fragments = []
     cursor = 0
     for match in re.finditer(r"\[([^\]\n]+)\]\((https?://[^\s)]+)\)", text):
-        fragments.append(html.escape(text[cursor:match.start()]))
+        fragments.append(render_text(text[cursor:match.start()]))
         label, url = match.groups()
         if valid_web_url(url):
             fragments.append(
@@ -600,7 +637,7 @@ def post_inline_html(text):
         else:
             fragments.append(html.escape(match.group(0)))
         cursor = match.end()
-    fragments.append(html.escape(text[cursor:]))
+    fragments.append(render_text(text[cursor:]))
     return "".join(fragments).replace("\n", "<br>\n")
 
 
@@ -924,6 +961,113 @@ def build_topics(records, taxonomy, source_taxonomy, topic_records):
         )
 
 
+def def_category_href(slug, depth):
+    return "../" * depth + f"defs/categories/{slug}.html"
+
+
+def definition_linker(records):
+    """Match whole terms and explicit aliases, preferring the longest phrase."""
+    targets = {}
+    for record in records:
+        for term in [record["term"], *record.get("aliases", [])]:
+            key = term.lower()
+            if key in targets and targets[key] != record["slug"]:
+                raise ValueError(f"ambiguous definition term or alias: {term}")
+            targets[key] = record["slug"]
+    pattern = re.compile(
+        r"(?<!\w)(?:" + "|".join(
+            re.escape(term) for term in sorted(targets, key=lambda term: (-len(term), term))
+        ) + r")(?!\w)", re.IGNORECASE,
+    ) if targets else None
+
+    def render(text, depth):
+        if pattern is None:
+            return html.escape(text)
+        fragments = []
+        cursor = 0
+        for match in pattern.finditer(text):
+            fragments.append(html.escape(text[cursor:match.start()]))
+            slug = targets[match.group().lower()]
+            href = "../" * depth + f"defs.html#d-{slug}"
+            fragments.append(f'<a href="{html.escape(href, quote=True)}">{html.escape(match.group())}</a>')
+            cursor = match.end()
+        fragments.append(html.escape(text[cursor:]))
+        return "".join(fragments)
+
+    return render
+
+
+def def_card(record, depth, link_text):
+    slug = html.escape(record["slug"], quote=True)
+    permalink = "../" * depth + f"defs.html#d-{slug}"
+    categories = "".join(
+        f'<li><a href="{def_category_href(category, depth)}">{html.escape(label)}</a></li>'
+        for category, label in record["display_topics"]
+    )
+    body = "".join(
+        f'<p>{post_inline_html(paragraph, lambda text: link_text(text, depth))}</p>'
+        for paragraph in re.split(r"\n\s*\n", record["body"].strip())
+    )
+    return f"""<article class="card definition" id="d-{slug}">
+  <h2><a href="{permalink}">{html.escape(record['term'])}</a></h2>
+  {body}
+  <p class="attrib">Added <time datetime="{record['date_added']}">{pretty_date(record['date_added'])}</time></p>
+  <ul class="tags">{categories}</ul>
+</article>"""
+
+
+def build_defs(records, taxonomy, category_records):
+    link_text = definition_linker(records)
+    def render(filename, selected=""):
+        depth = filename.count("/")
+
+        def category_tree(parent=""):
+            rows = []
+            children = sorted(
+                (node for node in taxonomy.values() if node["parent"] == parent),
+                key=lambda node: node["label"].casefold(),
+            )
+            for node in children:
+                slug = node["slug"]
+                current = ' aria-current="page"' if selected == slug else ""
+                rows.append(
+                    f'<li><a href="{def_category_href(slug, depth)}"{current}>'
+                    f'{html.escape(node["label"])} <span class="category-count">'
+                    f'({len(category_records[slug])})</span></a>{category_tree(slug)}</li>'
+                )
+            return f'<ul>{"".join(rows)}</ul>' if rows else ""
+
+        current = ' aria-current="page"' if not selected else ""
+        all_link = f'<a href="{"../" * depth}defs.html"{current}>All definitions ({len(records)})</a>'
+        filtered = category_records[selected] if selected else records
+        title = taxonomy[selected]["label"] if selected else "Defs"
+        lede = "Definitions, newest added first."
+        if selected:
+            lede = " / ".join(taxonomy[slug]["label"] for slug in taxonomy[selected]["path"])
+            lede += " — newest added first."
+        feed = "".join(def_card(record, depth, link_text) for record in filtered)
+        feed = feed or '<p class="empty">No definitions yet.</p>'
+        body = f"""<section class="hero">
+  <h1>{html.escape(title)}</h1>
+  <p class="lede">{html.escape(lede)}</p>
+</section>
+<section class="defs-browser" aria-label="Definitions and categories">
+  <aside class="filter-rail defs-categories" aria-label="Definition categories">
+    <h2>Categories</h2>
+    <nav aria-label="Filter definitions">{all_link}{category_tree()}</nav>
+  </aside>
+  <div class="defs-feed">{feed}</div>
+</section>"""
+        page(filename, title, body, active="defs.html", lede=lede)
+
+    category_output = OUT / "defs" / "categories"
+    if category_output.exists():
+        shutil.rmtree(category_output)
+    render("defs.html")
+    for slug in taxonomy:
+        render(f"defs/categories/{slug}.html", slug)
+
+
 def build_about():
     body = """<section class="hero">
   <div class="about-heading">
@@ -948,6 +1092,10 @@ def build_about():
 def main():
     records = collect_quotes()
     posts = collect_posts()
+    definitions = collect_defs()
+    def_taxonomy, category_records = build_taxonomy(
+        definitions, DEF_DB / "taxonomy.yml", field="categories"
+    )
     taxonomy, topic_records = build_taxonomy(records)
     source_taxonomy, source_records = build_source_taxonomy(records)
     if TOPICS.exists():
@@ -956,6 +1104,7 @@ def main():
         shutil.rmtree(WRITERS)
     build_random_quote_script(records)
     build_posts(posts)
+    build_defs(definitions, def_taxonomy, category_records)
     build_quotes(records, taxonomy, source_taxonomy)
     build_writers(records, taxonomy, source_taxonomy, source_records)
     build_topics(records, taxonomy, source_taxonomy, topic_records)

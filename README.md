@@ -1,6 +1,12 @@
 # mark-reveley
 
-A static personal site with posts, selected quotes, and an about page.
+A static personal site with posts, selected quotes, definitions, and an about page.
+
+## Add a definition
+
+Create a Markdown record under [`defs/`](defs/) with a term, date added,
+categories, and definition body, then rebuild. See [`defs/README.md`](defs/README.md)
+for the schema and nested category format.
 
 ## Add a post
 

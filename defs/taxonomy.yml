@@ -1,0 +1,6 @@
+computing:
+  label: Computing
+  children:
+    operating-systems:
+      label: Operating systems
+      tags: [operating-systems]

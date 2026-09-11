@@ -1,6 +1,6 @@
 # site/
 
-A static dev blog: HTML and CSS, no client-side JavaScript or framework.
+A static dev blog: HTML and CSS, with a small JavaScript random-quote control.
 
 ## Running locally
 
@@ -35,6 +35,14 @@ The same resource URL may occur in any number of quote records.
 Add a quote by invoking `$quote` with a resource URL and exact quote.
 The repository skill researches and authors the record, then rebuilds these
 pages automatically.
+
+## Definitions
+
+Markdown records in [`../defs/`](../defs/) are the canonical definition source.
+`build.py` generates `defs.html` as a newest-added-first feed and
+`defs/categories/<category>.html` for each node in the nested category tree.
+Categories appear to the left of the content on desktop and above it on
+smaller screens. Parent categories include definitions from their descendants.
 
 ## Rebuilding
 

@@ -51,6 +51,9 @@ def isolated_site():
         output = root / "site"
         quote_db.mkdir()
         post_db.mkdir()
+        def_db = root / "defs"
+        def_db.mkdir()
+        old_defs = site_build.DEF_DB
         old_db, old_posts, old_out, old_topics, old_writers = (
             site_build.QUOTE_DB,
             site_build.POST_DB,
@@ -61,11 +64,13 @@ def isolated_site():
         try:
             site_build.QUOTE_DB = quote_db
             site_build.POST_DB = post_db
+            site_build.DEF_DB = def_db
             site_build.OUT = output
             site_build.TOPICS = output / "topics"
             site_build.WRITERS = output / "writers"
             yield quote_db, output
         finally:
+            site_build.DEF_DB = old_defs
             site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS, site_build.WRITERS = (
                 old_db,
                 old_posts,
@@ -81,6 +86,99 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def write_definition(self, name="program", body="A definition.", **overrides):
+        meta = {
+            "type": "Definition", "term": name.title(),
+            "date_added": "2026-09-11", "categories": ["systems"], **overrides,
+        }
+        (site_build.DEF_DB / f"{name}.md").write_text(
+            f"---\n{yaml.safe_dump(meta)}---\n{body}\n", encoding="utf-8"
+        )
+
+    def test_definitions_order_categories_and_navigation(self):
+        with isolated_site() as (_, output):
+            (site_build.DEF_DB / "taxonomy.yml").write_text(
+                "computing:\n  label: Computing\n  children:\n"
+                "    systems:\n      label: Systems\n      tags: [systems]\n"
+                "    languages:\n      label: Languages\n      tags: [languages]\n"
+            )
+            self.write_definition("old", date_added="2026-09-10")
+            self.write_definition("alpha", categories=["languages"])
+            self.write_definition("zeta", categories=["systems", "languages"],
+                                  body='Safe <script> & [reference](https://example.com).')
+            build()
+            feed = (output / "defs.html").read_text()
+            parent = (output / "defs/categories/computing.html").read_text()
+            child = (output / "defs/categories/systems.html").read_text()
+            self.assertLess(feed.index('id="d-zeta"'), feed.index('id="d-alpha"'))
+            self.assertLess(feed.index('id="d-alpha"'), feed.index('id="d-old"'))
+            self.assertEqual(parent.count('id="d-zeta"'), 1)
+            self.assertIn('id="d-old"', child)
+            self.assertNotIn('id="d-alpha"', child)
+            self.assertIn('href="../../defs.html#d-zeta"', child)
+            self.assertIn('href="../../defs.html" aria-current="page">Defs', child)
+            self.assertIn('href="../../defs/categories/systems.html" aria-current="page"', child)
+            self.assertIn('Safe &lt;script&gt; &amp;', feed)
+            self.assertIn('href="https://example.com"', feed)
+            self.assertIn('<time datetime="2026-09-11">11 September 2026</time>', feed)
+            self.assertIn('href="defs.html">Defs', (output / "index.html").read_text())
+            # Removing a category must remove the generated page on the next build.
+            (site_build.DEF_DB / "taxonomy.yml").unlink()
+            build()
+            self.assertFalse((output / "defs/categories/computing.html").exists())
+
+    def test_definition_validation_and_empty_feed(self):
+        with isolated_site() as (_, output):
+            build()
+            self.assertIn("No definitions yet.", (output / "defs.html").read_text())
+        cases = (
+            ({"date_added": "2026-02-30"}, "date_added must"),
+            ({"term": ""}, "term and definition body"),
+            ({"body": ""}, "term and definition body"),
+            ({"categories": []}, "categories must"),
+            ({"categories": ["Bad Category"]}, "categories must"),
+            ({"categories": ["systems", "systems"]}, "duplicates"),
+        )
+        for overrides, message in cases:
+            with self.subTest(overrides=overrides), isolated_site():
+                self.write_definition(**overrides)
+                with self.assertRaisesRegex(ValueError, message):
+                    build()
+        with isolated_site():
+            self.write_definition()
+            (site_build.DEF_DB / "taxonomy.yml").write_text("computing: {}\n")
+            with self.assertRaisesRegex(ValueError, "unmapped categories"):
+                build()
+
+    def test_definition_links_match_terms_aliases_and_preserve_existing_links(self):
+        with isolated_site() as (_, output):
+            self.write_definition("process", aliases=["processes"])
+            self.write_definition("process-execution-state", term="Process execution state",
+                                  aliases=["execution state"])
+            self.write_definition("program", body=(
+                "Process execution state; EXECUTION STATE; process; processes; process's; "
+                "processor; preprocessing. <process> & program.\n\n"
+                "[process reference](https://example.com/process)"
+            ))
+            build()
+            for path, prefix in (("defs.html", ""), ("defs/categories/systems.html", "../../")):
+                page = (output / path).read_text()
+                self.assertIn(f'<a href="{prefix}defs.html#d-process-execution-state">Process execution state</a>', page)
+                self.assertIn(f'<a href="{prefix}defs.html#d-process-execution-state">EXECUTION STATE</a>', page)
+                self.assertIn(f'<a href="{prefix}defs.html#d-process">processes</a>', page)
+                self.assertIn(f'<a href="{prefix}defs.html#d-process">process</a>&#x27;s', page)
+                self.assertIn('processor; preprocessing.', page)
+                self.assertIn(f'&lt;<a href="{prefix}defs.html#d-process">process</a>&gt; &amp;', page)
+                self.assertIn('<a href="https://example.com/process" rel="noreferrer">process reference</a>', page)
+                self.assertIn(f'<a href="{prefix}defs.html#d-program">program</a>', page)
+
+    def test_definition_links_reject_ambiguous_targets(self):
+        with isolated_site():
+            self.write_definition("process")
+            self.write_definition("other", aliases=["PROCESS"])
+            with self.assertRaisesRegex(ValueError, "ambiguous definition term or alias"):
+                build()
+
     def test_about_links_to_social_profiles_with_icons(self):
         with isolated_site() as (_, output):
             build()
