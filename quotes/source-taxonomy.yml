@@ -8,19 +8,23 @@ writing:
         - blog.kunchenguid.com
         - blog.sshh.io
         - eardatasci.github.io
+        - lufzle.dev
         - margaretstorey.com
         - matklad.github.io
         - michelletilley.net
         - mvakde.github.io
+        - nolanlawson.com
         - rohankgeorge.substack.com
         - simonwillison.net
         - sumnerevans.com
+        - teorth.github.io
         - www.dbreunig.com
         - www.lpalmieri.com
         - wicksipedia.com
     organization-blogs:
       label: Organization blogs
       hosts:
+        - www.anthropic.com
         - blog.cloudflare.com
         - dora.dev
         - www.faros.ai
@@ -36,6 +40,7 @@ writing:
       label: Editorial articles
       hosts:
         - leaddev.com
+        - proofsandprompts.com
         - time.com
         - www.brookings.edu
 
@@ -47,6 +52,7 @@ research:
       hosts:
         - arxiv.org
         - ckrybus.com
+        - openreview.net
         - pages.cs.wisc.edu
 
 social:

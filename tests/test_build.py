@@ -179,6 +179,54 @@ class SiteBuildTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "ambiguous definition term or alias"):
                 build()
 
+    def test_multiple_definitions_keep_sources_with_their_text(self):
+        with isolated_site() as (_, output):
+            self.write_definition("program")
+            self.write_definition("agent", body="Notes about a program.", definitions=[
+                {"text": "First: a program.", "sources": [
+                    {"title": "First <source>", "url": "https://example.com/one?a=1&b=2#part",
+                     "author": "Author & Team", "date": "2026-02-18"},
+                    {"title": "Supporting source", "url": "https://example.com/two"},
+                ]},
+                {"text": "Second: another program.", "sources": [
+                    {"title": "Other source", "url": "https://example.org/three", "date": "2025"},
+                ]},
+            ])
+            build()
+            for filename, prefix in (("defs.html", ""), ("defs/categories/systems.html", "../../")):
+                page = (output / filename).read_text()
+                card = page.split('id="d-agent">', 1)[1].split('</article>', 1)[0]
+                self.assertEqual(card.count('class="definition-entry"'), 2)
+                self.assertLess(card.index('First &lt;source&gt;'), card.index('Second:'))
+                self.assertLess(card.index('Supporting source'), card.index('Second:'))
+                self.assertGreater(card.index('Other source'), card.index('Second:'))
+                self.assertIn('https://example.com/one?a=1&amp;b=2#part', card)
+                self.assertIn('Author &amp; Team', card)
+                self.assertIn('<time datetime="2026-02-18">18 February 2026</time>', card)
+                self.assertEqual(card.count(f'href="{prefix}defs.html#d-program"'), 3)
+                self.assertIn('class="definition-notes"', card)
+
+    def test_structured_definition_validation(self):
+        cases = [
+            ([], "definitions must"),
+            (["text"], "definition must be a mapping"),
+            ([{"text": ""}], "definition text must"),
+            ([{"text": "Valid", "sources": {}}], "sources must be a list"),
+            ([{"text": "Valid", "sources": ["source"]}], "source must be a mapping"),
+            ([{"text": "Valid", "sources": [{"url": "https://example.com"}]}], "url and title"),
+            ([{"text": "Valid", "sources": [{"title": "Bad", "url": "javascript:alert(1)"}]}], "url and title"),
+            ([{"text": "Valid", "sources": [{"title": "Bad", "url": "https://example.com", "date": "2026-02-30"}]}], "source date must"),
+        ]
+        for definitions, message in cases:
+            with self.subTest(definitions=definitions), isolated_site():
+                self.write_definition(body="", definitions=definitions)
+                with self.assertRaisesRegex(ValueError, message):
+                    build()
+        with isolated_site() as (_, output):
+            self.write_definition(body="", definitions=[{"text": "A definition without a source."}])
+            build()
+            self.assertIn("A definition without a source.", (output / "defs.html").read_text())
+
     def test_about_links_to_social_profiles_with_icons(self):
         with isolated_site() as (_, output):
             build()

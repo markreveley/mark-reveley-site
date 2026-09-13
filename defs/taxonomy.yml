@@ -1,6 +1,12 @@
 computing:
   label: Computing
   children:
+    artificial-intelligence:
+      label: Artificial intelligence
+      children:
+        agents:
+          label: Agents
+          tags: [agents]
     operating-systems:
       label: Operating systems
       tags: [operating-systems]

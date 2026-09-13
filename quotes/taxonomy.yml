@@ -18,6 +18,7 @@ agent:
       tags: [tool-use]
     agent-workflow:
       label: workflow
+      tags: [agent-workflow]
       children:
         workflow-orchestration:
           label: orchestration
@@ -35,9 +36,19 @@ agent:
 model:
   label: model
   children:
+    ai-capabilities:
+      label: capabilities
+      tags: [ai-capabilities]
+    judgement:
+      label: judgement
+      tags: [judgement]
     ai-alignment:
       label: alignment
       tags: [ai-alignment]
+      children:
+        social-bias:
+          label: social-bias
+          tags: [social-bias]
     ai-generated-code:
       label: generated-code
       tags: [ai-generated-code]
@@ -50,6 +61,9 @@ model:
     symbolic-reasoning:
       label: symbolic-reasoning
       tags: [symbolic-reasoning]
+    pattern-recognition:
+      label: pattern-recognition
+      tags: [pattern-recognition]
     evaluation:
       label: evaluation
       tags: [evaluation]
@@ -95,6 +109,13 @@ software:
     software-security:
       label: security
       tags: [software-security]
+      children:
+        prompt-injection:
+          label: prompt-injection
+          tags: [prompt-injection]
+        capability-based-security:
+          label: capabilities
+          tags: [capability-based-security]
     requirements-engineering:
       label: requirements
       tags: [requirements-engineering]
@@ -142,6 +163,9 @@ software:
 development:
   label: development
   children:
+    web-standards:
+      label: web-standards
+      tags: [web-standards]
     developer-productivity:
       label: productivity
       tags: [developer-productivity]

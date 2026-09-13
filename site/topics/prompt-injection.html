@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>prompt-injection — Mark Reveley</title>
+<meta name="description" content="2 quotes filed under software / security / prompt-injection, newest first.">
+<link rel="stylesheet" href="../style.css">
+<script defer src="../random-quotes.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../index.html">Posts</a><a href="../quotes.html" aria-current="page">Quotes</a><a href="../defs.html">Defs</a><a href="../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <div class="quote-heading">
+    <h1>prompt-injection</h1>
+    <div class="quote-controls">
+      <button class="random-toggle" type="button" data-random-quote data-root="../" data-filters="on" aria-label="Load a random quote" title="Load a random quote"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><g class="die-face" data-die-face="1"><circle cx="12" cy="12" r="1"/></g><g class="die-face" data-die-face="2"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="16" r="1"/></g><g class="die-face" data-die-face="3"><circle cx="8" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="16" r="1"/></g><g class="die-face" data-die-face="4"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g><g class="die-face is-visible" data-die-face="5"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g><g class="die-face" data-die-face="6"><circle cx="8" cy="7.5" r="1"/><circle cx="16" cy="7.5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16.5" r="1"/><circle cx="16" cy="16.5" r="1"/></g></svg></button>
+      <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
+    </div>
+  </div>
+  <p class="lede">2 quotes filed under <em>software / security / prompt-injection</em>, newest first.</p>
+</section>
+<section class="quote-browser" aria-label="Quote filters and results">
+  <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
+    <h2>Tags</h2>
+    <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit software filter">software</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software.html" aria-label="Exit security filter">security</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software-security.html" aria-label="Exit prompt-injection filter">prompt-injection</a></li></ul>
+  </aside>
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-12-layered-prompt-injection-defenses" data-quote-slug="2026-09-12-layered-prompt-injection-defenses" data-source-filter="David Singleton" data-source-filter-href="../writers/david-singleton.html">
+  <div class="said"><blockquote><p>One threat we’re particularly focused on is prompt injection, and we handle it in layers. The model is trained to recognize and resist it. The harness marks anything coming from an untrusted source. Deterministic code checks the result. And an ensemble of classifiers runs where the agent can&#x27;t reach them.</p></blockquote></div>
+  <p class="source-title"><a href="https://x.com/dps/status/2097404102468899131" rel="noreferrer">Source</a> · <a href="https://news.ycombinator.com/item?id=49615537" rel="noreferrer">hn</a> · <a href="../writers/david-singleton.html">David Singleton</a> · 8 September 2026</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/agent.html">agent</a></li><li><a href="../topics/model-harnesses.html">harnesses</a></li><li><a href="../topics/verification.html">verification</a></li><li><a href="../topics/deterministic-verification.html">deterministic</a></li><li><a href="../topics/guardrails.html">guardrails</a></li></ul>
+</article><article class="card quote" id="q-2026-09-12-camel-capabilities-prevent-prompt-injection-harm" data-quote-slug="2026-09-12-camel-capabilities-prevent-prompt-injection-harm" data-source-filter="Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, and Florian Tramèr" data-source-filter-href="../writers/edoardo-debenedetti-ilia-shumailov-tianqi-fan-jamie-hayes-nicholas-carlini-daniel-fabian-christoph-kern-chongyang-shi-andreas-terzis-and-florian-tram-r.html">
+  <div class="said"><blockquote><p>By enforcing capability-based security policies,<br>
+CaMeL effectively prevents unintended data<br>
+flows and actions. Even with a compromised<br>
+cloud storage file containing prompt injections<br>
+targeting the Quarantined LLM, the capabilities system acts as a robust and granular control mechanism, preventing data exfiltration, as<br>
+well as other prohibited actions. This approach<br>
+provides a secure environment for LLM agents,<br>
+preventing harm by design, without requiring<br>
+modifications to the underlying LLM itself, and<br>
+offering a significantly more fine-grained and<br>
+robust defense compared to isolation and/or<br>
+adversarial training strategies alone.</p></blockquote></div>
+  <p class="source-title"><a href="https://arxiv.org/pdf/2503.18813" rel="noreferrer">Defeating Prompt Injections by Design</a> · <a href="../writers/edoardo-debenedetti-ilia-shumailov-tianqi-fan-jamie-hayes-nicholas-carlini-daniel-fabian-christoph-kern-chongyang-shi-andreas-terzis-and-florian-tram-r.html">Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, and Florian Tramèr</a> · 24 March 2025</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/capability-based-security.html">capabilities</a></li><li><a href="../topics/agent.html">agent</a></li><li><a href="../topics/guardrails.html">guardrails</a></li></ul>
+</article></div>
+  <aside class="filter-rail filter-rail-sources" aria-label="Filter by author or source">
+    <h2>Authors / sources</h2>
+    <ul><li><a href="../writers/types/research.html">Research</a></li><li><a href="../writers/types/social.html">Social</a></li><li><a href="../writers/types/writing.html">Writing</a></li></ul>
+  </aside>
+</section>
+</main>
+</body>
+</html>

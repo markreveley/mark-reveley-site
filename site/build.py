@@ -331,6 +331,38 @@ def collect_posts():
     )
 
 
+def definition_entries(meta, body, path):
+    """Normalize legacy prose and validate definitions with per-entry sources."""
+    entries = meta.get("definitions", [{"text": body}])
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"{path}: definitions must be a non-empty list")
+    normalized = []
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise ValueError(f"{path}: each definition must be a mapping")
+        text = optional_text(entry, "text", path)
+        if not text:
+            raise ValueError(f"{path}: definition text must not be empty")
+        sources = entry.get("sources", [])
+        if not isinstance(sources, list):
+            raise ValueError(f"{path}: sources must be a list")
+        references = []
+        for source in sources:
+            if not isinstance(source, dict):
+                raise ValueError(f"{path}: each source must be a mapping")
+            reference = {
+                key: optional_text(source, key, path)
+                for key in ("url", "title", "author", "date")
+            }
+            if not valid_web_url(reference["url"]) or not reference["title"]:
+                raise ValueError(f"{path}: each source needs an absolute HTTP(S) url and title")
+            if reference["date"] and not valid_iso_date(reference["date"], partial=True):
+                raise ValueError(f"{path}: source date must be YYYY, YYYY-MM, or YYYY-MM-DD")
+            references.append(reference)
+        normalized.append({"text": text, "sources": references})
+    return normalized
+
+
 def collect_defs():
     records = []
     for path in sorted(DEF_DB.glob("*.md")):
@@ -339,7 +371,7 @@ def collect_defs():
             continue
         term = optional_text(meta, "term", path)
         date_added = optional_text(meta, "date_added", path)
-        if not term or not body:
+        if not term or (not body and "definitions" not in meta):
             raise ValueError(f"{path}: term and definition body must not be empty")
         if not valid_iso_date(date_added):
             raise ValueError(f"{path}: date_added must be a valid YYYY-MM-DD date")
@@ -361,6 +393,8 @@ def collect_defs():
         records.append({
             "slug": path.stem, "term": term, "date_added": date_added,
             "categories": categories, "body": body,
+            "definitions": definition_entries(meta, body, path),
+            "notes": body if "definitions" in meta else "",
             "aliases": [alias.strip() for alias in aliases],
         })
     return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
@@ -1004,10 +1038,31 @@ def def_card(record, depth, link_text):
         f'<li><a href="{def_category_href(category, depth)}">{html.escape(label)}</a></li>'
         for category, label in record["display_topics"]
     )
-    body = "".join(
-        f'<p>{post_inline_html(paragraph, lambda text: link_text(text, depth))}</p>'
-        for paragraph in re.split(r"\n\s*\n", record["body"].strip())
-    )
+    def prose(text):
+        return "".join(
+            f'<p>{post_inline_html(paragraph, lambda text: link_text(text, depth))}</p>'
+            for paragraph in re.split(r"\n\s*\n", text.strip())
+        )
+
+    entries = []
+    for entry in record["definitions"]:
+        references = []
+        for source in entry["sources"]:
+            details = [f'<a href="{html.escape(source["url"], quote=True)}" rel="noreferrer">'
+                       f'{html.escape(source["title"])}</a>']
+            if source["author"]:
+                details.append(html.escape(source["author"]))
+            if source["date"]:
+                details.append(f'<time datetime="{source["date"]}">{pretty_date(source["date"])}</time>')
+            references.append(f'<li>{" · ".join(details)}</li>')
+        attribution = (
+            '<div class="definition-sources"><span>Sources</span>'
+            f'<ul>{"".join(references)}</ul></div>' if references else ""
+        )
+        entries.append(f'<div class="definition-entry">{prose(entry["text"])}{attribution}</div>')
+    body = "".join(entries)
+    if record["notes"]:
+        body += f'<div class="definition-notes">{prose(record["notes"])}</div>'
     return f"""<article class="card definition" id="d-{slug}">
   <h2><a href="{permalink}">{html.escape(record['term'])}</a></h2>
   {body}

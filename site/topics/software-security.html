@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>security — Mark Reveley</title>
-<meta name="description" content="1 quote filed under software / security, newest first.">
+<meta name="description" content="3 quotes filed under software / security, newest first.">
 <link rel="stylesheet" href="../style.css">
 <script defer src="../random-quotes.js"></script>
 </head>
@@ -23,14 +23,33 @@
       <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
     </div>
   </div>
-  <p class="lede">1 quote filed under <em>software / security</em>, newest first.</p>
+  <p class="lede">3 quotes filed under <em>software / security</em>, newest first.</p>
 </section>
 <section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
     <h2>Tags</h2>
-    <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit software filter">software</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software.html" aria-label="Exit security filter">security</a></li></ul>
+    <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit software filter">software</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software.html" aria-label="Exit security filter">security</a></li><li class="filter-divider" aria-hidden="true"></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/capability-based-security.html">capabilities</a></li></ul>
   </aside>
-  <div class="quote-browser-feed"><article class="card quote" id="q-2026-08-31-ai-code-security-is-a-scale-problem" data-quote-slug="2026-08-31-ai-code-security-is-a-scale-problem" data-source-filter="Natalie Tischler" data-source-filter-href="../writers/natalie-tischler.html">
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-12-layered-prompt-injection-defenses" data-quote-slug="2026-09-12-layered-prompt-injection-defenses" data-source-filter="David Singleton" data-source-filter-href="../writers/david-singleton.html">
+  <div class="said"><blockquote><p>One threat we’re particularly focused on is prompt injection, and we handle it in layers. The model is trained to recognize and resist it. The harness marks anything coming from an untrusted source. Deterministic code checks the result. And an ensemble of classifiers runs where the agent can&#x27;t reach them.</p></blockquote></div>
+  <p class="source-title"><a href="https://x.com/dps/status/2097404102468899131" rel="noreferrer">Source</a> · <a href="https://news.ycombinator.com/item?id=49615537" rel="noreferrer">hn</a> · <a href="../writers/david-singleton.html">David Singleton</a> · 8 September 2026</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/agent.html">agent</a></li><li><a href="../topics/model-harnesses.html">harnesses</a></li><li><a href="../topics/verification.html">verification</a></li><li><a href="../topics/deterministic-verification.html">deterministic</a></li><li><a href="../topics/guardrails.html">guardrails</a></li></ul>
+</article><article class="card quote" id="q-2026-09-12-camel-capabilities-prevent-prompt-injection-harm" data-quote-slug="2026-09-12-camel-capabilities-prevent-prompt-injection-harm" data-source-filter="Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, and Florian Tramèr" data-source-filter-href="../writers/edoardo-debenedetti-ilia-shumailov-tianqi-fan-jamie-hayes-nicholas-carlini-daniel-fabian-christoph-kern-chongyang-shi-andreas-terzis-and-florian-tram-r.html">
+  <div class="said"><blockquote><p>By enforcing capability-based security policies,<br>
+CaMeL effectively prevents unintended data<br>
+flows and actions. Even with a compromised<br>
+cloud storage file containing prompt injections<br>
+targeting the Quarantined LLM, the capabilities system acts as a robust and granular control mechanism, preventing data exfiltration, as<br>
+well as other prohibited actions. This approach<br>
+provides a secure environment for LLM agents,<br>
+preventing harm by design, without requiring<br>
+modifications to the underlying LLM itself, and<br>
+offering a significantly more fine-grained and<br>
+robust defense compared to isolation and/or<br>
+adversarial training strategies alone.</p></blockquote></div>
+  <p class="source-title"><a href="https://arxiv.org/pdf/2503.18813" rel="noreferrer">Defeating Prompt Injections by Design</a> · <a href="../writers/edoardo-debenedetti-ilia-shumailov-tianqi-fan-jamie-hayes-nicholas-carlini-daniel-fabian-christoph-kern-chongyang-shi-andreas-terzis-and-florian-tram-r.html">Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, and Florian Tramèr</a> · 24 March 2025</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/capability-based-security.html">capabilities</a></li><li><a href="../topics/agent.html">agent</a></li><li><a href="../topics/guardrails.html">guardrails</a></li></ul>
+</article><article class="card quote" id="q-2026-08-31-ai-code-security-is-a-scale-problem" data-quote-slug="2026-08-31-ai-code-security-is-a-scale-problem" data-source-filter="Natalie Tischler" data-source-filter-href="../writers/natalie-tischler.html">
   <div class="said"><blockquote><p>The 2026 GenAI Code Security Report found that roughly 44% of AI code generation tasks introduced a risky security vulnerability in tests. The average security pass rate across models is 56% – barely changed from 55% in the first report. In other words, security performance has stayed flat while the amount of AI-generated code entering pipelines has surged.<br>
 That is why GenAI code security is now a scale problem, not a theoretical risk discussion. If AI is responsible for half the codebase and vulnerable output remains this common, every organization needs a sharper strategy for model selection, verification, remediation, and governance.</p></blockquote></div>
   <p class="source-title"><a href="https://www.veracode.com/blog/2026-genai-code-security-report-ai-risk/" rel="noreferrer">2026 GenAI Code Security: Syntax is Solved, Security is Not</a> · <a href="../writers/natalie-tischler.html">Natalie Tischler</a></p>

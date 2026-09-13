@@ -258,6 +258,15 @@ ul.topics a:hover { color: var(--accent-strong); text-decoration: underline; }
 .category-count { color: var(--ink-faint); }
 .defs-feed { min-width: 0; }
 .definition { overflow-wrap: anywhere; }
+.definition-entry + .definition-entry {
+  margin-top: 1.25rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--rule-soft);
+}
+.definition-sources { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); }
+.definition-sources > span { color: var(--ink-faint); }
+.definition-sources ul { list-style: none; padding: 0; margin: .2rem 0 0; }
+.definition-sources li + li { margin-top: .3rem; }
+.definition-notes { margin-top: .9rem; }
 
 ul.tags {
   list-style: none; display: flex; flex-wrap: wrap; gap: .3rem .5rem;
