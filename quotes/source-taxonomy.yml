@@ -32,6 +32,7 @@ writing:
         - www.mindstudio.ai
         - www.veracode.com
         - www.warp.dev
+        - zed.dev
     newsletters:
       label: Newsletters
       hosts:

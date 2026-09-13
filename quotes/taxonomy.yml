@@ -10,6 +10,9 @@ agent:
     agent-systems:
       label: systems
       tags: [agent-systems]
+    agent-memory:
+      label: memory
+      tags: [agent-memory]
     model-harnesses:
       label: harnesses
       tags: [model-harnesses]
