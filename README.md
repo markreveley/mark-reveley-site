@@ -28,6 +28,25 @@ metadata, assigns topics, writes an OKF-style Markdown record under
 The URL is intentionally not unique. Different quotes may point to the same
 resource; only an exact repeat of both URL and quote is rejected.
 
+Quotes with a `hacker_news_url` may also include `child_quotes`, an ordered
+list of exact excerpts from that HN discussion. Keep the article URL in
+`resource` and its excerpt in `quote`; save discussion excerpts on the same
+record, not as separate quotes. They appear below the article details on the
+card, indented under an HN discussion link, without commenter attribution.
+Preserve each excerpt verbatim and check it against the linked discussion.
+The parent verification fields describe the article quote only. Child quotes
+inherit the parent card's topics and do not count as separate quote records.
+
+```yaml
+hacker_news_url: "https://news.ycombinator.com/item?id=12345678"
+child_quotes:
+  - "An exact excerpt from the discussion."
+  - |-
+    Another discussion excerpt, with multiple paragraphs.
+
+    Its second paragraph.
+```
+
 ## Quote records
 
 The Markdown files in [`quotes/`](quotes/) are the quote database and the only

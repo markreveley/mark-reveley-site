@@ -134,6 +134,25 @@ def collect_quotes():
         hacker_news_url = optional_text(meta, "hacker_news_url", path)
         if hacker_news_url and not valid_web_url(hacker_news_url):
             raise ValueError(f"{path}: hacker_news_url must be an absolute http:// or https:// URL")
+        child_quotes = meta.get("child_quotes", [])
+        if not isinstance(child_quotes, list) or any(
+            not isinstance(text, str) or not text.strip() for text in child_quotes
+        ):
+            raise ValueError(f"{path}: child_quotes must be a list of non-empty strings")
+        if child_quotes and urlparse(hacker_news_url).hostname != "news.ycombinator.com":
+            raise ValueError(f"{path}: child_quotes require a Hacker News discussion URL")
+        related_links = meta.get("related_links", [])
+        if not isinstance(related_links, list):
+            raise ValueError(f"{path}: related_links must be a list")
+        links = []
+        for link in related_links:
+            if not isinstance(link, dict):
+                raise ValueError(f"{path}: each related link must be a mapping")
+            title = optional_text(link, "title", path)
+            url = optional_text(link, "url", path)
+            if not title or not valid_web_url(url):
+                raise ValueError(f"{path}: each related link needs a title and absolute HTTP(S) URL")
+            links.append({"title": title, "url": url})
 
         identity = (resource, quote)
         if identity in identities:
@@ -152,6 +171,8 @@ def collect_quotes():
             "source_date": source_date,
             "speaker": optional_text(meta, "speaker", path),
             "hacker_news_url": hacker_news_url,
+            "child_quotes": [text.strip() for text in child_quotes],
+            "related_links": links,
             "verification_status": verification_status,
             "verification_date": verification_date,
         })
@@ -709,16 +730,32 @@ def quote_card(record, depth):
         )
     if record["source_date"]:
         writer_details.append(pretty_date(record["source_date"]))
-    source_details = " · ".join([source_link] + writer_details)
+    related_links = [
+        f'<a href="{html.escape(link["url"], quote=True)}" rel="noreferrer">'
+        f'{html.escape(link["title"])}</a>' for link in record["related_links"]
+    ]
+    source_details = " · ".join([source_link] + writer_details + related_links)
     source_title_html = f'  <p class="source-title">{source_details}</p>\n'
     record_slug = html.escape(record["slug"], quote=True)
     source_filter = source_filter_name(record)
     source_filter_label = html.escape(source_filter, quote=True)
     source_filter_url = html.escape(writer_href(source_filter, depth), quote=True)
+    discussion_html = ""
+    if record["child_quotes"]:
+        children = "".join(
+            f'<blockquote>{quote_text_html(text)}</blockquote>'
+            for text in record["child_quotes"]
+        )
+        discussion_html = (
+            '<div class="discussion-quotes" role="group" aria-label="HN discussion quotes">'
+            f'<p class="discussion-label"><a href="{hacker_news_url}" rel="noreferrer">HN discussion</a></p>'
+            f'{children}</div>\n'
+        )
     return f"""<article class="card quote" id="q-{record_slug}" data-quote-slug="{record_slug}" data-source-filter="{source_filter_label}" data-source-filter-href="{source_filter_url}">
   <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
 {attribution_html}{source_title_html}\
   <ul class="tags">{tags}</ul>
+{discussion_html}\
 </article>"""
 
 

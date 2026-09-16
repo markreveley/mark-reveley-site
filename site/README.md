@@ -32,6 +32,12 @@ quote database. `build.py` reads their `resource`, `quote`, `date_added`, and
 
 The same resource URL may occur in any number of quote records.
 
+Records with `hacker_news_url` can include an ordered `child_quotes` list of
+exact discussion excerpts. The shared card renderer displays these below the
+article details, indented and without commenter attribution. This applies to
+the quote feeds, topic and writer pages, and random quote view. See the root
+README and `../quotes/README.md` for the schema and intake instructions.
+
 Add a quote by invoking `$quote` with a resource URL and exact quote.
 The repository skill researches and authors the record, then rebuilds these
 pages automatically.

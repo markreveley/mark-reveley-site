@@ -112,6 +112,9 @@ software:
     software-engineering:
       label: engineering
       tags: [software-engineering]
+    probabilistic-programming:
+      label: probabilistic-programming
+      tags: [probabilistic-programming]
     software-security:
       label: security
       tags: [software-security]
@@ -148,6 +151,9 @@ software:
       label: verification
       tags: [verification]
       children:
+        design-by-contract:
+          label: contracts
+          tags: [design-by-contract]
         code-review:
           label: code-review
           tags: [code-review]

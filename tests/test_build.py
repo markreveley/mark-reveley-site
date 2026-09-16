@@ -86,6 +86,47 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def test_discussion_quotes_stay_with_parent_across_card_views(self):
+        with isolated_site() as (database, output):
+            (database / "source-taxonomy.yml").write_text(
+                "writing:\n  label: Writing\n  hosts: [example.com]\n"
+            )
+            write_record(database, "discussion.md", source_author="Example Author",
+                         hacker_news_url="https://news.ycombinator.com/item?id=123",
+                         child_quotes=["First <script>alert(1)</script> & comment.",
+                                       "Second comment.\n\nAnother paragraph."])
+            write_record(database, "plain.md", quote="No discussion.")
+            build()
+            self.assertEqual(len(site_build.collect_quotes()), 2)
+            for filename in ("quotes.html", "quotes-expanded.html", "topics/all.html",
+                             "topics/software-engineering.html", "writers/example-author.html",
+                             "writers/types/writing.html"):
+                page = (output / filename).read_text()
+                card = page.split('id="q-discussion"', 1)[1].split('</article>', 1)[0]
+                self.assertEqual(card.count('<blockquote>'), 3)
+                self.assertIn('First &lt;script&gt;alert(1)&lt;/script&gt; &amp; comment.', card)
+                self.assertIn('<p>Second comment.</p><p>Another paragraph.</p>', card)
+                self.assertLess(card.index('Example Author</a>'), card.index('discussion-quotes'))
+                self.assertLess(card.index('First &lt;script&gt;'), card.index('Second comment.'))
+                discussion = card.split('class="discussion-quotes"', 1)[1]
+                self.assertIn('href="https://news.ycombinator.com/item?id=123"', discussion)
+                self.assertNotIn('Example Author', discussion)
+            plain = (output / "quotes.html").read_text().split('id="q-plain"', 1)[1].split('</article>', 1)[0]
+            self.assertNotIn('discussion-quotes', plain)
+
+    def test_discussion_quotes_require_valid_text_and_hn_link(self):
+        for children in (None, "comment", {}, [""], ["  "], [123], [{"quote": "text"}]):
+            with self.subTest(children=children), isolated_site() as (database, _):
+                write_record(database, "bad.md", child_quotes=children,
+                             hacker_news_url="https://news.ycombinator.com/item?id=123")
+                with self.assertRaisesRegex(ValueError, "child_quotes must"):
+                    build()
+        for url in ("", "https://example.com/discussion"):
+            with self.subTest(url=url), isolated_site() as (database, _):
+                write_record(database, "bad.md", child_quotes=["Comment"], hacker_news_url=url)
+                with self.assertRaisesRegex(ValueError, "require a Hacker News"):
+                    build()
+
     def write_definition(self, name="program", body="A definition.", **overrides):
         meta = {
             "type": "Definition", "term": name.title(),

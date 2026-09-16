@@ -9,6 +9,7 @@ writing:
         - blog.sshh.io
         - eardatasci.github.io
         - lufzle.dev
+        - leoveanu.com
         - margaretstorey.com
         - matklad.github.io
         - michelletilley.net
@@ -24,6 +25,7 @@ writing:
     organization-blogs:
       label: Organization blogs
       hosts:
+        - typesafe.ai
         - www.anthropic.com
         - blog.cloudflare.com
         - dora.dev

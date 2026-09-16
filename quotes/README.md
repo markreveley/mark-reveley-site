@@ -21,6 +21,15 @@ Optional enriched fields:
 - `speaker`: quoted speaker when distinct from the source author
 - `source-taxonomy.yml`: maps source hosts to the source-format hierarchy used by the Writers index
 - `hacker_news_url`: Hacker News discussion URL for the source
+- `related_links`: optional list of `{title, url}` mappings for extra resources
+  shown with the card's source details. Each needs a non-empty title and an
+  absolute HTTP(S) URL; the main source remains in `resource`.
+- `child_quotes`: optional ordered list of non-empty discussion excerpt strings;
+  requires `hacker_news_url` on `news.ycombinator.com`. Preserve exact text.
+  These render below the article details, without commenter attribution, on
+  every quote card. They share the parent's topics and are not separate records.
+  Check them against the discussion; parent verification fields apply only to
+  the main quote. See the root README for a YAML example.
 - `verification_status`: `verified`, `unverified`, `not-found`, or
   `source-unavailable`
 - `verification_date`: required when a source check was attempted

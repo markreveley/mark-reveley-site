@@ -188,6 +188,17 @@ p { margin: 0 0 .9rem; }
 .attrib { color: var(--ink-faint); margin: .7rem 0 .2rem; }
 .source-title { color: var(--ink-soft); margin: .25rem 0 .15rem; }
 .source-title a { color: var(--accent); }
+.discussion-quotes {
+  margin: 1rem 0 0 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  color: var(--ink-soft);
+}
+.discussion-label { margin: 0 0 .5rem; font-family: var(--sans); font-size: .78rem; }
+.discussion-quotes blockquote { margin: 0 0 .85rem; font-size: .98rem; line-height: 1.5; }
+.discussion-quotes blockquote:last-child { margin-bottom: 0; }
+.discussion-quotes blockquote p { margin: 0 0 .5rem; }
+.discussion-quotes blockquote p:last-child { margin-bottom: 0; }
 /* ---------- the topic list ---------- */
 
 .topics-head {
