@@ -116,12 +116,14 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('id="d-old"', child)
             self.assertNotIn('id="d-alpha"', child)
             self.assertIn('href="../../defs.html#d-zeta"', child)
-            self.assertIn('href="../../defs.html" aria-current="page">Defs', child)
+            self.assertIn('href="../../defs.html">All definitions', child)
             self.assertIn('href="../../defs/categories/systems.html" aria-current="page"', child)
             self.assertIn('Safe &lt;script&gt; &amp;', feed)
             self.assertIn('href="https://example.com"', feed)
             self.assertIn('<time datetime="2026-09-11">11 September 2026</time>', feed)
-            self.assertIn('href="defs.html">Defs', (output / "index.html").read_text())
+            for filename in ("index.html", "defs.html", "defs/categories/systems.html"):
+                navigation = (output / filename).read_text().split('<nav class="mainnav"', 1)[1].split('</nav>', 1)[0]
+                self.assertNotIn('defs.html', navigation)
             # Removing a category must remove the generated page on the next build.
             (site_build.DEF_DB / "taxonomy.yml").unlink()
             build()

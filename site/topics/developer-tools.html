@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>tools — Mark Reveley</title>
-<meta name="description" content="4 quotes filed under development / tools, newest first.">
+<meta name="description" content="5 quotes filed under development / tools, newest first.">
 <link rel="stylesheet" href="../style.css">
 <script defer src="../random-quotes.js"></script>
 </head>
@@ -12,7 +12,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="masthead">
   <a class="brand" href="../index.html">Mark Reveley</a>
-  <nav class="mainnav" aria-label="Sections"><a href="../index.html">Posts</a><a href="../quotes.html" aria-current="page">Quotes</a><a href="../defs.html">Defs</a><a href="../about.html">About</a></nav>
+  <nav class="mainnav" aria-label="Sections"><a href="../index.html">Posts</a><a href="../quotes.html" aria-current="page">Quotes</a><a href="../about.html">About</a></nav>
 </header>
 <main id="main">
 <section class="hero">
@@ -23,14 +23,20 @@
       <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
     </div>
   </div>
-  <p class="lede">4 quotes filed under <em>development / tools</em>, newest first.</p>
+  <p class="lede">5 quotes filed under <em>development / tools</em>, newest first.</p>
 </section>
 <section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
     <h2>Tags</h2>
     <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit development filter">development</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/development.html" aria-label="Exit tools filter">tools</a></li></ul>
   </aside>
-  <div class="quote-browser-feed"><article class="card quote" id="q-2026-08-31-minimalist-zsh-setup" data-quote-slug="2026-08-31-minimalist-zsh-setup" data-source-filter="Matt Wicks" data-source-filter-href="../writers/matt-wicks.html">
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-14-iroh-embeds-application-layer-connectivity" data-quote-slug="2026-09-14-iroh-embeds-application-layer-connectivity" data-source-filter="apitman" data-source-filter-href="../writers/apitman.html">
+  <div class="said"><blockquote><p>If you&#x27;re new to Iroh, my mental model is roughly &quot;Tailscale at the application layer instead of the network layer&quot;.<br>
+If your question is, &quot;why not just use Tailscale?&quot;, look at it from an app developer&#x27;s perspective. If you want to release an app and have instances of your app be able to easily connect to each other, you could theoretically embeded Tailscale functionality into your app, but then the users of your app need Tailscale accounts, and your app is dependent on Tailscale.<br>
+Iroh lets you embed this functionality directly, and provides public fallback relays. If your app gets too big for the public relays, using your own relays is the flip of a switch.</p></blockquote></div>
+  <p class="source-title"><a href="https://news.ycombinator.com/item?id=48542480" rel="noreferrer">Iroh 1.0</a> · <a href="https://news.ycombinator.com/item?id=48546782" rel="noreferrer">hn</a> · <a href="../writers/apitman.html">apitman</a> · 15 June 2026</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li><li><a href="../topics/development.html">development</a></li><li><a href="../topics/developer-tools.html">tools</a></li><li><a href="../topics/business.html">business</a></li><li><a href="../topics/saas.html">saas</a></li><li><a href="../topics/vendor-lock-in.html">vendor-lock-in</a></li></ul>
+</article><article class="card quote" id="q-2026-08-31-minimalist-zsh-setup" data-quote-slug="2026-08-31-minimalist-zsh-setup" data-source-filter="Matt Wicks" data-source-filter-href="../writers/matt-wicks.html">
   <div class="said"><blockquote><p>I used to load the full Oh My Zsh framework. Then I profiled my shell and found I was pulling in 150+ files to use maybe 10 features. The chef overcooks 👨‍🍳<br>
 So I stripped things back. Now I cherry-pick the OMZ plugins I need via Zinit, and fill the gaps with tools that do one thing well. The terminal is Ghostty with a six-line config, the shell is Zsh, and everything below is what makes it feel like home.</p></blockquote></div>
   <p class="source-title"><a href="https://wicksipedia.com/blog/modern-zsh-setup" rel="noreferrer">My Fast Zsh Setup Without Oh My Zsh (But With Its Best Plugins)</a> · <a href="../writers/matt-wicks.html">Matt Wicks</a> · 5 March 2026</p>

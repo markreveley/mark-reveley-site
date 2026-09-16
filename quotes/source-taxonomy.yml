@@ -29,6 +29,7 @@ writing:
         - dora.dev
         - www.faros.ai
         - www.gitclear.com
+        - www.iroh.computer
         - www.mindstudio.ai
         - www.veracode.com
         - www.warp.dev
@@ -44,6 +45,7 @@ writing:
         - proofsandprompts.com
         - time.com
         - www.brookings.edu
+        - www.founderland.ai
 
 research:
   label: Research
@@ -62,5 +64,6 @@ social:
     social-posts:
       label: Social posts
       hosts:
+        - news.ycombinator.com
         - www.reddit.com
         - x.com
