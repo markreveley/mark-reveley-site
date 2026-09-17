@@ -17,6 +17,9 @@ Optional enriched fields:
 
 - `source_title`: title of the page or work
 - `source_author`: author of the source
+- `source_department`: card attribution for formal papers with multiple authors;
+  use verified departments/research groups, or institutions when departments are
+  unspecified. Keep all names in `source_author` for records and author indexes.
 - `source_date`: publication date at known ISO precision
 - `speaker`: quoted speaker when distinct from the source author
 - `source-taxonomy.yml`: maps source hosts to the source-format hierarchy used by the Writers index

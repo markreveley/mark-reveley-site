@@ -7,6 +7,7 @@ tags:
   - model-architecture
   - symbolic-reasoning
 source_title: "The Emergent Symbolic Structure of Artificial Neural Networks"
+source_department: "Yale University · Johns Hopkins University · New York University · Microsoft Research"
 source_author: "R. Thomas McCoy, Paul Soulos, Tal Linzen, and Paul Smolensky"
 source_date: "2026-08-30"
 hacker_news_url: "https://news.ycombinator.com/item?id=49531651"

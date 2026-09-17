@@ -58,6 +58,10 @@ model:
     context-engineering:
       label: context
       tags: [context-engineering]
+      children:
+        retrieval-augmented-generation:
+          label: retrieval
+          tags: [retrieval-augmented-generation]
     model-architecture:
       label: architecture
       tags: [model-architecture]

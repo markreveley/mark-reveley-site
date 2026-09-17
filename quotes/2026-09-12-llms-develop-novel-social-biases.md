@@ -8,6 +8,7 @@ tags:
   - feedback-loops
   - ai-alignment
 source_title: "Large Language Models Develop Novel Social Biases Through Adaptive Exploration"
+source_department: "Princeton University · University of Chicago"
 source_author: "Addison J. Wu, Ryan Liu, Xuechunzi Bai, and Thomas L. Griffiths"
 source_date: "2025"
 hacker_news_url: "https://news.ycombinator.com/item?id=49617581"

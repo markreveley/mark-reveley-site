@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>context — Mark Reveley</title>
-<meta name="description" content="5 quotes filed under model / context, newest first.">
+<meta name="description" content="6 quotes filed under model / context, newest first.">
 <link rel="stylesheet" href="../style.css">
 <script defer src="../random-quotes.js"></script>
 </head>
@@ -23,14 +23,31 @@
       <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
     </div>
   </div>
-  <p class="lede">5 quotes filed under <em>model / context</em>, newest first.</p>
+  <p class="lede">6 quotes filed under <em>model / context</em>, newest first.</p>
 </section>
 <section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
     <h2>Tags</h2>
-    <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit model filter">model</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/model.html" aria-label="Exit context filter">context</a></li></ul>
+    <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit model filter">model</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/model.html" aria-label="Exit context filter">context</a></li><li class="filter-divider" aria-hidden="true"></li><li><a href="../topics/retrieval-augmented-generation.html">retrieval</a></li></ul>
   </aside>
-  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-12-deltadb-preserves-agent-attention-and-reasoning" data-quote-slug="2026-09-12-deltadb-preserves-agent-attention-and-reasoning" data-source-filter="Nathan Sobo" data-source-filter-href="../writers/nathan-sobo.html">
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-17-brane-per-query-retrieval-configuration" data-quote-slug="2026-09-17-brane-per-query-retrieval-configuration" data-source-filter="Melissa Z. Pan, Negar Arabzadeh, Mathew Jacob, Fiodar Kazhamiaka, Esha Choukse, and Matei Zaharia" data-source-filter-href="../writers/melissa-z.-pan-negar-arabzadeh-mathew-jacob-fiodar-kazhamiaka-esha-choukse-and-matei-zaharia.html">
+  <div class="said"><blockquote><p>Modern retrieval agents expose many configuration choices—LLM, retriever, number of documents, number of hops, and synthesis strategy—each shaping both<br>
+answer quality and serving cost. Today, these pipelines are typically hand-tuned<br>
+once per workload, leaving substantial per-query optimization untapped. We formulate Query2Conf : given a natural-language query and either an accuracy or<br>
+a budget target, select from a predefined pipeline catalog the configuration that<br>
+minimizes cost (or maximizes accuracy) at inference time. We propose BRANE<br>
+which uses an LLM to convert each query into workload-specific characteristics,<br>
+then trains a lightweight per-configuration predictor that estimates whether the<br>
+pipeline will answer the query correctly. At inference time, BRANE selects the<br>
+configuration that maximizes predicted correctness penalized by cost, exposing a<br>
+tunable cost–quality tradeoff without retraining. Across MuSiQue, BrowseCompPlus, and FinanceBench, BRANE consistently pushes the cost–quality Pareto<br>
+frontier, matches the best fixed configuration’s accuracy at up to 89% lower cost,<br>
+and outperforms LLM-routing, rule-based, and fine-tuned Qwen3-4B baselines.<br>
+These results show that per-query configuration of the full retrieval pipeline is a<br>
+practical alternative to static workload-level tuning.</p></blockquote></div>
+  <p class="source-title"><a href="https://arxiv.org/pdf/2605.27361" rel="noreferrer">Natural Language Query to Configuration for Retrieval Agents</a> · <a href="../writers/melissa-z.-pan-negar-arabzadeh-mathew-jacob-fiodar-kazhamiaka-esha-choukse-and-matei-zaharia.html">UC Berkeley · University of Washington · Microsoft Azure Research - Systems</a> · 26 May 2026</p>
+  <ul class="tags"><li><a href="../topics/model.html">model</a></li><li><a href="../topics/context-engineering.html">context</a></li><li><a href="../topics/retrieval-augmented-generation.html">retrieval</a></li><li><a href="../topics/model-inference.html">inference</a></li><li><a href="../topics/model-routing.html">routing</a></li><li><a href="../topics/inference-costs.html">costs</a></li><li><a href="../topics/evaluation.html">evaluation</a></li></ul>
+</article><article class="card quote" id="q-2026-09-12-deltadb-preserves-agent-attention-and-reasoning" data-quote-slug="2026-09-12-deltadb-preserves-agent-attention-and-reasoning" data-source-filter="Nathan Sobo" data-source-filter-href="../writers/nathan-sobo.html">
   <div class="said"><blockquote><p>We have been exploring how agents can build on that coordinate system. The files and symbols earlier agents repeatedly read, edited, cited, or returned to can become landmarks for the next agent, resolved against the code as it exists now and linked back to the conversations where that understanding was formed. By preserving the causal metadata beneath that surface representation, like which operation produced each fragment and what prior state it built on, DeltaDB gives the model a way to traverse not just the current code, but its provenance, accumulated attention, and prior reasoning.</p></blockquote></div>
   <p class="source-title"><a href="https://zed.dev/blog/agentic-xanadu" rel="noreferrer">Xanadu Was Waiting for Agents</a> · <a href="../writers/nathan-sobo.html">Nathan Sobo</a> · 1 September 2026</p>
   <ul class="tags"><li><a href="../topics/agent.html">agent</a></li><li><a href="../topics/agent-memory.html">memory</a></li><li><a href="../topics/software.html">software</a></li><li><a href="../topics/version-control.html">version-control</a></li><li><a href="../topics/model.html">model</a></li><li><a href="../topics/context-engineering.html">context</a></li></ul>

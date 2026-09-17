@@ -86,6 +86,24 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def test_paper_card_uses_department_and_preserves_author_identity(self):
+        with isolated_site() as (database, output):
+            write_record(database, "paper.md", source_author="Alice and Bob",
+                         source_department="Research <Lab> & University")
+            write_record(database, "solo.md", resource="https://example.com/solo",
+                         source_author="Solo Author")
+            build()
+            page = (output / "quotes.html").read_text()
+            card = page.split('id="q-paper"', 1)[1].split('</article>', 1)[0]
+            details = card.split('class="source-title">', 1)[1].split('</p>', 1)[0]
+            self.assertIn('Research &lt;Lab&gt; &amp; University', details)
+            self.assertNotIn('Alice and Bob', details)
+            self.assertIn('href="writers/alice-and-bob.html"', details)
+            self.assertTrue((output / "writers/alice-and-bob.html").exists())
+            record = next(r for r in site_build.collect_quotes() if r['slug'] == 'paper')
+            self.assertEqual(record['source_author'], 'Alice and Bob')
+            self.assertIn('>Solo Author</a>', page)
+
     def test_discussion_quotes_stay_with_parent_across_card_views(self):
         with isolated_site() as (database, output):
             (database / "source-taxonomy.yml").write_text(

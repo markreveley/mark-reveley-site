@@ -8,6 +8,7 @@ tags:
   - ai-generated-code
   - human-computer-interaction
 source_title: "How AI Impacts Skill Formation"
+source_department: "Anthropic"
 source_author: "Judy Hanwen Shen and Alex Tamkin"
 source_date: "2026-01-28"
 verification_status: "verified"

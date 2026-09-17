@@ -49,6 +49,13 @@ child_quotes:
 
 ## Quote records
 
+For formal papers with multiple authors, retain the full names in `source_author`
+and add `source_department` for the card attribution. Use the departments or
+research groups named in the paper, falling back to its institutional affiliations
+when no department is specified. Include all collaborating affiliations; do not
+infer a department from an author's current employment. Existing author indexes
+and links still use the preserved author names.
+
 The Markdown files in [`quotes/`](quotes/) are the quote database and the only
 source of truth. Each record has these YAML frontmatter attributes:
 

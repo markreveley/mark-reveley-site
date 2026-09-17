@@ -20,6 +20,7 @@ tags:
   - capability-based-security
   - guardrails
 source_title: "Defeating Prompt Injections by Design"
+source_department: "Google · Google DeepMind · ETH Zurich"
 source_author: "Edoardo Debenedetti, Ilia Shumailov, Tianqi Fan, Jamie Hayes, Nicholas Carlini, Daniel Fabian, Christoph Kern, Chongyang Shi, Andreas Terzis, and Florian Tramèr"
 source_date: "2025-03-24"
 verification_status: "verified"

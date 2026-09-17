@@ -16,6 +16,7 @@ tags:
   - workflow-orchestration
   - evaluation
 source_title: "SymbolicAI: A framework for logic-based approaches combining generative models and solvers"
+source_department: "ExtensityAI · Johannes Kepler University · RICAM · Amazon Devices"
 source_author: "Marius-Constantin Dinu, Claudiu Leoveanu-Condrei, Markus Holzleitner, Werner Zellinger, and Sepp Hochreiter"
 source_date: "2024-02-01"
 hacker_news_url: "https://news.ycombinator.com/item?id=44399234"

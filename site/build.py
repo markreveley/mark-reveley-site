@@ -168,6 +168,7 @@ def collect_quotes():
             "tags": normalized_tags,
             "source_title": optional_text(meta, "source_title", path),
             "source_author": optional_text(meta, "source_author", path),
+            "source_department": optional_text(meta, "source_department", path),
             "source_date": source_date,
             "speaker": optional_text(meta, "speaker", path),
             "hacker_news_url": hacker_news_url,
@@ -723,10 +724,11 @@ def quote_card(record, depth):
         writer_details.append(
             f'<a href="{hacker_news_url}" rel="noreferrer">hn</a>'
         )
-    if record["source_author"]:
+    if record["source_department"] or record["source_author"]:
+        attribution = record["source_department"] or record["source_author"]
         writer_details.append(
-            f'<a href="{writer_href(record["source_author"], depth)}">'
-            f'{html.escape(record["source_author"])}</a>'
+            f'<a href="{writer_href(source_filter_name(record), depth)}">'
+            f'{html.escape(attribution)}</a>'
         )
     if record["source_date"]:
         writer_details.append(pretty_date(record["source_date"]))
