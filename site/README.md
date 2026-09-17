@@ -50,6 +50,10 @@ Markdown records in [`../defs/`](../defs/) are the canonical definition source.
 Categories appear to the left of the content on desktop and above it on
 smaller screens. Parent categories include definitions from their descendants.
 
+Definitions is intentionally omitted from the main navigation. Keep `defs.html`,
+its category pages, and existing definition links accessible; do not restore a
+menu entry unless requested.
+
 ## Rebuilding
 
 Install the single build dependency once and run the builder:
