@@ -40,6 +40,7 @@ writing:
     newsletters:
       label: Newsletters
       hosts:
+        - bradmehldau.substack.com
         - substack.com
     editorial-articles:
       label: Editorial articles

@@ -247,6 +247,9 @@ business:
 human:
   label: human
   children:
+    faith:
+      label: faith
+      tags: [faith]
     cognitive-debt:
       label: cognitive-debt
       tags: [cognitive-debt]
