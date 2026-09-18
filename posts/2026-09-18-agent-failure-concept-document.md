@@ -5,13 +5,13 @@ date_published: "2026-09-18"
 excerpt: "An agent's claim to have searched all branches, an unmerged PR, and an LLM's critique of my audit."
 ---
 
-## Audit
-
 I am going to begin documenting agent failures and attempting to define the modes that underlie them.
 
 The format will be the following - I analyse an agent failure in a document, and then I have an LLM evaluate my analysis. An LLM evaluating a human's evaluation of an agent failure. I am choosing not to revise my audit with the LLM's feedback, so that the process is documented. In my mind this keeps top of mind that it's easier in many ways (and less political) to spotlight agent failures than it is to spotlight human failures. This also preserves my (flawed) evaluation verbatim. The transcript of the agent error appears underneath my audit text, and the LLM's evaluation of my analysis appears below that. What strikes me here is that the agent hallucination eerily parallels mine, as the evaluating LLM points out.
 
-So, the agent error is pretty straightforward - a terminology change was discussed and then arrived on in a PR, which sat unmerged. Another agent used the previous terminology, which makes sense, as the PR had not been merged. When I mistakenly challenged it on this ("didn't we change x"), the agent pushed back in saying that the term had NOT been changed (correct) and that there was zero evidence on God's green earth anywhere in the repo that a terminology had ever even been considered (incorrect, it was sitting in the unmerged PR.) Below is the transcript for reference.
+## Audit
+
+The agent error is pretty straightforward - a terminology change was discussed and then arrived on in a PR, which sat unmerged. Another agent used the previous terminology, which makes sense, as the PR had not been merged. When I mistakenly challenged it on this ("didn't we change x"), the agent pushed back in saying that the term had NOT been changed (correct) and that there was zero evidence on God's green earth anywhere in the repo that a terminology had ever even been considered (incorrect, it was sitting in the unmerged PR.) Below is the transcript for reference.
 
 So, it's actually not straightforward, and is more insidious than an "agent failure", and probably not the simplest choice for a first error examination, but maybe none of these are as simple as they might appear.
 
