@@ -10,5 +10,7 @@ Required frontmatter fields:
 - `date_published`: an ISO date (`YYYY-MM-DD`)
 - `excerpt`: optional text shown on the Posts landing-page card
 
-The Markdown body contains the post itself. Plain paragraphs separated by a
-blank line are rendered as paragraphs on the site.
+The Markdown body contains the post itself. CommonMark headings, paragraphs,
+lists, blockquotes, emphasis, links, and code are rendered on the site. Raw
+HTML is displayed as text rather than executed. Use level-two headings for
+major sections; the post title is the page's level-one heading.

@@ -155,6 +155,23 @@ p { margin: 0 0 .9rem; }
 
 /* ---------- posts ---------- */
 
+.post-body { overflow-wrap: anywhere; }
+.post-body h2 { padding-top: 1rem; border-top: 1px solid var(--rule-soft); }
+.post-body h3 { margin-top: 1.75rem; }
+.post-body ul,
+.post-body ol { padding-left: 1.5rem; margin: 0 0 1rem; }
+.post-body li + li { margin-top: .5rem; }
+.post-body blockquote {
+  margin: 1rem 0; padding-left: 1rem;
+  border-left: 3px solid var(--rule); color: var(--ink-soft);
+}
+.post-body code { font: inherit; background: var(--surface); padding: .1em .25em; }
+.post-body pre {
+  padding: 1rem; overflow-x: auto;
+  border: 1px solid var(--rule-soft); background: var(--surface);
+}
+.post-body pre code { padding: 0; }
+
 .empty {
   font-size: 1.25rem; color: var(--ink-faint); font-style: italic;
   border: 1px dashed var(--rule); border-radius: 4px;

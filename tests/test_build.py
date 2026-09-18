@@ -331,6 +331,34 @@ class SiteBuildTests(unittest.TestCase):
             )
             self.assertNotIn("[example]", post)
 
+    def test_post_markdown_formats_transcript_and_keeps_html_inert(self):
+        with isolated_site() as (quote_db, output):
+            write_post(
+                quote_db.parent / "posts",
+                body=(
+                    "## Transcript\n\n### Assistant\n\n"
+                    "**History check** with *emphasis* and `git log --all`.\n\n"
+                    "- First finding\n- Second finding\n\n"
+                    "> Exact quoted wording.\n\n"
+                    "```text\n<routes ref=\"/policy.md\">\n```\n\n"
+                    "<script>alert('test')</script>\n\n"
+                    "[unsafe](javascript:alert(1))"
+                ),
+            )
+            build()
+            post = (output / "posts" / "example-post.html").read_text()
+            for fragment in (
+                "<h2>Transcript</h2>", "<h3>Assistant</h3>",
+                "<strong>History check</strong>", "<em>emphasis</em>",
+                "<code>git log --all</code>", "<ul>\n<li>First finding</li>",
+                "<blockquote>\n<p>Exact quoted wording.</p>",
+                '<pre><code class="language-text">&lt;routes',
+                "&lt;script&gt;",
+            ):
+                self.assertIn(fragment, post)
+            self.assertNotIn("<script>", post)
+            self.assertNotIn('href="javascript:', post)
+
     def test_builds_enriched_quotes_and_allows_a_repeated_resource(self):
         with isolated_site() as (quote_db, output):
             write_record(

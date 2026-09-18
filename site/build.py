@@ -12,8 +12,9 @@ from urllib.parse import urlparse
 
 try:
     import yaml
+    from markdown_it import MarkdownIt
 except ImportError as exc:  # pragma: no cover
-    sys.exit(f"{exc}; install the build dependency: pip install -r site/requirements.txt")
+    sys.exit(f"{exc}; install the build dependencies: pip install -r site/requirements.txt")
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -698,10 +699,14 @@ def post_inline_html(text, render_text=html.escape):
 
 
 def post_text_html(text):
-    paragraphs = []
-    for paragraph in re.split(r"\n\s*\n", text.strip()):
-        paragraphs.append(f"<p>{post_inline_html(paragraph)}</p>")
-    return "".join(paragraphs)
+    """Render post Markdown while keeping embedded HTML inert."""
+    markdown = MarkdownIt("commonmark", {"html": False, "breaks": True})
+    tokens = markdown.parse(text)
+    for token in tokens:
+        for child in token.children or []:
+            if child.type == "link_open":
+                child.attrSet("rel", "noreferrer")
+    return markdown.renderer.render(tokens, markdown.options, {})
 
 
 def quote_card(record, depth):

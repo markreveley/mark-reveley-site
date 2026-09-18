@@ -56,7 +56,7 @@ menu entry unless requested.
 
 ## Rebuilding
 
-Install the single build dependency once and run the builder:
+Install the build dependencies once and run the builder:
 
     pip install -r site/requirements.txt
     python3 site/build.py
