@@ -1,11 +1,9 @@
 ---
 type: Post
-title: "Agent Failure: Concept vs. Document"
+title: "Agent Failure Games #1: Things That Never Were (but Actually Were)"
 date_published: "2026-09-18"
 excerpt: "An agent's claim to have searched all branches, an unmerged PR, and an LLM's critique of my audit."
 ---
-
-*Spelling, capitalization, and minor grammar have been corrected in the audit. The transcript and LLM evaluation retain their original wording.*
 
 ## Audit
 
@@ -74,8 +72,6 @@ Note: PR #71 was opened before the `sb:` → `em:` prefix migration, and you're 
 ## LLM Evaluation
 
 *Claude Fable, effort: Max*
-
-Better in the ways that matter most: the intro is now one clean sentence, the exact quote "the full content history across all branches" is in the post, and you've dropped the apology. But the new middle paragraph argues itself into the wrong conclusion, and it's the paragraph the whole post rests on.
 
 The problem is the pivot to "content history" ambiguity. You concede "the PR's branch existed" and then spend the rest of the paragraph wondering whether "content history" includes unmerged PRs. But the agent didn't say "content history" alone; it said "all branches." A PR branch is a branch. There's no definitional question to resolve. The agent made a specific, falsifiable claim about coverage, and the claim was false. Reframing that as operator error for not qualifying the search is the post letting the agent off the hook, and it's the opposite of the point your last two paragraphs make (that the operator's picture of the system drifted because the agent's report couldn't be trusted).
 
