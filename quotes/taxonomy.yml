@@ -123,6 +123,9 @@ software:
       label: security
       tags: [software-security]
       children:
+        ai-pentesting:
+          label: ai-pentesting
+          tags: [ai-pentesting]
         cryptographic-identity:
           label: cryptographic-identity
           tags: [cryptographic-identity]
