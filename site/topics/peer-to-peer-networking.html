@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>peer-to-peer-networking — Mark Reveley</title>
-<meta name="description" content="3 quotes filed under software / peer-to-peer-networking, newest first.">
+<meta name="description" content="6 quotes filed under software / peer-to-peer-networking, newest first.">
 <link rel="stylesheet" href="../style.css">
 <script defer src="../random-quotes.js"></script>
 </head>
@@ -23,14 +23,26 @@
       <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
     </div>
   </div>
-  <p class="lede">3 quotes filed under <em>software / peer-to-peer-networking</em>, newest first.</p>
+  <p class="lede">6 quotes filed under <em>software / peer-to-peer-networking</em>, newest first.</p>
 </section>
 <section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
     <h2>Tags</h2>
     <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit software filter">software</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software.html" aria-label="Exit peer-to-peer-networking filter">peer-to-peer-networking</a></li></ul>
   </aside>
-  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-14-iroh-embeds-application-layer-connectivity" data-quote-slug="2026-09-14-iroh-embeds-application-layer-connectivity" data-source-filter="apitman" data-source-filter-href="../writers/apitman.html">
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-20-tailscale-remembering-the-lan" data-quote-slug="2026-09-20-tailscale-remembering-the-lan" data-source-filter="David Crawshaw" data-source-filter-href="../writers/david-crawshaw.html">
+  <div class="said"><blockquote><p>The broader concept of virtualizing networks has existed forever: the Virtual Private Network. New protocols make VPNs better than before, WireGuard is pioneering easy and efficient tunneling between peers. Marry the VPN to identity, and make it work anywhere, and you can have a virtual 90s-style LAN made up of all your 21st century devices. Let the internet be the dumb pipe, let your endpoints determine who they will talk to based on the person at the other end.</p></blockquote></div>
+  <p class="source-title"><a href="https://tailscale.com/blog/remembering-the-lan" rel="noreferrer">Remembering the LAN</a> · <a href="../writers/david-crawshaw.html">David Crawshaw</a> · 28 January 2020</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/cryptographic-identity.html">cryptographic-identity</a></li></ul>
+</article><article class="card quote" id="q-2026-09-20-tailscale-nat-traversal" data-quote-slug="2026-09-20-tailscale-nat-traversal" data-source-filter="David Anderson" data-source-filter-href="../writers/david-anderson.html">
+  <div class="said"><blockquote><p>Let’s start with a simple problem: establishing a peer-to-peer connection between two machines. In Tailscale’s case, we want to set up a WireGuard® tunnel, but that doesn’t really matter. The techniques we use are widely applicable and the work of many people over decades. For example, WebRTC uses this bag of tricks to send peer-to-peer audio, video and data between web browsers. VoIP phones and some video games use similar techniques, though not always successfully.</p><p>We’ll be discussing these techniques generically, using Tailscale and others for examples where appropriate.</p></blockquote></div>
+  <p class="source-title"><a href="https://tailscale.com/blog/how-nat-traversal-works" rel="noreferrer">How NAT traversal works</a> · <a href="https://news.ycombinator.com/item?id=42600846" rel="noreferrer">hn</a> · <a href="../writers/david-anderson.html">David Anderson</a> · 21 August 2020</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li></ul>
+</article><article class="card quote" id="q-2026-09-20-tailscale-end-to-end-encryption" data-quote-slug="2026-09-20-tailscale-end-to-end-encryption" data-source-filter="Avery Pennarun" data-source-filter-href="../writers/avery-pennarun.html">
+  <div class="said"><blockquote><p>Note that the private key never, ever leaves its node. This is important because the private key is the only thing that could potentially be used to impersonate that node when negotiating a WireGuard session. As a result, only the two nodes that are communicating with each other are able to encrypt or decrypt packets for that WireGuard session. It’s important to keep that in mind: Tailscale node connections are end-to-end encrypted (a concept called “zero trust networking”).</p><p>Unlike a hub-and-spoke network, unencrypted packets never need to be sent over a wire, and no intermediary can inspect them. (The exception is if you use subnet routes, which are useful for incremental deployment, which Tailscale supports. You can create a hybrid network that combines new-style mesh connections with zero or more old-style “hubs” that decrypt packets, then forward them to legacy physical networks.)</p></blockquote></div>
+  <p class="source-title"><a href="https://tailscale.com/blog/how-tailscale-works" rel="noreferrer">How Tailscale works</a> · <a href="../writers/avery-pennarun.html">Avery Pennarun</a> · 20 March 2020</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li><li><a href="../topics/software-security.html">security</a></li></ul>
+</article><article class="card quote" id="q-2026-09-14-iroh-embeds-application-layer-connectivity" data-quote-slug="2026-09-14-iroh-embeds-application-layer-connectivity" data-source-filter="apitman" data-source-filter-href="../writers/apitman.html">
   <div class="said"><blockquote><p>If you&#x27;re new to Iroh, my mental model is roughly &quot;Tailscale at the application layer instead of the network layer&quot;.<br>
 If your question is, &quot;why not just use Tailscale?&quot;, look at it from an app developer&#x27;s perspective. If you want to release an app and have instances of your app be able to easily connect to each other, you could theoretically embeded Tailscale functionality into your app, but then the users of your app need Tailscale accounts, and your app is dependent on Tailscale.<br>
 Iroh lets you embed this functionality directly, and provides public fallback relays. If your app gets too big for the public relays, using your own relays is the flip of a switch.</p></blockquote></div>

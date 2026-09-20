@@ -13,12 +13,20 @@ agent:
     agent-memory:
       label: memory
       tags: [agent-memory]
+      children:
+        knowledge-graphs:
+          label: knowledge-graphs
+          tags: [knowledge-graphs]
     model-harnesses:
       label: harnesses
       tags: [model-harnesses]
     tool-use:
       label: tools
       tags: [tool-use]
+      children:
+        model-context-protocol:
+          label: mcp
+          tags: [model-context-protocol]
     agent-workflow:
       label: workflow
       tags: [agent-workflow]

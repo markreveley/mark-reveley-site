@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>security — Mark Reveley</title>
-<meta name="description" content="5 quotes filed under software / security, newest first.">
+<meta name="description" content="8 quotes filed under software / security, newest first.">
 <link rel="stylesheet" href="../style.css">
 <script defer src="../random-quotes.js"></script>
 </head>
@@ -23,14 +23,26 @@
       <a class="filter-toggle is-on" href="../quotes.html" aria-label="Hide quote filters" title="Hide quote filters"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg></a>
     </div>
   </div>
-  <p class="lede">5 quotes filed under <em>software / security</em>, newest first.</p>
+  <p class="lede">8 quotes filed under <em>software / security</em>, newest first.</p>
 </section>
 <section class="quote-browser" aria-label="Quote filters and results">
   <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
     <h2>Tags</h2>
     <ul><li class="filter-path"><a href="../quotes-expanded.html" aria-label="Exit software filter">software</a></li><li class="filter-divider" aria-hidden="true"></li><li class="filter-path"><a href="../topics/software.html" aria-label="Exit security filter">security</a></li><li class="filter-divider" aria-hidden="true"></li><li><a href="../topics/ai-pentesting.html">ai-pentesting</a></li><li><a href="../topics/cryptographic-identity.html">cryptographic-identity</a></li><li><a href="../topics/prompt-injection.html">prompt-injection</a></li><li><a href="../topics/capability-based-security.html">capabilities</a></li></ul>
   </aside>
-  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-18-ai-pentesting-beyond-dast" data-quote-slug="2026-09-18-ai-pentesting-beyond-dast" data-source-filter="Andy Hornegold" data-source-filter-href="../writers/andy-hornegold.html">
+  <div class="quote-browser-feed"><article class="card quote" id="q-2026-09-20-tailscale-remembering-the-lan" data-quote-slug="2026-09-20-tailscale-remembering-the-lan" data-source-filter="David Crawshaw" data-source-filter-href="../writers/david-crawshaw.html">
+  <div class="said"><blockquote><p>The broader concept of virtualizing networks has existed forever: the Virtual Private Network. New protocols make VPNs better than before, WireGuard is pioneering easy and efficient tunneling between peers. Marry the VPN to identity, and make it work anywhere, and you can have a virtual 90s-style LAN made up of all your 21st century devices. Let the internet be the dumb pipe, let your endpoints determine who they will talk to based on the person at the other end.</p></blockquote></div>
+  <p class="source-title"><a href="https://tailscale.com/blog/remembering-the-lan" rel="noreferrer">Remembering the LAN</a> · <a href="../writers/david-crawshaw.html">David Crawshaw</a> · 28 January 2020</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/cryptographic-identity.html">cryptographic-identity</a></li></ul>
+</article><article class="card quote" id="q-2026-09-20-tailscale-end-to-end-encryption" data-quote-slug="2026-09-20-tailscale-end-to-end-encryption" data-source-filter="Avery Pennarun" data-source-filter-href="../writers/avery-pennarun.html">
+  <div class="said"><blockquote><p>Note that the private key never, ever leaves its node. This is important because the private key is the only thing that could potentially be used to impersonate that node when negotiating a WireGuard session. As a result, only the two nodes that are communicating with each other are able to encrypt or decrypt packets for that WireGuard session. It’s important to keep that in mind: Tailscale node connections are end-to-end encrypted (a concept called “zero trust networking”).</p><p>Unlike a hub-and-spoke network, unencrypted packets never need to be sent over a wire, and no intermediary can inspect them. (The exception is if you use subnet routes, which are useful for incremental deployment, which Tailscale supports. You can create a hybrid network that combines new-style mesh connections with zero or more old-style “hubs” that decrypt packets, then forward them to legacy physical networks.)</p></blockquote></div>
+  <p class="source-title"><a href="https://tailscale.com/blog/how-tailscale-works" rel="noreferrer">How Tailscale works</a> · <a href="../writers/avery-pennarun.html">Avery Pennarun</a> · 20 March 2020</p>
+  <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/peer-to-peer-networking.html">peer-to-peer-networking</a></li><li><a href="../topics/software-security.html">security</a></li></ul>
+</article><article class="card quote" id="q-2026-09-20-cloudflare-superapp-production-access" data-quote-slug="2026-09-20-cloudflare-superapp-production-access" data-source-filter="Sam Rhea" data-source-filter-href="../writers/sam-rhea.html">
+  <div class="said"><blockquote><p>I knew we had a problem about six months ago when a member of our sales organization reached out to me asking for API keys. Keys plural. They used AI to build what they described as a SuperApp that would transform our go-to-market teams. All they needed was production access to about a dozen systems of record at Cloudflare and admin permissions to a deployment pipeline to make it work.</p></blockquote></div>
+  <p class="source-title"><a href="https://blog.cloudflare.com/how-we-use-ai-with-cloudflare-os/" rel="noreferrer">How we’re rethinking work at Cloudflare with Cloudflare OS</a> · <a href="../writers/sam-rhea.html">Sam Rhea</a> · 5 August 2026</p>
+  <ul class="tags"><li><a href="../topics/model.html">model</a></li><li><a href="../topics/ai-generated-code.html">generated-code</a></li><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/capability-based-security.html">capabilities</a></li></ul>
+</article><article class="card quote" id="q-2026-09-18-ai-pentesting-beyond-dast" data-quote-slug="2026-09-18-ai-pentesting-beyond-dast" data-source-filter="Andy Hornegold" data-source-filter-href="../writers/andy-hornegold.html">
   <div class="said"><blockquote><p>Dynamic Application Security Testing (DAST) checks a live application against known vulnerability types, so it&#x27;s constrained to issues that have a signature. AI web app pentesting reasons about how the application is supposed to behave, rather than matching a known list, which means it can catch what DAST structurally can&#x27;t.</p></blockquote></div>
   <p class="source-title"><a href="https://www.intruder.io/blog/what-is-ai-web-app-pentesting" rel="noreferrer">AI web app pentesting: Everything you need to know</a> · <a href="../writers/andy-hornegold.html">Andy Hornegold</a> · 29 July 2026</p>
   <ul class="tags"><li><a href="../topics/software.html">software</a></li><li><a href="../topics/software-security.html">security</a></li><li><a href="../topics/ai-pentesting.html">ai-pentesting</a></li><li><a href="../topics/software-testing.html">testing</a></li></ul>
