@@ -1,10 +1,10 @@
 ---
 type: Post
-title: "Letting the LLM Drive Me"
+title: "Letting the LLM Drive"
 date_published: "2026-09-25"
 excerpt: "Letting the LLM drive me may help me learn to specify what a program actually is."
 ---
-I've been finding some interesting results in learning by letting the LLM drive me.
+I've been finding some interesting results in certain contexts by letting the LLM drive me. These contexts mostly relate to learning or exploring ideas. It cannot veer into creative work, where it is a Bad Idea.
 
 First, I establish a direction or goal, something that requires effort and understanding from me.
 
