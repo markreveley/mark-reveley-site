@@ -1,21 +1,19 @@
 ---
 type: Post
-title: "Propositions"
+title: "I tried to define a proposition and rediscovered programming"
 date_published: "2026-10-16"
 excerpt: "An investigation into assumptions of shared understanding between operator and agent."
 ---
 
 This post explores the concept of a proposition. Below is a definition coined by an LLM in a discussion I am engaged in regarding expressing the essence of atomic claims. It is treated as provisional. The following exercise is an investigation into assumptions of shared understanding between operator and agent.
 
-Let's start with our working definition of a proposition:
+Let's start with our working definition:
 
-> A proposition is the meaning expressed by a statement, interpreted in its context, that can be
-evaluated for truth or falsity. Quotations and paraphrases are
-representations of that meaning.
+> A proposition is the meaning expressed by a statement, interpreted in its context, that can be evaluated for truth or falsity. Quotations and paraphrases are representations of that meaning.
 
 We are going to evaluate this definition through applying it to a scenario.
 
-Here is an example atomic claim taken from Sean Goedecke's article [Human-AI partnerships are for alignment, not capability](https://www.seangoedecke.com/human-ai-partnerships-are-for-alignment-not-capability/):
+Here is an example claim taken from Sean Goedecke's article [Human-AI partnerships are for alignment, not capability](https://www.seangoedecke.com/human-ai-partnerships-are-for-alignment-not-capability/):
 > Lots of people think that we’re currently in a world of software engineering centaurs.
 
 My informal reading of the proposition in this statement would be as:
