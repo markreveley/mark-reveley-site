@@ -14,7 +14,8 @@ architectural analysis ([analysis.md](analysis.md)), and the planned
 source-report experiment
 ([reproduction.md — Purpose of the experiment](reproduction.md#purpose-of-the-experiment)).
 The experiment uses a small reporting task to compare a Claude Code procedure
-with a shared application.
+with a shared application. The optional [beam-jido.md](beam-jido.md) companion
+adds BEAM/Jido architecture and protocol evolution; its terms are included here.
 
 **Aligned** means the cited source uses the term consistently with our
 definition. **Qualified** identifies a scope distinction. **Local** identifies
@@ -85,6 +86,13 @@ request. The **outer model** participates in the conversational harness. Inner
 and outer describe roles, not necessarily different model families or providers.
 Those role names are our local decomposition
 ([analysis.md — Follow the same model-assisted task through both arrangements](analysis.md#follow-the-same-model-assisted-task-through-both-arrangements)).
+
+Jido uses **agent** more broadly for a component with state and actions; it need
+not involve a model. Jido.AI adds model-driven behavior. This qualification
+applies when reading the companion's
+[beam-jido.md — Narrowing to Jido 2](beam-jido.md#narrowing-to-jido-2).
+[Jido core loop](https://jido.hexdocs.pm/core-loop.html),
+[Jido.AI](https://github.com/agentjido/jido_ai)
 
 ### Subagent and inner agent
 
@@ -314,6 +322,15 @@ A program offering MCP features to clients, locally or remotely. **Aligned:**
 [MCP architecture](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture).
 Our adapter exposes the shared core as tools.
 
+### ACP
+
+**Agent Client Protocol:** a protocol for clients such as editors to communicate
+with coding agents. **Aligned:**
+[ACP introduction](https://agentclientprotocol.com/get-started/introduction).
+It is distinct from MCP's tool/context interface. Our application could use MCP
+to expose capabilities and ACP to control a coding worker; see
+[beam-jido.md — There are two directions across the interface](beam-jido.md#there-are-two-directions-across-the-interface).
+
 ### Protocol and transport
 
 A protocol defines message rules; a transport carries the messages. **Aligned:**
@@ -331,8 +348,33 @@ Keep ordinary log text off protocol stdout.
 ### Streamable HTTP
 
 MCP's HTTP transport option. **Aligned:**
-[transport overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports).
-It is an alternative transport, deferred in the local reproduction.
+[Streamable HTTP specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+Independent requests may have streaming responses. The 2026-07-28 rules treat
+disconnecting a request's response stream as cancellation of that request.
+It is deferred in the local reproduction; implications for detached jobs are in
+[beam-jido.md — Stateless does not mean no streams or no cancellation](beam-jido.md#stateless-does-not-mean-no-streams-or-no-cancellation).
+
+### Stateless MCP requests
+
+Requests that provide their own protocol context and identify any application
+state explicitly, without depending on a prior connection's initialization or
+protocol session. **Aligned:** the
+[2026-07-28 base protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic).
+This does not prohibit databases or stateful workers. See
+[beam-jido.md — Stateless protocol requests can operate on stateful applications](beam-jido.md#stateless-protocol-requests-can-operate-on-stateful-applications).
+
+### MRTR and MCP Tasks
+
+**Multi round-trip requests**, MRTR, let a server request additional input and
+a client reissue the operation with that input and optional opaque continuation
+state. **Aligned:**
+[MRTR specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr).
+
+**MCP Tasks** is an opt-in extension for asynchronous task handles, polling,
+input, and cancellation. **Aligned:**
+[Tasks specification](https://tasks.extensions.modelcontextprotocol.io/specification/2026-07-28/tasks).
+Its task ID is distinct from a JSON-RPC request ID and our domain run identity;
+see [beam-jido.md — Keep the different identities separate](beam-jido.md#keep-the-different-identities-separate).
 
 ### JSON-RPC
 
@@ -383,6 +425,35 @@ uses JSON output plus a nonzero status on failure. Shell access is a separate
 route to resources from our MCP tools.
 
 ## Execution and stored state
+
+### BEAM, Elixir, and OTP
+
+BEAM is the runtime used by Erlang and Elixir. Elixir is a language on that
+runtime. OTP supplies conventions and libraries for building applications from
+communicating processes, including servers and supervisors. **Aligned:**
+[Elixir GenServer](https://elixir.hexdocs.pm/GenServer.html) and
+[Supervisor](https://elixir.hexdocs.pm/Supervisor.html).
+Their proposed roles are explained in
+[beam-jido.md — What OTP contributes](beam-jido.md#what-otp-contributes).
+
+### Jido and Jido.AI
+
+Jido supplies an agent abstraction and runtime; Jido.AI adds model and tool-loop
+integration. **Qualified:** a Jido agent need not involve inference. These are
+separately versioned packages, as is the external-agent integration library
+Jido.Harness. See
+[beam-jido.md — Narrowing to Jido 2](beam-jido.md#narrowing-to-jido-2) and
+[beam-jido.md — Jido.Harness is a direct implementation lead](beam-jido.md#jidoharness-is-a-direct-implementation-lead).
+
+### Hibernate and thaw in Jido
+
+Hibernate saves an agent for later restoration; thaw restores it from storage.
+**Aligned, with scope:**
+[Jido storage](https://jido.hexdocs.pm/storage.html).
+The backend and write policy determine what survives a crash. This Jido storage
+terminology should not be confused with merely keeping an idle BEAM process in
+memory. Our required business transaction is a separate design question in
+[beam-jido.md — Jido offers persistence mechanisms with specific boundaries](beam-jido.md#jido-offers-persistence-mechanisms-with-specific-boundaries).
 
 ### Runtime
 

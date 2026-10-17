@@ -33,6 +33,14 @@ establish the author's later system's exact recovery guarantees or show that
 this design is generally better than a harness-led workflow. The source-order
 explanations and qualifications are in [claim-analysis.md](claim-analysis.md).
 
+**BEAM and Jido extension:** an Elixir application could own the shared workflow
+and use Jido to coordinate it, including delegating coding work to an existing
+harness. The research spike found Jido.Harness as a direct integration lead and
+related work in other ecosystems. MCP's published 2026-07-28 revision also makes
+application state explicit across independent requests. These are documented
+mechanisms and research findings, not tested recovery or performance results.
+See [beam-jido.md](beam-jido.md) for the architecture, sources, and qualifications.
+
 **What remains untested:** the prototype has not been built. We have no measured
 handoff, retry, migration-effort, or maintenance results. The proposed test uses
 a small source-report task we devised: read the thread's YAML capture, prepare
@@ -41,10 +49,10 @@ lets us test whether another harness can finish the same saved work. Its purpose
 and limits are in
 [reproduction.md — Purpose of the experiment](reproduction.md#purpose-of-the-experiment).
 
-Current status: source intake, claim analysis, and architectural analysis are
-written; the experiment is specified. The next empirical question is whether the
-shared application preserves the same run across a harness change, and what each
-arrangement requires to do so.
+Current status: source intake, claim analysis, architectural analysis, and the
+BEAM/Jido research companion are written; the experiment is specified. The next
+empirical question is whether the shared application preserves the same run
+across a harness change, and what each arrangement requires to do so.
 
 ## How to read this investigation
 
@@ -67,6 +75,10 @@ conclusion, this README is sufficient; follow its analysis links for the reasoni
 
 ## When to use the other documents
 
+- **Optional branch after the synthesis:** read [beam-jido.md](beam-jido.md) for
+  BEAM and Elixir foundations, Jido 2, retaining a coding harness as a worker,
+  related projects, and MCP's move toward stateless requests. Its experiments
+  are proposals; the original reproduction remains the first specification.
 - **To understand or build the proposed test:** use
   [reproduction.md](reproduction.md). Its purpose and task sections explain the
   example; its later sections are implementation instructions and acceptance

@@ -6,6 +6,10 @@ and [analysis.md](analysis.md) for the architectural reasoning. The purpose and
 task sections below explain the example; the later instructions are for its
 implementer. No prototype or comparison has been run.
 
+The optional [beam-jido.md](beam-jido.md) companion proposes a later Elixir/Jido
+comparison and coding-worker experiments. It does not change this first
+reproduction's workload or imply that either implementation has been built.
+
 ## Purpose of the experiment
 
 This investigation asks what must live outside a coding assistant for another

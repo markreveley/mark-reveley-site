@@ -41,10 +41,13 @@ scope:
     - "Separate instructions, tool contracts, policy checks, workflow state, and transport."
     - "Specify a local reproduction with deterministic steps before adding an inner model."
     - "Test a harness change, process restart, duplicate request, and rejected operation."
+    - "Research BEAM/Elixir and Jido application ownership, including external coding harnesses as workers."
+    - "Check related primary-source work and MCP's published stateless protocol revision."
   defer:
     - "Production orchestration, remote authentication, and multi-user deployment."
     - "A survey or benchmark of every coding harness."
-    - "Automatic background recovery and observability service integration."
+    - "Implementation of automatic background recovery and observability service integration."
+    - "Implementing or benchmarking the proposed BEAM/Jido and coding-worker extensions."
 sources:
   - id: reddit-program-interface
     kind: discussion
@@ -238,12 +241,258 @@ sources:
     evidence: documentation
     checked_on: '2026-10-17'
     notes: "Observability versus request tracing."
+  - id: elixir-behaviours
+    kind: documentation
+    url: "https://elixir.hexdocs.pm/typespecs.html#behaviours"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Callback contracts; these do not establish semantic equivalence of adapters."
+  - id: elixir-genserver
+    kind: documentation
+    url: "https://elixir.hexdocs.pm/GenServer.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Server processes and guidance on using modules for code organization. No runtime tested."
+  - id: elixir-supervisor
+    kind: documentation
+    url: "https://elixir.hexdocs.pm/Supervisor.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Child start and restart policy; distinguished from restoring durable domain state."
+  - id: elixir-dynamic-supervisor
+    kind: documentation
+    url: "https://elixir.hexdocs.pm/DynamicSupervisor.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Starting and supervising dynamic children."
+  - id: erlang-gen-statem
+    kind: documentation
+    url: "https://www.erlang.org/doc/apps/stdlib/gen_statem.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "State machine behaviour, events, and transitions. Optional implementation choice."
+  - id: oban
+    kind: documentation
+    url: "https://oban.hexdocs.pm/Oban.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Database-backed jobs and transactional insertion. Inspected docs displayed 2.24.2; not installed."
+  - id: oban-unique-jobs
+    kind: documentation
+    url: "https://oban.hexdocs.pm/unique_jobs.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Insertion uniqueness distinguished from execution idempotency."
+  - id: jido-core-loop
+    kind: documentation
+    url: "https://jido.hexdocs.pm/core-loop.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Agent state, commands, actions, and directives. Inspected core/runtime pages
+      displayed 2.3.x while storage pages displayed 2.4.0. No unified dependency
+      set was resolved, installed, or tested.
+  - id: jido-runtime
+    kind: documentation
+    url: "https://jido.hexdocs.pm/runtime.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "AgentServer, logical agent relationships versus supervision, and managed persistence scope."
+  - id: jido-action
+    kind: project
+    url: "https://github.com/agentjido/jido_action"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Structured actions and side effects. Repository README inspected; no actions run."
+  - id: jido-ai
+    kind: project
+    url: "https://github.com/agentjido/jido_ai"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Optional model integration and reasoning/tool strategies; mutable README, no runtime tested."
+  - id: jido-storage
+    kind: documentation
+    url: "https://jido.hexdocs.pm/storage.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Default ETS versus persistent backends, journal/checkpoint sequence, and
+      managed hibernate/thaw. Documentation is not evidence of our proposed
+      domain transaction or tested crash guarantees.
+  - id: jido-persist
+    kind: documentation
+    url: "https://jido.hexdocs.pm/Jido.Persist.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Checkpoint and thread-journal persistence API; inspected v2.4.0 docs."
+  - id: jido-instance-manager
+    kind: documentation
+    url: "https://jido.hexdocs.pm/Jido.Agent.InstanceManager.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Keyed instances, idle hibernation, restoration, and error behavior; inspected v2.4.0 docs."
+  - id: jido-harness
+    kind: project
+    url: "https://github.com/agentjido/jido_harness"
+    read_url: "https://raw.githubusercontent.com/agentjido/jido_harness/main/README.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Common Elixir interface to coding agents. Raw main-branch README used because
+      rendered repository material differed. Caller-independent run lifetime is
+      distinct from VM/host restart durability. Mutable branch, no commit pinned.
+  - id: jido-harness-metadata
+    kind: implementation
+    url: "https://raw.githubusercontent.com/agentjido/jido_harness/main/mix.exs"
+    evidence: source_inspection
+    checked_on: '2026-10-17'
+    notes: >-
+      Package metadata inspected: 3.0.0-rc.1, ExMCP dependency, no direct jido
+      dependency. This package has its own version line. Not compiled or run.
+  - id: jido-harness-providers
+    kind: documentation
+    url: "https://raw.githubusercontent.com/agentjido/jido_harness/main/guides/providers.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      ACP provider profiles, separate Claude adapter, capability differences,
+      unavailable steering and built-in structured output, unsupported-option
+      errors. Actual provider/adapter compatibility remains untested.
+  - id: jido-harness-architecture
+    kind: documentation
+    url: "https://raw.githubusercontent.com/agentjido/jido_harness/main/guides/reference/architecture.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Host ownership of durable jobs, workspaces, provider selection, and retry policy. Mutable main branch."
+  - id: jido-claude
+    kind: project
+    url: "https://github.com/agentjido/jido_claude"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Deprecated integration; directs readers to Jido.Harness."
+  - id: jido-mcp
+    kind: project
+    url: "https://github.com/agentjido/jido_mcp"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Consuming MCP servers and publishing selected actions as tools. Examples
+      mention older protocol revisions; 2026-07-28 support was not established.
+  - id: claude-agent-sdk
+    kind: documentation
+    url: "https://code.claude.com/docs/en/agent-sdk/overview"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Embedding the coding loop through official Python/TypeScript SDKs; CLI route for other languages."
+  - id: claude-programmatic
+    kind: documentation
+    url: "https://code.claude.com/docs/en/headless"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Programmatic CLI output and session continuation. Wrapper capabilities may be narrower."
+  - id: acp-introduction
+    kind: specification
+    url: "https://agentclientprotocol.com/get-started/introduction"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Agent Client Protocol for coding clients and agents, distinct from MCP.
+      Site presented v1 as current and v2 draft; remote support described as work
+      in progress. No ACP client or agent tested.
+  - id: openhands-sdk
+    kind: project
+    url: "https://github.com/OpenHands/software-agent-sdk"
+    read_url: "https://raw.githubusercontent.com/OpenHands/software-agent-sdk/main/README.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Execution/conversation/workspace responsibilities separated from automation
+      scheduling, history, and dispatch. Mutable main branch; documentation only.
+  - id: openhands-september-2026
+    kind: article
+    url: "https://hub.openhands.dev/blog/new-in-agent-canvas-september-2026"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Published 2026-10-07 about September releases. Project-reported issue triage,
+      coding conversations, PR review, acceptance criteria, and isolation; not
+      independently exercised here.
+  - id: temporal-ai
+    kind: documentation
+    url: "https://docs.temporal.io/ai"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Durable agent workflows and human approval; adjacent architecture, not a verified Jido/Claude Code adapter."
+  - id: temporal-ai-cookbook
+    kind: documentation
+    url: "https://docs.temporal.io/ai/cookbook"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Catalog of agent and MCP examples; no examples executed."
+  - id: swe-agent-paper
+    kind: paper
+    url: "https://arxiv.org/abs/2405.15793"
+    evidence: abstract_review
+    checked_on: '2026-10-17'
+    notes: >-
+      Yang et al., first submitted 2024-05-06. Abstract inspected for the research
+      question and reported role of agent-computer interface design. No benchmark
+      numbers reused, full experimental artifacts not reviewed or reproduced.
+  - id: mcp-transport-future
+    kind: article
+    url: "https://blog.modelcontextprotocol.io/posts/2025-12-19-mcp-transport-future/"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "December 2025 transport working-group exploration; distinguished from final normative requirements."
+  - id: mcp-release-2026-07-28
+    kind: announcement
+    url: "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Publication of the July 2026 protocol revision; does not establish support in our intended hosts."
+  - id: mcp-changelog-2026-07-28
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Session/initialization removal, request metadata, Tasks extension, and deprecations."
+  - id: mcp-transports-2025-11-25
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Historical comparison: server-assigned HTTP session IDs were optional."
+  - id: mcp-base-2026-07-28
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Independent request context, explicit application identifiers, and self-reported client metadata."
+  - id: mcp-mrtr
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Additional input, echoed requestState, new RPC IDs, and integrity/replay requirements."
+  - id: mcp-tasks-2026-07-28
+    kind: specification
+    url: "https://tasks.extensions.modelcontextprotocol.io/specification/2026-07-28/tasks"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Dated opt-in extension: asynchronous handles, get/update/cancel, creation visibility, and cooperative cancellation."
+  - id: mcp-streamable-http-2026-07-28
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Independent POST requests, streams, removed SSE replay, and disconnect cancellation semantics."
 artifacts:
   overview: README.md
   definitions: definitions.md
   instructions: instructions.md
   claim_analysis: claim-analysis.md
   analysis: analysis.md
+  beam_jido: beam-jido.md
   reproduction: reproduction.md
   draft: drafts/outline.md
 open_questions:
@@ -266,6 +515,22 @@ open_questions:
   - id: q05
     question: "How does the author's later MCP-facing workflow system differ from Switchplane?"
     next_step: "Look for an implementation of that later system; the captured discussion does not supply one."
+    status: open
+  - id: q06
+    question: "Which Jido storage and write policy satisfy the domain commit and restart contract?"
+    next_step: "Pin dependencies and test worker and VM failures around the same deterministic report transitions."
+    status: open
+  - id: q07
+    question: "Which Claude Code capabilities survive the selected Jido.Harness/ACP integration?"
+    next_step: "Pin the library, ACP adapter, and CLI; verify capabilities and compare the same bounded coding task."
+    status: open
+  - id: q08
+    question: "Which intended Jido MCP and harness combinations support the 2026-07-28 protocol and Tasks?"
+    next_step: "Check actual discovery and request behavior per revision; test explicit job handles through reconnects and alternate server instances."
+    status: open
+  - id: q09
+    question: "Does retaining an external coding harness improve outcomes or maintenance cost for this application?"
+    next_step: "Compare standalone, Jido-native, and delegated implementations with the same task, checks, and recorded configuration."
     status: open
 experiments: []
 publication:

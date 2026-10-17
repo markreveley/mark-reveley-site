@@ -199,6 +199,11 @@ arrangement
 keeps the conversation in the harness and moves workflow rules and saved results
 into application code.
 
+The optional companion also examines the reverse direction: an application
+invoking a replaceable coding worker. See
+[beam-jido.md — There are two directions across the interface](beam-jido.md#there-are-two-directions-across-the-interface).
+That is our architectural extension, not an additional claim by the source.
+
 ## P05: Put the capability in a CLI or local MCP server
 
 **Source:** post, paragraph 5

@@ -283,6 +283,9 @@ demonstrated yet.
 
 This ends the main reading sequence. Return to
 [README.md — Current assessment](README.md#current-assessment) for the concise
-evaluation. To examine or implement the test, continue to
+evaluation. An optional extension, [beam-jido.md](beam-jido.md), applies the
+architecture to BEAM and Jido, examines an application invoking a coding harness
+as a worker, and researches related projects and MCP's stateless revision.
+To examine or implement the test, continue to
 [reproduction.md](reproduction.md). Maintainers updating the investigation use
 [instructions.md](instructions.md).
