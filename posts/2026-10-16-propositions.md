@@ -46,7 +46,7 @@ So, at this point we have:
 4. a definition of dependent terms (i.e., centaur) necessary to understand to make the claim atomic
 5. an understanding of the context the claim appears within
 
-This raises a question - does the proposition exist within the context its corresponding claim does? According to the working definition, yes. I propose a question that has not been explicitly decided and whose answer has been implicitly smuggled into the definition:
+This raises a question - does the proposition exist within the context held by its corresponding claim? According to the working definition, yes. But I propose that there is an uncertainty which has been implicitly smuggled into the definition, hinging on the following:
 
 If a proposition is a verbatim fragment, i.e., if 'proposition' defines the part of the sentence following "that" which reads "we're currently in a world of software engineering centaurs", then a proposition is a semantic marker, and simply points to a portion of a claim. In this case, yes, the proposition is to be seen in the context of the claim.
 
