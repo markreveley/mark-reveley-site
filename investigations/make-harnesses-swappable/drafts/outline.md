@@ -6,6 +6,8 @@ coding assistants. It investigates the interface proposal in the r/LLMDevs threa
 implementation’?][discussion]. Our planned example is the [source-report task][task],
 which generates factual counts and metadata from our capture of that thread.
 We devised it to make the workflow's ownership and saved progress observable.
+Use the [source walkthrough](../claim-analysis.md) for the principle's background,
+the migration scenario, and the qualifications attached to each source claim.
 
 Status: outline only; the [planned reproduction][purpose] has not been implemented
 and results are pending.

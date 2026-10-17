@@ -28,12 +28,14 @@ build instructions.
    captured comment entries, including one with no captured body.
 2. [Definitions](definitions.md): terminology as used here, cross-referenced with
    source usage and marked where it is a local convention.
-3. [Analysis](analysis.md): the Claude Code baseline, the proposed boundary,
+3. [Claim analysis](claim-analysis.md): the title, each post paragraph, and each
+   comment explained in source order, with follow-up research and qualifications.
+4. [Analysis](analysis.md): the Claude Code baseline, the proposed boundary,
    and the same task traced through both arrangements.
-4. [Reproduction plan](reproduction.md): a small source-report workflow, its
+5. [Reproduction plan](reproduction.md): a small source-report workflow, its
    interface, persistence model, and acceptance checks.
-5. [Working instructions](instructions.md): scope for subsequent investigation.
-6. [Draft outline](drafts/outline.md): a possible post structure, pending results.
+6. [Working instructions](instructions.md): scope for subsequent investigation.
+7. [Draft outline](drafts/outline.md): a possible post structure, pending results.
 
 [The investigation record](investigation.yaml) indexes sources and open questions.
 [The source YAML][source] is the canonical structured transcript;

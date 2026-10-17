@@ -100,13 +100,29 @@ emphasizes agreement between CLI help, tool descriptions, and documentation.
 Our [operation definitions][contract] supply the concrete contract. Matching function
 names alone is insufficient to establish behavioral compatibility.
 
+### Abstraction and coupling
+
+An abstraction describes the behavior a caller needs while omitting details of
+how it is implemented. Coupling describes dependencies between components: what
+one component assumes about another. **Aligned:** [Gamma's explanation of
+interface-based design][gamma] concerns controlling those dependencies. Our
+[title analysis][interface-principle] applies that idea to harnesses and tools.
+
+### Lift and shift and configuration drift
+
+**Lift and shift** here means moving a customization to another harness while
+trying to preserve its purpose. **Configuration drift** means copies intended to
+describe the same procedure diverge as they are maintained separately.
+**Local interpretation:** [the opening migration account][migration] supplies
+the scenario, but not the actual files, versions, or migration steps.
+
 ### Capability and tool
 
 An **application capability** is useful behavior provided by our system, such as
 preparing a [source report][source-report]. A **tool** is an operation exposed for
 invocation; one tool may implement a small action or invoke a larger workflow.
-**Tool surface** means the exposed operations and descriptions; **tool layer** means the code
-serving those operations and applying its checks.
+**Tool surface** means the exposed operations and descriptions; **tool layer**
+means the code serving those operations and applying its checks.
 
 **Qualified:** this matches the [post][post] and [MCP tools][tools]. MCP also uses
 **capability** for declared protocol features such as support for tools; that is
@@ -134,8 +150,8 @@ second harness can recover the same persisted run.
 
 **Qualified:** the [post][post] proposes portability;
 the [reproduction][reproduction] defines our narrower observable test. Neither
-term guarantees identical model
-choices, universal host compatibility, or automatic background execution.
+term guarantees identical model choices, universal host compatibility, or
+automatic background execution.
 
 ## Instructions and packaging
 
@@ -665,9 +681,11 @@ tracing. [Product documentation][langfuse]
 
 ### Kin and Festival
 
-Projects mentioned by commenters in [c08][c08] and [c07][c07]. Treat their
-described capabilities as commenter accounts; this investigation has not
-inspected their implementations.
+Projects mentioned by commenters in [c08][c08] and [c07][c07]. The
+[Festival follow-up][festival-follow-up] checks its description against the
+project README; its implementation has not been run or inspected. Kin remains
+an unverified commenter account without an unambiguous repository reference in
+the capture. See the [Kin assessment][kin-follow-up].
 
 [post]: reddit-post-program-interface.md#post
 [c01]: reddit-post-program-interface.md#c01
@@ -721,3 +739,8 @@ inspected their implementations.
 [idempotency]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
 [outbox]: https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html
 [langfuse]: https://langfuse.com/docs/observability/overview
+[gamma]: https://www.artima.com/articles/design-principles-from-design-patterns
+[interface-principle]: claim-analysis.md#t01-program-to-an-interface-not-an-implementation
+[migration]: claim-analysis.md#p01-from-cursor-customization-to-repeated-migration-and-drift
+[festival-follow-up]: claim-analysis.md#c07-festival-uses-git-and-the-filesystem
+[kin-follow-up]: claim-analysis.md#c08a-kin-centralizes-behavior-in-one-mcp-server-and-cli

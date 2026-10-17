@@ -26,10 +26,10 @@ comparison:
     application core called through CLI and MCP adapters. The first prototype
     still relies on the harness to request each step.
   workload: >-
-    The locally devised source-report task (reproduction.md#source-report-task)
-    reads sources/reddit-program-interface.yaml and produces factual counts and
-    source metadata. Its fixed input and two steps make interruption, handoff,
-    and retry behavior observable.
+    The locally devised [source-report task](reproduction.md#source-report-task)
+    reads the [YAML capture](sources/reddit-program-interface.yaml) and produces
+    factual counts and source metadata. Its fixed input and two steps make
+    interruption, handoff, and retry behavior observable.
   held_constant:
     - "Source fixture and deterministic calculation logic."
     - "Prompt and model configuration where available in the later summary comparison."
@@ -84,9 +84,30 @@ sources:
   - id: festival
     kind: project
     url: "https://github.com/Obedience-Corp/festival"
-    evidence: supplied_capture
-    checked_on: null
-    notes: "Mentioned in c07; not inspected."
+    read_url: "https://raw.githubusercontent.com/Obedience-Corp/festival/main/README.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Followed the c07 reference. README describes progress in files and Git
+      and a CLI-driven next-step loop. Documentation inspected; implementation
+      not inspected or run. Mutable main branch; no revision pinned.
+  - id: gamma-interface-principle
+    kind: interview
+    url: "https://www.artima.com/articles/design-principles-from-design-patterns"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Bill Venners interviews Design Patterns coauthor Erich Gamma about
+      dependency relationships, published interfaces, and implementation changes.
+      Used for the engineering meaning of the source title, not current Java APIs.
+  - id: cursor-rules
+    kind: documentation
+    url: "https://cursor.com/docs/rules"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      Current scoped rule loading and AGENTS.md support. Explains possible
+      integration differences; does not establish the author's historical setup.
   - id: anthropic-harnesses
     kind: article
     url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
@@ -216,6 +237,7 @@ sources:
 artifacts:
   definitions: definitions.md
   instructions: instructions.md
+  claim_analysis: claim-analysis.md
   analysis: analysis.md
   reproduction: reproduction.md
   draft: drafts/outline.md

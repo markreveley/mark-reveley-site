@@ -20,6 +20,9 @@ is to compare that handoff and the work required to support it in each arrangeme
 possible Claude Code installation. The comparison concerns ownership of the
 workflow, rather than a product's inability to run code or connect to tools.
 See [definitions](definitions.md) for terminology and source qualifications.
+The [claim-by-claim companion](claim-analysis.md) explains the source's argument
+in order, including the engineering principle in its title and the migration
+scenario that motivates it.
 
 ## The baseline in Claude Code
 
@@ -188,6 +191,9 @@ the actual migration work. Shared scripts and portable skills can already reduce
 that work; the experiment should identify what remains coupled to the harness.
 
 ## What the discussion supports
+
+The [source walkthrough](claim-analysis.md#how-to-follow-the-source) provides
+the passage-by-passage evidence and qualifications behind this synthesis.
 
 - The [post][post] proposes CLI or MCP access to portable capabilities. It also
   allows useful harness-specific features to remain in thin integrations.

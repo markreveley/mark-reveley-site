@@ -7,6 +7,8 @@ published post only when it is deliberately added to `posts/` with the
 `investigations/`.
 
 Start with [making harnesses swappable](make-harnesses-swappable/README.md).
+The top-level [AGENTS.md](../AGENTS.md) sets the investigation requirements for
+future work, including the claim-by-claim source walkthrough.
 
 ## Context before instructions
 
@@ -78,6 +80,18 @@ should be able to follow the same concrete task through both versions.
 
 ## Terminology and evidence
 
+Keep a separate `claim-analysis.md` that follows the source in order. Explain
+each substantive paragraph, splitting dense passages when their claims need
+different explanations or evidence. Include the title and captured comments;
+mark missing text and distinguish questions from assertions. Each unit should
+link its source passage, explain its meaning and background, assess the evidence,
+and state a consequence or unresolved check. Follow the
+[full claim-analysis instructions](../AGENTS.md#explain-the-source-claim-by-claim).
+
+Use `analysis.md` to synthesize those findings into the architectural or thematic
+argument. Link the two documents where a conclusion depends on a particular
+claim. The [harness source walkthrough][claim-example] is a worked example.
+
 Maintain `definitions.md` for domain terminology and local design names. Explain
 how a term is used in this investigation, cite the relevant source usage, and
 mark local conventions or narrower meanings. Keep definitions, analysis,
@@ -142,6 +156,7 @@ investigations/<topic>/
   instructions.md         # Scope and working instructions for future sessions
   sources/                # Structured source records
     raw/                  # Original captures, preserved unchanged
+  claim-analysis.md       # Source-order explanations and follow-up per claim
   analysis.md             # Claims, evidence, interpretation, and uncertainty
   reproduction.md         # Build plan and acceptance criteria
   experiments/            # Implementations, commands, and recorded results
@@ -208,3 +223,4 @@ interpretation, and publication remain deliberate editorial work.
 [discussion-example]: make-harnesses-swappable/reddit-post-program-interface.md
 [comment-example]: make-harnesses-swappable/reddit-post-program-interface.md#c01
 [requirements]: ../site/requirements.txt
+[claim-example]: make-harnesses-swappable/claim-analysis.md

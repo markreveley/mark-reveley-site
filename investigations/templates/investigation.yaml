@@ -26,6 +26,7 @@ sources:
 artifacts:
   definitions: definitions.md
   instructions: instructions.md
+  claim_analysis: claim-analysis.md
   analysis: analysis.md
   reproduction: reproduction.md
   draft: null

@@ -7,6 +7,8 @@ A static personal site with posts, selected quotes, definitions, and an about pa
 Keep sources, analysis, working instructions, experiments, and rough drafts under
 [`investigations/`](investigations/README.md). This is a research workspace; the
 site builder publishes records from `posts/`, not investigation files.
+Follow the [repository investigation guidance](AGENTS.md), including a source
+walkthrough that explains and checks each claim before drawing wider conclusions.
 
 ## Add a definition
 

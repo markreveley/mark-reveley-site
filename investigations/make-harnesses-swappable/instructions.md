@@ -16,6 +16,9 @@ before expanding the architecture.
 Apply the [investigation writing guidance](../README.md), including its
 baseline-first explanations and table-free layout for Neovim.
 
+- Maintain the [claim-by-claim source walkthrough](claim-analysis.md) according
+  to the [repository guidance](../../AGENTS.md). Explain a passage before
+  assessing it, and distinguish completed source checks from planned experiments.
 - Keep the [raw paste][raw] unchanged. Edit source text in the
   [discussion YAML][source] and [regenerate the Markdown view][rendering]. Preserve
   local comment IDs.
