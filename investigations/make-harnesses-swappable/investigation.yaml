@@ -26,10 +26,11 @@ comparison:
     application core called through CLI and MCP adapters. The first prototype
     still relies on the harness to request each step.
   workload: >-
-    The locally devised [source-report task](reproduction.md#source-report-task)
-    reads the [YAML capture](sources/reddit-program-interface.yaml) and produces
-    factual counts and source metadata. Its fixed input and two steps make
-    interruption, handoff, and retry behavior observable.
+    The locally devised task in
+    [reproduction.md — Source-report task](reproduction.md#source-report-task)
+    reads [reddit-program-interface.yaml](sources/reddit-program-interface.yaml)
+    and produces factual counts and source metadata. Its fixed input and two steps
+    make interruption, handoff, and retry behavior observable.
   held_constant:
     - "Source fixture and deterministic calculation logic."
     - "Prompt and model configuration where available in the later summary comparison."
@@ -51,7 +52,10 @@ sources:
     url: "https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/"
     evidence: supplied_capture
     checked_on: '2026-10-17'
-    notes: "Normalized against the supplied paste; not verified against the live thread."
+    notes: >-
+      Normalized against the supplied paste; not verified against the live thread.
+      At the user's request, comment dates are estimated by counting backward from
+      2026-10-17; the source record retains original relative ages and date basis.
   - id: mcp-architecture
     kind: documentation
     url: "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
@@ -235,6 +239,7 @@ sources:
     checked_on: '2026-10-17'
     notes: "Observability versus request tracing."
 artifacts:
+  overview: README.md
   definitions: definitions.md
   instructions: instructions.md
   claim_analysis: claim-analysis.md

@@ -6,10 +6,15 @@ platform: reddit
 title: "Replace with the source title"
 url: "https://example.com/discussion"
 community: null
+navigation:
+  overview: null # Topic README path, relative to this YAML file
+  next: null # Next reading document, relative to this YAML file
 capture:
   method: user_paste
   imported_on: null # YYYY-MM-DD, quoted
   captured_at: null # Original capture timestamp, if known
+  relative_age_reference_date: null # Fixed YYYY-MM-DD for calculated dates
+  relative_age_reference_basis: null # Known capture date or explicit user assumption
   raw_file: null # Relative to this YAML file
   completeness: unknown # e.g. pasted_excerpt or complete_at_capture
   live_verification: not_checked
@@ -22,6 +27,7 @@ post:
   author: null
   author_basis: unknown # explicit, inferred_from_op_badge, or unknown
   published_at: null
+  estimated_published_on: null # Derived date; keep separate from verified publication
   age_label: null
   displayed_score: null
   content_status: present
@@ -35,6 +41,7 @@ comments:
     author: null
     author_is_op: false
     published_at: null
+    estimated_published_on: null
     age_label: null
     displayed_score: null
     content_status: present

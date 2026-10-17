@@ -24,6 +24,7 @@ sources:
     checked_on: null
     notes: "Describe what was checked and what this source can support."
 artifacts:
+  overview: README.md # Reader entry point and current assessment
   definitions: definitions.md
   instructions: instructions.md
   claim_analysis: claim-analysis.md

@@ -38,8 +38,19 @@ def render(source, record, output):
     ).as_posix()
     lines = [
         f"# {record['title']}", "",
+    ]
+    navigation = record.get("navigation") or {}
+    if navigation.get("overview"):
+        overview = source.parent / navigation["overview"]
+        relative_overview = Path(os.path.relpath(overview, output.parent)).as_posix()
+        lines += [
+            "This is the captured source, followed by its comments.",
+            f"Start with [{overview.name}]({relative_overview}) "
+            "for the investigation's assessment and reading order.", "",
+        ]
+    lines += [
         f"Source: [{record['platform']} discussion]({record['url']})", "",
-        f"Structured record: [{record['id']}]({relative_source}). "
+        f"Structured record: [{source.name}]({relative_source}). "
         f"Generated with [render_discussion.py]({relative_renderer}); "
         "edit the YAML record.", "",
     ]
@@ -47,10 +58,20 @@ def render(source, record, output):
     if capture["raw_file"]:
         raw = source.parent / capture["raw_file"]
         relative_raw = Path(os.path.relpath(raw, output.parent)).as_posix()
-        lines += [f"[Original capture]({relative_raw}).", ""]
+        lines += [f"Original capture: [{raw.name}]({relative_raw}).", ""]
     lines += [
         f"Capture: {capture['completeness']}; live verification: "
-        f"{capture['live_verification']}. Relative ages and scores belong to the capture.", "",
+        f"{capture['live_verification']}. Scores belong to the capture.", "",
+    ]
+    if capture.get("relative_age_reference_date"):
+        lines += [
+            "Estimated dates count backward from "
+            f"{capture['relative_age_reference_date']}.",
+            f"Reference basis: {capture['relative_age_reference_basis']}.",
+            "Original relative-age labels remain in the structured record;",
+            "these are calculated dates, not verified publication timestamps.", "",
+        ]
+    lines += [
         "Comments follow capture order. Unknown reply nesting is left unspecified; "
         "inferred relationships are labeled. Missing bodies are marked without "
         "assuming deletion. Post and comment bodies follow.", "",
@@ -66,13 +87,18 @@ def render(source, record, output):
             metadata.append("author inferred from OP badges in comments")
         if entry.get("published_at"):
             metadata.append(f"published: {entry['published_at']}")
-        if entry.get("age_label"):
+        elif entry.get("estimated_published_on"):
+            metadata.append(f"date: {entry['estimated_published_on']} (estimated)")
+        elif entry.get("age_label"):
             metadata.append(entry["age_label"])
         if entry.get("displayed_score") is not None:
             metadata.append(f"displayed score: {entry['displayed_score']}")
         if index and entry["parent_id"]:
             parent = entry["parent_id"]
-            metadata.append(f"reply to [{parent}](#{parent}) ({entry['parent_basis']})")
+            metadata.append(
+                f"reply to [{output.name} — {parent}](#{parent}) "
+                f"({entry['parent_basis']})"
+            )
         lines += [" · ".join(metadata), ""]
         if entry["content_status"] == "not_in_capture":
             lines += ["*No body was present in the supplied capture.*", ""]
@@ -81,6 +107,14 @@ def render(source, record, output):
             lines += [""]
         for note in entry.get("notes", []):
             lines += [f"Capture note: {note}", ""]
+    if navigation.get("next"):
+        next_document = source.parent / navigation["next"]
+        relative_next = Path(os.path.relpath(next_document, output.parent)).as_posix()
+        lines += [
+            "## Continue reading", "",
+            f"Next: [{next_document.name}]({relative_next}) "
+            "for the source-order explanation and assessment.", "",
+        ]
     return "\n".join(lines)
 
 

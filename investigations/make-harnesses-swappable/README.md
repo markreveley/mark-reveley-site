@@ -1,53 +1,87 @@
 # Making coding harnesses swappable
 
-This investigation asks how work can continue when we change coding assistants.
-We want to understand which instructions, executable behavior, and saved progress
-must move with the assistant, and which can remain in a shared application. The
-working hypothesis is that a shared core, exposed through CLI and MCP tools, can
-preserve workflow behavior and progress while the conversational harness changes.
+Start here. This README gives the investigation's question, current assessment,
+and reading order. Reading the investigation does not require building the
+prototype; implementation and maintenance instructions have separate roles below.
 
-The starting point is the r/LLMDevs thread
-[Have coding agents made us forget ‘program to an interface, not an
-implementation’?][discussion], preserved here as a post and its captured comments.
-The comparison uses a [Claude Code workflow][baseline] coordinated through a
-skill and helper scripts as its baseline. The [proposal][proposal] moves step
-rules, domain results, and retry handling into a shared application. Claude Code
-can remain the conversational assistant while the application owns the workflow.
+We are examining the r/LLMDevs thread *Have coding agents made us forget
+‘program to an interface, not an implementation’?*, captured in
+[reddit-post-program-interface.md](reddit-post-program-interface.md).
+The question is whether reusable workflows can retain their behavior and saved
+progress when we change coding assistants, and what must move outside the
+assistant to make that possible.
 
-The example workload is the [source-report task][task]: produce factual counts
-and source metadata from that thread's [YAML capture][source], with a later
-summary extension. We designed it for this investigation because the fixed input
-and two short steps make interruptions and retries observable. The test is
-whether another harness can finish the same saved work, and how much adaptation
-each arrangement requires. See the [experiment's purpose][purpose] before its
-build instructions.
+## Current assessment
 
-## Reading order
+**Preliminary conclusion:** the proposal describes a useful separation of
+responsibilities. A shared application can own workflow rules, results, and
+recovery semantics while different coding harnesses request its operations.
+The significant change is who owns that behavior; using MCP alone does not
+establish the separation. The reasoning is developed in
+[analysis.md — The proposed arrangement](analysis.md#the-proposed-arrangement).
 
-1. [Discussion](reddit-post-program-interface.md): the original post and 11
-   captured comment entries, including one with no captured body.
-2. [Definitions](definitions.md): terminology as used here, cross-referenced with
-   source usage and marked where it is a local convention.
-3. [Claim analysis](claim-analysis.md): the title, each post paragraph, and each
-   comment explained in source order, with follow-up research and qualifications.
-4. [Analysis](analysis.md): the Claude Code baseline, the proposed boundary,
-   and the same task traced through both arrangements.
-5. [Reproduction plan](reproduction.md): a small source-report workflow, its
-   interface, persistence model, and acceptance checks.
-6. [Working instructions](instructions.md): scope for subsequent investigation.
-7. [Draft outline](drafts/outline.md): a possible post structure, pending results.
+**The baseline matters.** Claude Code already supports executable helpers, MCP,
+hooks, and saved conversations. Shared scripts may already provide some of the
+proposed portability. Our comparison therefore asks which responsibilities move
+and whether the resulting handoff is easier, rather than assuming the baseline
+cannot support reusable work. See
+[analysis.md — The baseline in Claude Code](analysis.md#the-baseline-in-claude-code).
 
-[The investigation record](investigation.yaml) indexes sources and open questions.
-[The source YAML][source] is the canonical structured transcript;
-[the raw paste][raw] is preserved.
+**What the evidence supports:** the source and follow-up documentation establish
+the argument and describe mechanisms that could implement it. They do not
+establish the author's later system's exact recovery guarantees or show that
+this design is generally better than a harness-led workflow. The source-order
+explanations and qualifications are in [claim-analysis.md](claim-analysis.md).
 
-Current state: source intake and an initial design are complete. The reproduction
-is specified, but has not been implemented or tested in coding harnesses.
+**What remains untested:** the prototype has not been built. We have no measured
+handoff, retry, migration-effort, or maintenance results. The proposed test uses
+a small source-report task we devised: read the thread's YAML capture, prepare
+factual counts and metadata, then render a report. Interrupting those two steps
+lets us test whether another harness can finish the same saved work. Its purpose
+and limits are in
+[reproduction.md — Purpose of the experiment](reproduction.md#purpose-of-the-experiment).
 
-[discussion]: reddit-post-program-interface.md
-[baseline]: analysis.md#the-baseline-in-claude-code
-[proposal]: analysis.md#the-proposed-arrangement
-[task]: reproduction.md#source-report-task
-[purpose]: reproduction.md#purpose-of-the-experiment
-[source]: sources/reddit-program-interface.yaml
-[raw]: sources/raw/reddit-post-program-interface.txt
+Current status: source intake, claim analysis, and architectural analysis are
+written; the experiment is specified. The next empirical question is whether the
+shared application preserves the same run across a harness change, and what each
+arrangement requires to do so.
+
+## How to read this investigation
+
+For a first reading, use this order:
+
+1. **This README:** understand the question and preliminary assessment.
+2. **The source:** read the original post and captured comments in
+   [reddit-post-program-interface.md](reddit-post-program-interface.md).
+   These are the participants' statements, not our conclusions.
+3. **The explanation:** read [claim-analysis.md](claim-analysis.md) to unpack
+   the title, migration scenario, and each subsequent claim. It follows the
+   source order and separates interpretation from supporting evidence.
+4. **The synthesis:** read [analysis.md](analysis.md) for the architecture as a
+   whole: the Claude Code baseline, proposed change, tradeoffs, and unresolved
+   questions. This supplies the detailed reasoning behind the assessment above.
+
+Use [definitions.md](definitions.md) as a lookup while reading; it is not a
+required chapter to read from beginning to end. If you only want the current
+conclusion, this README is sufficient; follow its analysis links for the reasoning.
+
+## When to use the other documents
+
+- **To understand or build the proposed test:** use
+  [reproduction.md](reproduction.md). Its purpose and task sections explain the
+  example; its later sections are implementation instructions and acceptance
+  checks. Building it is a separate activity from reading the analysis.
+- **To continue maintaining this investigation:** use
+  [instructions.md](instructions.md). Its imperatives tell a researcher or agent
+  how to update evidence, conduct future experiments, and prepare a draft. It is
+  not a reading guide or the current evaluation.
+- **To prepare a future article:** use [outline.md](drafts/outline.md). This is a
+  provisional publication outline, pending experimental results.
+- **To inspect provenance and open questions:** use
+  [investigation.yaml](investigation.yaml). The structured source is
+  [reddit-program-interface.yaml](sources/reddit-program-interface.yaml), and
+  the original paste is
+  [reddit-post-program-interface.txt](sources/raw/reddit-post-program-interface.txt).
+
+The reader's next document is
+[reddit-post-program-interface.md](reddit-post-program-interface.md).

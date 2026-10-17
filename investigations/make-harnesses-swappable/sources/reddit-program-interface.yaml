@@ -5,10 +5,15 @@ platform: reddit
 title: Have coding agents made us forget ‘program to an interface, not an implementation’?
 url: https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/
 community: r/LLMDevs
+navigation:
+  overview: ../README.md
+  next: ../claim-analysis.md
 capture:
   method: user_paste
   imported_on: '2026-10-17'
   captured_at: null
+  relative_age_reference_date: '2026-10-17'
+  relative_age_reference_basis: user-requested reference date, not a known capture date
   raw_file: raw/reddit-post-program-interface.txt
   completeness: pasted_excerpt
   live_verification: not_checked
@@ -17,7 +22,8 @@ capture:
   - Removed avatar labels, the achievement badge, and vote/reply/award/share controls.
   - Preserved body wording, punctuation, paragraph order, links, and comment order; trimmed outer and
     trailing whitespace.
-  - Retained relative ages and displayed scores; left publication dates and reply nesting unknown.
+  - Retained original relative ages and displayed scores; left verified publication timestamps and reply nesting unknown.
+  - At the user's request, estimated comment dates by subtracting captured day counts from 2026-10-17.
   - Retained c04 with its metadata and marked its body as not present in the capture.
   - Inferred the post author from the OP badges on comments, not from a captured post byline.
 post:
@@ -62,6 +68,7 @@ comments:
   author: Then_Block6304
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 3
   content_status: present
@@ -76,6 +83,7 @@ comments:
   author: mostly_deterministic
   author_is_op: true
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 1
   content_status: present
@@ -90,6 +98,7 @@ comments:
   author: verstands
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 3
   content_status: present
@@ -105,6 +114,7 @@ comments:
   author: mostly_deterministic
   author_is_op: true
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 2
   content_status: not_in_capture
@@ -117,6 +127,7 @@ comments:
   author: FuckbigtechAI
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-10-06'
   age_label: 11d ago
   displayed_score: 1
   content_status: present
@@ -131,6 +142,7 @@ comments:
   author: guitarist91
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-09-28'
   age_label: 19d ago
   displayed_score: 2
   content_status: present
@@ -145,6 +157,7 @@ comments:
   author: kincaidDev
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-10-03'
   age_label: 14d ago
   displayed_score: 1
   content_status: present
@@ -160,6 +173,7 @@ comments:
   author: troyjr4103
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 1
   content_status: present
@@ -177,6 +191,7 @@ comments:
   author: mostly_deterministic
   author_is_op: true
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 1
   content_status: present
@@ -194,6 +209,7 @@ comments:
   author: troyjr4103
   author_is_op: false
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: 1
   content_status: present
@@ -209,6 +225,7 @@ comments:
   author: mostly_deterministic
   author_is_op: true
   published_at: null
+  estimated_published_on: '2026-09-27'
   age_label: 20d ago
   displayed_score: null
   content_status: present

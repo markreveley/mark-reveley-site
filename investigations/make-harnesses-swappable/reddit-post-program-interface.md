@@ -1,12 +1,20 @@
 # Have coding agents made us forget ‘program to an interface, not an implementation’?
 
+This is the captured source, followed by its comments.
+Start with [README.md](README.md) for the investigation's assessment and reading order.
+
 Source: [reddit discussion](https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/)
 
-Structured record: [reddit-program-interface](sources/reddit-program-interface.yaml). Generated with [render_discussion.py](../render_discussion.py); edit the YAML record.
+Structured record: [reddit-program-interface.yaml](sources/reddit-program-interface.yaml). Generated with [render_discussion.py](../render_discussion.py); edit the YAML record.
 
-[Original capture](sources/raw/reddit-post-program-interface.txt).
+Original capture: [reddit-post-program-interface.txt](sources/raw/reddit-post-program-interface.txt).
 
-Capture: pasted_excerpt; live verification: not_checked. Relative ages and scores belong to the capture.
+Capture: pasted_excerpt; live verification: not_checked. Scores belong to the capture.
+
+Estimated dates count backward from 2026-10-17.
+Reference basis: user-requested reference date, not a known capture date.
+Original relative-age labels remain in the structured record;
+these are calculated dates, not verified publication timestamps.
 
 Comments follow capture order. Unknown reply nesting is left unspecified; inferred relationships are labeled. Missing bodies are marked without assuming deletion. Post and comment bodies follow.
 
@@ -41,43 +49,43 @@ Have others here started to think along these lines? Curious if you’ve pushed 
 
 ## c01
 
-Comment by **Then_Block6304** · 20d ago · displayed score: 3
+Comment by **Then_Block6304** · date: 2026-09-27 (estimated) · displayed score: 3
 
 the whole mcp-as-seam idea clicks for me because i got tired of rewriting the same tool logic every time the wind shifted to a new harness. portable capabilities with a thin harness-specific wrapper feels like the only way to keep my sanity.
 
 ## c02
 
-Comment by **mostly_deterministic** · OP · 20d ago · displayed score: 1
+Comment by **mostly_deterministic** · OP · date: 2026-09-27 (estimated) · displayed score: 1
 
 Yas! There /can/ be additional complications at times (upstream MCP auth, state (assuming you're building something durable), but they're problems that only really need to be solved once and shared in a library. Happy to hear others are coming across the same pattern.
 
 ## c03
 
-Comment by **verstands** · 20d ago · displayed score: 3
+Comment by **verstands** · date: 2026-09-27 (estimated) · displayed score: 3
 
 Yeah, rules files aging into harness-specific folklore is the tax. MCP as the seam helped me more than another round of porting .cursorrules. Keep the tool contracts in one place, keep the harness prompts thin, and treat each IDE's rules as thin adapters. When the next harness shows up you rewrite the adapter, not the tools.
 
 ## c04
 
-Comment by **mostly_deterministic** · OP · 20d ago · displayed score: 2
+Comment by **mostly_deterministic** · OP · date: 2026-09-27 (estimated) · displayed score: 2
 
 *No body was present in the supplied capture.*
 
 ## c05
 
-Comment by **FuckbigtechAI** · 11d ago · displayed score: 1
+Comment by **FuckbigtechAI** · date: 2026-10-06 (estimated) · displayed score: 1
 
 same, and the one thing i'd pull out of the prose entirely is permissions. "never push to main" in AGENTS.md is a suggestion. the same rule in the tool layer is a wall, and it actually leaves a trace when it says no
 
 ## c06
 
-Comment by **guitarist91** · 19d ago · displayed score: 2
+Comment by **guitarist91** · date: 2026-09-28 (estimated) · displayed score: 2
 
 Yeah, same conclusion here. Cheapest version of it: one AGENTS.md as the source of truth, and CLAUDE.md / GEMINI.md as symlinks to it. The next harness becomes a symlink instead of a migration project.
 
 ## c07
 
-Comment by **kincaidDev** · 14d ago · displayed score: 1
+Comment by **kincaidDev** · date: 2026-10-03 (estimated) · displayed score: 1
 
 That’s what Ive been doing with my harness https://github.com/Obedience-Corp/festival
 
@@ -85,7 +93,7 @@ It’s based around git and the filesystem
 
 ## c08
 
-Comment by **troyjr4103** · 20d ago · displayed score: 1
+Comment by **troyjr4103** · date: 2026-09-27 (estimated) · displayed score: 1
 
 Yes, and I'd add that the prose is the least stable layer of all. I build Kin, an open source code repository that agents query over MCP, and we ended up where you are. One MCP server and one CLI carry the real behavior, and the Claude Code, Codex and Cursor pieces are thin, mostly just wiring up the server.
 
@@ -95,20 +103,24 @@ The other thing worth guarding is that every surface tells the same story. If th
 
 ## c09
 
-Comment by **mostly_deterministic** · OP · 20d ago · displayed score: 1
+Comment by **mostly_deterministic** · OP · date: 2026-09-27 (estimated) · displayed score: 1
 
 Exactly! Something something non-determinism. Adding deterministic properties is something I've been tackling since my first run in with "sorry, you're right, I should have..." in a prompt session. I actually built switchplane (https://github.com/salesforce-misc/switchplane) as a result of that exploration - a local-only, durable runtime for LangGraph with an out-of-the-box TUI/CLI. When I moved to a split conversational harness and another agentic system under the MCP seam, watching the interaction between the two blew my mind a bit.
 
 ## c10
 
-Comment by **troyjr4103** · 20d ago · displayed score: 1
+Comment by **troyjr4103** · date: 2026-09-27 (estimated) · displayed score: 1
 
 Local-only and durable is the right default for that. When the conversational side restarts mid-run, does switchplane pick the graph back up from its last checkpoint on its own, or does the harness have to ask for it? That handoff is the part I'd most want to get right, because it's where each side can end up with a different idea of what's already done.
 
 ## c11
 
-Comment by **mostly_deterministic** · OP · 20d ago
+Comment by **mostly_deterministic** · OP · date: 2026-09-27 (estimated)
 
 switchplane was pre-conversational harness split, self-contained runtime.
 
 With the more recent work I've been doing, if a harness dies for any reason, the user has to request it to start up the operation again. Nothing preventing the server from auto-continuing the tasks on startup if one should choose to do so though.
+
+## Continue reading
+
+Next: [claim-analysis.md](claim-analysis.md) for the source-order explanation and assessment.
