@@ -34,7 +34,7 @@ The context within which our claim is being made is a claim itself.
 
 Moving on, to understand the nature of our claim regarding engineering centaurs, we need to define engineering centaurs, according to the intention of the source's author. To paraphrase from the article:
 
-> <Centaurs are> human-AI partnerships that are stronger than unassisted AIs or humans
+> [Centaurs are] human-AI partnerships that are stronger than unassisted AIs or humans
 
 To which we could add "according to some objective measurement."
 
