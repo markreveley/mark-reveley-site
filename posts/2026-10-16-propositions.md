@@ -153,4 +153,4 @@ This statement was declared as context above and noted as itself being a proposi
 
 For further consideration, as it turns out, resolving contextual dependencies while preserving distinctions between propositions may improve retrieval for questions that depend on those distinctions.
 
-https://arxiv.org/pdf/2312.06648
+<https://arxiv.org/pdf/2312.06648>
