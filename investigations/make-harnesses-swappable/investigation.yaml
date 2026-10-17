@@ -1,0 +1,246 @@
+schema_version: 1
+id: make-harnesses-swappable
+title: "Making coding harnesses swappable"
+status: investigating
+started_on: '2026-10-17'
+question: >-
+  How can conversational coding harnesses share capabilities, enforced tool rules,
+  and recoverable workflow state through a stable interface, and what is the
+  smallest reproduction that demonstrates the separation?
+motivation: >-
+  The captured r/LLMDevs thread proposes reusable capabilities behind interfaces
+  instead of tying their behavior to one coding harness. We want to understand
+  the mechanism and compare what must be moved or reconfigured when a second
+  harness continues the same work.
+working_hypothesis: >-
+  A shared application core exposed through CLI and MCP adapters can keep tool
+  semantics and persisted work stable across harness changes. Recovery requires
+  explicit state and retry semantics in addition to a common protocol.
+guidance: ../README.md
+comparison:
+  baseline: >-
+    A Claude Code skill and deterministic helper scripts, with the
+    conversational model coordinating the reporting procedure.
+  proposed_change: >-
+    Move step validation, domain results, and retry semantics into a shared
+    application core called through CLI and MCP adapters. The first prototype
+    still relies on the harness to request each step.
+  workload: >-
+    The locally devised source-report task (reproduction.md#source-report-task)
+    reads sources/reddit-program-interface.yaml and produces factual counts and
+    source metadata. Its fixed input and two steps make interruption, handoff,
+    and retry behavior observable.
+  held_constant:
+    - "Source fixture and deterministic calculation logic."
+    - "Prompt and model configuration where available in the later summary comparison."
+scope:
+  include:
+    - "Compare the same task with a concrete Claude Code baseline before asserting architectural differences."
+    - "Follow one call from the conversational harness into application code."
+    - "Separate instructions, tool contracts, policy checks, workflow state, and transport."
+    - "Specify a local reproduction with deterministic steps before adding an inner model."
+    - "Test a harness change, process restart, duplicate request, and rejected operation."
+  defer:
+    - "Production orchestration, remote authentication, and multi-user deployment."
+    - "A survey or benchmark of every coding harness."
+    - "Automatic background recovery and observability service integration."
+sources:
+  - id: reddit-program-interface
+    kind: discussion
+    path: sources/reddit-program-interface.yaml
+    url: "https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/"
+    evidence: supplied_capture
+    checked_on: '2026-10-17'
+    notes: "Normalized against the supplied paste; not verified against the live thread."
+  - id: mcp-architecture
+    kind: documentation
+    url: "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Host/client/server roles, stdio transport, tool discovery, and tool calls."
+  - id: mcp-python-sdk
+    kind: project
+    url: "https://github.com/modelcontextprotocol/python-sdk"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Official implementation starting point; no SDK release installed or tested."
+  - id: langgraph-persistence
+    kind: documentation
+    url: "https://docs.langchain.com/oss/python/langgraph/persistence"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Checkpoint state versus cross-thread stores; in-memory state does not survive restart."
+  - id: switchplane-readme
+    kind: project
+    url: "https://github.com/salesforce-misc/switchplane"
+    read_url: "https://raw.githubusercontent.com/salesforce-misc/switchplane/main/README.md"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: >-
+      README describes a local LangGraph runtime with explicit checkpoint recovery.
+      Its MCP section describes consuming MCP tools. It does not by itself establish
+      the author's later architecture exposing workflows to a conversational harness.
+      Mutable main-branch documentation; no commit pinned or runtime tested.
+  - id: festival
+    kind: project
+    url: "https://github.com/Obedience-Corp/festival"
+    evidence: supplied_capture
+    checked_on: null
+    notes: "Mentioned in c07; not inspected."
+  - id: anthropic-harnesses
+    kind: article
+    url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Terminology check: harness, context management, and sessions."
+  - id: anthropic-agents-workflows
+    kind: article
+    url: "https://www.anthropic.com/engineering/building-effective-agents"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Terminology check: predefined workflows versus model-directed agents; conceptual usage, not current product setup."
+  - id: mcp-tools
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/server/tools"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Tool names, schemas, discovery, invocation, and declared protocol capabilities."
+  - id: mcp-transports
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/transports"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Transport versus message protocol; stdio and HTTP bindings."
+  - id: mcp-stdio
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Subprocess transport and protocol versus diagnostic streams."
+  - id: mcp-authorization
+    kind: specification
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Authorization scope for HTTP, distinct from stdio credentials and domain policy."
+  - id: agent-skills-format
+    kind: documentation
+    url: "https://agentskills.io/home"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Skills contain instructions and may bundle executable code and resources."
+  - id: claude-hooks
+    kind: documentation
+    url: "https://code.claude.com/docs/en/hooks"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Hooks are lifecycle handlers; handlers can include model calls."
+  - id: claude-code-architecture
+    kind: documentation
+    url: "https://code.claude.com/docs/en/how-claude-code-works"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Model-driven loop, tool execution, context management, and conversation resume."
+  - id: claude-code-skills
+    kind: documentation
+    url: "https://code.claude.com/docs/en/skills"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Skills can bundle executable scripts; a baseline need not consist only of prose."
+  - id: claude-code-subagents
+    kind: documentation
+    url: "https://code.claude.com/docs/en/sub-agents"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Harness-managed delegation with separate contexts, prompts, and tool configuration."
+  - id: claude-code-memory
+    kind: documentation
+    url: "https://code.claude.com/docs/en/memory"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Instruction and memory files are context, distinct from enforced settings."
+  - id: claude-code-permissions
+    kind: documentation
+    url: "https://code.claude.com/docs/en/permissions"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Existing host-level allow, ask, and deny rules for tool use."
+  - id: claude-code-checkpointing
+    kind: documentation
+    url: "https://code.claude.com/docs/en/checkpointing"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "File rewind and its scope; distinguished from the proposed workflow checkpoint."
+  - id: claude-code-mcp
+    kind: documentation
+    url: "https://code.claude.com/docs/en/mcp"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Existing MCP integration; MCP use alone does not establish the proposed ownership boundary."
+  - id: langgraph-graph-api
+    kind: documentation
+    url: "https://docs.langchain.com/oss/python/langgraph/graph-api"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Graph, node, edge, and shared state definitions."
+  - id: sqlite-transactions
+    kind: documentation
+    url: "https://www.sqlite.org/lang_transaction.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Commit, rollback, and concurrent read/write transaction behavior."
+  - id: sqlite-atomic-commit
+    kind: documentation
+    url: "https://www.sqlite.org/atomiccommit.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "All-or-nothing visibility of database changes under the documented storage assumptions."
+  - id: aws-idempotent-apis
+    kind: article
+    url: "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Retry, side effect, caller request identifier, and semantically equivalent responses."
+  - id: aws-transactional-outbox
+    kind: documentation
+    url: "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Atomic state/outbox update and separate delivery; duplicate delivery still needs handling."
+  - id: langfuse-observability
+    kind: documentation
+    url: "https://langfuse.com/docs/observability/overview"
+    evidence: documentation
+    checked_on: '2026-10-17'
+    notes: "Observability versus request tracing."
+artifacts:
+  definitions: definitions.md
+  instructions: instructions.md
+  analysis: analysis.md
+  reproduction: reproduction.md
+  draft: drafts/outline.md
+open_questions:
+  - id: q01
+    question: "Which exact contract and state are shared by two real harnesses?"
+    next_step: "Implement the core and adapters, then run the same contract suite through each."
+    status: open
+  - id: q02
+    question: "What survives the loss of the conversation, server process, or worker?"
+    next_step: "Run the restart and retry scenarios in reproduction.md and record each separately."
+    status: open
+  - id: q03
+    question: "Which tool rules can be bypassed by another tool or direct filesystem access?"
+    next_step: "Document the prototype's authority boundary and test rejected source IDs."
+    status: open
+  - id: q04
+    question: "What does moving a judgment step behind the interface change?"
+    next_step: "After deterministic checks pass, add one stored model-generated summary step."
+    status: open
+  - id: q05
+    question: "How does the author's later MCP-facing workflow system differ from Switchplane?"
+    next_step: "Look for an implementation of that later system; the captured discussion does not supply one."
+    status: open
+experiments: []
+publication:
+  proposed_title: "What actually makes a coding harness swappable"
+  post_path: null

@@ -11,11 +11,28 @@ status: stable
 
 A research push on **graph engineering** — as defined historically, and as the term re-emerged in June–July 2026 alongside *loop engineering* in AI-agent practice. The bundle has three levels of artifacts, as requested by the repository owner:
 
-| Level | Directory | Contents |
-|---|---|---|
-| 1 | [`references/`](references/index.md) | Links to resources: one OKF concept per source, with availability, dates, and credibility notes |
-| 2 | [`excerpts/`](excerpts/index.md) | Verbatim quotes from those sources, persisted as OKF concepts with a `role` in the dialectic, a `subtype` speech-act flavor, tags, and typed `deps` |
-| 3 | [`views/`](views/index.md) | Non-narrative compositions over the quote DAG (currently: the timeline). Explicit synthesis moved to [`ob6to8/direction`](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/README.md) under the house rule below |
+- Level: 1
+
+  Directory: [`references/`](references/index.md)
+
+  Contents: Links to resources: one OKF concept per source, with availability,
+  dates, and credibility notes
+
+- Level: 2
+
+  Directory: [`excerpts/`](excerpts/index.md)
+
+  Contents: Verbatim quotes from those sources, persisted as OKF concepts with a
+  `role` in the dialectic, a `subtype` speech-act flavor, tags, and typed `deps`
+
+- Level: 3
+
+  Directory: [`views/`](views/index.md)
+
+  Contents: Non-narrative compositions over the quote DAG (currently: the
+  timeline). Explicit synthesis moved to
+  [`ob6to8/direction`](https://github.com/ob6to8/direction/blob/main/mark_reveley/2026-08-25-graph-engineering-synthesis/README.md)
+  under the house rule below
 
 **House rule (2026-08-25, operator-directed).** This repository contains only primary sources and the typed DAG of quotes extracted from them, plus non-narrative views over that DAG. Positions may be taken only *implicitly* — in which quotes are selected and how they are composed and connected. Explicit synthesis lives in `ob6to8/direction` (`mark_reveley/2026-08-25-graph-engineering-synthesis/`), so conclusions are drawn in the operator's own writing, and presentation stays composable. Accordingly, in the v3 migration (2026-08-25) excerpt `# Analysis` prose was replaced by short provenance-and-connection `# Note`s; the removed interpretive prose survives only in the direction synthesis docs.
 
@@ -31,15 +48,54 @@ This bundle targets **OKF v0.2** as specified in [`okf/SPEC.md`](https://github.
 
 # Extension fields (producer-defined, per §4.1 "Extensions")
 
-| Field | On | Meaning |
-|---|---|---|
-| `role` | Excerpt | **Primary facet (v3, adopted 2026-08-25)**: the unit's place in the dialectic. Enum: `position` \| `argument` \| `evidence` (see the v3 section below) |
-| `subtype` | Excerpt | Secondary facet: the quote's speech-act flavor. Enum (v2): `question` \| `claim` \| `definition` \| `problem` \| `solution` \| `observation` \| `inference` \| `prescription` (definitions below) |
-| `speaker` | Excerpt | Who said/wrote the quoted words (may differ from the page author, e.g. a quoted tweet) |
-| `deps` | Excerpt | Typed relations forming the corpus DAG: list of `{ concept, rel }`. IBIS-descended core: `supports` \| `objects-to`. Genealogy layer: `answers` (directly addresses/resolves) \| `refines` \| `exemplifies` \| `precedes` |
-| `availability` | Source Reference | `fetched` \| `blocked` \| `user-supplied` \| `local-clone` |
-| `source_author`, `source_date` | Source Reference | Author and publication date of the external source |
-| `retrieved` | Source Reference | When this research accessed it |
+- Field: `role`
+
+  On: Excerpt
+
+  Meaning: **Primary facet (v3, adopted 2026-08-25)**: the unit's place in the
+  dialectic. Enum: `position` | `argument` | `evidence` (see the v3 section
+  below)
+
+- Field: `subtype`
+
+  On: Excerpt
+
+  Meaning: Secondary facet: the quote's speech-act flavor. Enum (v2): `question`
+  | `claim` | `definition` | `problem` | `solution` | `observation` |
+  `inference` | `prescription` (definitions below)
+
+- Field: `speaker`
+
+  On: Excerpt
+
+  Meaning: Who said/wrote the quoted words (may differ from the page author,
+  e.g. a quoted tweet)
+
+- Field: `deps`
+
+  On: Excerpt
+
+  Meaning: Typed relations forming the corpus DAG: list of `{ concept, rel }`.
+  IBIS-descended core: `supports` | `objects-to`. Genealogy layer: `answers`
+  (directly addresses/resolves) | `refines` | `exemplifies` | `precedes`
+
+- Field: `availability`
+
+  On: Source Reference
+
+  Meaning: `fetched` | `blocked` | `user-supplied` | `local-clone`
+
+- Field: `source_author`, `source_date`
+
+  On: Source Reference
+
+  Meaning: Author and publication date of the external source
+
+- Field: `retrieved`
+
+  On: Source Reference
+
+  Meaning: When this research accessed it
 
 A concept's frontmatter `subtype` classifies its **primary** quote. Where a concept carries closely-coupled secondary quotes from the same source, each secondary quote is labeled with its own subtype inline in the body.
 

@@ -2,6 +2,12 @@
 
 A static personal site with posts, selected quotes, definitions, and an about page.
 
+## Investigate a future post
+
+Keep sources, analysis, working instructions, experiments, and rough drafts under
+[`investigations/`](investigations/README.md). This is a research workspace; the
+site builder publishes records from `posts/`, not investigation files.
+
 ## Add a definition
 
 Create a Markdown record under [`defs/`](defs/) with a term, date added,

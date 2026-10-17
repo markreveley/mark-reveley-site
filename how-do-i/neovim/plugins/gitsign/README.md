@@ -32,11 +32,13 @@ GitHub displays a three-dot PR diff: the merge base of the base and head branche
 
 Gitsigns and GitHub then have separate jobs:
 
-| Tool | Job |
-| --- | --- |
-| Gitsigns | Show, preview, and navigate the PR hunks in normal file buffers |
-| A `.git/pr-review.json` document | Hold comments without modifying the checked-out files |
-| GitHub CLI and API | Attach those comments to GitHub diff lines and submit the review |
+- **Gitsigns:** Show, preview, and navigate the PR hunks in normal file buffers
+
+- **A `.git/pr-review.json` document:** Hold comments without modifying the
+  checked-out files
+
+- **GitHub CLI and API:** Attach those comments to GitHub diff lines and submit
+  the review
 
 ## Sources
 
@@ -45,4 +47,3 @@ Gitsigns and GitHub then have separate jobs:
 - [GitHub's explanation of three-dot PR diffs](https://docs.github.com/en/pull-requests/reference/branches#three-dot-and-two-dot-git-diff-comparisons)
 - [GitHub CLI pull-request commands](https://cli.github.com/manual/gh_pr)
 - [GitHub review API](https://docs.github.com/en/rest/pulls/reviews)
-

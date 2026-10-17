@@ -1,0 +1,224 @@
+URL: https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/
+Title: Have coding agents made us forget ‘program to an interface, not an implementation’?
+Post:
+
+My introduction to customizing agentic coding harnesses was building out cursor rules. A not insignificant amount of time was spent on this. As the landscape evolved and Claude Code entered and took market share over the scene, an even larger amount of effort was exerted on a lift and shift. Then came the tooling drift as both harnesses were used. Then Codex, pi, opencode and others entered the scene. Chaos ensued. 
+
+As the models have improved, differentiation has increasingly moved into the harness around them. Each camp touts why their ecosystem is superior based on benchmarks but the rest of us are left to adapt our own efforts based on which way the wind blows on a given month. 
+
+Demos and press releases tend to emphasize features that pull you deeper into a particular ecosystem. That makes sense. They're selling a product.
+
+But what if we started thinking about frontier coding harnesses as the implementation, and started building our agentic systems against an interface instead?
+
+As an example, rather than building a Claude Code plugin that may consist of some skill prose and some ad-hoc code that doesn't have a generalized distribution mechanism, why not build a local MCP server or CLI that any harness can expose to their respective models as a tool?
+
+Make the harness swappable, keep the capabilities you build under a stable surface.
+
+I do believe that there’s some convergence beginning around this, but I also haven’t come across the question being posed quite like I am here. It very well could be that I just missed it with the endless stream of AI-related posts across every platform. If so, keen on being pointed towards similar thought streams.
+
+I’ve been using MCP as a seam for underlying agentic systems and it’s been fantastic. Splitting the conversational harness from the durable workflow and tool logic has been incredibly cool to watch operate (I’ve been using LangFuse for my observability layer).
+
+You want hooks? Add them to your own code.
+Doesn’t demo as well and as quickly as skill prose? Add very little boilerplate code to get a local MCP server running over STDIO and have an agent implemented with the exact same prose. Same core capabilities but entirely portable across harnesses and distributable with your chosen language’s ecosystem.
+
+To be clear: This isn’t intended as an argument for a specific boundary architecture or set of frameworks or languages to build on. This post is to really spur on talking about the separation of concerns around the conversational harnesses and the agentic capabilities you build.
+
+Also note: All of the above doesn’t mean you’re never going to use harness-specific features. They still can be useful. The difference is that the harness-specific aspects should become lean and not onerous to translate from harness to harness. The complex bits, those capabilities that you really care about are portable. The harness-specific stuff is just the icing on the top.
+
+Have others here started to think along these lines? Curious if you’ve pushed the idea upwards successfully and how you’ve communicated that maybe we’re letting the harness own too much of the architecture.
+
+Discussion:
+
+Then_Block6304
+•
+20d ago
+the whole mcp-as-seam idea clicks for me because i got tired of rewriting the same tool logic every time the wind shifted to a new harness. portable capabilities with a thin harness-specific wrapper feels like the only way to keep my sanity.
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mostly_deterministic avatar
+mostly_deterministic
+OP
+•
+20d ago
+Yas! There /can/ be additional complications at times (upstream MCP auth, state (assuming you're building something durable), but they're problems that only really need to be solved once and shared in a library. Happy to hear others are coming across the same pattern.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/verstands avatar
+verstands
+•
+20d ago
+Profile Badge for the Achievement Top 1% Commenter Top 1% Commenter
+Yeah, rules files aging into harness-specific folklore is the tax. MCP as the seam helped me more than another round of porting .cursorrules. Keep the tool contracts in one place, keep the harness prompts thin, and treat each IDE's rules as thin adapters. When the next harness shows up you rewrite the adapter, not the tools.
+
+
+Upvote
+3
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mostly_deterministic avatar
+mostly_deterministic
+OP
+•
+20d ago
+
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/FuckbigtechAI avatar
+FuckbigtechAI
+•
+11d ago
+same, and the one thing i'd pull out of the prose entirely is permissions. "never push to main" in AGENTS.md is a suggestion. the same rule in the tool layer is a wall, and it actually leaves a trace when it says no
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+guitarist91
+•
+19d ago
+Yeah, same conclusion here. Cheapest version of it: one AGENTS.md as the source of truth, and CLAUDE.md / GEMINI.md as symlinks to it. The next harness becomes a symlink instead of a migration project.
+
+
+Upvote
+2
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+kincaidDev
+•
+14d ago
+That’s what Ive been doing with my harness https://github.com/Obedience-Corp/festival
+
+It’s based around git and the filesystem
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+troyjr4103
+•
+20d ago
+Yes, and I'd add that the prose is the least stable layer of all. I build Kin, an open source code repository that agents query over MCP, and we ended up where you are. One MCP server and one CLI carry the real behavior, and the Claude Code, Codex and Cursor pieces are thin, mostly just wiring up the server.
+
+The lesson that took me longest was that instructions don't enforce anything. If a skill file says "don't do X" but the tool surface still lets the agent do X, some model on some harness will do X. So the rules we care about live in what the tools expose and refuse, and the prose just explains them.
+
+The other thing worth guarding is that every surface tells the same story. If the CLI help, the MCP tool descriptions and the plugin docs disagree even slightly, agents pick up on it and you get different behavior per harness, which is the thing you were trying to escape.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mostly_deterministic avatar
+mostly_deterministic
+OP
+•
+20d ago
+Exactly! Something something non-determinism. Adding deterministic properties is something I've been tackling since my first run in with "sorry, you're right, I should have..." in a prompt session. I actually built switchplane (https://github.com/salesforce-misc/switchplane) as a result of that exploration - a local-only, durable runtime for LangGraph with an out-of-the-box TUI/CLI. When I moved to a split conversational harness and another agentic system under the MCP seam, watching the interaction between the two blew my mind a bit.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+troyjr4103
+•
+20d ago
+Local-only and durable is the right default for that. When the conversational side restarts mid-run, does switchplane pick the graph back up from its last checkpoint on its own, or does the harness have to ask for it? That handoff is the part I'd most want to get right, because it's where each side can end up with a different idea of what's already done.
+
+
+Upvote
+1
+
+Downvote
+
+Reply
+
+Award
+
+Share
+
+u/mostly_deterministic avatar
+mostly_deterministic
+OP
+•
+20d ago
+switchplane was pre-conversational harness split, self-contained runtime.
+
+With the more recent work I've been doing, if a harness dies for any reason, the user has to request it to start up the operation again. Nothing preventing the server from auto-continuing the tasks on startup if one should choose to do so though.

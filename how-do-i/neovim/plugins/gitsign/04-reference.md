@@ -19,15 +19,47 @@ Then in Neovim, substituting the printed SHA:
 
 Review motions:
 
-| Action | Mapping | Command |
-| --- | --- | --- |
-| Next hunk | `]c` | `:Gitsigns nav_hunk next` |
-| Previous hunk | `[c` | `:Gitsigns nav_hunk prev` |
-| Preview old text | `<leader>hp` | `:Gitsigns preview_hunk` |
-| Inline preview | `<leader>hi` | `:Gitsigns preview_hunk_inline` |
-| All repository hunks | `<leader>hq` | `:Gitsigns setqflist all` |
-| Full-file diff | `<leader>hd` | `:Gitsigns diffthis` |
-| Restore normal base | — | `:Gitsigns reset_base true` |
+- Action: Next hunk
+
+  Mapping: `]c`
+
+  Command: `:Gitsigns nav_hunk next`
+
+- Action: Previous hunk
+
+  Mapping: `[c`
+
+  Command: `:Gitsigns nav_hunk prev`
+
+- Action: Preview old text
+
+  Mapping: `<leader>hp`
+
+  Command: `:Gitsigns preview_hunk`
+
+- Action: Inline preview
+
+  Mapping: `<leader>hi`
+
+  Command: `:Gitsigns preview_hunk_inline`
+
+- Action: All repository hunks
+
+  Mapping: `<leader>hq`
+
+  Command: `:Gitsigns setqflist all`
+
+- Action: Full-file diff
+
+  Mapping: `<leader>hd`
+
+  Command: `:Gitsigns diffthis`
+
+- Action: Restore normal base
+
+  Mapping: —
+
+  Command: `:Gitsigns reset_base true`
 
 ## What the gutter signs mean
 
@@ -102,4 +134,3 @@ Refresh the PR, verify its `headRefOid`, and re-anchor the comment instead of re
 ## Gitsigns is showing the index again
 
 `change_base` lasts for the Neovim session, not forever. Re-run it after restarting Neovim. This is desirable: ordinary editing should return to the normal working-tree-versus-index view automatically.
-
