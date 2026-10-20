@@ -4,11 +4,11 @@ A static personal site with posts, selected quotes, definitions, and an about pa
 
 ## Investigate a future post
 
-Keep sources, analysis, working instructions, experiments, and rough drafts under
-`investigations/`, as described in [README.md](investigations/README.md). This is
-a research workspace; the site builder publishes records from `posts/`, not
-investigation files. Follow [AGENTS.md](AGENTS.md), including a source
-walkthrough that explains and checks each claim before drawing wider conclusions.
+Keep sources, analysis, working instructions, experiments, and rough drafts in
+the [investigations repository](https://github.com/markreveley/investigations).
+Follow its README and AGENTS.md, including a source walkthrough that explains
+and checks each claim before drawing wider conclusions. Publish completed posts
+by adding records to this repository's `posts/` directory.
 
 ## Add a definition
 
