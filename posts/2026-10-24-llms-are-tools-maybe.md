@@ -2,7 +2,7 @@
 type: Post
 title: "LLMs are tools maybe"
 date_published: "2026-10-24"
-excerpt: "Rich Hickey argues that LLMs are not tools. I'm not entirely sure that discounts LLMs from being tools though."
+excerpt: "Rich Hickey argues that LLMs are not tools. I'm not sure."
 ---
 Rich Hickey has a [post](https://gist.github.com/svieira/619d60dea942a8d4498cba3bb6b11c02) arguing that LLMs are not tools. He defines tools as something you *weild*. I'll buy that. Its Rich Hickey I'll buy most anything he says. I'm not entirely sure that discounts LLMs from being tools though.
 
