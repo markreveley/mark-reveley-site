@@ -4,13 +4,13 @@ title: "LLMs are tools maybe"
 date_published: "2026-10-24"
 excerpt: "Rich Hickey argues that LLMs are not tools. I'm not sure."
 ---
-Rich Hickey has a [post](https://gist.github.com/svieira/619d60dea942a8d4498cba3bb6b11c02) arguing that LLMs are not tools. He defines tools as something you *weild*. I'll buy that. Its Rich Hickey I'll buy most anything he says. I'm not entirely sure that discounts LLMs from being tools though.
+Rich Hickey has a [post](https://gist.github.com/svieira/619d60dea942a8d4498cba3bb6b11c02) arguing that LLMs are not tools. He defines tools as something you *wield*. I'll buy that. It's Rich Hickey, I'll buy most anything he says. I'm not entirely sure that discounts LLMs from being tools though.
 
 Here is my proposed tool definition: "An item that affects a subject's ability to enact change through leverage."
 
 If we consider the teleological meaning of tool, it would revolve around the intended function of a tool - what a tool is designed to accomplish. In this way, a tool is evaluated by its specific nature, the purpose it was built for, and that it were to be 'employed' towards.
 
-Since everything is teleologically defined in the context of purpose, the distinguishing aspect of a tool appears to be that is employed. Which is quite close to being wielded. I see where this is headed.
+Since everything is teleologically defined in the context of purpose, the distinguishing aspect of a tool appears to be that it is employed. Which is quite close to being wielded. I see where this is headed.
 
 Screw it, here's my revised definition: "An item that, when wielded, affects a subject's ability to enact change through leverage."
 
@@ -18,7 +18,7 @@ So, we can agree that a tool is wielded. This does not, however, exclude LLMs fr
 
 "**wield** - to use (as a tool or instrument) especially with full command or power : handle, manipulate, control" - Rich Hickey, either quoting somewhere else or coining.
 
-"Handle, manipulate, control" point towards the ability to command. Degree of command is a spectrum, and LLMs land at different points on it depending on how they’re used. "I used an LLM to write my article" is acceptable and coherent expression. "I wielded an LLM to write my article" is not. And yet, Wielding is defined as a type of use, only "especially" with full command or power.
+"Handle, manipulate, control" point towards the ability to command. Degree of command is a spectrum, and LLMs land at different points on it depending on how they’re used. "I used an LLM to write my article" is acceptable and coherent expression. "I wielded an LLM to write my article" is not. And yet, wielding is defined as a type of use, only "especially" with full command or power.
 
 Can you "use" a search engine? Yes. Can you "wield" one? Arguably. If your experience and ability with using a search engine to achieve an aim enables higher performance compared to someone with less experience and ability, an argument could be made that you wielded it.
 
