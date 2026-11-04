@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evals — Mark Reveley</title>
+<meta name="description" content="Methods and tools for measuring what a model or agent actually does:
+benchmarks, graders, calibration and the statistics behind a score.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Evals</h1>
+  <p class="lede">Methods and tools for measuring what a model or agent actually does:
+benchmarks, graders, calibration and the statistics behind a score.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (258)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(71)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(22)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(14)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(19)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(13)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(19)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(8)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/evals.html" aria-current="page">Evals <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(42)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(27)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(20)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(5)</span></a></li></ul></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(9)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-a-benchmark-map-of-the-us-economy-mercor">
+  <h2><a href="https://www.mercor.com/research/labor-index/benchmark-map/" rel="noreferrer">A benchmark map of the US economy (Mercor)</a></h2>
+  <p>Mercor maps AI benchmarks onto 923 US occupations and finds most working hours<br />
+go to tasks no good agentic benchmark covers.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · research · <a href="https://news.ycombinator.com/item?id=50121179" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry</a></li></ul>
+</article><article class="card bookmark" id="b-asking-an-llm-for-confidence">
+  <h2><a href="https://rumple.github.io/blog/2026/10/20/asking-llm-for-confidence.html" rel="noreferrer">Asking an LLM for confidence</a></h2>
+  <p>Why a confidence score an LLM writes as text is not a number you should trust,<br />
+and what to use instead.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · essay · <a href="https://news.ycombinator.com/item?id=50176082" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-benchmarking-testing-in-automated-theorem-proving">
+  <h2><a href="https://aclanthology.org/2026.acl-industry.150/" rel="noreferrer">Benchmarking testing in automated theorem proving</a></h2>
+  <p>An ACL 2026 industry-track paper by Kim, Han and Hwang on how theorem-proving<br />
+benchmarks are tested. The PDF tab was merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-evaluation-best-practices-openai">
+  <h2><a href="https://developers.openai.com/api/docs/guides/evaluation-best-practices?api-mode=responses" rel="noreferrer">Evaluation best practices (OpenAI)</a></h2>
+  <p>OpenAI's guidance on designing evals for variable model output and using them<br />
+to improve production behaviour.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-exploring-model-graders-for-reinforcement-fine-tuning">
+  <h2><a href="https://developers.openai.com/cookbook/examples/reinforcement_fine_tuning" rel="noreferrer">Exploring model graders for reinforcement fine-tuning</a></h2>
+  <p>An OpenAI cookbook guide to using model graders as the reward signal in<br />
+reinforcement fine-tuning.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-factscore">
+  <h2><a href="https://aclanthology.org/2023.emnlp-main.741/" rel="noreferrer">FActScore</a></h2>
+  <p>An EMNLP 2023 paper that scores long-form generation by splitting it into<br />
+atomic facts and checking each against a knowledge source.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-faults-in-our-formal-benchmarking">
+  <h2><a href="https://arxiv.org/abs/2606.29493" rel="noreferrer">Faults in our formal benchmarking</a></h2>
+  <p>A paper showing that Lean theorem-proving benchmarks contain defects, because<br />
+the kernel checks the formal statement but not whether it matches the informal<br />
+problem. The Papers With Lean and PDF tabs were merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/lean.html">Lean</a></li></ul>
+</article><article class="card bookmark" id="b-jevbench">
+  <h2><a href="https://benchmarkheaven.com/jev-models" rel="noreferrer">JevBench</a></h2>
+  <p>Benchmark Heaven's ranking of decision models on accuracy, calibration,<br />
+latency and cost, with methodology and results.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · benchmark</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-large-language-models-pass-the-turing-test">
+  <h2><a href="https://arxiv.org/abs/2503.23674" rel="noreferrer">Large Language Models Pass the Turing Test</a></h2>
+  <p>A pre-registered three-party Turing test in which people often judged GPT-4.5<br />
+to be the human more often than the real human.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-loco-blog">
+  <h2><a href="https://loco.rs/blog/" rel="noreferrer">Loco blog</a></h2>
+  <p>News from Loco, the one-person Rust framework, including a series on teaching<br />
+agents Loco and an eval that graded the team.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · blog</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/rust.html">Rust</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-metr">
+  <h2><a href="https://metr.org/" rel="noreferrer">METR</a></h2>
+  <p>Home page of METR, a research nonprofit that evaluates frontier models'<br />
+capabilities and risks, known for its time-horizon metric.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · organisation</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety</a></li></ul>
+</article><article class="card bookmark" id="b-openai-evals-is-winding-down-the-alternatives-skip-the">
+  <h2><a href="https://latenteval.ai/guides/openai-evals" rel="noreferrer">OpenAI Evals is winding down; the alternatives skip the statistics</a></h2>
+  <p>With OpenAI's hosted Evals closing, this compares DeepEval, Ragas, TruLens and<br />
+Promptfoo and the statistical rigour none of them provide.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-reduced-my-jev-as-a-judge-calibration-error">
+  <h2><a href="https://www.reddit.com/r/AgentsOfAI/comments/1ws2ye2/reduced_my_jev_as_a_judges_calibration_error/" rel="noreferrer">Reduced my Jev-as-a-judge calibration error</a></h2>
+  <p>Stub: a Reddit post in r/AgentsOfAI, titled “Reduced my Jev as a judge’s<br />
+calibration error”. Reddit could not be read automatically; fill in the<br />
+overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-rl-sandbox-pricing">
+  <h2><a href="https://fly.io/learn/rl-sandbox-pricing/" rel="noreferrer">RL sandbox pricing</a></h2>
+  <p>What 10,000 agentic RL rollouts cost across Sprites, Prime Intellect, E2B,<br />
+Daytona, Modal, Vercel and Cloudflare. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-sean-goedecke-posts-tagged-papers">
+  <h2><a href="https://www.seangoedecke.com/tags/papers/" rel="noreferrer">Sean Goedecke: posts tagged papers</a></h2>
+  <p>Sean Goedecke's posts reviewing AI papers, including METR's productivity study<br />
+and the chain-of-thought debate.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · blog</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-software-engineer-rl-environments-at-afterquery">
+  <h2><a href="https://www.theladders.com/job/software-engineer-rl-environments-afterquery-san-francisco-ca_86637815" rel="noreferrer">Software Engineer, RL Environments at AfterQuery</a></h2>
+  <p>A job listing for building reinforcement-learning environments at AfterQuery<br />
+in San Francisco. Overview written from the title and description only; the<br />
+page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · job</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-industry.html">AI industry</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-task-completion-time-horizons-of-frontier-ai-models">
+  <h2><a href="https://metr.org/time-horizons/" rel="noreferrer">Task-completion time horizons of frontier AI models</a></h2>
+  <p>METR's running measurement of the task length, in human expert time, at which<br />
+frontier agents succeed 50% and 80% of the time, plotted across models.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · research</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety</a></li></ul>
+</article><article class="card bookmark" id="b-testing-agent-skills-systematically-with-evals">
+  <h2><a href="https://developers.openai.com/blog/eval-skills" rel="noreferrer">Testing agent skills systematically with evals</a></h2>
+  <p>OpenAI's guide to turning an agent skill into something you can test, score<br />
+and improve, so changes are measured rather than guessed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-the-illusion-of-the-illusion-of-thinking">
+  <h2><a href="https://www.seangoedecke.com/illusion-of-thinking/" rel="noreferrer">The illusion of &#x27;The Illusion of Thinking&#x27;</a></h2>
+  <p>Sean Goedecke critiques Apple's paper claiming reasoning models don't really<br />
+reason, while still doubting a path to superintelligence.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · essay · <a href="https://news.ycombinator.com/item?id=44221900" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-typesafe-workflow-evals">
+  <h2><a href="https://evals.typesafe.ai/" rel="noreferrer">TypeSafe workflow evals</a></h2>
+  <p>TypeSafe's benchmark of models on structured automation workflows, plotting<br />
+accuracy against cost and time.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · benchmark</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

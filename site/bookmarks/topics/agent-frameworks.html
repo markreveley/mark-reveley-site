@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent frameworks — Mark Reveley</title>
+<meta name="description" content="Libraries, protocols and runtimes for building agents: agent loops, tool and
+provider adapters, persistence, and protocols such as MCP.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Agent frameworks</h1>
+  <p class="lede">Libraries, protocols and runtimes for building agents: agent loops, tool and
+provider adapters, persistence, and protocols such as MCP.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (258)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(71)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(22)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html" aria-current="page">Agent frameworks <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(14)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(19)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(13)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(19)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(8)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(42)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(27)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(20)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(5)</span></a></li></ul></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(9)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-cloudflare-os">
+  <h2><a href="https://blog.cloudflare.com/cloudflare-os/" rel="noreferrer">Cloudflare OS</a></h2>
+  <p>Cloudflare's open-source platform for building apps, automating work and<br />
+giving agents safe access to internal systems, shaped around an organisation's<br />
+knowledge.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-composio">
+  <h2><a href="https://composio.dev/for-you" rel="noreferrer">Composio</a></h2>
+  <p>Tools, auth and sandboxes for agents, connecting Claude, Codex and custom<br />
+agents to more than 1,500 apps, with a firewall to control what they do.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-elixir-otp-agent-runtime-running-in-15-companies-now-open">
+  <h2><a href="https://www.reddit.com/r/elixir/comments/1wo70pg/an_ai_agent_runtime_built_in_elixirotp_running_in/" rel="noreferrer">Elixir/OTP agent runtime running in 15+ companies, now open source</a></h2>
+  <p>Stub: a Reddit post in r/elixir, titled “An AI agent runtime built in<br />
+Elixir/OTP, running in 15+ companies for over a year, now open source”. Reddit<br />
+could not be read automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-generative-user-interfaces-ai-sdk">
+  <h2><a href="https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces" rel="noreferrer">Generative user interfaces (AI SDK)</a></h2>
+  <p>Vercel AI SDK docs on letting a model render UI components through tools<br />
+instead of returning only text.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-host-a-remote-mcp-server">
+  <h2><a href="https://fly.io/learn/host-a-remote-mcp-server/" rel="noreferrer">How to host a remote MCP server</a></h2>
+  <p>Hosting an MCP server over Streamable HTTP with itemised costs, wrapping a<br />
+stdio server and OAuth end to end. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li></ul>
+</article><article class="card bookmark" id="b-isolate-store-data-per-user-langsmith">
+  <h2><a href="https://docs.langchain.com/langsmith/store-auth" rel="noreferrer">Isolate store data per user (LangSmith)</a></h2>
+  <p>LangChain docs on scoping a deployment's long-term store to each authenticated<br />
+user with auth handlers.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-langchain-nuggets">
+  <h2><a href="https://github.com/NuggetsLtd/langchain-nuggets" rel="noreferrer">langchain-nuggets</a></h2>
+  <p>Middleware for LangChain and LangGraph that asks Nuggets for an allow or deny<br />
+decision before each tool call and keeps a signed proof.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-live-connector-v1-0-0">
+  <h2><a href="https://github.com/philtzjp/live-connector/discussions/31" rel="noreferrer">live-connector v1.0.0</a></h2>
+  <p>An MCP server that lets agents query and edit an Ableton Live set with<br />
+Cypher-like queries, built on the Ableton Extensions SDK.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/music-tech.html">Music technology</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-model-context-protocol-architecture-overview">
+  <h2><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" rel="noreferrer">Model Context Protocol architecture overview</a></h2>
+  <p>The MCP docs' explanation of hosts, clients and servers and how they exchange<br />
+tools, resources and prompts.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-openai-agents-api">
+  <h2><a href="https://developers.openai.com/api/docs/guides/agents-api/overview" rel="noreferrer">OpenAI Agents API</a></h2>
+  <p>OpenAI's managed API for durable cloud agents built on the Codex harness, with<br />
+sessions and orchestration handled by OpenAI.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs · <a href="https://news.ycombinator.com/item?id=49649213" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-pepe">
+  <h2><a href="https://github.com/pepe-agent/pepe" rel="noreferrer">Pepe</a></h2>
+  <p>An Elixir/OTP agent runtime with a tool-calling loop for any OpenAI-compatible<br />
+model, plus CLI, HTTP API, dashboard, Telegram and WhatsApp.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-persistence-and-storage-jido">
+  <h2><a href="https://jido.hexdocs.pm/storage.html" rel="noreferrer">Persistence and storage (Jido)</a></h2>
+  <p>Jido's guide to checkpoints and thread journals so Elixir agents survive<br />
+restarts, hibernate when idle and keep their history.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-tanstack-ai">
+  <h2><a href="https://tanstack.com/ai/latest" rel="noreferrer">TanStack AI</a></h2>
+  <p>A TypeScript library providing an agent loop, provider adapters, durability,<br />
+interrupts, sandboxes and tools that plug into an existing stack.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-tanstack-ai-1-0-is-stable-r-llmdevs">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1xdiw7p/tanstack_ai_10_is_stable_with_typed_agents/" rel="noreferrer">TanStack AI 1.0 is stable (r/LLMDevs)</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “TanStack AI 1.0 is stable with typed<br />
+agents, durable streams and AG-UI support”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-the-runtime-that-was-ready-for-ai-all-along">
+  <h2><a href="https://www.youtube.com/watch?v=dKaZ89SkVYY&amp;t=1s" rel="noreferrer">The runtime that was ready for AI all along</a></h2>
+  <p>A talk arguing that Elixir and the BEAM already have the primitives, such as<br />
+lightweight processes and supervision, that other ecosystems are assembling<br />
+for agents. Overview written from the title and description only; the page<br />
+could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Language models — Mark Reveley</title>
+<meta name="description" content="Neural networks trained on text that predict and generate language, and the
+research into how they are built, served and what they can do.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Language models</h1>
+  <p class="lede">Neural networks trained on text that predict and generate language, and the
+research into how they are built, served and what they can do.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (258)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(71)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(22)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(14)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(19)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(13)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(19)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(8)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/language-models.html" aria-current="page">Language models <span class="category-count">(42)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(27)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(20)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(5)</span></a></li></ul></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(9)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-we-were-looking-at-it-wrong-the-explosive-claim-thats">
+  <h2><a href="https://www.technologyreview.com/2026/10/19/1147149/we-were-looking-at-it-wrong-the-explosive-claim-thats-upended-the-ai-world/?utm_medium=tr_social&amp;utm_source=Twitter&amp;utm_campaign=site_visitor.unpaid.engagement" rel="noreferrer">&#x27;We were looking at it wrong&#x27;: the explosive claim that&#x27;s upended the AI world</a></h2>
+  <p>MIT Technology Review interviews Nick Cammarata about his essay claiming<br />
+language models may be far easier to understand, and so to monitor, than<br />
+assumed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/interpretability.html">Interpretability</a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-alex-wang-on-x">
+  <h2><a href="https://x.com/heyyalexwang/status/2111158818730397932?s=46" rel="noreferrer">Alex Wang on X</a></h2>
+  <p>Stub: a post on X. X could not be read automatically; the browser tab title<br />
+was “”. Fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · post · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-asking-an-llm-for-confidence">
+  <h2><a href="https://rumple.github.io/blog/2026/10/20/asking-llm-for-confidence.html" rel="noreferrer">Asking an LLM for confidence</a></h2>
+  <p>Why a confidence score an LLM writes as text is not a number you should trust,<br />
+and what to use instead.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · essay · <a href="https://news.ycombinator.com/item?id=50176082" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-build-your-own-decision-model">
+  <h2><a href="https://nishtahir.com/build-your-own-decision-model/" rel="noreferrer">Build your own decision model</a></h2>
+  <p>A walkthrough of building a System One style model that returns calibrated<br />
+probabilities for every allowed answer in a single pass.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-call-jev-a-decision-model-maggie-appleton">
+  <h2><a href="https://x.com/Mappletons/status/2101560333441610133" rel="noreferrer">Call Jev a decision model (Maggie Appleton)</a></h2>
+  <p>Stub: a post on X. X could not be read automatically; the browser tab title<br />
+was “Maggie Appleton on X: &quot;Can we agree to call Jev a &quot;Decision Model&quot;? I<br />
+feel like they buried this in the explainations and docs. Language models<br />
+output language. Decision models output decisions. https://t.co/4IIHss00va&quot; /<br />
+X”. Fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · post · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-commonwealth-ai">
+  <h2><a href="https://github.com/alexsbryan/commonwealth-ai/tree/main" rel="noreferrer">commonwealth-ai</a></h2>
+  <p>A local assistant, svrnmesh, that runs on your own machine, plus an optional<br />
+mesh, cmnwlth, for pooling machines you trust.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-deepinfer">
+  <h2><a href="https://github.com/deepseek-ai/DeepInfer" rel="noreferrer">DeepInfer</a></h2>
+  <p>DeepSeek's open-source inference framework behind its production serving, with<br />
+optimised kernels, parallelism and batch scheduling.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=50163277" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li></ul>
+</article><article class="card bookmark" id="b-dense-x-retrieval-what-retrieval-granularity-should-we-use">
+  <h2><a href="https://arxiv.org/abs/2312.06648" rel="noreferrer">Dense X Retrieval: what retrieval granularity should we use?</a></h2>
+  <p>A paper showing that indexing a retrieval corpus by propositions rather than<br />
+passages or sentences improves retrieval and downstream tasks. The PDF tab was<br />
+merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-elixir-client-for-jev">
+  <h2><a href="https://www.reddit.com/r/elixir/comments/1wmnxzb/i_built_a_small_elixir_client_for_jev_with/" rel="noreferrer">Elixir client for Jev</a></h2>
+  <p>Stub: a Reddit post in r/elixir, titled “I built a small Elixir client for Jev<br />
+with TypeSafe and OpenRouter support”. Reddit could not be read automatically;<br />
+fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li></ul>
+</article><article class="card bookmark" id="b-every-ai-model-has-the-same-controversial-take-on-humans">
+  <h2><a href="https://www.modelcompare.ai/blog/ai-models-controversial-take-on-humans" rel="noreferrer">Every AI model has the same controversial take on humans</a></h2>
+  <p>Asked 13 models for their most controversial view of humans, 32 of 38 answers<br />
+said people value belonging over truth.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50197313" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-hybrid-reasoning-agents">
+  <h2><a href="https://arxiv.org/abs/2610.18861" rel="noreferrer">Hybrid Reasoning Agents</a></h2>
+  <p>An arXiv paper on agents that reason in latent space but act through text,<br />
+combining efficient internal reasoning with tool use.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper · <a href="https://news.ycombinator.com/item?id=50145337" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-if-you-dont-run-your-own-llm-proxy-how-do-you-know-whats">
+  <h2><a href="https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/" rel="noreferrer">If you don&#x27;t run your own LLM proxy, how do you know what&#x27;s going on?</a></h2>
+  <p>An argument for putting your own proxy between your code and model providers<br />
+so you can see the requests, costs and failures.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50145507" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li></ul>
+</article><article class="card bookmark" id="b-introducing-system-one-models-and-jev">
+  <h2><a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" rel="noreferrer">Introducing System One models and Jev</a></h2>
+  <p>TypeSafe's launch post for Jev, arguing that chat models haven't produced<br />
+automation and that software needs fast, calibrated decisions instead.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=49717558" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jeffy">
+  <h2><a href="https://jeffyclassify.com/" rel="noreferrer">Jeffy</a></h2>
+  <p>Sixty-eight pretrained classifiers for text, game state and numeric features<br />
+that run on CPU in under 80 ms, with confidence-based routing.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-jev-ai-vs-llms-when-to-use-a-decision-model">
+  <h2><a href="https://huggingface.co/blog/sora-2/jev-ai-vs-llms-when-should-you-use-a-decision-mode" rel="noreferrer">Jev AI vs LLMs: when to use a decision model</a></h2>
+  <p>A Hugging Face post on which jobs suit a decision model and which suit a chat<br />
+model that returns JSON.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jev-introduces-a-new-shape-of-llm">
+  <h2><a href="https://simonwillison.net/2026/Sep/21/jev/" rel="noreferrer">Jev introduces a new shape of LLM</a></h2>
+  <p>Simon Willison explains Jev, a model that takes text and returns probabilities<br />
+rather than text, and why decision model is a better name than System One.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=49796843" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jev-meets-the-trolley-problem">
+  <h2><a href="https://zachlandes.com/trolley-problem/" rel="noreferrer">Jev meets the trolley problem</a></h2>
+  <p>Zach Landes puts the trolley problem to Jev and 13 other decision models and<br />
+compares their answers.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50106023" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jev-wasnt-built-to-make-agents-kyle-jeong">
+  <h2><a href="https://x.com/kylejeong/status/2102108924677927169" rel="noreferrer">Jev wasn&#x27;t built to make agents (Kyle Jeong)</a></h2>
+  <p>Stub: a post on X. X could not be read automatically; the browser tab title<br />
+was “Kyle Jeong on X: &quot;Jev wasn't built to make Agents&quot; / X”. Fill in the<br />
+overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · post · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jevs-architecture-unmasked">
+  <h2><a href="https://archerhume.com/posts/jevs-architecture-unmasked" rel="noreferrer">Jev&#x27;s architecture unmasked</a></h2>
+  <p>An attempt to infer Jev's design from 10,000 API calls: shared state, isolated<br />
+questions, options that interact, and confidence calculated from a trained<br />
+distribution.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-jev-style-decisions-with-local-qwen">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1wkc9hp/i_tried_jevstyle_decisions_with_local_qwen_same/" rel="noreferrer">Jev-style decisions with local Qwen</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “I tried Jev-style decisions with<br />
+local Qwen: same accuracy, 239 ms vs 368 ms”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-jevbench">
+  <h2><a href="https://benchmarkheaven.com/jev-models" rel="noreferrer">JevBench</a></h2>
+  <p>Benchmark Heaven's ranking of decision models on accuracy, calibration,<br />
+latency and cost, with methodology and results.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · benchmark</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-jevchat-jev-as-a-lousy-chatbot">
+  <h2><a href="https://github.com/kyle-pena-nlp/jevchat/" rel="noreferrer">jevchat: Jev as a (lousy) chatbot</a></h2>
+  <p>Turns Jev into a chat model by asking it, one symbol at a time, which<br />
+character comes next and sampling from the probabilities it returns.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=49778162" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-kev">
+  <h2><a href="https://github.com/jaredpalmer/kev/tree/main" rel="noreferrer">Kev</a></h2>
+  <p>Small Jev-like decision models built on Qwen that you can train and run<br />
+yourself, serving the same API as TypeSafe's System One.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=49783999" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-large-language-models-pass-the-turing-test">
+  <h2><a href="https://arxiv.org/abs/2503.23674" rel="noreferrer">Large Language Models Pass the Turing Test</a></h2>
+  <p>A pre-registered three-party Turing test in which people often judged GPT-4.5<br />
+to be the human more often than the real human.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-lgit-source-control-for-the-ai-era">
+  <h2><a href="https://nicobrenner.github.io/lossy-git/" rel="noreferrer">lgit: source control for the AI era</a></h2>
+  <p>An experiment keeping Git's interface but storing commits in a neural network<br />
+that sometimes reconstructs files imperfectly.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/version-control.html">Version control</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-minotaur-deep-dive-reasoning-without-a-language-model">
+  <h2><a href="https://fleetingswallow.com/minotaur-ai-deep-dive-achieving-reasoning-without-a-language-model/" rel="noreferrer">Minotaur deep dive: reasoning without a language model</a></h2>
+  <p>How Minotaur reasons by measurement rather than prediction, set against<br />
+earlier approaches and why language models think as they do.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50192868" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/computer-science.html">Computer science</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-natural-language-processing-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Natural_language_processing" rel="noreferrer">Natural language processing (Wikipedia)</a></h2>
+  <p>Wikipedia's overview of natural language processing, its history and its<br />
+relation to linguistics and information retrieval.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/computer-science.html">Computer science</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-openai-is-well-positioned-to-fast-follow-jev">
+  <h2><a href="https://arcturus-labs.com/blog/2026/09/21/will-openai-eat-jevs-lunch/" rel="noreferrer">OpenAI is well positioned to fast-follow Jev</a></h2>
+  <p>Arcturus Labs calls Jev a real breakthrough and bets that OpenAI will copy the<br />
+idea and fold it into its own models.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=49802161" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry</a></li></ul>
+</article><article class="card bookmark" id="b-reduced-my-jev-as-a-judge-calibration-error">
+  <h2><a href="https://www.reddit.com/r/AgentsOfAI/comments/1ws2ye2/reduced_my_jev_as_a_judges_calibration_error/" rel="noreferrer">Reduced my Jev-as-a-judge calibration error</a></h2>
+  <p>Stub: a Reddit post in r/AgentsOfAI, titled “Reduced my Jev as a judge’s<br />
+calibration error”. Reddit could not be read automatically; fill in the<br />
+overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-sean-goedecke-posts-tagged-ai">
+  <h2><a href="https://www.seangoedecke.com/tags/ai/" rel="noreferrer">Sean Goedecke: posts tagged ai</a></h2>
+  <p>The index of Sean Goedecke's AI posts, including several on System One models<br />
+such as Jev.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · blog</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-semif">
+  <h2><a href="https://github.com/TheoLeeCJ/SemIf" rel="noreferrer">SemIf</a></h2>
+  <p>An independent project that answers semantic yes/no questions with open models<br />
+on a single 3090, measured against the same questions as Jev.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-should-i-learn-rag-as-a-backend-dev">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1wjf2if/should_i_learn_rag_as_a_backend_dev/" rel="noreferrer">Should I learn RAG as a backend dev?</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “Should I learn RAG as a backend<br />
+dev?”. Reddit could not be read automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-six-clones-of-jev-in-two-days-ainews">
+  <h2><a href="https://www.latent.space/p/ainews-here-are-6-clones-of-jev-in" rel="noreferrer">Six clones of Jev in two days (AINews)</a></h2>
+  <p>Latent Space's roundup of the attention after Jev's launch and the clones that<br />
+appeared within two days.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · newsletter</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-svrn-ai">
+  <h2><a href="https://www.svrnme.sh/" rel="noreferrer">svrn ai</a></h2>
+  <p>Home page of svrn, a local AI assistant whose model lives on your computer.<br />
+The one-pager tab was merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-svrnmesh-releases">
+  <h2><a href="https://github.com/alexsbryan/svrnmesh-releases" rel="noreferrer">svrnmesh releases</a></h2>
+  <p>Prebuilt alpha installers and CLI tarballs for svrnmesh while its source stays<br />
+invite-only.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/local-ai.html">Local AI</a></li></ul>
+</article><article class="card bookmark" id="b-system-one-adapter-python">
+  <h2><a href="https://github.com/typesafe-ai/system-one-adapter-python" rel="noreferrer">system-one-adapter-python</a></h2>
+  <p>A drop-in replacement for TypeSafe's client that answers the same calls with<br />
+ordinary LLM APIs, for comparing cost, speed and quality.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-the-illusion-of-the-illusion-of-thinking">
+  <h2><a href="https://www.seangoedecke.com/illusion-of-thinking/" rel="noreferrer">The illusion of &#x27;The Illusion of Thinking&#x27;</a></h2>
+  <p>Sean Goedecke critiques Apple's paper claiming reasoning models don't really<br />
+reason, while still doubting a path to superintelligence.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · essay · <a href="https://news.ycombinator.com/item?id=44221900" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-typesafe-ai-documentation">
+  <h2><a href="https://docs.typesafe.ai/introduction" rel="noreferrer">TypeSafe AI documentation</a></h2>
+  <p>Docs for Jev: sending state and typed questions, question types, and how<br />
+confidence is reported. The API reference tab was merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-typesafe-workflow-evals">
+  <h2><a href="https://evals.typesafe.ai/" rel="noreferrer">TypeSafe workflow evals</a></h2>
+  <p>TypeSafe's benchmark of models on structured automation workflows, plotting<br />
+accuracy against cost and time.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · benchmark</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/decision-models.html">Decision models</a></li></ul>
+</article><article class="card bookmark" id="b-welcome-to-the-era-of-experience">
+  <h2><a href="https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf" rel="noreferrer">Welcome to the Era of Experience</a></h2>
+  <p>David Silver and Richard Sutton argue the next generation of agents will gain<br />
+superhuman abilities by learning mainly from their own experience rather than<br />
+human data.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper, pdf</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-worldtui-a-360m-model-that-pretends-to-be-a-terminal">
+  <h2><a href="https://simedw.com/2026/10/21/world-model-terminal/" rel="noreferrer">WorldTUI: a 360M model that pretends to be a terminal</a></h2>
+  <p>A small model fine-tuned to predict terminal screens keystroke by keystroke,<br />
+running vim, tmux and snake with no real shell behind it.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50190363" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-you-could-have-invented-transformers-from-memory">
+  <h2><a href="https://alexwang.ai/posts/associative-memory/" rel="noreferrer">You could have invented transformers from memory</a></h2>
+  <p>Alex Wang explains transformers by treating every layer as an associative<br />
+memory store.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · essay · <a href="https://news.ycombinator.com/item?id=50122878" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

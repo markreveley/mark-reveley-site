@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI agents — Mark Reveley</title>
+<meta name="description" content="Software in which a language model plans and takes actions through tools, over
+many steps, toward a goal someone gave it.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>AI agents</h1>
+  <p class="lede">Software in which a language model plans and takes actions through tools, over
+many steps, toward a goal someone gave it.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (258)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html" aria-current="page">AI agents <span class="category-count">(71)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(22)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(14)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(19)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(13)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(19)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(8)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(42)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(27)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(20)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(5)</span></a></li></ul></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(9)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-a-single-pane-of-glass-for-all-your-cloud-agents-warp-oz">
+  <h2><a href="https://www.warp.dev/blog/multi-harness-cloud-agent-orchestration" rel="noreferrer">A single pane of glass for all your cloud agents (Warp Oz)</a></h2>
+  <p>Warp's Oz as a multi-harness control plane for launching and governing Claude<br />
+Code, Codex and other cloud agents.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-access-management-for-multi-user-agents-alter-demo">
+  <h2><a href="https://www.youtube.com/watch?v=9ZqPU14ipGE" rel="noreferrer">Access management for multi-user agents (Alter demo)</a></h2>
+  <p>A demo of one shared agent acting for different users across Gmail, Calendar,<br />
+GitHub and Slack through Alter. Overview written from the title and<br />
+description only; the page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-agent-sandboxes-isolated-runtimes-for-testing-agent">
+  <h2><a href="https://fly.io/learn/agent-sandbox/" rel="noreferrer">Agent sandboxes: isolated runtimes for testing agent behaviour</a></h2>
+  <p>What an agent sandbox is and how it lets you test tool calls and decisions<br />
+away from production. A Fly.io Learn explainer; it compares providers but is<br />
+written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-ai-sandbox-pricing-compared">
+  <h2><a href="https://fly.io/learn/ai-sandbox-pricing/" rel="noreferrer">AI sandbox pricing compared</a></h2>
+  <p>Published sandbox rates, the four billing models, and one agent workload<br />
+priced end to end on each provider. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-alter-documentation">
+  <h2><a href="https://docs.alterauth.com/" rel="noreferrer">Alter documentation</a></h2>
+  <p>Alter's docs: vaulted credentials, default-deny policy down to the parameter,<br />
+approval policies and audit events for every call.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-alter-vault">
+  <h2><a href="https://alterauth.com/" rel="noreferrer">Alter Vault</a></h2>
+  <p>Privileged access management for agents: vaulted credentials injected per<br />
+request, per-action policy, approval before risky calls, and an audit trail.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product · <a href="https://news.ycombinator.com/item?id=50176908" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-andrew-ng-on-graph-engineering-for-agents">
+  <h2><a href="https://www.youtube.com/watch?v=58n-n-3oRic" rel="noreferrer">Andrew Ng on graph engineering for agents</a></h2>
+  <p>A two-hour course building agent systems from one prompt up to many agents,<br />
+loops and graphs. Overview written from the title and description only; the<br />
+page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-astra-flash-orchestrator-codex-on-crack">
+  <h2><a href="https://github.com/ethanplusai/astra-flash-orchestrator" rel="noreferrer">astra-flash-orchestrator (codex-on-crack)</a></h2>
+  <p>A Codex workflow in which a strong model plans and reviews while a cheaper one<br />
+implements, with phased tasks, verification and reversible setup.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-authority-control-plane-blast-radius-nuggets">
+  <h2><a href="https://www.nuggets.life/nuggets-authority-control-plane-blast-radius.pdf" rel="noreferrer">Authority control plane: blast radius (Nuggets)</a></h2>
+  <p>A Nuggets brief on limiting what a compromised agent can do by enforcing<br />
+delegated authority at action boundaries.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · pdf</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-claude-duet">
+  <h2><a href="https://claude.com/product/claude-duet" rel="noreferrer">Claude Duet</a></h2>
+  <p>Anthropic's proactive personal agent that you message, handling inbox,<br />
+calendar and follow-ups and asking before acting when it matters.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product · <a href="https://news.ycombinator.com/item?id=50186037" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-cloudflare-os">
+  <h2><a href="https://blog.cloudflare.com/cloudflare-os/" rel="noreferrer">Cloudflare OS</a></h2>
+  <p>Cloudflare's open-source platform for building apps, automating work and<br />
+giving agents safe access to internal systems, shaped around an organisation's<br />
+knowledge.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-code-interpreter-pricing">
+  <h2><a href="https://fly.io/learn/code-interpreter-pricing/" rel="noreferrer">Code interpreter pricing</a></h2>
+  <p>Prices 1,000 code executions across OpenAI containers, Bedrock AgentCore, E2B,<br />
+Daytona, Modal, Vercel, Cloudflare and Sprites. A Fly.io Learn explainer; it<br />
+compares providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-composio">
+  <h2><a href="https://composio.dev/for-you" rel="noreferrer">Composio</a></h2>
+  <p>Tools, auth and sandboxes for agents, connecting Claude, Codex and custom<br />
+agents to more than 1,500 apps, with a firewall to control what they do.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-effective-harnesses-for-long-running-agents">
+  <h2><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" rel="noreferrer">Effective harnesses for long-running agents</a></h2>
+  <p>Anthropic engineering on keeping agents productive across many context windows<br />
+with an initializer agent and an incremental coding agent.</p>
+<p>Our assessment of whether it is still current is in<br />
+<a href="https://github.com/markreveley/investigations/blob/main/in-progress/effective-agents/README.md" rel="noreferrer">README.md</a>.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-elixir-otp-agent-runtime-running-in-15-companies-now-open">
+  <h2><a href="https://www.reddit.com/r/elixir/comments/1wo70pg/an_ai_agent_runtime_built_in_elixirotp_running_in/" rel="noreferrer">Elixir/OTP agent runtime running in 15+ companies, now open source</a></h2>
+  <p>Stub: a Reddit post in r/elixir, titled “An AI agent runtime built in<br />
+Elixir/OTP, running in 15+ companies for over a year, now open source”. Reddit<br />
+could not be read automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-enterprise-ai-governance-framework-nuggets">
+  <h2><a href="https://www.nuggets.life/docs/nuggets-labs/enterprise-ai-governance-framework" rel="noreferrer">Enterprise AI governance framework (Nuggets)</a></h2>
+  <p>Nuggets' framework separating model safety and infrastructure security from<br />
+the authorisation of each AI action, which it treats as the control point.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-ephemeral-vs-persistent-sandboxes">
+  <h2><a href="https://fly.io/learn/ephemeral-vs-persistent-sandbox/" rel="noreferrer">Ephemeral vs persistent sandboxes</a></h2>
+  <p>When an agent workload needs a sandbox that resets per task and when it needs<br />
+one that keeps its files. A Fly.io Learn explainer; it compares providers but<br />
+is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-five-months-treating-bugs-like-patients-and-coding-agents">
+  <h2><a href="https://www.cockroachlabs.com/blog/experiment-running-hospital-code/" rel="noreferrer">Five months treating bugs like patients and coding agents like a medical team</a></h2>
+  <p>Cockroach Labs' agent pipeline modelled on a teaching hospital, with triage,<br />
+fellows, review attendings and discharge, which shipped Db2 migration support<br />
+in under two days.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50021899" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-learn">
+  <h2><a href="https://fly.io/learn/" rel="noreferrer">Fly.io Learn</a></h2>
+  <p>The index of Fly.io's explainers on microVMs, agent sandboxes, isolation and<br />
+application hosting.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-sprites-connectors">
+  <h2><a href="https://docs.fly.io/sprites/concepts/connectors?utm_campaign=Oct+%2726+Newsletter&amp;utm_content=Email&amp;utm_medium=email_action&amp;utm_source=customer.io" rel="noreferrer">Fly.io Sprites connectors</a></h2>
+  <p>Sprites connectors let a sandbox call GitHub, OpenRouter or any HTTP API<br />
+through a gateway that holds the token, under deny-by-default policies.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-vs-cloudflare-agent-computers-vs-ephemeral-edge">
+  <h2><a href="https://fly.io/learn/fly-vs-cloudflare/" rel="noreferrer">Fly.io vs Cloudflare: agent computers vs ephemeral edge containers</a></h2>
+  <p>Sprites and Cloudflare's Sandbox SDK compared on disk persistence, sleep,<br />
+preview URLs, isolation and where agent state lives. A Fly.io Learn explainer;<br />
+it compares providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-vs-daytona">
+  <h2><a href="https://fly.io/learn/fly-vs-daytona/" rel="noreferrer">Fly.io vs Daytona</a></h2>
+  <p>Auto-stop and archive timers, disk size, isolation, process supervision and<br />
+credentials compared. A Fly.io Learn explainer; it compares providers but is<br />
+written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-vs-e2b">
+  <h2><a href="https://fly.io/learn/fly-vs-e2b/" rel="noreferrer">Fly.io vs E2B</a></h2>
+  <p>Pause cost, runtime limits, supervision, wake behaviour and credential<br />
+handling compared. A Fly.io Learn explainer; it compares providers but is<br />
+written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-vs-modal">
+  <h2><a href="https://fly.io/learn/fly-vs-modal/" rel="noreferrer">Fly.io vs Modal</a></h2>
+  <p>Persistence, duration caps, snapshot restore, gVisor versus Firecracker<br />
+isolation and GPUs compared. A Fly.io Learn explainer; it compares providers<br />
+but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-fly-io-vs-vercel-sandbox">
+  <h2><a href="https://fly.io/learn/fly-vs-vercel/" rel="noreferrer">Fly.io vs Vercel Sandbox</a></h2>
+  <p>Process state, session caps, snapshot expiry, wake behaviour and keeping<br />
+credentials out of agent code compared. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-generative-user-interfaces-ai-sdk">
+  <h2><a href="https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces" rel="noreferrer">Generative user interfaces (AI SDK)</a></h2>
+  <p>Vercel AI SDK docs on letting a model render UI components through tools<br />
+instead of returning only text.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-glossary-nuggets">
+  <h2><a href="https://www.nuggets.life/docs/nuggets-labs/enterprise-ai-governance-framework-glossary" rel="noreferrer">Glossary (Nuggets)</a></h2>
+  <p>Glossary for Nuggets' enterprise AI governance framework. Overview written<br />
+from the title and description only; the page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-guardrails-for-agentic-ai">
+  <h2><a href="https://www.codesupreme.ai/guardrails-for-ai" rel="noreferrer">Guardrails for agentic AI</a></h2>
+  <p>An article on guardrails for agents from The AI Edge. The page returned not<br />
+found when fetched, so it may have moved.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-harness-engineering-for-coding-agent-users">
+  <h2><a href="https://martinfowler.com/articles/harness-engineering.html" rel="noreferrer">Harness engineering for coding agent users</a></h2>
+  <p>A Martin Fowler site article on building trust in coding agents through guides<br />
+that steer them ahead of time and sensors that check their output.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-have-coding-agents-made-us-forget-program-to-an-interface">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/" rel="noreferrer">Have coding agents made us forget &#x27;program to an interface&#x27;?</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “Have coding agents made us forget<br />
+‘program to an interface, not an implementation’?”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-how-claude-code-is-used-in-practice">
+  <h2><a href="https://www.anthropic.com/research/claude-code-expertise" rel="noreferrer">How Claude Code is used in practice</a></h2>
+  <p>Anthropic research from about 400,000 Claude Code sessions: what tasks people<br />
+bring, how planning and execution split between person and model, and how<br />
+often sessions succeed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · research</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-host-a-remote-mcp-server">
+  <h2><a href="https://fly.io/learn/host-a-remote-mcp-server/" rel="noreferrer">How to host a remote MCP server</a></h2>
+  <p>Hosting an MCP server over Streamable HTTP with itemised costs, wrapping a<br />
+stdio server and OAuth end to end. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-run-llm-generated-python-safely">
+  <h2><a href="https://fly.io/learn/run-llm-generated-python-safely/" rel="noreferrer">How to run LLM-generated Python safely</a></h2>
+  <p>Running untrusted model-written Python behind an isolation boundary with<br />
+network, CPU, time and memory limits. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing</a></li><li><a href="../../bookmarks/topics/python.html">Python</a></li></ul>
+</article><article class="card bookmark" id="b-how-were-rethinking-work-at-cloudflare-with-cloudflare-os">
+  <h2><a href="https://blog.cloudflare.com/how-we-use-ai-with-cloudflare-os/" rel="noreferrer">How we&#x27;re rethinking work at Cloudflare with Cloudflare OS</a></h2>
+  <p>Cloudflare's CIO on employees asking for production API keys to build AI apps,<br />
+and how Cloudflare OS gives them safe access instead.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry</a></li></ul>
+</article><article class="card bookmark" id="b-hybrid-reasoning-agents">
+  <h2><a href="https://arxiv.org/abs/2610.18861" rel="noreferrer">Hybrid Reasoning Agents</a></h2>
+  <p>An arXiv paper on agents that reason in latent space but act through text,<br />
+combining efficient internal reasoning with tool use.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper · <a href="https://news.ycombinator.com/item?id=50145337" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-infrastructure-for-ai-agents">
+  <h2><a href="https://arxiv.org/abs/2501.10114" rel="noreferrer">Infrastructure for AI Agents</a></h2>
+  <p>An arXiv paper arguing that agents need external infrastructure, such as<br />
+identity, attribution and interaction protocols, alongside training-time fixes<br />
+to their behaviour. The PDF tab was merged into this entry.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-isolate-store-data-per-user-langsmith">
+  <h2><a href="https://docs.langchain.com/langsmith/store-auth" rel="noreferrer">Isolate store data per user (LangSmith)</a></h2>
+  <p>LangChain docs on scoping a deployment's long-term store to each authenticated<br />
+user with auth handlers.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-langchain-nuggets">
+  <h2><a href="https://github.com/NuggetsLtd/langchain-nuggets" rel="noreferrer">langchain-nuggets</a></h2>
+  <p>Middleware for LangChain and LangGraph that asks Nuggets for an allow or deny<br />
+decision before each tool call and keeps a signed proof.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-live-connector-v1-0-0">
+  <h2><a href="https://github.com/philtzjp/live-connector/discussions/31" rel="noreferrer">live-connector v1.0.0</a></h2>
+  <p>An MCP server that lets agents query and edit an Ableton Live set with<br />
+Cypher-like queries, built on the Ableton Extensions SDK.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/music-tech.html">Music technology</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-live-smith">
+  <h2><a href="https://github.com/SamKuler/live-smith" rel="noreferrer">live-smith</a></h2>
+  <p>An AI assistant inside Ableton Live 12 that changes tracks, clips and devices<br />
+through conversation and keeps sessions of results.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/music-tech.html">Music technology</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-maria-gorskikh">
+  <h2><a href="https://www.linkedin.com/in/mariagorskikh/" rel="noreferrer">Maria Gorskikh</a></h2>
+  <p>LinkedIn profile of Maria Gorskikh, who is building hosting for very large<br />
+numbers of AI agents.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · person</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-meta-muse-exposes-users-secrets-when-they-share">
+  <h2><a href="https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/" rel="noreferrer">Meta Muse exposes users&#x27; secrets when they share conversations</a></h2>
+  <p>Ars Technica on Meta's Muse agent leaking sensitive information through shared<br />
+conversation links, and Meta pausing sharing.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50174687" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/security.html">Security</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-model-context-protocol-architecture-overview">
+  <h2><a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" rel="noreferrer">Model Context Protocol architecture overview</a></h2>
+  <p>The MCP docs' explanation of hosts, clients and servers and how they exchange<br />
+tools, resources and prompts.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-nuggets">
+  <h2><a href="https://www.nuggets.life/" rel="noreferrer">Nuggets</a></h2>
+  <p>Nuggets' home page: an authority control plane that proves what an agent may<br />
+do and enforces it at execution, on top of existing IAM.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-nuggets-launches-the-authority-control-plane">
+  <h2><a href="https://www.einpresswire.com/article/928309189/nuggets-launches-the-authority-control-plane" rel="noreferrer">Nuggets launches the Authority Control Plane</a></h2>
+  <p>Press release announcing Nuggets' Authority Control Plane, which checks<br />
+whether each AI action is authorised at the moment it runs.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · press-release</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-nuggets-on-linkedin">
+  <h2><a href="https://www.linkedin.com/company/nuggets/home/" rel="noreferrer">Nuggets on LinkedIn</a></h2>
+  <p>Nuggets' LinkedIn company page. Overview written from the title and<br />
+description only; the page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · organisation</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-nuggets-on-x">
+  <h2><a href="https://x.com/nuggetsPAYandID" rel="noreferrer">Nuggets on X</a></h2>
+  <p>Stub: a post on X. X could not be read automatically; the browser tab title<br />
+was “”. Fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · post · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-openai-agents-api">
+  <h2><a href="https://developers.openai.com/api/docs/guides/agents-api/overview" rel="noreferrer">OpenAI Agents API</a></h2>
+  <p>OpenAI's managed API for durable cloud agents built on the Codex harness, with<br />
+sessions and orchestration handled by OpenAI.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs · <a href="https://news.ycombinator.com/item?id=49649213" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-openclaw-alter-plugin">
+  <h2><a href="https://github.com/AlterAIDev/openclaw-alter-plugin" rel="noreferrer">openclaw-alter-plugin</a></h2>
+  <p>A plugin giving one OpenClaw team agent per-user identity, OAuth grants and<br />
+approval steps, so each person acts as themselves and the agent holds no<br />
+tokens.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-openshell">
+  <h2><a href="https://github.com/NVIDIA/OpenShell" rel="noreferrer">OpenShell</a></h2>
+  <p>NVIDIA's runtime for fleets of autonomous agents that lets them use files,<br />
+packages, APIs and credentials without unrestricted access to data and<br />
+secrets.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=50198675" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-orchestration-package-that-cut-gpt-6-astra-usage-by-98">
+  <h2><a href="https://www.reddit.com/r/vibecoding/comments/1wl3lfi/i_built_an_orchestration_package_that_lowered_my/" rel="noreferrer">Orchestration package that cut GPT-6 Astra usage by 98%</a></h2>
+  <p>Stub: a Reddit post in r/vibecoding, titled “I built an orchestration package<br />
+that lowered my GPT-6 Astra usage by 98%”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-otodock">
+  <h2><a href="https://github.com/OtoDock/oto-dock" rel="noreferrer">OtoDock</a></h2>
+  <p>A self-hosted platform for a company's agents built on Claude Code, Codex or<br />
+local models, working in chats, on schedules and on your machines.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=49630606" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-paperclip">
+  <h2><a href="https://paperclipai.net/" rel="noreferrer">Paperclip</a></h2>
+  <p>Open-source, self-hosted orchestration for running a company of AI agents with<br />
+org charts, budgets, governance and goals.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-pepe">
+  <h2><a href="https://github.com/pepe-agent/pepe" rel="noreferrer">Pepe</a></h2>
+  <p>An Elixir/OTP agent runtime with a tool-calling loop for any OpenAI-compatible<br />
+model, plus CLI, HTTP API, dashboard, Telegram and WhatsApp.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-persistence-and-storage-jido">
+  <h2><a href="https://jido.hexdocs.pm/storage.html" rel="noreferrer">Persistence and storage (Jido)</a></h2>
+  <p>Jido's guide to checkpoints and thread journals so Elixir agents survive<br />
+restarts, hibernate when idle and keep their history.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-procurement-questions-for-evaluating-ai-systems-nuggets">
+  <h2><a href="https://www.nuggets.life/docs/nuggets-labs/procurement-questions-for-evaluating-ai-systems" rel="noreferrer">Procurement questions for evaluating AI systems (Nuggets)</a></h2>
+  <p>A checklist of buyer questions on how AI actors are identified, tied to<br />
+accountable people and given authority that can be restricted or revoked.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-propagate-identity-into-memory-layers-alter">
+  <h2><a href="https://docs.alterauth.com/guides/propagate-identity-to-memory/" rel="noreferrer">Propagate identity into memory layers (Alter)</a></h2>
+  <p>An Alter guide to partitioning agent memory by verified application, acting<br />
+agent and represented end user.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity</a></li></ul>
+</article><article class="card bookmark" id="b-pullboard">
+  <h2><a href="https://github.com/pullboard-dev/pullboard" rel="noreferrer">Pullboard</a></h2>
+  <p>A coordination queue in your repo where agents build from approved specs and<br />
+nothing merges until a second agent verifies it.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-rfc-8693-oauth-2-0-token-exchange">
+  <h2><a href="https://www.rfc-editor.org/rfc/rfc8693.html#section-4.1" rel="noreferrer">RFC 8693: OAuth 2.0 Token Exchange</a></h2>
+  <p>The IETF standard for a token service that exchanges one security token for<br />
+another, including impersonation and delegation.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · standard</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/access-control.html">Access control</a></li><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority</a></li></ul>
+</article><article class="card bookmark" id="b-rl-sandbox-pricing">
+  <h2><a href="https://fly.io/learn/rl-sandbox-pricing/" rel="noreferrer">RL sandbox pricing</a></h2>
+  <p>What 10,000 agentic RL rollouts cost across Sprites, Prime Intellect, E2B,<br />
+Daytona, Modal, Vercel and Cloudflare. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-sprites-vs-e2b-vs-modal-vs-daytona">
+  <h2><a href="https://fly.io/learn/sprites-vs-e2b-vs-modal-vs-daytona/" rel="noreferrer">Sprites vs E2B vs Modal vs Daytona</a></h2>
+  <p>Four agent sandboxes compared on isolation, start time, idle billing,<br />
+persistence, Docker, GPUs and cost from 1 to 200 sandboxes. A Fly.io Learn<br />
+explainer; it compares providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-tanstack-ai">
+  <h2><a href="https://tanstack.com/ai/latest" rel="noreferrer">TanStack AI</a></h2>
+  <p>A TypeScript library providing an agent loop, provider adapters, durability,<br />
+interrupts, sandboxes and tools that plug into an existing stack.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-tanstack-ai-1-0-is-stable-r-llmdevs">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1xdiw7p/tanstack_ai_10_is_stable_with_typed_agents/" rel="noreferrer">TanStack AI 1.0 is stable (r/LLMDevs)</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “TanStack AI 1.0 is stable with typed<br />
+agents, durable streams and AG-UI support”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-testing-agent-skills-systematically-with-evals">
+  <h2><a href="https://developers.openai.com/blog/eval-skills" rel="noreferrer">Testing agent skills systematically with evals</a></h2>
+  <p>OpenAI's guide to turning an agent skill into something you can test, score<br />
+and improve, so changes are measured rather than guessed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-the-runtime-that-was-ready-for-ai-all-along">
+  <h2><a href="https://www.youtube.com/watch?v=dKaZ89SkVYY&amp;t=1s" rel="noreferrer">The runtime that was ready for AI all along</a></h2>
+  <p>A talk arguing that Elixir and the BEAM already have the primitives, such as<br />
+lightweight processes and supervision, that other ecosystems are assembling<br />
+for agents. Overview written from the title and description only; the page<br />
+could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-the-sprites-ecosystem">
+  <h2><a href="https://fly.io/sprites/ecosystem/?utm_campaign=Oct+%2726+Newsletter&amp;utm_content=Email&amp;utm_medium=email_action&amp;utm_source=customer.io" rel="noreferrer">The Sprites ecosystem</a></h2>
+  <p>Setup steps for giving Claude Code, Codex, Cursor, VS Code or any MCP client<br />
+its own Linux computer on Fly.io Sprites.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-vms-wont-contain-cyber-capable-agents">
+  <h2><a href="https://blog.trailofbits.com/2026/08/26/vms-wont-contain-cyber-capable-agents/" rel="noreferrer">VMs won&#x27;t contain cyber-capable agents</a></h2>
+  <p>Trail of Bits gave a cyber-capable model the task of escaping a QEMU/KVM VM<br />
+and it got out three different ways, starting with recently disclosed host<br />
+kernel bugs.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li><li><a href="../../bookmarks/topics/security.html">Security</a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing</a></li></ul>
+</article><article class="card bookmark" id="b-welcome-to-the-era-of-experience">
+  <h2><a href="https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf" rel="noreferrer">Welcome to the Era of Experience</a></h2>
+  <p>David Silver and Richard Sutton argue the next generation of agents will gain<br />
+superhuman abilities by learning mainly from their own experience rather than<br />
+human data.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · paper, pdf</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-what-it-costs-to-host-an-ai-agent-24-7">
+  <h2><a href="https://fly.io/learn/always-on-agent-hosting-cost/" rel="noreferrer">What it costs to host an AI agent 24/7</a></h2>
+  <p>Always-on agent hosting priced on six hosts for one workload, from about<br />
+$12.70 a month on a small Fly Machine. A Fly.io Learn explainer; it compares<br />
+providers but is written by one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-what-it-costs-to-run-claude-code-or-codex-in-a-cloud-sandbox">
+  <h2><a href="https://fly.io/learn/claude-code-sandbox-cost/" rel="noreferrer">What it costs to run Claude Code or Codex in a cloud sandbox</a></h2>
+  <p>Cost per session, developer-month and ticket for coding agents across sandbox<br />
+providers. A Fly.io Learn explainer; it compares providers but is written by<br />
+one of them.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article><article class="card bookmark" id="b-where-to-run-agent-code-sandbox-providers-compared">
+  <h2><a href="https://fly.io/learn/agent-sandbox-providers/" rel="noreferrer">Where to run agent code: sandbox providers compared</a></h2>
+  <p>Fly.io compares E2B, Modal, Daytona, Vercel Sandbox, Cloudflare Sandbox and<br />
+Sprites on isolation, state between turns, idle behaviour, session caps and<br />
+egress control.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

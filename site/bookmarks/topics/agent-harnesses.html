@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent harnesses — Mark Reveley</title>
+<meta name="description" content="The program around a model that runs an agent: its loop, context management,
+tool wiring, state across sessions, and the controls that keep long-running
+work on track.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Agent harnesses</h1>
+  <p class="lede">The program around a model that runs an agent: its loop, context management,
+tool wiring, state across sessions, and the controls that keep long-running
+work on track.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (258)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(71)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(22)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html" aria-current="page">Agent harnesses <span class="category-count">(14)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(19)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(13)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(19)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(8)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(42)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(1)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(27)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(7)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(20)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(5)</span></a></li></ul></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(9)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-a-single-pane-of-glass-for-all-your-cloud-agents-warp-oz">
+  <h2><a href="https://www.warp.dev/blog/multi-harness-cloud-agent-orchestration" rel="noreferrer">A single pane of glass for all your cloud agents (Warp Oz)</a></h2>
+  <p>Warp's Oz as a multi-harness control plane for launching and governing Claude<br />
+Code, Codex and other cloud agents.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-andrew-ng-on-graph-engineering-for-agents">
+  <h2><a href="https://www.youtube.com/watch?v=58n-n-3oRic" rel="noreferrer">Andrew Ng on graph engineering for agents</a></h2>
+  <p>A two-hour course building agent systems from one prompt up to many agents,<br />
+loops and graphs. Overview written from the title and description only; the<br />
+page could not be read automatically.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-astra-flash-orchestrator-codex-on-crack">
+  <h2><a href="https://github.com/ethanplusai/astra-flash-orchestrator" rel="noreferrer">astra-flash-orchestrator (codex-on-crack)</a></h2>
+  <p>A Codex workflow in which a strong model plans and reviews while a cheaper one<br />
+implements, with phased tasks, verification and reversible setup.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-effective-harnesses-for-long-running-agents">
+  <h2><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" rel="noreferrer">Effective harnesses for long-running agents</a></h2>
+  <p>Anthropic engineering on keeping agents productive across many context windows<br />
+with an initializer agent and an incremental coding agent.</p>
+<p>Our assessment of whether it is still current is in<br />
+<a href="https://github.com/markreveley/investigations/blob/main/in-progress/effective-agents/README.md" rel="noreferrer">README.md</a>.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-five-months-treating-bugs-like-patients-and-coding-agents">
+  <h2><a href="https://www.cockroachlabs.com/blog/experiment-running-hospital-code/" rel="noreferrer">Five months treating bugs like patients and coding agents like a medical team</a></h2>
+  <p>Cockroach Labs' agent pipeline modelled on a teaching hospital, with triage,<br />
+fellows, review attendings and discharge, which shipped Db2 migration support<br />
+in under two days.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article · <a href="https://news.ycombinator.com/item?id=50021899" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-harness-engineering-for-coding-agent-users">
+  <h2><a href="https://martinfowler.com/articles/harness-engineering.html" rel="noreferrer">Harness engineering for coding agent users</a></h2>
+  <p>A Martin Fowler site article on building trust in coding agents through guides<br />
+that steer them ahead of time and sensors that check their output.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-have-coding-agents-made-us-forget-program-to-an-interface">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1wrvh3v/have_coding_agents_made_us_forget_program_to_an/" rel="noreferrer">Have coding agents made us forget &#x27;program to an interface&#x27;?</a></h2>
+  <p>Stub: a Reddit post in r/LLMDevs, titled “Have coding agents made us forget<br />
+‘program to an interface, not an implementation’?”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-how-claude-code-is-used-in-practice">
+  <h2><a href="https://www.anthropic.com/research/claude-code-expertise" rel="noreferrer">How Claude Code is used in practice</a></h2>
+  <p>Anthropic research from about 400,000 Claude Code sessions: what tasks people<br />
+bring, how planning and execution split between person and model, and how<br />
+often sessions succeed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · research</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-openai-agents-api">
+  <h2><a href="https://developers.openai.com/api/docs/guides/agents-api/overview" rel="noreferrer">OpenAI Agents API</a></h2>
+  <p>OpenAI's managed API for durable cloud agents built on the Codex harness, with<br />
+sessions and orchestration handled by OpenAI.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · docs · <a href="https://news.ycombinator.com/item?id=49649213" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-orchestration-package-that-cut-gpt-6-astra-usage-by-98">
+  <h2><a href="https://www.reddit.com/r/vibecoding/comments/1wl3lfi/i_built_an_orchestration_package_that_lowered_my/" rel="noreferrer">Orchestration package that cut GPT-6 Astra usage by 98%</a></h2>
+  <p>Stub: a Reddit post in r/vibecoding, titled “I built an orchestration package<br />
+that lowered my GPT-6 Astra usage by 98%”. Reddit could not be read<br />
+automatically; fill in the overview by hand.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · thread · overview not written yet</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-otodock">
+  <h2><a href="https://github.com/OtoDock/oto-dock" rel="noreferrer">OtoDock</a></h2>
+  <p>A self-hosted platform for a company's agents built on Claude Code, Codex or<br />
+local models, working in chats, on schedules and on your machines.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo · <a href="https://news.ycombinator.com/item?id=49630606" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-paperclip">
+  <h2><a href="https://paperclipai.net/" rel="noreferrer">Paperclip</a></h2>
+  <p>Open-source, self-hosted orchestration for running a company of AI agents with<br />
+org charts, budgets, governance and goals.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-pullboard">
+  <h2><a href="https://github.com/pullboard-dev/pullboard" rel="noreferrer">Pullboard</a></h2>
+  <p>A coordination queue in your repo where agents build from approved specs and<br />
+nothing merges until a second agent verifies it.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-testing-agent-skills-systematically-with-evals">
+  <h2><a href="https://developers.openai.com/blog/eval-skills" rel="noreferrer">Testing agent skills systematically with evals</a></h2>
+  <p>OpenAI's guide to turning an agent skill into something you can test, score<br />
+and improve, so changes are measured rather than guessed.</p>
+
+  <p class="attrib">Added <time datetime="2026-10-23">23 October 2026</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/evals.html">Evals</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>
