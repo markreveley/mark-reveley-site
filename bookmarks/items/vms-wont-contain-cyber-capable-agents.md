@@ -4,6 +4,7 @@ type: resource
 title: "VMs won't contain cyber-capable agents"
 url: "https://blog.trailofbits.com/2026/08/26/vms-wont-contain-cyber-capable-agents/"
 added: 2026-10-23
+published: 2026-08-26
 status: unread
 tags: [article]
 topics: [def:agent-sandboxes, def:security, def:sandboxing]

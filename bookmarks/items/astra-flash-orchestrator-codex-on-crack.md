@@ -4,6 +4,7 @@ type: resource
 title: "astra-flash-orchestrator (codex-on-crack)"
 url: "https://github.com/ethanplusai/astra-flash-orchestrator"
 added: 2026-10-23
+published: 2026-09-17
 status: unread
 tags: [repo]
 topics: [def:agent-harnesses]

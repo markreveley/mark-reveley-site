@@ -5,6 +5,7 @@ title: "What I self-host"
 url: "https://viceconsole.fyi/blog/2026/10/10/what-i-self-host/"
 hacker_news: "https://news.ycombinator.com/item?id=50109715"
 added: 2026-10-23
+published: 2026-10-10
 status: unread
 tags: [article]
 topics: [def:cloud-hosting]

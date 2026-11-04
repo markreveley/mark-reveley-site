@@ -4,6 +4,7 @@ type: resource
 title: "Tell agents the why, not just the how"
 url: "https://www.seangoedecke.com/tell-agents-the-why/"
 added: 2026-10-23
+published: 2026-09-15
 status: unread
 tags: [essay]
 topics: [def:ai-assisted-programming]

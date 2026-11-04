@@ -4,6 +4,7 @@ type: resource
 title: "SemIf"
 url: "https://github.com/TheoLeeCJ/SemIf"
 added: 2026-10-23
+published: 2026-09-16
 status: unread
 tags: [repo]
 topics: [def:decision-models, def:local-ai]

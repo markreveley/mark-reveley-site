@@ -4,6 +4,7 @@ type: resource
 title: "The AI industry has already spent $65 million ahead of the midterms"
 url: "https://www.businessinsider.com/ai-midterm-elections-spending-super-pacs-greg-brockman-anthropic-2026-7"
 added: 2026-10-23
+published: 2026-07-26
 status: unread
 tags: [article]
 topics: [def:ai-industry]

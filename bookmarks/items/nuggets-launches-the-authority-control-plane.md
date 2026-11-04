@@ -4,6 +4,7 @@ type: resource
 title: "Nuggets launches the Authority Control Plane"
 url: "https://www.einpresswire.com/article/928309189/nuggets-launches-the-authority-control-plane"
 added: 2026-10-23
+published: 2026-07-22
 status: unread
 tags: [press-release]
 topics: [def:agent-authority]

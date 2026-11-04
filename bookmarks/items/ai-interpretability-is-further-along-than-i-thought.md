@@ -4,6 +4,7 @@ type: resource
 title: "AI interpretability is further along than I thought"
 url: "https://www.seangoedecke.com/ai-interpretability/"
 added: 2026-10-23
+published: 2025-06-07
 status: unread
 tags: [essay]
 topics: [def:interpretability]

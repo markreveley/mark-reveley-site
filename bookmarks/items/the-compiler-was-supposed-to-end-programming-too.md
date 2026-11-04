@@ -5,6 +5,7 @@ title: "The compiler was supposed to end programming too"
 url: "https://hrih.si/articles/the-compiler-was-supposed-to-end-programming/"
 hacker_news: "https://news.ycombinator.com/item?id=50185045"
 added: 2026-10-23
+published: 2026-10-21
 status: unread
 tags: [essay]
 topics: [def:ai-assisted-programming]

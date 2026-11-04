@@ -4,6 +4,7 @@ type: resource
 title: "Software's centaur age may last decades"
 url: "https://www.seangoedecke.com/softwares-centaur-age-may-last-decades/"
 added: 2026-10-23
+published: 2026-10-10
 status: unread
 tags: [essay]
 topics: [def:ai-assisted-programming]

@@ -4,6 +4,7 @@ type: resource
 title: "Best Django hosting providers in 2026"
 url: "https://fly.io/learn/django-hosting/"
 added: 2026-10-23
+published: 2026-09-28
 status: unread
 tags: [comparison]
 topics: [def:cloud-hosting, def:python]

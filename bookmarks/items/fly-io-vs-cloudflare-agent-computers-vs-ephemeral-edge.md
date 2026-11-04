@@ -4,6 +4,7 @@ type: resource
 title: "Fly.io vs Cloudflare: agent computers vs ephemeral edge containers"
 url: "https://fly.io/learn/fly-vs-cloudflare/"
 added: 2026-10-23
+published: 2026-08-27
 status: unread
 tags: [comparison]
 topics: [def:agent-sandboxes]

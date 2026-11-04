@@ -4,6 +4,7 @@ type: resource
 title: "The first big AI disaster is yet to happen"
 url: "https://www.seangoedecke.com/the-first-big-ai-disaster/"
 added: 2026-10-23
+published: 2025-06-10
 status: unread
 tags: [essay]
 topics: [def:ai-safety]

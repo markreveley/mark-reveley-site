@@ -4,6 +4,7 @@ type: resource
 title: "How to host a remote MCP server"
 url: "https://fly.io/learn/host-a-remote-mcp-server/"
 added: 2026-10-23
+published: 2026-10-12
 status: unread
 tags: [guide]
 topics: [def:agent-frameworks, def:cloud-hosting]

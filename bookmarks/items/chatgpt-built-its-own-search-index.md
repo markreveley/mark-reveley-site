@@ -4,6 +4,7 @@ type: resource
 title: "ChatGPT built its own search index"
 url: "https://peec.ai/blog/chatgpt-built-its-own-search-index"
 added: 2026-10-23
+published: 2026-09-04
 status: unread
 tags: [article]
 topics: [def:ai-search]

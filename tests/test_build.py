@@ -103,7 +103,7 @@ class SiteBuildTests(unittest.TestCase):
             (db / "items" / "bench.md").write_text(
                 "---\nid: res:bench\ntype: resource\ntitle: \"A <bench>\"\n"
                 "url: \"https://example.com/bench\"\nhacker_news: \"https://news.ycombinator.com/item?id=1\"\n"
-                "added: 2026-10-23\nstatus: unread\ntags: [paper]\ntopics: [def:evals]\n---\n"
+                "added: 2026-10-23\npublished: 2026-09\nstatus: unread\ntags: [paper]\ntopics: [def:evals]\n---\n"
                 "An overview with a [link](https://example.com/more).\n")
             topics, items = site_build.collect_bookmarks()
             site_build.build_bookmarks(topics, items)
@@ -111,6 +111,8 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('href="https://example.com/bench"', index)
             self.assertIn("A &lt;bench&gt;", index)
             self.assertIn("HN discussion", index)
+            self.assertIn('Published <time datetime="2026-09">September 2026</time>', index)
+            self.assertNotIn("Added", index)
             self.assertIn('href="bookmarks/graph.html"', index)
             self.assertIn('href="https://example.com/more" rel="noreferrer"', index)
             parent = (output / "bookmarks" / "topics" / "ai.html").read_text()

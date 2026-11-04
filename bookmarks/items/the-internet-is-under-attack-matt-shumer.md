@@ -4,6 +4,7 @@ type: resource
 title: "The internet is under attack (Matt Shumer)"
 url: "https://x.com/mattshumer_/status/2113360930876580337"
 added: 2026-10-23
+published: 2026-10-22
 status: stub
 tags: [post]
 topics: [def:security]

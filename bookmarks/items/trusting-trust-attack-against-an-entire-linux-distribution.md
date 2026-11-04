@@ -4,6 +4,7 @@ type: resource
 title: "Trusting-trust attack against an entire Linux distribution"
 url: "https://arxiv.org/abs/2607.24888"
 added: 2026-10-23
+published: 2026-07
 status: unread
 tags: [paper]
 topics: [def:security, def:linux]

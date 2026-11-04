@@ -5,6 +5,7 @@ title: "Five months treating bugs like patients and coding agents like a medical
 url: "https://www.cockroachlabs.com/blog/experiment-running-hospital-code/"
 hacker_news: "https://news.ycombinator.com/item?id=50021899"
 added: 2026-10-23
+published: 2026-10-09
 status: unread
 tags: [article]
 topics: [def:agent-harnesses, def:ai-assisted-programming]

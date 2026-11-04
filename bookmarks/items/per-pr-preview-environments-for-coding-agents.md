@@ -4,6 +4,7 @@ type: resource
 title: "Per-PR preview environments for coding agents"
 url: "https://fly.io/learn/per-pr-preview-environments-for-coding-agents/"
 added: 2026-10-23
+published: 2026-10-12
 status: unread
 tags: [guide]
 topics: [def:cloud-hosting, def:ai-assisted-programming]

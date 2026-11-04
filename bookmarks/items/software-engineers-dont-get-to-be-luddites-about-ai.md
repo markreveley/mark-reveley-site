@@ -4,6 +4,7 @@ type: resource
 title: "Software engineers don't get to be Luddites about AI"
 url: "https://www.seangoedecke.com/software-engineers-dont-get-to-be-luddites-about-ai/"
 added: 2026-10-23
+published: 2026-10-12
 status: unread
 tags: [essay]
 topics: [def:ai-assisted-programming]

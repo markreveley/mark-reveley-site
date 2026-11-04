@@ -4,6 +4,7 @@ type: resource
 title: "openclaw-alter-plugin"
 url: "https://github.com/AlterAIDev/openclaw-alter-plugin"
 added: 2026-10-23
+published: 2026-10-08
 status: unread
 tags: [repo]
 topics: [def:agent-authority]

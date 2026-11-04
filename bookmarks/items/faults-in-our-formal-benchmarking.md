@@ -4,6 +4,7 @@ type: resource
 title: "Faults in our formal benchmarking"
 url: "https://arxiv.org/abs/2606.29493"
 added: 2026-10-23
+published: 2026-06
 status: unread
 tags: [paper]
 topics: [def:formal-verification, def:evals, def:lean]

@@ -5,6 +5,7 @@ title: "Asking an LLM for confidence"
 url: "https://rumple.github.io/blog/2026/10/20/asking-llm-for-confidence.html"
 hacker_news: "https://news.ycombinator.com/item?id=50176082"
 added: 2026-10-23
+published: 2026-10-20
 status: unread
 tags: [essay]
 topics: [def:evals, def:decision-models]

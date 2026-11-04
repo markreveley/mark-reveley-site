@@ -4,6 +4,7 @@ type: resource
 title: "Lean, Mathlib and AI-verified math explained"
 url: "https://www.youtube.com/watch?v=-6ouyHDng7U"
 added: 2026-10-23
+published: 2026-06-24
 status: unread
 tags: [video]
 topics: [def:lean, def:formal-verification]

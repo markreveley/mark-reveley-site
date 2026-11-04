@@ -5,6 +5,7 @@ title: "Woman charged with computer fraud over a scam CashApp account in her nam
 url: "https://www.404media.co/amanda-smith-opened-a-cashapp-in-her-name-she-faces-years-in-prison-cashapp-fraud/"
 hacker_news: "https://news.ycombinator.com/item?id=50194833"
 added: 2026-10-23
+published: 2026-10-21
 status: unread
 tags: [article]
 topics: [def:digital-identity, def:security]

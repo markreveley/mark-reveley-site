@@ -4,6 +4,7 @@ type: resource
 title: "How to read code"
 url: "https://www.seangoedecke.com/how-to-read-code/"
 added: 2026-10-23
+published: 2026-10-07
 status: unread
 tags: [essay]
 topics: [def:ai-assisted-programming]

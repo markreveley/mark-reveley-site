@@ -4,6 +4,7 @@ type: resource
 title: "Tilden Prep part-time high school program"
 url: "https://tildenprep.com/high-school-programs/part-time-high-school/"
 added: 2026-10-23
+published: 2020-04-30
 status: unread
 tags: [school]
 topics: [def:education]

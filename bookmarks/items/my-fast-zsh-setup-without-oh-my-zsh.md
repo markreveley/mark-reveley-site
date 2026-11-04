@@ -4,6 +4,7 @@ type: resource
 title: "My fast Zsh setup without Oh My Zsh"
 url: "https://wicksipedia.com/blog/modern-zsh-setup"
 added: 2026-10-23
+published: 2026-03-05
 status: unread
 tags: [guide]
 topics: [def:developer-tools]

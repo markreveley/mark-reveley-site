@@ -4,6 +4,7 @@ type: resource
 title: "Access management for multi-user agents (Alter demo)"
 url: "https://www.youtube.com/watch?v=9ZqPU14ipGE"
 added: 2026-10-23
+published: 2026-10-20
 status: unread
 tags: [video]
 topics: [def:agent-authority]

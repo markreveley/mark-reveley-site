@@ -4,6 +4,7 @@ type: resource
 title: "OpenAI Evals is winding down; the alternatives skip the statistics"
 url: "https://latenteval.ai/guides/openai-evals"
 added: 2026-10-23
+published: 2026-07-04
 status: unread
 tags: [article]
 topics: [def:evals]
