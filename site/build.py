@@ -1228,7 +1228,23 @@ def bookmark_topic_href(slug, depth):
     return "../" * depth + f"bookmarks/topics/{slug}.html"
 
 
-def bookmark_card(item, topics, depth):
+def bookmark_wikilinks(text, titles, topics, depth):
+    """Turn artifact-dag wikilinks ([[res:x]], [[def:x|label]]) into Markdown links."""
+    up = "../" * depth
+
+    def link(match):
+        target, label = match.group(1), match.group(2)
+        if target.startswith("res:") and target[4:] in titles:
+            slug = target[4:]
+            return f"[{label or titles[slug]}]({up}bookmarks.html#b-{slug})"
+        if target in topics:
+            return f"[{label or topics[target]['title']}]({bookmark_topic_href(topics[target]['slug'], depth)})"
+        return label or target
+
+    return re.sub(r"\[\[((?:res|def):[a-z0-9-]+)(?:\|([^\]]+))?\]\]", link, text)
+
+
+def bookmark_card(item, topics, depth, titles=None):
     details = []
     if item["published"]:
         details.append(
@@ -1249,7 +1265,7 @@ def bookmark_card(item, topics, depth):
     )
     return f"""<article class="card bookmark" id="b-{html.escape(item['slug'], quote=True)}">
   <h2><a href="{html.escape(item['url'], quote=True)}" rel="noreferrer">{html.escape(item['title'])}</a></h2>
-  {post_text_html(item['overview']) if item['overview'] else ''}
+  {post_text_html(bookmark_wikilinks(item['overview'], titles or {}, topics, depth)) if item['overview'] else ''}
   <p class="attrib">{' · '.join(details)}</p>
   <ul class="tags">{topic_links}</ul>
 </article>"""
@@ -1258,6 +1274,7 @@ def bookmark_card(item, topics, depth):
 def build_bookmarks(topics, items):
     """Write bookmarks.html and one page per topic, in the site's own style."""
     children = bookmark_topic_tree(topics)
+    titles = {item["slug"]: item["title"] for item in items}
 
     def descendants(topic_id):
         found = {topic_id}
@@ -1294,7 +1311,7 @@ def build_bookmarks(topics, items):
             "Outside pages worth keeping, filed by topic, newest published first."
         )
         graph = f'<p class="lede"><a href="{up}bookmarks/graph.html">See them as a graph</a></p>'
-        feed = "".join(bookmark_card(item, topics, depth) for item in shown)
+        feed = "".join(bookmark_card(item, topics, depth, titles) for item in shown)
         feed = feed or '<p class="empty">No bookmarks yet.</p>'
         body = f"""<section class="hero">
   <h1>{html.escape(title)}</h1>

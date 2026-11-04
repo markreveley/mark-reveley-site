@@ -5,10 +5,12 @@ title: "The internet is under attack (Matt Shumer)"
 url: "https://x.com/mattshumer_/status/2113360930876580337"
 added: 2026-10-23
 published: 2026-10-22
-status: stub
+status: unread
 tags: [post]
 topics: [def:security]
+not_links: [def:ai-agents]
 ---
-Stub: a post on X. X could not be read automatically; the browser tab title
-was “Matt Shumer on X: "The Internet Is Under Attack. Here's How to Protect
-Yourself and Your Family. " / X”. Fill in the overview by hand.
+Matt Shumer's X article version of
+[[res:the-internet-is-under-attack-how-to-protect-yourself-and]]: AI agents
+are attacking the websites people use, and there are simple steps anyone can
+take to protect themselves.
