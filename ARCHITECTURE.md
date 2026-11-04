@@ -24,7 +24,7 @@ Build needs: Python with `site/requirements.txt`. For bookmarks it also needs
 
 `bookmarks/` uses the [artifact-dag](https://github.com/markreveley/artifact-dag)
 node format, not the site's own record format, so the same files can be checked
-and drawn by artifact-dag's tools. Its schema is artifact-dag's `SCHEMA.md`,
+and drawn by artifact-dag's tools. Its schema is artifact-dag's `md/governance/SCHEMA.md`,
 "Resource". In short:
 
 - `dag/items/*.md` are bookmarks: `type: resource`, `id: res:<slug>`, `url`,
