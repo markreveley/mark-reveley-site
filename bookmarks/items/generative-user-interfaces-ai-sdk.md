@@ -4,6 +4,7 @@ type: resource
 title: "Generative user interfaces (AI SDK)"
 url: "https://ai-sdk.dev/docs/ai-sdk-ui/generative-user-interfaces"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [docs]
 topics: [def:agent-frameworks]

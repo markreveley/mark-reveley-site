@@ -4,6 +4,7 @@ type: resource
 title: "Nuggets on X"
 url: "https://x.com/nuggetsPAYandID"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [post]
 topics: [def:agent-authority]

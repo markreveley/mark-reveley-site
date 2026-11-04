@@ -4,6 +4,7 @@ type: resource
 title: "Rustlings"
 url: "https://rustlings.rust-lang.org/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [course]
 topics: [def:rust]

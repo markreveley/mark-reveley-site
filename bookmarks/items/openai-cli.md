@@ -5,6 +5,7 @@ title: "OpenAI CLI"
 url: "https://github.com/openai/openai-cli"
 hacker_news: "https://news.ycombinator.com/item?id=50191507"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-05-01
 status: unread
 tags: [repo]

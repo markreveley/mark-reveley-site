@@ -5,6 +5,7 @@ title: "Neural networks are already clean"
 url: "https://already-clean.goodfire.com/"
 hacker_news: "https://news.ycombinator.com/item?id=50105647"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-15
 status: unread
 tags: [essay]

@@ -4,6 +4,7 @@ type: resource
 title: "Ramp AI Index, August 2026"
 url: "https://econlab.substack.com/p/ai-index-august-2026?r=3ubgw&utm_medium=ios"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-08-12
 status: unread
 tags: [newsletter]

@@ -4,6 +4,7 @@ type: resource
 title: "Shipping 2,500 PRs in a month (talk)"
 url: "https://x.com/poteto/status/2102050467505430555/video/1?s=46"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-21
 status: unread
 tags: [post, video]

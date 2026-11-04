@@ -5,6 +5,7 @@ title: "Jev meets the trolley problem"
 url: "https://zachlandes.com/trolley-problem/"
 hacker_news: "https://news.ycombinator.com/item?id=50106023"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-14
 status: unread
 tags: [article]

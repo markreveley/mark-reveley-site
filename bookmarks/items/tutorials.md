@@ -4,6 +4,7 @@ type: resource
 title: "tutorials"
 url: "https://github.com/markreveley/tutorials"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-09-22
 status: unread
 tags: [repo]

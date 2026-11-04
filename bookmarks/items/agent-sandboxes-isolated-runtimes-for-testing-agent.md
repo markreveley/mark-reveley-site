@@ -4,6 +4,7 @@ type: resource
 title: "Agent sandboxes: isolated runtimes for testing agent behaviour"
 url: "https://fly.io/learn/agent-sandbox/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-05-05
 status: unread
 tags: [guide]

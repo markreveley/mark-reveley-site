@@ -4,6 +4,7 @@ type: resource
 title: "Jev wasn't built to make agents (Kyle Jeong)"
 url: "https://x.com/kylejeong/status/2102108924677927169"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-21
 status: unread
 tags: [post]

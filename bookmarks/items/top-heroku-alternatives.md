@@ -4,6 +4,7 @@ type: resource
 title: "Top Heroku alternatives"
 url: "https://fly.io/learn/heroku-alternatives/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-07
 status: unread
 tags: [comparison]

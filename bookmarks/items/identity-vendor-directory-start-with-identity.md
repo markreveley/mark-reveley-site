@@ -4,6 +4,7 @@ type: resource
 title: "Identity vendor directory (Start with Identity)"
 url: "https://startwithidentity.com/vendors/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [docs]
 topics: [def:digital-identity]

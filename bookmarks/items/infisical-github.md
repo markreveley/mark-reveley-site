@@ -4,6 +4,7 @@ type: resource
 title: "Infisical (GitHub)"
 url: "https://github.com/infisical/infisical"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2022-08-05
 status: unread
 tags: [repo]

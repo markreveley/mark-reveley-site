@@ -5,6 +5,7 @@ title: "Kev"
 url: "https://github.com/jaredpalmer/kev/tree/main"
 hacker_news: "https://news.ycombinator.com/item?id=49783999"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [repo]
 topics: [def:decision-models, def:local-ai]

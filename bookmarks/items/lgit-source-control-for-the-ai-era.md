@@ -4,6 +4,7 @@ type: resource
 title: "lgit: source control for the AI era"
 url: "https://nicobrenner.github.io/lossy-git/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [article]
 topics: [def:version-control, def:language-models]

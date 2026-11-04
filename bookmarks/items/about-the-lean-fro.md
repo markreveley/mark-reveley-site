@@ -4,6 +4,7 @@ type: resource
 title: "About the Lean FRO"
 url: "https://lean-lang.org/fro/about/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [organisation]
 topics: [def:lean, def:formal-verification]

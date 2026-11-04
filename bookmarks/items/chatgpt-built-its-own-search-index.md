@@ -4,10 +4,12 @@ type: resource
 title: "ChatGPT built its own search index"
 url: "https://peec.ai/blog/chatgpt-built-its-own-search-index"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-04
 status: unread
 tags: [article]
 topics: [def:ai-search]
+not_links: [def:retrieval]
 ---
 Peec AI reports that ChatGPT runs its own family of vertical retrieval indexes
 alongside Bing and Google.

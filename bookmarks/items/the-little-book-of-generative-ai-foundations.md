@@ -5,6 +5,7 @@ title: "The Little Book of Generative AI Foundations"
 url: "https://arxiv.org/abs/2605.29713"
 hacker_news: "https://news.ycombinator.com/item?id=50358582"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-05
 status: unread
 tags: [paper]

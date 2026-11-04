@@ -4,6 +4,7 @@ type: resource
 title: "Don't review agent code, interrogate it (r/codex)"
 url: "https://www.reddit.com/r/codex/comments/1xic8ut/dont_review_agent_code_interrogate_it/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-29
 status: unread
 tags: [thread]

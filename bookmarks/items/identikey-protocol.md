@@ -4,6 +4,7 @@ type: resource
 title: "identikey-protocol"
 url: "https://github.com/identikey/identikey-protocol"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-08-01
 status: unread
 tags: [repo]

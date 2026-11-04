@@ -4,6 +4,7 @@ type: resource
 title: "What is a Firecracker microVM?"
 url: "https://fly.io/learn/firecracker-vm/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-05-06
 status: unread
 tags: [guide]

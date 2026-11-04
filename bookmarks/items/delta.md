@@ -4,6 +4,7 @@ type: resource
 title: "Delta"
 url: "https://delta.dev/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [product]
 topics: [def:version-control, def:ai-assisted-programming]

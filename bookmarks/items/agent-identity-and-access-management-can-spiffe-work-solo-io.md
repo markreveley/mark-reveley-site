@@ -4,6 +4,7 @@ type: resource
 title: "Agent identity and access management: can SPIFFE work? (Solo.io)"
 url: "https://www.solo.io/blog/agent-identity-and-access-management---can-spiffe-work"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2025-06-26
 status: unread
 tags: [article]

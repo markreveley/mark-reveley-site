@@ -4,6 +4,7 @@ type: resource
 title: "7 core components for building a software factory (Warp)"
 url: "https://www.warp.dev/blog/7-ways-to-build-a-software-factory"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-29
 status: unread
 tags: [article]

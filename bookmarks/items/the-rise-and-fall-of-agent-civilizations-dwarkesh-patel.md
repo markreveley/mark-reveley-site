@@ -4,6 +4,7 @@ type: resource
 title: "The rise and fall of agent civilizations (Dwarkesh Patel)"
 url: "https://www.dwarkesh.com/p/openai-huggingface"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-08-29
 status: unread
 tags: [essay]

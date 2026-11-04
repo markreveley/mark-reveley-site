@@ -4,6 +4,7 @@ type: resource
 title: "Composio"
 url: "https://composio.dev/for-you"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [product]
 topics: [def:agent-frameworks, def:agent-authority]

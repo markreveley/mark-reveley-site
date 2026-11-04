@@ -5,6 +5,7 @@ title: "After automation: solo founding will be the default"
 url: "https://every.to/thesis-statements/julian-weisser"
 hacker_news: "https://news.ycombinator.com/item?id=50186518"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [essay]
 topics: [def:ai-industry]

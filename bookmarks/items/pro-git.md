@@ -4,6 +4,7 @@ type: resource
 title: "Pro Git"
 url: "https://git-scm.com/book/en/v2"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [book]
 topics: [def:version-control, def:developer-tools]

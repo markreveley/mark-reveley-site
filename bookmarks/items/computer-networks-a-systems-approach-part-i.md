@@ -4,6 +4,7 @@ type: resource
 title: "Computer Networks: A Systems Approach, Part I"
 url: "https://7e.systemsapproach.org/part_one.html"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [book]
 topics: [def:networking]

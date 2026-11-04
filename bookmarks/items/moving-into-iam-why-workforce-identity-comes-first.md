@@ -4,6 +4,7 @@ type: resource
 title: "Moving into IAM: why workforce identity comes first"
 url: "https://startwithidentity.com/blog/workforce-identity-for-people-moving-into-iam/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-26
 status: unread
 tags: [guide]

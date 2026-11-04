@@ -4,6 +4,7 @@ type: resource
 title: "AI agents and the impact on cybersecurity (Cisco)"
 url: "https://www.cisco.com/site/m/ai-workforce-consortium/agent-cybersecurity-impact.html"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [report]
 topics: [def:security, def:ai-agents]

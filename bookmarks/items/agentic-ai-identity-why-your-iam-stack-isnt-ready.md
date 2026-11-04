@@ -4,6 +4,7 @@ type: resource
 title: "Agentic AI identity: why your IAM stack isn't ready"
 url: "https://startwithidentity.com/blog/agentic-ai-identity-the-next-frontier/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-06-04
 status: unread
 tags: [article]

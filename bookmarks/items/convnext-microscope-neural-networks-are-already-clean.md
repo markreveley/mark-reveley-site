@@ -4,6 +4,7 @@ type: resource
 title: "ConvNeXt microscope (Neural networks are already clean)"
 url: "https://already-clean.goodfire.com/microscope/medium.html?layer=stage0.block1&neuron=1"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [tool]
 topics: [def:interpretability]

@@ -4,6 +4,7 @@ type: resource
 title: "Giving AI agents identities: delegation, not borrowing"
 url: "https://startwithidentity.com/blog/giving-ai-agents-identities/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-23
 status: unread
 tags: [article]

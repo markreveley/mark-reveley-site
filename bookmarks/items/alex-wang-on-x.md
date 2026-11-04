@@ -4,6 +4,7 @@ type: resource
 title: "How you could have invented the transformer from memory (Alex Wang)"
 url: "https://x.com/heyyalexwang/status/2111158818730397932?s=46"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-16
 status: unread
 tags: [post]

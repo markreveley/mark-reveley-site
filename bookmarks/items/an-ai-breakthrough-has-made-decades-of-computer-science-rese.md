@@ -4,6 +4,7 @@ type: resource
 title: "An AI breakthrough has made decades of computer science research 'irrelevant' (WIRED)"
 url: "https://www.wired.com/story/ai-made-decades-of-computer-science-research-irrelevant/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-29
 status: unread
 tags: [article]

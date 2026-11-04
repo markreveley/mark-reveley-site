@@ -4,6 +4,7 @@ type: resource
 title: "'We were looking at it wrong' (r/singularity)"
 url: "https://www.reddit.com/r/singularity/comments/1xa944i/we_were_looking_at_it_wrong_the_explosive_claim/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-19
 status: unread
 tags: [thread]

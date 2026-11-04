@@ -4,6 +4,7 @@ type: resource
 title: "Nuggets on LinkedIn"
 url: "https://www.linkedin.com/company/nuggets/home/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [organisation]
 topics: [def:agent-authority]

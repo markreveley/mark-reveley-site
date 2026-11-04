@@ -4,6 +4,7 @@ type: resource
 title: "TypeSafe API reference (System One)"
 url: "https://docs.typesafe.ai/api"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [docs]
 topics: [def:decision-models]

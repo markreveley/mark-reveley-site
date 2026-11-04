@@ -4,6 +4,7 @@ type: resource
 title: "What it costs to host an AI agent 24/7"
 url: "https://fly.io/learn/always-on-agent-hosting-cost/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-05
 status: unread
 tags: [comparison]

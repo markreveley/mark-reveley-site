@@ -4,6 +4,7 @@ type: resource
 title: "Procurement questions for evaluating AI systems (Nuggets)"
 url: "https://www.nuggets.life/docs/nuggets-labs/procurement-questions-for-evaluating-ai-systems"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [docs]
 topics: [def:agent-authority]

@@ -4,6 +4,7 @@ type: resource
 title: "commonwealth-ai"
 url: "https://github.com/alexsbryan/commonwealth-ai/tree/main"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [repo]
 topics: [def:local-ai]

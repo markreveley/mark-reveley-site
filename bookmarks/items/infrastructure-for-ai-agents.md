@@ -4,6 +4,7 @@ type: resource
 title: "Infrastructure for AI Agents"
 url: "https://arxiv.org/abs/2501.10114"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2025-01
 status: unread
 tags: [paper]

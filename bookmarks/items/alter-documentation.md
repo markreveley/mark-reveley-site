@@ -4,6 +4,7 @@ type: resource
 title: "Alter documentation"
 url: "https://docs.alterauth.com/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [docs]
 topics: [def:agent-authority]

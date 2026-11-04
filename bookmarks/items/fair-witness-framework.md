@@ -4,6 +4,7 @@ type: resource
 title: "fair-witness-framework"
 url: "https://github.com/kashfshah/fair-witness-framework"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2025-05-19
 status: unread
 tags: [repo]

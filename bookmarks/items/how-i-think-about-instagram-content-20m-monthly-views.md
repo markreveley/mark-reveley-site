@@ -4,6 +4,7 @@ type: resource
 title: "How I think about Instagram content (20M+ monthly views)"
 url: "https://www.reddit.com/r/musicmarketing/comments/1wl8faa/how_i_think_about_instagram_content_as_someone/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-20
 status: unread
 tags: [thread]

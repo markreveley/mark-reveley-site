@@ -4,6 +4,7 @@ type: resource
 title: "Why math dumped OpenAI"
 url: "https://raymyers.org/post/math-dumped-openai/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-11
 status: unread
 tags: [essay]

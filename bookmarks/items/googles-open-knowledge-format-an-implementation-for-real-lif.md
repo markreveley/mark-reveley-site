@@ -4,6 +4,7 @@ type: resource
 title: "Google's Open Knowledge Format, an implementation for real-life problems (r/LLMDevs)"
 url: "https://www.reddit.com/r/LLMDevs/comments/1xkebc5/googles_open_knowledge_format_okf_an/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-31
 status: unread
 tags: [thread]

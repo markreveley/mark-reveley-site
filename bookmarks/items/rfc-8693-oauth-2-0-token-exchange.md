@@ -4,6 +4,7 @@ type: resource
 title: "RFC 8693: OAuth 2.0 Token Exchange"
 url: "https://www.rfc-editor.org/rfc/rfc8693.html#section-4.1"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2020-01
 status: unread
 tags: [standard]

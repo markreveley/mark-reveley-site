@@ -4,6 +4,7 @@ type: resource
 title: "We're still underestimating what AI really means (Ryan Dahl)"
 url: "https://tinyclouds.org/underestimating-ai/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2025-06-14
 status: unread
 tags: [essay]

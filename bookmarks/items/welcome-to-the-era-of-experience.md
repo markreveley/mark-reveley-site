@@ -4,6 +4,7 @@ type: resource
 title: "Welcome to the Era of Experience"
 url: "https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [paper, pdf]
 topics: [def:ai-agents, def:language-models]

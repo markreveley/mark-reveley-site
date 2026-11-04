@@ -4,6 +4,7 @@ type: resource
 title: "JevBench"
 url: "https://benchmarkheaven.com/jev-models"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [benchmark]
 topics: [def:decision-models, def:evals]

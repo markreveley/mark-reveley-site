@@ -4,6 +4,7 @@ type: resource
 title: "METR lands in AI's doom debate"
 url: "https://www.businessinsider.com/metr-beth-barnes-ai-talent-shortage-safety-research-openai-2026-8"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-11
 status: unread
 tags: [article]

@@ -4,6 +4,7 @@ type: resource
 title: "Karpathy is right: your attention is the new bottleneck"
 url: "https://www.youtube.com/watch?v=IFNum8_oAD8"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-20
 status: unread
 tags: [video]

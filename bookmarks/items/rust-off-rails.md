@@ -5,6 +5,7 @@ title: "Rust off Rails"
 url: "https://rustoffrails.org/"
 hacker_news: "https://news.ycombinator.com/item?id=50183727"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [product]
 topics: [def:rust, def:ai-assisted-programming]

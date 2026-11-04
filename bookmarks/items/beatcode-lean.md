@@ -4,6 +4,7 @@ type: resource
 title: "beatcode-lean"
 url: "https://github.com/markreveley/beatcode-lean"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-09-27
 status: unread
 tags: [repo]

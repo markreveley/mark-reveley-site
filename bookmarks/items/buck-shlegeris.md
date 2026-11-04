@@ -4,6 +4,7 @@ type: resource
 title: "Buck Shlegeris"
 url: "https://www.shlegeris.com/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [person]
 topics: [def:ai-safety]

@@ -5,6 +5,7 @@ title: "Software sandboxing: the basics"
 url: "https://blog.emilua.org/2025/01/12/software-sandboxing-basics/"
 hacker_news: "https://news.ycombinator.com/item?id=49778670"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2025-01-12
 status: unread
 tags: [article]

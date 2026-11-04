@@ -4,6 +4,7 @@ type: resource
 title: "Evolving programming languages in the AI era"
 url: "https://dashbit.co/blog/evolving-ai-era"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [article]
 topics: [def:programming-languages, def:ai-assisted-programming, def:elixir]

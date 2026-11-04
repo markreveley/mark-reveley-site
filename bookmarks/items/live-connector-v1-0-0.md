@@ -4,6 +4,7 @@ type: resource
 title: "live-connector v1.0.0"
 url: "https://github.com/philtzjp/live-connector/discussions/31"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [repo]
 topics: [def:music-tech, def:agent-frameworks]

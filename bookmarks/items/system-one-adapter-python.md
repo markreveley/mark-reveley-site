@@ -4,6 +4,7 @@ type: resource
 title: "system-one-adapter-python"
 url: "https://github.com/typesafe-ai/system-one-adapter-python"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-08-08
 status: unread
 tags: [repo]

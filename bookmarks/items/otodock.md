@@ -5,6 +5,7 @@ title: "OtoDock"
 url: "https://github.com/OtoDock/oto-dock"
 hacker_news: "https://news.ycombinator.com/item?id=49630606"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-07-09
 status: unread
 tags: [repo]

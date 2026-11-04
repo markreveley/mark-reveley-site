@@ -4,6 +4,7 @@ type: resource
 title: "Fly.io Sprites alternatives for AI agent sandboxes (Blaxel)"
 url: "https://blaxel.ai/blog/fly-io-sprites-alternatives-ai-agent-sandboxes"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-06-04
 status: unread
 tags: [comparison]

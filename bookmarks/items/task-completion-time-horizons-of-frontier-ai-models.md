@@ -4,6 +4,7 @@ type: resource
 title: "Task-completion time horizons of frontier AI models"
 url: "https://metr.org/time-horizons/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [research]
 topics: [def:evals, def:ai-safety]

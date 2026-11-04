@@ -4,6 +4,7 @@ type: resource
 title: "Six clones of Jev in two days (AINews)"
 url: "https://www.latent.space/p/ainews-here-are-6-clones-of-jev-in"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-19
 status: unread
 tags: [newsletter]

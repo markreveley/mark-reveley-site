@@ -4,6 +4,7 @@ type: resource
 title: "identikey-core"
 url: "https://github.com/identikey/identikey-core"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-02-24
 status: unread
 tags: [repo]

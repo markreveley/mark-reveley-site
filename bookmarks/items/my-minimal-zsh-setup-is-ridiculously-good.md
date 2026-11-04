@@ -4,6 +4,7 @@ type: resource
 title: "My minimal Zsh setup is ridiculously good"
 url: "https://www.youtube.com/watch?v=nzP_UcpaBZ0"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-09-25
 status: unread
 tags: [video]

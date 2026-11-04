@@ -4,6 +4,7 @@ type: resource
 title: "Sean Goedecke: posts tagged ai"
 url: "https://www.seangoedecke.com/tags/ai/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [blog]
 topics: [def:ai-assisted-programming, def:decision-models]

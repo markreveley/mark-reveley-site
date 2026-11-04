@@ -4,6 +4,7 @@ type: resource
 title: "OpenSpec"
 url: "https://openspec.dev/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [product]
 topics: [def:ai-assisted-programming]

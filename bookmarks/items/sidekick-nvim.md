@@ -4,6 +4,7 @@ type: resource
 title: "sidekick.nvim"
 url: "https://github.com/folke/sidekick.nvim"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2025-09-26
 status: unread
 tags: [repo]

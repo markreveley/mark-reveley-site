@@ -4,6 +4,7 @@ type: resource
 title: "OpenReview paper BZ5a1r-kVsf"
 url: "https://openreview.net/pdf?id=BZ5a1r-kVsf"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [paper, pdf]
 ---

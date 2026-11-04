@@ -4,6 +4,7 @@ type: resource
 title: "I asked 100 agents to hack me (Shrivu Shankar)"
 url: "https://blog.sshh.io/p/i-asked-100-agents-to-hack-me"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-09-08
 status: unread
 tags: [essay]

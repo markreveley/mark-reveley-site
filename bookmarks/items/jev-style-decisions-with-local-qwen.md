@@ -4,6 +4,7 @@ type: resource
 title: "Jev-style decisions with local Qwen"
 url: "https://www.reddit.com/r/LLMDevs/comments/1wkc9hp/i_tried_jevstyle_decisions_with_local_qwen_same/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-19
 status: unread
 tags: [thread]

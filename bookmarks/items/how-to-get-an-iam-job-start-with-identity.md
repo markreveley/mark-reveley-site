@@ -4,6 +4,7 @@ type: resource
 title: "How to get an IAM job (Start with Identity)"
 url: "https://startwithidentity.com/guides/career/how-to-get-an-iam-job/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-16
 status: unread
 tags: [guide]

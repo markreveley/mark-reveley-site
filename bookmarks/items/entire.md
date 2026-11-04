@@ -4,6 +4,7 @@ type: resource
 title: "Entire"
 url: "https://entire.com/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [product]
 topics: [def:version-control, def:agent-harnesses]

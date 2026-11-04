@@ -4,6 +4,7 @@ type: resource
 title: "The Little Book of Deep Learning (François Fleuret)"
 url: "https://fleuret.org/francois/lbdl.html"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [book]
 topics: [def:language-models, def:education]

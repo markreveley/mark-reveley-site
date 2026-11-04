@@ -4,6 +4,7 @@ type: resource
 title: "Replace PRs with Delta, now in public beta"
 url: "https://zed.dev/blog/delta-public-beta"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [article]
 topics: [def:version-control, def:ai-assisted-programming]

@@ -4,6 +4,7 @@ type: resource
 title: "Taking a Lovable, Bolt or Replit app to production"
 url: "https://fly.io/learn/lovable-bolt-replit-to-production/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-12
 status: unread
 tags: [guide]

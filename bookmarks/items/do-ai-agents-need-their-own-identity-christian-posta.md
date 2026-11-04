@@ -4,6 +4,7 @@ type: resource
 title: "Do AI agents need their own identity? (Christian Posta)"
 url: "https://blog.christianposta.com/do-we-even-need-agent-identity/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2025-06-02
 status: unread
 tags: [essay]

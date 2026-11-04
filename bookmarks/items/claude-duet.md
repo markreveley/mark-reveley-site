@@ -5,6 +5,7 @@ title: "Claude Duet"
 url: "https://claude.com/product/claude-duet"
 hacker_news: "https://news.ycombinator.com/item?id=50186037"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [product]
 topics: [def:ai-agents]

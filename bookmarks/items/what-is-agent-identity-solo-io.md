@@ -4,6 +4,7 @@ type: resource
 title: "What is agent identity? (Solo.io)"
 url: "https://www.solo.io/blog/what-is-agent-identity-human-workload-a-new-layer"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-06-23
 status: unread
 tags: [article]

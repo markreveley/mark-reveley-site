@@ -5,6 +5,7 @@ title: "Introducing System One models and Jev"
 url: "https://typesafe.ai/blog/introducing-system-one-models-and-jev"
 hacker_news: "https://news.ycombinator.com/item?id=49717558"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [article]
 topics: [def:decision-models]

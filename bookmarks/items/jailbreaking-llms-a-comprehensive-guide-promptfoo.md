@@ -4,6 +4,7 @@ type: resource
 title: "Jailbreaking LLMs: a comprehensive guide (Promptfoo)"
 url: "https://www.promptfoo.dev/blog/how-to-jailbreak-llms/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2025-01-07
 status: unread
 tags: [guide]

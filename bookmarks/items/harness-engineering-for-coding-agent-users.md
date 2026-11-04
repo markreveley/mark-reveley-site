@@ -4,6 +4,7 @@ type: resource
 title: "Harness engineering for coding agent users"
 url: "https://martinfowler.com/articles/harness-engineering.html"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [article]
 topics: [def:agent-harnesses, def:ai-assisted-programming]

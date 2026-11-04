@@ -4,6 +4,7 @@ type: resource
 title: "tuios"
 url: "https://tuios.dev/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [product]
 topics: [def:developer-tools, def:agent-harnesses]

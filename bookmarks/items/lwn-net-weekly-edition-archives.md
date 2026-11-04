@@ -4,6 +4,7 @@ type: resource
 title: "LWN.net weekly edition archives"
 url: "https://lwn.net/Archives/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [news]
 topics: [def:linux]

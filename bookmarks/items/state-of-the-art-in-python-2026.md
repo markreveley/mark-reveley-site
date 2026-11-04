@@ -4,6 +4,7 @@ type: resource
 title: "State of the art in Python 2026?"
 url: "https://www.reddit.com/r/Python/comments/1wkziub/state_of_the_art_in_python_2026/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-19
 status: unread
 tags: [thread]

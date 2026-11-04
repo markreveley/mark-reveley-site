@@ -4,6 +4,7 @@ type: resource
 title: "Glossary (Nuggets)"
 url: "https://www.nuggets.life/docs/nuggets-labs/enterprise-ai-governance-framework-glossary"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 status: unread
 tags: [docs]
 topics: [def:agent-authority]

@@ -4,6 +4,7 @@ type: resource
 title: "FActScore"
 url: "https://aclanthology.org/2023.emnlp-main.741/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2023-12
 status: unread
 tags: [paper]

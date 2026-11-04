@@ -4,6 +4,7 @@ type: resource
 title: "The Atlassian engineer who posted his systems breakdown is now at Tesla (r/AgentsOfAI)"
 url: "https://www.reddit.com/r/AgentsOfAI/comments/1xlllql/remember_the_guy_who_dropped_the_big_atlassian/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-11-02
 status: unread
 tags: [thread]

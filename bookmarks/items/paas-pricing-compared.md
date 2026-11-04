@@ -4,6 +4,7 @@ type: resource
 title: "PaaS pricing compared"
 url: "https://fly.io/learn/paas-pricing-compared/"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-09-09
 status: unread
 tags: [comparison]

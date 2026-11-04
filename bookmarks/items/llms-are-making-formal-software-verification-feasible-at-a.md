@@ -5,6 +5,7 @@ title: "LLMs are making formal software verification feasible at a much larger s
 url: "https://www.anthropic.com/research/formal-verification"
 hacker_news: "https://news.ycombinator.com/item?id=50202217"
 added: 2026-10-23
+source: [chrome-tabs-2026-10-23]
 published: 2026-10-22
 status: unread
 tags: [research]

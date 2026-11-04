@@ -4,6 +4,7 @@ type: resource
 title: "BayMe.sh documentation"
 url: "https://bayme.sh/docs/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 status: unread
 tags: [docs]
 topics: [def:networking]

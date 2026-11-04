@@ -4,6 +4,7 @@ type: resource
 title: "Superrepos and why Claude Code is the best worktree manager (cmux)"
 url: "https://cmux.com/blog/claude-code-best-worktree-manager"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-07-23
 status: unread
 tags: [article]

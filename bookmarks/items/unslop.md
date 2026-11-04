@@ -4,6 +4,7 @@ type: resource
 title: "unslop"
 url: "https://github.com/heydamir/unslop"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-29
 status: unread
 tags: [repo]

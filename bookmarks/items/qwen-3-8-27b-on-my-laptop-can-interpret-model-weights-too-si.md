@@ -5,6 +5,7 @@ title: "Qwen 3.8 27B on my laptop can interpret model weights, too (Simon Willis
 url: "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/"
 hacker_news: "https://news.ycombinator.com/item?id=50355251"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-11-03
 status: unread
 tags: [article]

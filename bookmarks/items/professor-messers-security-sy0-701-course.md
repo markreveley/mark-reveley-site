@@ -4,6 +4,7 @@ type: resource
 title: "Professor Messer's Security+ SY0-701 course"
 url: "https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-comptia-security-plus-course/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2023-11-01
 status: unread
 tags: [course, video]

@@ -4,6 +4,7 @@ type: resource
 title: "You don't need plugins in Neovim (full IDE setup)"
 url: "https://www.youtube.com/watch?v=otRvw9neQkg"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-08-04
 status: unread
 tags: [video]

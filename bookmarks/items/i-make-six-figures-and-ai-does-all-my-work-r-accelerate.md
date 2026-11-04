@@ -4,6 +4,7 @@ type: resource
 title: "I make six figures and AI does all my work (r/accelerate)"
 url: "https://www.reddit.com/r/accelerate/comments/1xh9enp/i_make_six_figures_for_my_company_in_a_senior/"
 added: 2026-11-03
+source: [chrome-tabs-2026-11-03]
 published: 2026-10-28
 status: unread
 tags: [thread]
