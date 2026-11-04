@@ -27,10 +27,15 @@ node format, not the site's own record format, so the same files can be checked
 and drawn by artifact-dag's tools. Its schema is artifact-dag's `SCHEMA.md`,
 "Resource". In short:
 
-- `items/*.md` are bookmarks: `type: resource`, `id: res:<slug>`, `url`, and
-  `topics` naming the topics they are filed under.
-- `topics/*.md` are topics: `type: definition` tagged `topic`. A narrower
+- `dag/items/*.md` are bookmarks: `type: resource`, `id: res:<slug>`, `url`,
+  and `topics` naming the topics they are filed under.
+- `dag/topics/*.md` are topics: `type: definition` tagged `topic`. A narrower
   topic names its broader ones in `refines`.
+- `unprocessed/*.md` are links still to be gone through. They sit outside
+  `dag/` because artifact-dag's checker and viewer read every Markdown file
+  under the folder they are given and cannot exclude a subfolder. Nothing in
+  `unprocessed/` is checked or published. Processing a file means writing its
+  overview and topics, then `git mv` into `dag/items/`.
 
 The folder's own [README](bookmarks/README.md) covers adding entries; the
 [spec](bookmarks/SPEC-bookmark-dag-claude-opus-5-5-effort-low.md) covers where
@@ -43,14 +48,15 @@ The build does three things with it:
    `bookmarks.html` and one page per topic. A topic page lists the bookmarks
    filed under it or any narrower topic. In the topic tree, a topic with
    several parents appears under its first one.
-2. **Validation.** artifact-dag's `dagcheck --lint` runs over `bookmarks/`.
+2. **Validation.** artifact-dag's `dagcheck --lint` runs over `bookmarks/dag/`.
    Errors stop the build. Warnings and info are printed only when it fails.
-3. **Graph page.** artifact-dag's `build-viewer` turns `bookmarks/` into one
+3. **Graph page.** artifact-dag's `build-viewer` turns `bookmarks/dag/` into one
    self-contained HTML page, configured by `bookmarks/dag-viewer.json`, and
    the build writes it to `bookmarks/graph.html`. The page loads dagre and
    fonts from CDNs. Without a network it falls back to a simpler layout.
 
-Steps 2 and 3 run only when `bookmarks/items/` exists.
+Steps 2 and 3 run only when `bookmarks/dag/items/` exists. All three read
+`bookmarks/dag/` only.
 
 ### artifact-dag is pinned to a recorded commit
 
