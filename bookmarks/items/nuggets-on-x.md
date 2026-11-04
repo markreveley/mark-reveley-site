@@ -4,9 +4,9 @@ type: resource
 title: "Nuggets on X"
 url: "https://x.com/nuggetsPAYandID"
 added: 2026-10-23
-status: stub
+status: unread
 tags: [post]
 topics: [def:agent-authority]
 ---
-Stub: a post on X. X could not be read automatically; the browser tab title
-was “”. Fill in the overview by hand.
+The X account of Nuggets, which describes itself as a trust layer for
+autonomous AI that governs agents at the point of execution.

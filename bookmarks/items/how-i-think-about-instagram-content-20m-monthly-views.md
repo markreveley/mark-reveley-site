@@ -4,10 +4,11 @@ type: resource
 title: "How I think about Instagram content (20M+ monthly views)"
 url: "https://www.reddit.com/r/musicmarketing/comments/1wl8faa/how_i_think_about_instagram_content_as_someone/"
 added: 2026-10-23
-status: stub
+published: 2026-09-20
+status: unread
 tags: [thread]
 topics: [def:music-tech]
 ---
-Stub: a Reddit post in r/musicmarketing, titled “How I think about Instagram
-content (As someone with 20Mil+ monthly views)”. Reddit could not be read
-automatically; fill in the overview by hand.
+Advice for musicians on Instagram from a creator with over 20 million monthly
+views: open with the most gripping part of the song and keep viewers
+stimulated from the first second.

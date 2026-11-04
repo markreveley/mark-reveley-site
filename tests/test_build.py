@@ -104,7 +104,7 @@ class SiteBuildTests(unittest.TestCase):
                 "---\nid: res:bench\ntype: resource\ntitle: \"A <bench>\"\n"
                 "url: \"https://example.com/bench\"\nhacker_news: \"https://news.ycombinator.com/item?id=1\"\n"
                 "added: 2026-10-23\npublished: 2026-09\nstatus: unread\ntags: [paper]\ntopics: [def:evals]\n---\n"
-                "An overview with a [link](https://example.com/more).\n")
+                "An overview with a [link](https://example.com/more). See [[res:bench]] and [[def:ai|all AI]].\n")
             topics, items = site_build.collect_bookmarks()
             site_build.build_bookmarks(topics, items)
             index = (output / "bookmarks.html").read_text()
@@ -115,6 +115,9 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn("Added", index)
             self.assertIn('href="bookmarks/graph.html"', index)
             self.assertIn('href="https://example.com/more" rel="noreferrer"', index)
+            self.assertIn('<a href="bookmarks.html#b-bench" rel="noreferrer">A &lt;bench&gt;</a>', index)
+            self.assertIn('<a href="bookmarks/topics/ai.html" rel="noreferrer">all AI</a>', index)
+            self.assertNotIn("[[", index)
             parent = (output / "bookmarks" / "topics" / "ai.html").read_text()
             self.assertIn("A &lt;bench&gt;", parent)
             self.assertIn('href="../../bookmarks/topics/evals.html"', parent)

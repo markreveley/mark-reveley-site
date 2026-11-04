@@ -5,12 +5,9 @@ title: "Everyone in tech is panicking about security (Matt Shumer)"
 url: "https://x.com/mattshumer_/status/2113363050745217364?s=46"
 added: 2026-10-23
 published: 2026-10-22
-status: stub
+status: unread
 tags: [post]
 topics: [def:security]
 ---
-Stub: a post on X. X could not be read automatically; the browser tab title
-was “Matt Shumer on X: "Everyone in tech is panicking about security right
-now. But outside of it, almost nobody knows anything is wrong. I wrote this so
-you don’t have to be the one explaining it to your family. Just send them
-this." / X”. Fill in the overview by hand.
+Matt Shumer's post introducing his explainer for people outside tech, who
+mostly don't know that anything is wrong with internet security right now.
