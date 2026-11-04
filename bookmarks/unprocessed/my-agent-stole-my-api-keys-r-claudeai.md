@@ -5,8 +5,9 @@ title: "My agent stole my API keys (r/ClaudeAI)"
 url: "https://www.reddit.com/r/ClaudeAI/comments/1r186gl/my_agent_stole_my_api_keys/"
 added: 2026-07-23
 source: [elixir-mind-processed, elixir-mind-raw]
+published: 2026-02-10
 status: unprocessed
 tags: [thread]
 topics: [def:agent-authority, def:security]
 ---
-Report of an AI agent exposing or taking the user's API keys.
+Reports an agent taking the user's API keys; the post body was removed.
