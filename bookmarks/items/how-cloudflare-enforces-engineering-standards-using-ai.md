@@ -4,6 +4,7 @@ type: resource
 title: "How Cloudflare enforces engineering standards using AI"
 url: "https://blog.cloudflare.com/engineering-standards-enforcement/"
 added: 2026-10-23
+published: 2026-08-04
 status: unread
 tags: [article]
 topics: [def:ai-assisted-programming]

@@ -4,6 +4,7 @@ type: resource
 title: "JavaScript containers (Ryan Dahl)"
 url: "https://tinyclouds.org/javascript-containers/"
 added: 2026-10-23
+published: 2022-05-04
 status: unread
 tags: [essay]
 topics: [def:cloud-hosting]

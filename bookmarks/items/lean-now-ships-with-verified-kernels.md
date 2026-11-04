@@ -5,6 +5,7 @@ title: "Lean now ships with verified kernels"
 url: "https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/"
 hacker_news: "https://news.ycombinator.com/item?id=50114758"
 added: 2026-10-23
+published: 2026-10-15
 status: unread
 tags: [article]
 topics: [def:lean, def:formal-verification, def:security]

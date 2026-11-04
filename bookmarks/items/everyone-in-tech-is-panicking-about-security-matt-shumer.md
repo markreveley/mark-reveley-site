@@ -4,6 +4,7 @@ type: resource
 title: "Everyone in tech is panicking about security (Matt Shumer)"
 url: "https://x.com/mattshumer_/status/2113363050745217364?s=46"
 added: 2026-10-23
+published: 2026-10-22
 status: stub
 tags: [post]
 topics: [def:security]

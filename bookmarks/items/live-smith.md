@@ -4,6 +4,7 @@ type: resource
 title: "live-smith"
 url: "https://github.com/SamKuler/live-smith"
 added: 2026-10-23
+published: 2026-08-06
 status: unread
 tags: [repo]
 topics: [def:music-tech, def:ai-agents]

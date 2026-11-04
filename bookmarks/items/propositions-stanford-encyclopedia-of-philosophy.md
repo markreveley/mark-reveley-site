@@ -4,6 +4,7 @@ type: resource
 title: "Propositions (Stanford Encyclopedia of Philosophy)"
 url: "https://plato.stanford.edu/entries/propositions/"
 added: 2026-10-23
+published: 2005-12-19
 status: unread
 tags: [reference]
 topics: [def:philosophy]

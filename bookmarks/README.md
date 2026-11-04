@@ -20,7 +20,11 @@ A resource file has these fields:
 - `url` is the page itself.
 - `hacker_news`, when present, is the Hacker News thread that led to the
   page.
-- `added` is the date the resource came in.
+- `added` is the date the resource came in. It is intake data for us, and the site
+  does not show it.
+- `published`, when known, is the date the page itself was published
+  (`YYYY`, `YYYY-MM` or `YYYY-MM-DD`). The site shows it and sorts by it,
+  newest first, with undated resources last.
 - `status` is `unread` for a resource with an overview, or `stub` for one
   whose overview still needs writing by hand.
 - `tags` says what kind of thing it is, such as `paper`, `repo`, `video`,

@@ -4,6 +4,7 @@ type: resource
 title: "Dense X Retrieval: what retrieval granularity should we use?"
 url: "https://arxiv.org/abs/2312.06648"
 added: 2026-10-23
+published: 2023-12
 status: unread
 tags: [paper]
 topics: [def:language-models]

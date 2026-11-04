@@ -5,6 +5,7 @@ title: "You could have invented transformers from memory"
 url: "https://alexwang.ai/posts/associative-memory/"
 hacker_news: "https://news.ycombinator.com/item?id=50122878"
 added: 2026-10-23
+published: 2026-10-15
 status: unread
 tags: [essay]
 topics: [def:language-models]

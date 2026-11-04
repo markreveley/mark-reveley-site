@@ -4,6 +4,7 @@ type: resource
 title: "Fly.io vs Railway"
 url: "https://fly.io/learn/fly-vs-railway/"
 added: 2026-10-23
+published: 2026-09-14
 status: unread
 tags: [comparison]
 topics: [def:cloud-hosting]

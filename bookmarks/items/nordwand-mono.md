@@ -4,6 +4,7 @@ type: resource
 title: "Nordwand Mono"
 url: "https://github.com/tywr/Nordwand-Mono"
 added: 2026-10-23
+published: 2026-03-28
 status: unread
 tags: [repo]
 topics: [def:developer-tools]

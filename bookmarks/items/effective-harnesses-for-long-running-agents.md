@@ -4,6 +4,7 @@ type: resource
 title: "Effective harnesses for long-running agents"
 url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
 added: 2026-10-23
+published: 2025-11-26
 status: unread
 tags: [article]
 topics: [def:agent-harnesses]

@@ -4,6 +4,7 @@ type: resource
 title: "How we're rethinking work at Cloudflare with Cloudflare OS"
 url: "https://blog.cloudflare.com/how-we-use-ai-with-cloudflare-os/"
 added: 2026-10-23
+published: 2026-08-05
 status: unread
 tags: [article]
 topics: [def:agent-authority, def:ai-industry]

@@ -4,6 +4,7 @@ type: resource
 title: "Halting problem (Wikipedia)"
 url: "https://en.wikipedia.org/wiki/Halting_problem"
 added: 2026-10-23
+published: 2001-08-26
 status: unread
 tags: [reference]
 topics: [def:computer-science]

@@ -4,6 +4,7 @@ type: resource
 title: "Building a distributed CRDT layer for Git (Conrad Irwin)"
 url: "https://www.youtube.com/watch?v=yif2rday2bw"
 added: 2026-10-23
+published: 2026-10-09
 status: unread
 tags: [video]
 topics: [def:version-control, def:rust]

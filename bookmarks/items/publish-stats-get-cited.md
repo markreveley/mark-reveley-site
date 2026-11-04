@@ -5,6 +5,7 @@ title: "Publish stats, get cited"
 url: "https://peec.ai/blog/publish-stats-get-cited-the-tactic-that-put-my-data-all-over-the-web"
 hacker_news: "https://news.ycombinator.com/item?id=50165801"
 added: 2026-10-23
+published: 2026-10-07
 status: unread
 tags: [article]
 topics: [def:ai-search]

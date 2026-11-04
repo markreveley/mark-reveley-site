@@ -4,6 +4,7 @@ type: resource
 title: "Reinventing entropy: compression is intelligence, part 1"
 url: "https://www.youtube.com/watch?v=l6DKRf-fAAM"
 added: 2026-10-23
+published: 2026-06-07
 status: unread
 tags: [video]
 topics: [def:computer-science]

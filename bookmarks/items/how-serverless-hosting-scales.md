@@ -4,6 +4,7 @@ type: resource
 title: "How serverless hosting scales"
 url: "https://fly.io/learn/how-does-serverless-hosting-scale/"
 added: 2026-10-23
+published: 2026-05-14
 status: unread
 tags: [guide]
 topics: [def:cloud-hosting]

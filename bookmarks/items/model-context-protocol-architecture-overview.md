@@ -4,6 +4,7 @@ type: resource
 title: "Model Context Protocol architecture overview"
 url: "https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture"
 added: 2026-10-23
+published: 2026-07-28
 status: unread
 tags: [docs]
 topics: [def:agent-frameworks]

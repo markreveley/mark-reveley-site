@@ -1194,17 +1194,22 @@ def collect_bookmarks():
         url = str(meta.get("url", ""))
         if not valid_web_url(url):
             raise ValueError(f"{path}: url must be an absolute HTTP(S) URL")
+        published = str(meta.get("published") or "")
+        if published and not valid_iso_date(published, partial=True):
+            raise ValueError(f"{path}: published must be YYYY, YYYY-MM, or YYYY-MM-DD")
         items.append({
             "slug": path.stem, "title": str(meta["title"]), "url": url,
+            "published": published,
             "hacker_news": str(meta.get("hacker_news") or ""),
-            "added": str(meta.get("added") or ""),
             "status": str(meta.get("status") or ""),
             "kinds": [str(tag) for tag in meta.get("tags") or []],
             "topics": [topic for topic in meta.get("topics") or [] if topic in topics],
             "overview": body,
         })
+    # Newest published first; undated last. `added` is private intake data and
+    # is not shown or used for ordering.
     items.sort(key=lambda item: item["title"].casefold())
-    items.sort(key=lambda item: item["added"], reverse=True)
+    items.sort(key=lambda item: item["published"], reverse=True)
     return topics, items
 
 
@@ -1225,8 +1230,10 @@ def bookmark_topic_href(slug, depth):
 
 def bookmark_card(item, topics, depth):
     details = []
-    if item["added"]:
-        details.append(f'Added <time datetime="{item["added"]}">{pretty_date(item["added"])}</time>')
+    if item["published"]:
+        details.append(
+            f'Published <time datetime="{item["published"]}">{pretty_date(item["published"])}</time>'
+        )
     if item["kinds"]:
         details.append(html.escape(", ".join(item["kinds"])))
     if item["hacker_news"] and valid_web_url(item["hacker_news"]):
@@ -1284,7 +1291,7 @@ def build_bookmarks(topics, items):
         shown = filed[selected] if selected else items
         title = topics[selected]["title"] if selected else "Bookmarks"
         lede = topics[selected]["scope"] if selected else (
-            "Outside pages worth keeping, filed by topic, newest added first."
+            "Outside pages worth keeping, filed by topic, newest published first."
         )
         graph = f'<p class="lede"><a href="{up}bookmarks/graph.html">See them as a graph</a></p>'
         feed = "".join(bookmark_card(item, topics, depth) for item in shown)

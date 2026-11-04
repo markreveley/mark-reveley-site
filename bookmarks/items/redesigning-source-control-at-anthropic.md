@@ -4,6 +4,7 @@ type: resource
 title: "Redesigning source control at Anthropic"
 url: "https://www.anthropic.com/engineering/redesigning-source-control"
 added: 2026-10-23
+published: 2026-10-13
 status: unread
 tags: [article]
 topics: [def:version-control, def:ai-assisted-programming]

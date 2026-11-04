@@ -4,6 +4,7 @@ type: resource
 title: "Deno is joining Cloudflare"
 url: "https://blog.cloudflare.com/deno-joins-cloudflare/"
 added: 2026-10-23
+published: 2026-10-09
 status: unread
 tags: [article]
 topics: [def:cloud-hosting]

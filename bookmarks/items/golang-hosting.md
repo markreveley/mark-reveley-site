@@ -4,6 +4,7 @@ type: resource
 title: "Golang hosting"
 url: "https://fly.io/learn/golang-hosting/"
 added: 2026-10-23
+published: 2026-05-06
 status: unread
 tags: [guide]
 topics: [def:cloud-hosting]

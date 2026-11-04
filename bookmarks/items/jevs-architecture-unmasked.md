@@ -4,6 +4,7 @@ type: resource
 title: "Jev's architecture unmasked"
 url: "https://archerhume.com/posts/jevs-architecture-unmasked"
 added: 2026-10-23
+published: 2026-09-17
 status: unread
 tags: [article]
 topics: [def:decision-models]
