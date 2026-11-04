@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software design — Mark Reveley</title>
+<meta name="description" content="How software is structured: architecture, abstractions, interfaces, patterns,
+and the trade-offs between them.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Software design</h1>
+  <p class="lede">How software is structured: architecture, abstractions, interfaces, patterns,
+and the trade-offs between them.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (1118)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(319)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(39)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(60)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(115)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(39)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(59)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(55)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(20)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(191)</span></a></li><li><a href="../../bookmarks/topics/blockchain.html">Blockchain <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(40)</span></a></li><li><a href="../../bookmarks/topics/cognitive-science.html">Cognitive science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(19)</span></a></li><li><a href="../../bookmarks/topics/databases.html">Databases <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(107)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(91)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(12)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/human-computer-interaction.html">Human-computer interaction <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(130)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(18)</span></a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval <span class="category-count">(23)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/machine-learning.html">Machine learning <span class="category-count">(24)</span></a></li><li><a href="../../bookmarks/topics/music-business.html">Music business <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(33)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(145)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(84)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/web-development.html">Web development <span class="category-count">(16)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(69)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(6)</span></a></li></ul></li><li><a href="../../bookmarks/topics/software-design.html" aria-current="page">Software design <span class="category-count">(64)</span></a><ul><li><a href="../../bookmarks/topics/testing.html">Testing <span class="category-count">(18)</span></a></li></ul></li><li><a href="../../bookmarks/topics/startups.html">Startups <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/technical-writing.html">Technical writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(28)</span></a></li><li><a href="../../bookmarks/topics/video-production.html">Video production <span class="category-count">(0)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-postgres-is-all-you-need-for-durable-workflows-dbos">
+  <h2><a href="https://www.dbos.dev/blog/postgres-is-all-you-need-for-durable-execution" rel="noreferrer">Postgres is all you need for durable workflows (DBOS)</a></h2>
+  <p>DBOS explains Postgres-backed durable execution and argues it can replace<br />
+external workflow orchestrators.</p>
+
+  <p class="attrib">Published <time datetime="2026-09-28">28 September 2026</time> · article · <a href="https://news.ycombinator.com/item?id=48313530" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-we-replaced-our-ledger-with-two-functions-river">
+  <h2><a href="https://river.com/content/we-replaced-our-ledger-with-two-functions" rel="noreferrer">We replaced our ledger with two functions (River)</a></h2>
+  <p>River rebuilt its Elixir ledger, collapsing a large imperative API into two<br />
+functions and swapping it in live with zero downtime.</p>
+
+  <p class="attrib">Published <time datetime="2026-08-19">19 August 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li></ul>
+</article><article class="card bookmark" id="b-in-the-land-of-ai-agents-the-verifiers-are-king-tariq-shauka">
+  <h2><a href="https://www.youtube.com/watch?v=VrpEyglYgeU" rel="noreferrer">In the land of AI agents, the verifiers are king (Tariq Shaukat, Sonar)</a></h2>
+  <p>Talk arguing that as agents take on complex development work, the main<br />
+challenge shifts from generating code to verifying it.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-20">20 July 2026</time> · talk, video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-dont-let-the-llm-drive-ornella-bahidika-and-joel-allou-micro">
+  <h2><a href="https://www.youtube.com/watch?v=m24UKZomm7k" rel="noreferrer">Don&#x27;t let the LLM drive (Ornella Bahidika and Joel Allou, Microsoft)</a></h2>
+  <p>Talk using a voice tutor as an example of keeping control flow, such as<br />
+grading and lesson progression, in code rather than leaving it to the model.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-19">19 July 2026</time> · talk, video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-the-tower-keeps-rising-armin-ronacher">
+  <h2><a href="https://lucumr.pocoo.org/2026/7/13/the-tower-keeps-rising/" rel="noreferrer">The tower keeps rising (Armin Ronacher)</a></h2>
+  <p>Argues coding agents remove the coordination friction that forced engineers to<br />
+share a language, risking a collapse of shared understanding.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-13">13 July 2026</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-designing-software-for-software-factories-shrivu-shankar">
+  <h2><a href="https://blog.sshh.io/p/designing-software-for-software-factories" rel="noreferrer">Designing software for software factories (Shrivu Shankar)</a></h2>
+  <p>Reflections on turning software engineering into agentic loops, relying on<br />
+strong contracts, tests and feedback with human oversight.</p>
+
+  <p class="attrib">Published <time datetime="2026-06-13">13 June 2026</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-state-of-ai-coding-2026-new-relic">
+  <h2><a href="https://newrelic.com/blog/ai/state-of-ai-coding-2026" rel="noreferrer">State of AI Coding 2026 (New Relic)</a></h2>
+  <p>A survey of 200 US technology leaders finding AI writes most weekly code and<br />
+is trusted to ship, while reliability lags.</p>
+
+  <p class="attrib">Published <time datetime="2026-06-10">10 June 2026</time> · report</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-data-oriented-design-nagent">
+  <h2><a href="https://github.com/macton/nagent/blob/main/context/data-oriented-design.md" rel="noreferrer">Data-oriented design (nagent)</a></h2>
+  <p>Context document in the nagent repo introducing data-oriented design:<br />
+organising code around data and its transformations for cache efficiency and<br />
+parallelism.</p>
+
+  <p class="attrib">Published <time datetime="2026-06-06">6 June 2026</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-de-slop-a-codebase-ruined-by-ai-with-one-skill">
+  <h2><a href="https://www.youtube.com/watch?v=3MP8D-mdheA" rel="noreferrer">How to de-slop a codebase ruined by AI (with one skill)</a></h2>
+  <p>Shows how to rescue a messy AI-written codebase using deep modules and better<br />
+architecture, packaged as an agent skill.</p>
+
+  <p class="attrib">Published <time datetime="2026-04-29">29 April 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-architecture-without-architects-how-ai-coding-agents-shape-s">
+  <h2><a href="https://arxiv.org/abs/2604.04990" rel="noreferrer">Architecture without architects: how AI coding agents shape software architecture</a></h2>
+  <p>Argues AI coding agents now make architectural decisions, such as choosing<br />
+frameworks and wiring integrations, quickly and often implicitly, and examines<br />
+the consequences.</p>
+
+  <p class="attrib">Published <time datetime="2026-04">April 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-context-matters-evaluating-context-strategies-for-automated">
+  <h2><a href="https://arxiv.org/abs/2604.03826" rel="noreferrer">Context matters: evaluating context strategies for automated ADR generation</a></h2>
+  <p>A 750-repository study of context strategies for LLM-generated architecture<br />
+decision records, finding a small window of 3-5 recent related records works<br />
+best.</p>
+
+  <p class="attrib">Published <time datetime="2026-04">April 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-classical-software-jesse-vincent">
+  <h2><a href="https://blog.fsck.com/2026/03/25/Classical-Software/" rel="noreferrer">Classical software (Jesse Vincent)</a></h2>
+  <p>Proposes 'classical software' as a name for traditional deterministic code<br />
+written without AI, as distinct from model-driven software.</p>
+
+  <p class="attrib">Published <time datetime="2026-03-25">25 March 2026</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-smarter-handling-of-tests-and-a-separate-impl-command-codesp">
+  <h2><a href="https://codespeak.dev/blog/codespeak-test-20250324" rel="noreferrer">Smarter handling of tests and a separate impl command (CodeSpeak)</a></h2>
+  <p>CodeSpeak 0.3.7 release notes: separate build, impl, test and coverage<br />
+commands so agents keep test discipline while generating code.</p>
+
+  <p class="attrib">Published <time datetime="2026-03-24">24 March 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-it-does-what-it-says-on-the-tin-why-naming-matters-more-with">
+  <h2><a href="https://wicksipedia.com/blog/it-does-what-it-says-on-the-tin" rel="noreferrer">It does what it says on the tin: why naming matters more with AI (Wicksipedia)</a></h2>
+  <p>Shows how a misleading function name a human would question gets taken at face<br />
+value by a coding agent and built upon.</p>
+
+  <p class="attrib">Published <time datetime="2026-03-02">2 March 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-agenticakm-enroute-to-agentic-architecture-knowledge-managem">
+  <h2><a href="https://arxiv.org/abs/2602.04445" rel="noreferrer">AgenticAKM: Enroute to agentic architecture knowledge management</a></h2>
+  <p>A multi-agent system that splits architecture knowledge management into<br />
+extraction, retrieval, generation and validation agents.</p>
+
+  <p class="attrib">Published <time datetime="2026-02">February 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management</a></li></ul>
+</article><article class="card bookmark" id="b-what-top-tier-software-architects-do-differently-gregor-hohp">
+  <h2><a href="https://www.youtube.com/watch?v=F8X9_Dp3ZUk" rel="noreferrer">What top tier software architects do differently (Gregor Hohpe)</a></h2>
+  <p>Interview in which Hohpe argues good architects lower risk and make others<br />
+smarter rather than being the smartest in the room.</p>
+
+  <p class="attrib">Published <time datetime="2026-01-20">20 January 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-why-does-test-driven-development-work-so-well-in-ai-assisted">
+  <h2><a href="https://codemanship.wordpress.com/2026/01/09/why-does-test-driven-development-work-so-well-in-ai-assisted-programming/" rel="noreferrer">Why does test-driven development work so well in AI-assisted programming? (Jason Gorman)</a></h2>
+  <p>Argues TDD's small-step discipline matches LLM failure modes, such as<br />
+effective context far below advertised limits.</p>
+
+  <p class="attrib">Published <time datetime="2026-01-09">9 January 2026</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-from-everything-is-a-file-to-files-are-all-you-need-unix-phi">
+  <h2><a href="https://arxiv.org/html/2601.11672v1" rel="noreferrer">From &quot;everything is a file&quot; to &quot;files are all you need&quot;: Unix philosophy for agentic AI</a></h2>
+  <p>Traces the Unix file abstraction from 1970s operating systems to the design of<br />
+modern autonomous agents and DevOps tooling.</p>
+
+  <p class="attrib">Published <time datetime="2026-01">January 2026</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-your-job-is-to-deliver-code-you-have-proven-to-work-simon-wi">
+  <h2><a href="https://simonwillison.net/2025/Dec/18/code-proven-to-work/" rel="noreferrer">Your job is to deliver code you have proven to work (Simon Willison)</a></h2>
+  <p>Argues developers using AI must prove their code works, through manual and<br />
+automated testing, before handing it to reviewers.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-18">18 December 2025</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-enabling-agent-3-to-self-test-at-scale-with-repl-based-verif">
+  <h2><a href="https://blog.replit.com/automated-self-testing" rel="noreferrer">Enabling Agent 3 to self-test at scale with REPL-based verification (Replit)</a></h2>
+  <p>Replit explains how Agent 3 combines code execution and browser automation to<br />
+check that generated apps actually work when used.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-15">15 December 2025</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-all-hail-the-monorepo-long-live-microservices">
+  <h2><a href="https://medium.com/jonathans-musings/all-hail-the-monorepo-long-live-microservices-4f96209c66e4" rel="noreferrer">All hail the monorepo, long live microservices</a></h2>
+  <p>Argues teams running microservices should keep them in a single monorepo,<br />
+comparing its development advantages with polyrepos.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-02">2 December 2025</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/version-control.html">Version control</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-ai-coding-tool-productivity-across-architectures-annie-vella">
+  <h2><a href="https://www.linkedin.com/posts/annievella_oooh-these-are-very-interesting-results-activity-7384812092421419008-YPZ9/" rel="noreferrer">AI coding tool productivity across architectures (Annie Vella, LinkedIn)</a></h2>
+  <p>LinkedIn post on results suggesting AI coding tools give large productivity<br />
+gains in centralised codebases but little in distributed microservice<br />
+architectures.</p>
+
+  <p class="attrib">Published <time datetime="2025-10-17">17 October 2025</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-vibe-coding-our-way-to-disaster-arthropod">
+  <h2><a href="https://www.arthropod.software/p/vibe-coding-our-way-to-disaster" rel="noreferrer">Vibe coding our way to disaster (Arthropod)</a></h2>
+  <p>Argues that vibe coding produces unmaintainable code and that Rich Hickey's<br />
+design principles matter more than ever.</p>
+
+  <p class="attrib">Published <time datetime="2025-09-04">4 September 2025</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-12-factor-agents-humanlayer-2">
+  <h2><a href="https://www.humanlayer.dev/blog/12-factor-agents#factor-1-natural-language-to-tool-calls" rel="noreferrer">12 factor agents (HumanLayer)</a></h2>
+  <p>Manifesto of principles for production LLM agents that combine model decisions<br />
+with deterministic code.</p>
+
+  <p class="attrib">Published <time datetime="2025-04-03">3 April 2025</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-using-llms-in-generating-design-rationale-for-software-archi">
+  <h2><a href="https://arxiv.org/abs/2504.20781" rel="noreferrer">Using LLMs in generating design rationale for software architecture decisions</a></h2>
+  <p>Measures how well LLMs reconstruct design rationale: recall of 0.63-0.72 but<br />
+precision of about 0.27 against expert ground truth.</p>
+
+  <p class="attrib">Published <time datetime="2025-04">April 2025</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article><article class="card bookmark" id="b-12-factor-agents-humanlayer">
+  <h2><a href="https://github.com/humanlayer/12-factor-agents?tab=readme-ov-file" rel="noreferrer">12-factor-agents (HumanLayer)</a></h2>
+  <p>Design principles for production LLM-powered software, modelled on the<br />
+12-factor app methodology.</p>
+
+  <p class="attrib">Published <time datetime="2025-03-30">30 March 2025</time> · repo, guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-own-your-control-flow-factor-8-of-12-factor-agents-humanlaye">
+  <h2><a href="https://github.com/humanlayer/12-factor-agents/blob/main/content/factor-08-own-your-control-flow.md" rel="noreferrer">Own your control flow, factor 8 of 12-factor agents (HumanLayer)</a></h2>
+  <p>Argues an agent should be a program you control rather than a black-box loop,<br />
+so you can interrupt, resume and apply custom logic at each step.</p>
+
+  <p class="attrib">Published <time datetime="2025-03-30">30 March 2025</time> · guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-beam-vs-microservices-ada-beat">
+  <h2><a href="https://adabeat.com/fp/beam-vs-microservices/" rel="noreferrer">BEAM vs microservices (Ada Beat)</a></h2>
+  <p>Compares the BEAM runtime with microservices, covering advantages, limitations<br />
+and suitable use cases for each.</p>
+
+  <p class="attrib">Published <time datetime="2025-01-29">29 January 2025</time> · comparison, article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-a-practical-guide-to-applying-data-oriented-design-andrew-ke">
+  <h2><a href="https://www.youtube.com/watch?v=IroPQ150F6c" rel="noreferrer">A practical guide to applying data-oriented design (Andrew Kelley)</a></h2>
+  <p>Andrew Kelley's Handmade Seattle talk on applying data-oriented design in<br />
+practice.</p>
+
+  <p class="attrib">Published <time datetime="2024-07-13">13 July 2024</time> · talk</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages</a></li></ul>
+</article><article class="card bookmark" id="b-casey-muratori-smart-pointers-raii-zii-becoming-an-n-2-progr">
+  <h2><a href="https://www.youtube.com/watch?v=xt1KNDmOYqA" rel="noreferrer">Casey Muratori: smart pointers, RAII, ZII? Becoming an N+2 programmer</a></h2>
+  <p>Casey Muratori explains his objections to smart pointers, RAII, OOP and the<br />
+Rust borrow checker, and what to learn instead.</p>
+
+  <p class="attrib">Published <time datetime="2024-07-12">12 July 2024</time> · video, talk</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-obelisk">
+  <h2><a href="https://github.com/obeli-sk/obelisk" rel="noreferrer">obelisk</a></h2>
+  <p>Durable, deterministic workflow runtime built on WASM that replays workflows<br />
+from persistent logs with automatic retries.</p>
+
+  <p class="attrib">Published <time datetime="2024-04-25">25 April 2024</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-mneme">
+  <h2><a href="https://github.com/zachallaun/mneme" rel="noreferrer">mneme</a></h2>
+  <p>Snapshot testing library for Elixir; like other Elixir snapshot tools it is a<br />
+third-party hex dependency.</p>
+
+  <p class="attrib">Published <time datetime="2023-01-19">19 January 2023</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-elixir-can-make-you-avoid-the-microservices-architecture">
+  <h2><a href="https://dev.to/pierrelegall/about-elixir-and-the-microservices-architecture-37gi" rel="noreferrer">Elixir can make you avoid the microservices architecture</a></h2>
+  <p>Argues the BEAM's lightweight processes let Elixir monoliths meet needs that<br />
+usually drive teams to microservices.</p>
+
+  <p class="attrib">Published <time datetime="2022-12-14">14 December 2022</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-unit-and-integration-tests-matklad">
+  <h2><a href="https://matklad.github.io/2022/07/04/unit-and-integration-tests.html" rel="noreferrer">Unit and integration tests (matklad)</a></h2>
+  <p>Argues the unit-versus-integration distinction is confused and proposes a<br />
+two-dimensional model based on test purity and extent.</p>
+
+  <p class="attrib">Published <time datetime="2022-07-04">4 July 2022</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-simple-made-easy-rich-hickey-2011">
+  <h2><a href="https://www.youtube.com/watch?v=SxdOUGdseq4" rel="noreferrer">Simple made easy (Rich Hickey, 2011)</a></h2>
+  <p>Rich Hickey's talk distinguishing simple from easy in software design.</p>
+
+  <p class="attrib">Published <time datetime="2021-09-02">2 September 2021</time> · talk</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-test-matklad">
+  <h2><a href="https://matklad.github.io/2021/05/31/how-to-test.html" rel="noreferrer">How to test (matklad)</a></h2>
+  <p>Argues for data-driven tests of features rather than implementation details,<br />
+kept fast by isolating IO.</p>
+
+  <p class="attrib">Published <time datetime="2021-05-31">31 May 2021</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-delete-cargo-integration-tests-matklad">
+  <h2><a href="https://matklad.github.io/2021/02/27/delete-cargo-integration-tests.html" rel="noreferrer">Delete Cargo integration tests (matklad)</a></h2>
+  <p>Argues a project's tests directory should hold at most one Cargo<br />
+integration-test binary, to cut compile and link time.</p>
+
+  <p class="attrib">Published <time datetime="2021-02-27">27 February 2021</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/rust.html">Rust</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-skeleton-and-principles-for-a-maintainable-test-suite-luca-p">
+  <h2><a href="https://www.lpalmieri.com/posts/skeleton-and-principles-for-a-maintainable-test-suite/" rel="noreferrer">Skeleton and principles for a maintainable test suite (Luca Palmieri)</a></h2>
+  <p>Proposes a single test binary with nested modules and shared helpers as a<br />
+structure that keeps a Rust test suite maintainable.</p>
+
+  <p class="attrib">Published <time datetime="2021-02-14">14 February 2021</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/rust.html">Rust</a></li></ul>
+</article><article class="card bookmark" id="b-goal-structuring-notation-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Goal_structuring_notation" rel="noreferrer">Goal structuring notation (Wikipedia)</a></h2>
+  <p>Wikipedia's article on GSN, a graphical notation for safety assurance cases<br />
+that decomposes a claim through strategies down to evidence.</p>
+
+  <p class="attrib">Published <time datetime="2018-05-28">28 May 2018</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-the-one-ring-problem-abstraction-and-our-quest-for-power-ted">
+  <h2><a href="https://www.tedinski.com/2018/01/30/the-one-ring-problem-abstraction-and-power.html" rel="noreferrer">The one ring problem: abstraction and our quest for power (Ted Kaminski)</a></h2>
+  <p>Argues power and guaranteed properties trade off in abstraction design, so<br />
+limits on what something can do are often a feature.</p>
+
+  <p class="attrib">Published <time datetime="2018-01-30">30 January 2018</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages</a></li></ul>
+</article><article class="card bookmark" id="b-unified-modeling-language-uml-diagrams-geeksforgeeks">
+  <h2><a href="https://www.geeksforgeeks.org/system-design/unified-modeling-language-uml-introduction/" rel="noreferrer">Unified Modeling Language (UML) diagrams (GeeksforGeeks)</a></h2>
+  <p>An introduction to UML, a standardised visual notation for documenting system<br />
+design, and its diagram types.</p>
+
+  <p class="attrib">Published <time datetime="2017-10-27">27 October 2017</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-entity-component-systems-in-elixir-yos-riady">
+  <h2><a href="https://yos.io/2016/09/17/entity-component-systems/" rel="noreferrer">Entity component systems in Elixir (Yos Riady)</a></h2>
+  <p>A 2016 walkthrough of the entity-component-system pattern from games,<br />
+favouring composition over inheritance, implemented in Elixir.</p>
+
+  <p class="attrib">Published <time datetime="2016-09-17">17 September 2016</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li></ul>
+</article><article class="card bookmark" id="b-hammock-driven-development-rich-hickey">
+  <h2><a href="https://www.youtube.com/watch?v=f84n5oFoZBc" rel="noreferrer">Hammock driven development (Rich Hickey)</a></h2>
+  <p>Rich Hickey's talk from the first Clojure Conj on taking time to think through<br />
+problems before coding.</p>
+
+  <p class="attrib">Published <time datetime="2012-12-16">16 December 2012</time> · talk</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/cognitive-science.html">Cognitive science</a></li></ul>
+</article><article class="card bookmark" id="b-scenario-testing-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Scenario_testing" rel="noreferrer">Scenario testing (Wikipedia)</a></h2>
+  <p>Encyclopedia entry on scenario testing, which uses hypothetical stories to<br />
+help testers work through complex systems.</p>
+
+  <p class="attrib">Published <time datetime="2005-10-20">20 October 2005</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-mutation-testing-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Mutation_testing" rel="noreferrer">Mutation testing (Wikipedia)</a></h2>
+  <p>Wikipedia article on mutation testing, which injects small faults into code to<br />
+measure how well a test suite detects them.</p>
+
+  <p class="attrib">Published <time datetime="2005-08-02">2 August 2005</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-the-law-of-leaky-abstractions-joel-spolsky">
+  <h2><a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/" rel="noreferrer">The law of leaky abstractions (Joel Spolsky)</a></h2>
+  <p>Joel Spolsky argues that all non-trivial abstractions leak, so programmers<br />
+still need to understand the layers beneath them.</p>
+
+  <p class="attrib">Published <time datetime="2002-11-11">11 November 2002</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-backpressure-is-all-you-need-lucas-f-costa">
+  <h2><a href="https://www.lucasfcosta.com/blog/backpressure-is-all-you-need" rel="noreferrer">Backpressure is all you need (Lucas F. Costa)</a></h2>
+  <p>Argues for building automated checks into AI coding agent workflows so less<br />
+human review is needed while keeping code quality.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-clean-code-in-the-age-of-ai">
+  <h2><a href="https://medium.com/jonathans-musings/clean-code-in-the-age-of-ai-fc00d204d3e4" rel="noreferrer">Clean code in the age of AI</a></h2>
+  <p>Considers which clean code principles still matter when agents write most<br />
+code, stressing tests, dependency structure and data models.</p>
+
+  <p class="attrib">article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-exunit-case-elixir-docs">
+  <h2><a href="https://ex-unit.hexdocs.pm/ExUnit.Case.html" rel="noreferrer">ExUnit.Case (Elixir docs)</a></h2>
+  <p>ExUnit documentation, including the tmp_dir tag for isolated scratch<br />
+directories and built-in diffs on failed assertions.</p>
+
+  <p class="attrib">docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-first-run-the-tests-simon-willison">
+  <h2><a href="https://simonwillison.net/guides/agentic-engineering-patterns/first-run-the-tests/" rel="noreferrer">First run the tests (Simon Willison)</a></h2>
+  <p>Agentic engineering pattern: start a coding agent session by having it run the<br />
+test suite.</p>
+
+  <p class="attrib">guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-gsn-community-standard-version-1-scsc">
+  <h2><a href="https://scsc.uk/r141C:1" rel="noreferrer">GSN Community Standard, version 1 (SCSC)</a></h2>
+  <p>The 2011 Goal Structuring Notation community standard, defining elements such<br />
+as goals, strategies, solutions, context and assumptions for assurance-case<br />
+arguments.</p>
+
+  <p class="attrib">standard</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management</a></li></ul>
+</article><article class="card bookmark" id="b-model-based-agentic-software-engineering-mage-james-c-davis">
+  <h2><a href="https://davisjam.github.io/model-based-agentic-software-engineering/" rel="noreferrer">Model-based agentic software engineering (MAGE, James C. Davis)</a></h2>
+  <p>A framework for governing AI-agent fleets in software delivery, built from a<br />
+19-week case study, arguing the bottleneck is modelling and governance rather<br />
+than code generation.</p>
+
+  <p class="attrib">reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-my-agent-skill-for-test-driven-development-jason-swett">
+  <h2><a href="https://www.saturnci.com/my-agent-skill-for-test-driven-development.html" rel="noreferrer">My agent skill for test-driven development (Jason Swett)</a></h2>
+  <p>Jason Swett's agent skill for TDD using a specify, encode, fulfil method with<br />
+design review.</p>
+
+  <p class="attrib">post · <a href="https://news.ycombinator.com/item?id=48398925" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-no-silver-bullet-essence-and-accidents-of-software-engineeri">
+  <h2><a href="https://worrydream.com/refs/Brooks_1986_-_No_Silver_Bullet.pdf" rel="noreferrer">No Silver Bullet: essence and accidents of software engineering (Fred Brooks, 1986)</a></h2>
+  <p>Brooks's classic paper separating the essential difficulties of software from<br />
+accidental ones, and arguing no single technique will bring an<br />
+order-of-magnitude productivity gain.</p>
+
+  <p class="attrib">paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-obelisk-durable-workflow-platform">
+  <h2><a href="https://obeli.sk/features/" rel="noreferrer">Obelisk: durable workflow platform</a></h2>
+  <p>Open-source durable workflow platform with crash recovery, retries, explicit<br />
+permissions, versioned deployments and step-through debugging of executions.</p>
+
+  <p class="attrib">product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-programming-with-ai-agents-as-theory-building-sean-goedecke">
+  <h2><a href="https://www.seangoedecke.com/programming-with-ai-agents-as-theory-building/" rel="noreferrer">Programming (with AI agents) as theory building (Sean Goedecke)</a></h2>
+  <p>Applies Naur's thesis that the programmer's theory of the program is the<br />
+primary artifact to agentic coding.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-programming-as-theory-building-peter-naur-1985">
+  <h2><a href="https://pages.cs.wisc.edu/~remzi/Naur.pdf" rel="noreferrer">Programming as theory building (Peter Naur, 1985)</a></h2>
+  <p>Naur argues that the real product of programming is the team's shared theory<br />
+of the program, not the code itself.</p>
+
+  <p class="attrib">paper, essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-red-green-tdd-simon-willison">
+  <h2><a href="https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/" rel="noreferrer">Red/green TDD (Simon Willison)</a></h2>
+  <p>Agentic engineering pattern for test-driven development with agents: write the<br />
+test, confirm it fails, then implement.</p>
+
+  <p class="attrib">guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-reflections-on-a-decade-of-coding-jamie-brandon">
+  <h2><a href="https://www.scattered-thoughts.net/writing/reflections-on-a-decade-of-coding/" rel="noreferrer">Reflections on a decade of coding (Jamie Brandon)</a></h2>
+  <p>Argues a decade of growth as a programmer came from habits, process and<br />
+practice more than from knowledge of particular tools.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-reviewing-code-is-a-skill-typesanitizer">
+  <h2><a href="https://typesanitizer.com/blog/code-review.html" rel="noreferrer">Reviewing code is a skill (typesanitizer)</a></h2>
+  <p>Argues code-review proficiency, from catching bugs to spotting design flaws,<br />
+is learnable and teachable rather than innate.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-systems-thinking-the-programmers-paradox">
+  <h2><a href="https://theprogrammersparadox.blogspot.com/2026/02/systems-thinking.html" rel="noreferrer">Systems thinking (The Programmer&#x27;s Paradox)</a></h2>
+  <p>Contrasts software that grows by evolution with up-front engineered design,<br />
+arguing deliberate design reduces long-term complexity and dependency<br />
+problems.</p>
+
+  <p class="attrib">post · <a href="https://news.ycombinator.com/item?id=46909439" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-to-spawn-or-not-to-spawn-sa-a-juri">
+  <h2><a href="https://www.theerlangelist.com/article/spawn_or_not" rel="noreferrer">To spawn, or not to spawn? (Saša Jurić)</a></h2>
+  <p>Saša Jurić argues processes should model runtime concerns, not domain<br />
+concepts, using a blackjack example with pure-function logic and processes<br />
+only for scaling and fault isolation.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-when-an-llm-workflow-should-have-been-regex-and-deterministi">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1vbjwts/when_an_llm_workflow_should_have_been_regex/" rel="noreferrer">When an LLM workflow should have been regex and deterministic parsers (r/LLMDevs)</a></h2>
+  <p>Argues an LLM absorbs uncertainty a team has not yet formalised, and that once<br />
+understood, parts of the workflow should move to schemas, parsers, rules and<br />
+classifiers.</p>
+
+  <p class="attrib">thread</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li><li><a href="../../bookmarks/topics/language-models.html">Language models</a></li></ul>
+</article><article class="card bookmark" id="b-you-cant-design-software-you-dont-work-on-sean-goedecke">
+  <h2><a href="https://www.seangoedecke.com/you-cant-design-software-you-dont-work-on/" rel="noreferrer">You can&#x27;t design software you don&#x27;t work on (Sean Goedecke)</a></h2>
+  <p>Argues only engineers who work on a large system can meaningfully design it,<br />
+because good design depends on its concrete details.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

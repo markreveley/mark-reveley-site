@@ -60,7 +60,7 @@ resource is, from a closed list (`paper`, `repo`, `docs`, `video`, `thread`,
 new subject becomes a topic file, never a tag.
 
 Other fields kept in frontmatter: `hacker_news`, `added`, `status`
-(`unread | stub | read | promoted`). The parser ignores fields it does not
+(`unread | read | promoted`; `unprocessed` for files in `bookmarks/unprocessed/`, outside the graph). The parser ignores fields it does not
 know, which is allowed.
 
 ## Rules (`site/bookmarks/lint.dl`)
@@ -105,7 +105,7 @@ How to convert `bookmarks.md`. Each entry is `### [title](url)` followed by
 - Mark where each item came from with a `source: elixir-mind-survey` field.
 
 When the conversion is done, stop adding to `elixir-mind/survey/bookmarks.md`,
-and point `/bookmarks` at `site/bookmarks/items/`. That is a
+and point `/bookmarks` at `site/bookmarks/unprocessed/` (new links) and `site/bookmarks/dag/items/` (processed). That is a
 separate change in elixir-mind.
 
 ## Topic hierarchy

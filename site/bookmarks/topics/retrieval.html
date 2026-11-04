@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retrieval — Mark Reveley</title>
+<meta name="description" content="Retrieval-augmented generation and the search, chunking, embedding and vector
+databases it relies on.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Retrieval</h1>
+  <p class="lede">Retrieval-augmented generation and the search, chunking, embedding and vector
+databases it relies on.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (1118)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(319)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(39)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(60)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(115)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(39)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(59)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(55)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(20)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(191)</span></a></li><li><a href="../../bookmarks/topics/blockchain.html">Blockchain <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(40)</span></a></li><li><a href="../../bookmarks/topics/cognitive-science.html">Cognitive science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(19)</span></a></li><li><a href="../../bookmarks/topics/databases.html">Databases <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(107)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(91)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(12)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/human-computer-interaction.html">Human-computer interaction <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(130)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(18)</span></a></li><li><a href="../../bookmarks/topics/retrieval.html" aria-current="page">Retrieval <span class="category-count">(23)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/machine-learning.html">Machine learning <span class="category-count">(24)</span></a></li><li><a href="../../bookmarks/topics/music-business.html">Music business <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(33)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(145)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(84)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/web-development.html">Web development <span class="category-count">(16)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(69)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(6)</span></a></li></ul></li><li><a href="../../bookmarks/topics/software-design.html">Software design <span class="category-count">(64)</span></a><ul><li><a href="../../bookmarks/topics/testing.html">Testing <span class="category-count">(18)</span></a></li></ul></li><li><a href="../../bookmarks/topics/startups.html">Startups <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/technical-writing.html">Technical writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(28)</span></a></li><li><a href="../../bookmarks/topics/video-production.html">Video production <span class="category-count">(0)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-doma">
+  <h2><a href="https://github.com/L34Z/doma" rel="noreferrer">doma</a></h2>
+  <p>A dependency-free Odin binary that chunks markdown and code, ranks with BM25<br />
+and returns top passages for agents.</p>
+
+  <p class="attrib">Published <time datetime="2026-08-02">2 August 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li></ul>
+</article><article class="card bookmark" id="b-doyo">
+  <h2><a href="https://github.com/L34Z/doyo" rel="noreferrer">doyo</a></h2>
+  <p>A small Odin binary that downloads a GitHub repo's or website's documentation<br />
+into a local Markdown tree for LLM context, preferring llms.txt manifests.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-29">29 July 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li></ul>
+</article><article class="card bookmark" id="b-crabrag-why-automated-assistants-need-graph-memory-not-more">
+  <h2><a href="https://www.youtube.com/watch?v=Q0VkgCyNVUg" rel="noreferrer">CrabRAG: why automated assistants need graph memory, not more tokens (Stephen Chin, Neo4j)</a></h2>
+  <p>Stephen Chin compares two copies of an agent given the same facts, one storing<br />
+them in a vector database and the other as a graph.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-22">22 July 2026</time> · talk, video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-a-practitioners-guide-to-graphs-tim-ainge-good-collective">
+  <h2><a href="https://www.youtube.com/watch?v=3ySF0I5iE_0" rel="noreferrer">A practitioner&#x27;s guide to graphs (Tim Ainge, Good Collective)</a></h2>
+  <p>Talk covering graph basics, extracting graphs from unstructured text, and<br />
+schema-first and ontology improvements.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-18">18 July 2026</time> · talk, video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management</a></li></ul>
+</article><article class="card bookmark" id="b-how-we-taught-a-small-llm-to-throw-away-68-of-our-rag-contex">
+  <h2><a href="https://www.kapa.ai/blog/how-we-prune-rag-context" rel="noreferrer">How we taught a small LLM to throw away 68% of our RAG context (Kapa.ai)</a></h2>
+  <p>Kapa.ai adds a cheap LLM step that scores retrieved chunks before generation,<br />
+pruning context while keeping 96% of recall.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-02">2 July 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-ai-memory-comparison">
+  <h2><a href="https://github.com/carsteneu/ai-memory-comparison" rel="noreferrer">ai-memory-comparison</a></h2>
+  <p>Feature comparison of memory systems for AI coding agents, covering 81 systems<br />
+across 79 features, with each claim cited to public documentation.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-28">28 May 2026</time> · repo, comparison</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-ai-memory-beyond-rag-vectors-graphs-and-dense-mem-mark-huang">
+  <h2><a href="https://markhuang.ai/blog/ai-memory-beyond-rag" rel="noreferrer">AI memory beyond RAG: vectors, graphs, and Dense-Mem (Mark Huang)</a></h2>
+  <p>Explains layers of AI memory from prompt context to durable memory, covering<br />
+chunks, embeddings, vector search and graph memory, and why retrieval alone<br />
+falls short.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-25">25 May 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-pinecone-just-demoted-vector-search-the-knowledge-layer-nate">
+  <h2><a href="https://www.youtube.com/watch?v=lqiwQiDglGk" rel="noreferrer">Pinecone just demoted vector search: the knowledge layer (Nate B. Jones)</a></h2>
+  <p>Nate B. Jones on a knowledge-layer architecture for RAG agents beyond plain<br />
+vector search.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-13">13 May 2026</time> · video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-better-models-wont-save-your-agent-pinecone">
+  <h2><a href="https://www.pinecone.io/blog/introducing-nexus-knowledge-engine/" rel="noreferrer">Better models won&#x27;t save your agent (Pinecone)</a></h2>
+  <p>Pinecone argues most agent failures are data failures and introduces the Nexus<br />
+knowledge engine with its context compiler.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-04">4 May 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-pinecone-nexus-the-knowledge-engine-for-agents">
+  <h2><a href="https://www.pinecone.io/blog/knowledge-infrastructure-for-agents/" rel="noreferrer">Pinecone Nexus: the knowledge engine for agents</a></h2>
+  <p>Pinecone describes Nexus, a move from vector database to knowledge compilation<br />
+platform with the KnowQL query language for agents.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-04">4 May 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-multi-agent-memory-without-a-vector-database-the-markdown-fi">
+  <h2><a href="https://dev.to/whoffagents/multi-agent-memory-without-a-vector-database-the-markdown-first-approach-2lo0" rel="noreferrer">Multi-agent memory without a vector database: the markdown-first approach</a></h2>
+  <p>Describes running five agents with persistent memory across sessions using<br />
+structured markdown files and a retrieval discipline, with no embeddings.</p>
+
+  <p class="attrib">Published <time datetime="2026-04-16">16 April 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li></ul>
+</article><article class="card bookmark" id="b-codebase-memory-mcp">
+  <h2><a href="https://github.com/DeusData/codebase-memory-mcp" rel="noreferrer">codebase-memory-mcp</a></h2>
+  <p>Parses a codebase into a persistent Tree-sitter knowledge graph and serves it<br />
+to agents over MCP for structural queries.</p>
+
+  <p class="attrib">Published <time datetime="2026-02-24">24 February 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-graperoot">
+  <h2><a href="https://github.com/kunal12203/graperoot" rel="noreferrer">GrapeRoot</a></h2>
+  <p>A Python context engine that builds a semantic code graph and pre-packs<br />
+graph-ranked code into the prompt for coding assistants.</p>
+
+  <p class="attrib">Published <time datetime="2026-02-21">21 February 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-sdl-mcp">
+  <h2><a href="https://github.com/GlitterKill/sdl-mcp" rel="noreferrer">sdl-mcp</a></h2>
+  <p>Symbol Delta Ledger: a context budget layer for coding agents that indexes<br />
+repositories as symbol graphs with policy-gated retrieval over MCP.</p>
+
+  <p class="attrib">Published <time datetime="2026-02-08">8 February 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses</a></li></ul>
+</article><article class="card bookmark" id="b-superlocalmemory">
+  <h2><a href="https://github.com/qualixar/superlocalmemory" rel="noreferrer">superlocalmemory</a></h2>
+  <p>An AGPL local-first memory engine for AI agents with a SQLite and sqlite-vec<br />
+store and multiple retrieval channels, including dense, BM25 and temporal<br />
+search.</p>
+
+  <p class="attrib">Published <time datetime="2026-02-05">5 February 2026</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-hindsight-is-20-20-building-agent-memory-that-retains-recall">
+  <h2><a href="https://arxiv.org/abs/2512.12818" rel="noreferrer">Hindsight is 20/20: building agent memory that retains, recalls, and reflects</a></h2>
+  <p>Describes Hindsight, a structured memory architecture for LLM agents, and<br />
+reports its accuracy on long-context memory benchmarks.</p>
+
+  <p class="attrib">Published <time datetime="2025-12">December 2025</time> · paper</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-gitnexus">
+  <h2><a href="https://github.com/abhigyanpatwari/GitNexus" rel="noreferrer">GitNexus</a></h2>
+  <p>Client-side engine that builds a knowledge graph of a codebase and exposes its<br />
+architecture and dependencies to agents via MCP.</p>
+
+  <p class="attrib">Published <time datetime="2025-08-02">2 August 2025</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-knowledge-graph">
+  <h2><a href="https://github.com/rahulnyk/knowledge_graph" rel="noreferrer">knowledge_graph</a></h2>
+  <p>Converts arbitrary text into a knowledge graph for graph-augmented generation<br />
+or knowledge-graph question answering.</p>
+
+  <p class="attrib">Published <time datetime="2023-10-22">22 October 2023</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li></ul>
+</article><article class="card bookmark" id="b-all-my-homies-hate-grep-doma-release-r-llmdevs">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1vd6d2b/all_my_homies_hate_grep/" rel="noreferrer">All my homies hate grep: doma release (r/LLMDevs)</a></h2>
+  <p>The author's announcement of doma, a single-binary BM25 search tool for<br />
+agents, motivated by Claude grepping widely through codebases.</p>
+
+  <p class="attrib">thread</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li></ul>
+</article><article class="card bookmark" id="b-chroma">
+  <h2><a href="https://www.trychroma.com" rel="noreferrer">Chroma</a></h2>
+  <p>Chroma is an open-source, serverless search database supporting vector,<br />
+full-text, regex and metadata search, used for retrieval-augmented generation<br />
+and context engineering.</p>
+
+  <p class="attrib">product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-hindsight-mcp-server-vectorize">
+  <h2><a href="https://hindsight.vectorize.io/developer/mcp-server" rel="noreferrer">Hindsight MCP server (Vectorize)</a></h2>
+  <p>Docs for Hindsight's built-in MCP server, which lets AI assistants store and<br />
+retrieve memories through 30+ tools.</p>
+
+  <p class="attrib">docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks</a></li></ul>
+</article><article class="card bookmark" id="b-i-ripped-out-my-vector-db-and-replaced-it-with-markdown-file">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1v549i8/i_ripped_out_my_vector_db_and_a_folder_of/" rel="noreferrer">I ripped out my vector DB and replaced it with markdown files (r/LLMDevs)</a></h2>
+  <p>Practitioner report that a folder of cross-linked markdown, navigated by file<br />
+tools, worked better than a vector database pipeline as an agent's knowledge<br />
+base.</p>
+
+  <p class="attrib">thread</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management</a></li></ul>
+</article><article class="card bookmark" id="b-your-graphrag-pipeline-has-an-unmeasured-stage-graph-seriali">
+  <h2><a href="https://www.reddit.com/r/LLMDevs/comments/1v7su76/your_graphrag_pipeline_has_an_unmeasured_stage/" rel="noreferrer">Your GraphRAG pipeline has an unmeasured stage: graph serialization format (r/LLMDevs)</a></h2>
+  <p>A promoted benchmark claims the format a retrieved subgraph is serialized into<br />
+swings multi-hop accuracy between 40% and 80% and changes token cost<br />
+substantially.</p>
+
+  <p class="attrib">thread</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/evals.html">Evals</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

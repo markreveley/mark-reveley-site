@@ -24,6 +24,8 @@ QUOTE_DB = ROOT / "quotes"
 POST_DB = ROOT / "posts"
 DEF_DB = ROOT / "defs"
 BOOKMARK_DB = ROOT / "bookmarks"
+# The published graph. bookmarks/unprocessed/ sits outside it and is never built.
+BOOKMARK_DAG = BOOKMARK_DB / "dag"
 ARTIFACT_DAG_URL = "https://github.com/markreveley/artifact-dag.git"
 ARTIFACT_DAG_CACHE = ROOT / ".cache" / "artifact-dag"
 OUT = ROOT / "site"
@@ -1178,7 +1180,7 @@ def build_defs(records, taxonomy, category_records):
 def collect_bookmarks():
     """Return (topics, items) from the artifact-dag nodes under bookmarks/."""
     topics, items = {}, []
-    for path in sorted((BOOKMARK_DB / "topics").glob("*.md")):
+    for path in sorted((BOOKMARK_DAG / "topics").glob("*.md")):
         meta, body = load_document(path)
         if not meta or meta.get("type") != "definition":
             continue
@@ -1187,7 +1189,7 @@ def collect_bookmarks():
             "id": meta["id"], "slug": slug, "title": str(meta["title"]),
             "parents": list(meta.get("refines") or []), "scope": body,
         }
-    for path in sorted((BOOKMARK_DB / "items").glob("*.md")):
+    for path in sorted((BOOKMARK_DAG / "items").glob("*.md")):
         meta, body = load_document(path)
         if not meta or meta.get("type") != "resource":
             continue
@@ -1374,11 +1376,11 @@ def build_bookmark_graph():
     """Validate bookmarks/ with dagcheck, then write the artifact-dag viewer page."""
     tool = artifact_dag_checkout()
     check = subprocess.run(
-        ["node", str(tool / "bin" / "dagcheck.js"), str(BOOKMARK_DB), "--lint"],
+        ["node", str(tool / "bin" / "dagcheck.js"), str(BOOKMARK_DAG), "--lint"],
         capture_output=True, text=True,
     )
     if check.returncode != 0:
-        raise ValueError(f"dagcheck found errors in bookmarks/:\n{check.stdout}{check.stderr}")
+        raise ValueError(f"dagcheck found errors in bookmarks/dag/:\n{check.stdout}{check.stderr}")
     viewer = subprocess.run(
         ["node", str(tool / "bin" / "build-viewer.js"), "--config", str(BOOKMARK_DB / "dag-viewer.json")],
         check=True, capture_output=True, text=True,
@@ -1428,7 +1430,7 @@ def main():
     build_quotes(records, taxonomy, source_taxonomy)
     build_writers(records, taxonomy, source_taxonomy, source_records)
     build_topics(records, taxonomy, source_taxonomy, topic_records)
-    if (BOOKMARK_DB / "items").is_dir():
+    if (BOOKMARK_DAG / "items").is_dir():
         bookmark_topics, bookmarks = collect_bookmarks()
         build_bookmarks(bookmark_topics, bookmarks)
         build_bookmark_graph()

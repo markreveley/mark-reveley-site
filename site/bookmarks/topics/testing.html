@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing — Mark Reveley</title>
+<meta name="description" content="Checking that code does what it should: unit, property and integration tests,
+code review, and code quality.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Testing</h1>
+  <p class="lede">Checking that code does what it should: unit, property and integration tests,
+code review, and code quality.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (1118)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(319)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(39)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(60)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(115)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(39)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(59)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(55)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(20)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(191)</span></a></li><li><a href="../../bookmarks/topics/blockchain.html">Blockchain <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(40)</span></a></li><li><a href="../../bookmarks/topics/cognitive-science.html">Cognitive science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(19)</span></a></li><li><a href="../../bookmarks/topics/databases.html">Databases <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(107)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(91)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(12)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/human-computer-interaction.html">Human-computer interaction <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(130)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(18)</span></a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval <span class="category-count">(23)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/machine-learning.html">Machine learning <span class="category-count">(24)</span></a></li><li><a href="../../bookmarks/topics/music-business.html">Music business <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(33)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(145)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(84)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/web-development.html">Web development <span class="category-count">(16)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(69)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(6)</span></a></li></ul></li><li><a href="../../bookmarks/topics/software-design.html">Software design <span class="category-count">(64)</span></a><ul><li><a href="../../bookmarks/topics/testing.html" aria-current="page">Testing <span class="category-count">(18)</span></a></li></ul></li><li><a href="../../bookmarks/topics/startups.html">Startups <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/technical-writing.html">Technical writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(28)</span></a></li><li><a href="../../bookmarks/topics/video-production.html">Video production <span class="category-count">(0)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-in-the-land-of-ai-agents-the-verifiers-are-king-tariq-shauka">
+  <h2><a href="https://www.youtube.com/watch?v=VrpEyglYgeU" rel="noreferrer">In the land of AI agents, the verifiers are king (Tariq Shaukat, Sonar)</a></h2>
+  <p>Talk arguing that as agents take on complex development work, the main<br />
+challenge shifts from generating code to verifying it.</p>
+
+  <p class="attrib">Published <time datetime="2026-07-20">20 July 2026</time> · talk, video</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-state-of-ai-coding-2026-new-relic">
+  <h2><a href="https://newrelic.com/blog/ai/state-of-ai-coding-2026" rel="noreferrer">State of AI Coding 2026 (New Relic)</a></h2>
+  <p>A survey of 200 US technology leaders finding AI writes most weekly code and<br />
+is trusted to ship, while reliability lags.</p>
+
+  <p class="attrib">Published <time datetime="2026-06-10">10 June 2026</time> · report</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-smarter-handling-of-tests-and-a-separate-impl-command-codesp">
+  <h2><a href="https://codespeak.dev/blog/codespeak-test-20250324" rel="noreferrer">Smarter handling of tests and a separate impl command (CodeSpeak)</a></h2>
+  <p>CodeSpeak 0.3.7 release notes: separate build, impl, test and coverage<br />
+commands so agents keep test discipline while generating code.</p>
+
+  <p class="attrib">Published <time datetime="2026-03-24">24 March 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-why-does-test-driven-development-work-so-well-in-ai-assisted">
+  <h2><a href="https://codemanship.wordpress.com/2026/01/09/why-does-test-driven-development-work-so-well-in-ai-assisted-programming/" rel="noreferrer">Why does test-driven development work so well in AI-assisted programming? (Jason Gorman)</a></h2>
+  <p>Argues TDD's small-step discipline matches LLM failure modes, such as<br />
+effective context far below advertised limits.</p>
+
+  <p class="attrib">Published <time datetime="2026-01-09">9 January 2026</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-your-job-is-to-deliver-code-you-have-proven-to-work-simon-wi">
+  <h2><a href="https://simonwillison.net/2025/Dec/18/code-proven-to-work/" rel="noreferrer">Your job is to deliver code you have proven to work (Simon Willison)</a></h2>
+  <p>Argues developers using AI must prove their code works, through manual and<br />
+automated testing, before handing it to reviewers.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-18">18 December 2025</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-enabling-agent-3-to-self-test-at-scale-with-repl-based-verif">
+  <h2><a href="https://blog.replit.com/automated-self-testing" rel="noreferrer">Enabling Agent 3 to self-test at scale with REPL-based verification (Replit)</a></h2>
+  <p>Replit explains how Agent 3 combines code execution and browser automation to<br />
+check that generated apps actually work when used.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-15">15 December 2025</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-mneme">
+  <h2><a href="https://github.com/zachallaun/mneme" rel="noreferrer">mneme</a></h2>
+  <p>Snapshot testing library for Elixir; like other Elixir snapshot tools it is a<br />
+third-party hex dependency.</p>
+
+  <p class="attrib">Published <time datetime="2023-01-19">19 January 2023</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-unit-and-integration-tests-matklad">
+  <h2><a href="https://matklad.github.io/2022/07/04/unit-and-integration-tests.html" rel="noreferrer">Unit and integration tests (matklad)</a></h2>
+  <p>Argues the unit-versus-integration distinction is confused and proposes a<br />
+two-dimensional model based on test purity and extent.</p>
+
+  <p class="attrib">Published <time datetime="2022-07-04">4 July 2022</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-how-to-test-matklad">
+  <h2><a href="https://matklad.github.io/2021/05/31/how-to-test.html" rel="noreferrer">How to test (matklad)</a></h2>
+  <p>Argues for data-driven tests of features rather than implementation details,<br />
+kept fast by isolating IO.</p>
+
+  <p class="attrib">Published <time datetime="2021-05-31">31 May 2021</time> · essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-delete-cargo-integration-tests-matklad">
+  <h2><a href="https://matklad.github.io/2021/02/27/delete-cargo-integration-tests.html" rel="noreferrer">Delete Cargo integration tests (matklad)</a></h2>
+  <p>Argues a project's tests directory should hold at most one Cargo<br />
+integration-test binary, to cut compile and link time.</p>
+
+  <p class="attrib">Published <time datetime="2021-02-27">27 February 2021</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/rust.html">Rust</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-skeleton-and-principles-for-a-maintainable-test-suite-luca-p">
+  <h2><a href="https://www.lpalmieri.com/posts/skeleton-and-principles-for-a-maintainable-test-suite/" rel="noreferrer">Skeleton and principles for a maintainable test suite (Luca Palmieri)</a></h2>
+  <p>Proposes a single test binary with nested modules and shared helpers as a<br />
+structure that keeps a Rust test suite maintainable.</p>
+
+  <p class="attrib">Published <time datetime="2021-02-14">14 February 2021</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/rust.html">Rust</a></li></ul>
+</article><article class="card bookmark" id="b-scenario-testing-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Scenario_testing" rel="noreferrer">Scenario testing (Wikipedia)</a></h2>
+  <p>Encyclopedia entry on scenario testing, which uses hypothetical stories to<br />
+help testers work through complex systems.</p>
+
+  <p class="attrib">Published <time datetime="2005-10-20">20 October 2005</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-mutation-testing-wikipedia">
+  <h2><a href="https://en.wikipedia.org/wiki/Mutation_testing" rel="noreferrer">Mutation testing (Wikipedia)</a></h2>
+  <p>Wikipedia article on mutation testing, which injects small faults into code to<br />
+measure how well a test suite detects them.</p>
+
+  <p class="attrib">Published <time datetime="2005-08-02">2 August 2005</time> · reference</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-backpressure-is-all-you-need-lucas-f-costa">
+  <h2><a href="https://www.lucasfcosta.com/blog/backpressure-is-all-you-need" rel="noreferrer">Backpressure is all you need (Lucas F. Costa)</a></h2>
+  <p>Argues for building automated checks into AI coding agent workflows so less<br />
+human review is needed while keeping code quality.</p>
+
+  <p class="attrib">essay</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-exunit-case-elixir-docs">
+  <h2><a href="https://ex-unit.hexdocs.pm/ExUnit.Case.html" rel="noreferrer">ExUnit.Case (Elixir docs)</a></h2>
+  <p>ExUnit documentation, including the tmp_dir tag for isolated scratch<br />
+directories and built-in diffs on failed assertions.</p>
+
+  <p class="attrib">docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-first-run-the-tests-simon-willison">
+  <h2><a href="https://simonwillison.net/guides/agentic-engineering-patterns/first-run-the-tests/" rel="noreferrer">First run the tests (Simon Willison)</a></h2>
+  <p>Agentic engineering pattern: start a coding agent session by having it run the<br />
+test suite.</p>
+
+  <p class="attrib">guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article><article class="card bookmark" id="b-my-agent-skill-for-test-driven-development-jason-swett">
+  <h2><a href="https://www.saturnci.com/my-agent-skill-for-test-driven-development.html" rel="noreferrer">My agent skill for test-driven development (Jason Swett)</a></h2>
+  <p>Jason Swett's agent skill for TDD using a specify, encode, fulfil method with<br />
+design review.</p>
+
+  <p class="attrib">post · <a href="https://news.ycombinator.com/item?id=48398925" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/testing.html">Testing</a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li></ul>
+</article><article class="card bookmark" id="b-red-green-tdd-simon-willison">
+  <h2><a href="https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/" rel="noreferrer">Red/green TDD (Simon Willison)</a></h2>
+  <p>Agentic engineering pattern for test-driven development with agents: write the<br />
+test, confirm it fails, then implement.</p>
+
+  <p class="attrib">guide</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/testing.html">Testing</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databases — Mark Reveley</title>
+<meta name="description" content="Databases and the backend systems around them: SQL and other query models,
+storage engines, queues, and data modelling.">
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <a class="brand" href="../../index.html">Mark Reveley</a>
+  <nav class="mainnav" aria-label="Sections"><a href="../../index.html">Posts</a><a href="../../quotes.html">Quotes</a><a href="../../bookmarks.html" aria-current="page">Bookmarks</a><a href="../../about.html">About</a></nav>
+</header>
+<main id="main">
+<section class="hero">
+  <h1>Databases</h1>
+  <p class="lede">Databases and the backend systems around them: SQL and other query models,
+storage engines, queues, and data modelling.</p>
+  <p class="lede"><a href="../../bookmarks/graph.html">See them as a graph</a></p>
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks"><a href="../../bookmarks.html">All bookmarks (1118)</a><ul><li><a href="../../bookmarks/topics/ai-agents.html">AI agents <span class="category-count">(319)</span></a><ul><li><a href="../../bookmarks/topics/agent-authority.html">Agent authority <span class="category-count">(39)</span></a></li><li><a href="../../bookmarks/topics/agent-frameworks.html">Agent frameworks <span class="category-count">(60)</span></a></li><li><a href="../../bookmarks/topics/agent-harnesses.html">Agent harnesses <span class="category-count">(115)</span></a></li><li><a href="../../bookmarks/topics/agent-sandboxes.html">Agent sandboxes <span class="category-count">(39)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-industry.html">AI industry <span class="category-count">(59)</span></a></li><li><a href="../../bookmarks/topics/ai-safety.html">AI safety <span class="category-count">(55)</span></a><ul><li><a href="../../bookmarks/topics/interpretability.html">Interpretability <span class="category-count">(20)</span></a></li></ul></li><li><a href="../../bookmarks/topics/ai-search.html">AI search <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming <span class="category-count">(191)</span></a></li><li><a href="../../bookmarks/topics/blockchain.html">Blockchain <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/cloud-hosting.html">Cloud hosting <span class="category-count">(40)</span></a></li><li><a href="../../bookmarks/topics/cognitive-science.html">Cognitive science <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/computer-science.html">Computer science <span class="category-count">(19)</span></a></li><li><a href="../../bookmarks/topics/databases.html" aria-current="page">Databases <span class="category-count">(15)</span></a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools <span class="category-count">(107)</span></a></li><li><a href="../../bookmarks/topics/digital-identity.html">Digital identity <span class="category-count">(20)</span></a></li><li><a href="../../bookmarks/topics/education.html">Education <span class="category-count">(23)</span></a></li><li><a href="../../bookmarks/topics/evals.html">Evals <span class="category-count">(91)</span></a></li><li><a href="../../bookmarks/topics/formal-verification.html">Formal verification <span class="category-count">(12)</span></a></li><li><a href="../../bookmarks/topics/hardware.html">Hardware <span class="category-count">(5)</span></a></li><li><a href="../../bookmarks/topics/human-computer-interaction.html">Human-computer interaction <span class="category-count">(6)</span></a></li><li><a href="../../bookmarks/topics/knowledge-management.html">Knowledge management <span class="category-count">(30)</span></a></li><li><a href="../../bookmarks/topics/language-models.html">Language models <span class="category-count">(130)</span></a><ul><li><a href="../../bookmarks/topics/decision-models.html">Decision models <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/local-ai.html">Local AI <span class="category-count">(18)</span></a></li><li><a href="../../bookmarks/topics/retrieval.html">Retrieval <span class="category-count">(23)</span></a></li></ul></li><li><a href="../../bookmarks/topics/linux.html">Linux <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/machine-learning.html">Machine learning <span class="category-count">(24)</span></a></li><li><a href="../../bookmarks/topics/music-business.html">Music business <span class="category-count">(3)</span></a></li><li><a href="../../bookmarks/topics/music-tech.html">Music technology <span class="category-count">(33)</span></a></li><li><a href="../../bookmarks/topics/networking.html">Networking <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/nonprofits.html">Nonprofits <span class="category-count">(2)</span></a></li><li><a href="../../bookmarks/topics/personal-writing.html">Personal writing <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/philosophy.html">Philosophy <span class="category-count">(10)</span></a></li><li><a href="../../bookmarks/topics/programming-languages.html">Programming languages <span class="category-count">(145)</span></a><ul><li><a href="../../bookmarks/topics/elixir.html">Elixir <span class="category-count">(84)</span></a></li><li><a href="../../bookmarks/topics/lean.html">Lean <span class="category-count">(8)</span></a></li><li><a href="../../bookmarks/topics/python.html">Python <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/rust.html">Rust <span class="category-count">(25)</span></a></li><li><a href="../../bookmarks/topics/web-development.html">Web development <span class="category-count">(16)</span></a></li></ul></li><li><a href="../../bookmarks/topics/security.html">Security <span class="category-count">(69)</span></a><ul><li><a href="../../bookmarks/topics/access-control.html">Access control <span class="category-count">(9)</span></a></li><li><a href="../../bookmarks/topics/sandboxing.html">Sandboxing <span class="category-count">(6)</span></a></li></ul></li><li><a href="../../bookmarks/topics/software-design.html">Software design <span class="category-count">(64)</span></a><ul><li><a href="../../bookmarks/topics/testing.html">Testing <span class="category-count">(18)</span></a></li></ul></li><li><a href="../../bookmarks/topics/startups.html">Startups <span class="category-count">(7)</span></a></li><li><a href="../../bookmarks/topics/technical-writing.html">Technical writing <span class="category-count">(4)</span></a></li><li><a href="../../bookmarks/topics/version-control.html">Version control <span class="category-count">(28)</span></a></li><li><a href="../../bookmarks/topics/video-production.html">Video production <span class="category-count">(0)</span></a></li></ul></nav>
+  </aside>
+  <div class="defs-feed"><article class="card bookmark" id="b-postgres-is-all-you-need-for-durable-workflows-dbos">
+  <h2><a href="https://www.dbos.dev/blog/postgres-is-all-you-need-for-durable-execution" rel="noreferrer">Postgres is all you need for durable workflows (DBOS)</a></h2>
+  <p>DBOS explains Postgres-backed durable execution and argues it can replace<br />
+external workflow orchestrators.</p>
+
+  <p class="attrib">Published <time datetime="2026-09-28">28 September 2026</time> · article · <a href="https://news.ycombinator.com/item?id=48313530" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li><li><a href="../../bookmarks/topics/software-design.html">Software design</a></li></ul>
+</article><article class="card bookmark" id="b-the-perils-of-uuid-primary-keys-in-sqlite-anders-murphy">
+  <h2><a href="https://andersmurphy.com/2026/06/05/the-perils-of-uuid-primary-keys-in-sqlite.html" rel="noreferrer">The perils of UUID primary keys in SQLite (Anders Murphy)</a></h2>
+  <p>Benchmarks showing random UUIDv4 primary keys make SQLite inserts 14-16x<br />
+slower than sequential keys, recommending UUIDv7 or rowid.</p>
+
+  <p class="attrib">Published <time datetime="2026-06-05">5 June 2026</time> · article · <a href="https://news.ycombinator.com/item?id=48419571" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-sqlite-is-all-you-need-for-durable-workflows-obelisk">
+  <h2><a href="https://obeli.sk/blog/sqlite-is-all-you-need-for-durable-workflows/" rel="noreferrer">SQLite is all you need for durable workflows (Obelisk)</a></h2>
+  <p>Responds to DBOS's Postgres argument by showing SQLite plus Litestream backup<br />
+gives enough durability for workflow state without separate orchestration.</p>
+
+  <p class="attrib">Published <time datetime="2026-05-29">29 May 2026</time> · article · <a href="https://news.ycombinator.com/item?id=48326802" rel="noreferrer">HN discussion</a></p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-filesystem-vs-database-for-agent-memory-lobu">
+  <h2><a href="https://lobu.ai/blog/filesystem-vs-database-agent-memory/" rel="noreferrer">Filesystem vs database for agent memory (Lobu)</a></h2>
+  <p>Argues agents should keep ephemeral work in a filesystem workspace and durable<br />
+organisational knowledge in a database.</p>
+
+  <p class="attrib">Published <time datetime="2026-04-13">13 April 2026</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-agents.html">AI agents</a></li><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-writable-vfs-fly-io">
+  <h2><a href="https://fly.io/blog/litestream-writable-vfs/" rel="noreferrer">Litestream writable VFS (Fly.io)</a></h2>
+  <p>Litestream's VFS gains writes, buffering them locally and syncing periodically<br />
+so storage-heavy apps start fast without losing durability.</p>
+
+  <p class="attrib">Published <time datetime="2026-01-29">29 January 2026</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-dbflux">
+  <h2><a href="https://github.com/0xErwin1/dbflux" rel="noreferrer">dbflux</a></h2>
+  <p>Fast, keyboard-first open-source database client written in Rust with GPUI,<br />
+positioned as a DBeaver alternative.</p>
+
+  <p class="attrib">Published <time datetime="2025-12-30">30 December 2025</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li><li><a href="../../bookmarks/topics/developer-tools.html">Developer tools</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-v0-5-0-is-here-fly-io">
+  <h2><a href="https://fly.io/blog/litestream-v050-is-here/" rel="noreferrer">Litestream v0.5.0 is here (Fly.io)</a></h2>
+  <p>Release post for Litestream 0.5.0: LTX format, point-in-time recovery, removal<br />
+of generations, and no more CGO dependency.</p>
+
+  <p class="attrib">Published <time datetime="2025-10-02">2 October 2025</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-revamped-fly-io">
+  <h2><a href="https://fly.io/blog/litestream-revamped/" rel="noreferrer">Litestream revamped (Fly.io)</a></h2>
+  <p>Fly.io describes a Litestream overhaul using the LTX format from LiteFS:<br />
+faster recovery, conditional writes, lightweight read replicas and<br />
+multi-database replication.</p>
+
+  <p class="attrib">Published <time datetime="2025-05-20">20 May 2025</time> · post</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-postgres-by-example">
+  <h2><a href="https://github.com/boringcollege/postgres-by-example" rel="noreferrer">postgres-by-example</a></h2>
+  <p>Open PostgreSQL book teaching through annotated SQL examples arranged from<br />
+basics to advanced queries.</p>
+
+  <p class="attrib">Published <time datetime="2023-08-31">31 August 2023</time> · repo, book</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-under-the-hood-of-ecto-appsignal">
+  <h2><a href="https://blog.appsignal.com/2023/02/14/under-the-hood-of-ecto.html" rel="noreferrer">Under the hood of Ecto (AppSignal)</a></h2>
+  <p>Explains how Ecto's four main modules work together for database operations in<br />
+Elixir.</p>
+
+  <p class="attrib">Published <time datetime="2023-02-14">14 February 2023</time> · article</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/elixir.html">Elixir</a></li><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream">
+  <h2><a href="https://github.com/benbjohnson/litestream" rel="noreferrer">litestream</a></h2>
+  <p>Source repository for Litestream, which streams SQLite changes to S3 or other<br />
+remote storage for backup and recovery.</p>
+
+  <p class="attrib">Published <time datetime="2020-10-06">6 October 2020</time> · repo</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-agents-md">
+  <h2><a href="https://github.com/benbjohnson/litestream/blob/main/AGENTS.md" rel="noreferrer">Litestream AGENTS.md</a></h2>
+  <p>The AGENTS.md file for Litestream, giving AI agents contribution guidelines<br />
+and architecture patterns for the SQLite replication tool.</p>
+
+  <p class="attrib">Published <time datetime="2020-10-06">6 October 2020</time> · docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/ai-assisted-programming.html">AI-assisted programming</a></li><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-issues-github">
+  <h2><a href="https://github.com/benbjohnson/litestream/issues" rel="noreferrer">Litestream issues (GitHub)</a></h2>
+  <p>Issue tracker for Litestream, covering performance, storage compatibility,<br />
+security and MCP integration reports.</p>
+
+  <p class="attrib">Published <time datetime="2020-10-06">6 October 2020</time> · thread</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-chroma">
+  <h2><a href="https://www.trychroma.com" rel="noreferrer">Chroma</a></h2>
+  <p>Chroma is an open-source, serverless search database supporting vector,<br />
+full-text, regex and metadata search, used for retrieval-augmented generation<br />
+and context engineering.</p>
+
+  <p class="attrib">product</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/retrieval.html">Retrieval</a></li><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article><article class="card bookmark" id="b-litestream-2">
+  <h2><a href="https://litestream.io/" rel="noreferrer">Litestream</a></h2>
+  <p>Project site for Litestream, open-source streaming replication that lets<br />
+SQLite apps run on one server with continuous backup to cloud storage.</p>
+
+  <p class="attrib">product, docs</p>
+  <ul class="tags"><li><a href="../../bookmarks/topics/databases.html">Databases</a></li></ul>
+</article></div>
+</section>
+</main>
+</body>
+</html>

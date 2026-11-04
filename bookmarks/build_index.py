@@ -1,6 +1,6 @@
 """Rebuild the topic index in bookmarks/README.md from the node files.
 
-Reads topics/*.md and items/*.md (artifact-dag frontmatter) and replaces the
+Reads dag/topics/*.md and dag/items/*.md (artifact-dag frontmatter) and replaces the
 text between the INDEX markers in README.md. Run from anywhere:
 
     python3 bookmarks/build_index.py
@@ -36,13 +36,13 @@ def front(path):
 
 def main():
     topics = {}
-    for p in sorted((HERE / "topics").glob("*.md")):
+    for p in sorted((HERE / "dag" / "topics").glob("*.md")):
         f = front(p)
         topics[f["id"]] = {"title": f["title"], "parents": f.get("refines", []), "items": []}
     loose = []
-    for p in sorted((HERE / "items").glob("*.md")):
+    for p in sorted((HERE / "dag" / "items").glob("*.md")):
         f = front(p)
-        entry = (f["title"], f"items/{p.name}", f.get("status", ""))
+        entry = (f["title"], f"dag/items/{p.name}", f.get("status", ""))
         tops = [t for t in f.get("topics", []) if t in topics]
         for t in tops:
             topics[t]["items"].append(entry)

@@ -56,6 +56,7 @@ def isolated_site():
         def_db.mkdir()
         old_defs = site_build.DEF_DB
         old_bookmarks = site_build.BOOKMARK_DB
+        old_bookmark_dag = site_build.BOOKMARK_DAG
         old_db, old_posts, old_out, old_topics, old_writers = (
             site_build.QUOTE_DB,
             site_build.POST_DB,
@@ -68,6 +69,7 @@ def isolated_site():
             site_build.POST_DB = post_db
             site_build.DEF_DB = def_db
             site_build.BOOKMARK_DB = root / "bookmarks"
+            site_build.BOOKMARK_DAG = root / "bookmarks" / "dag"
             site_build.OUT = output
             site_build.TOPICS = output / "topics"
             site_build.WRITERS = output / "writers"
@@ -75,6 +77,7 @@ def isolated_site():
         finally:
             site_build.DEF_DB = old_defs
             site_build.BOOKMARK_DB = old_bookmarks
+            site_build.BOOKMARK_DAG = old_bookmark_dag
             site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS, site_build.WRITERS = (
                 old_db,
                 old_posts,
@@ -92,7 +95,7 @@ def build():
 class SiteBuildTests(unittest.TestCase):
     def test_bookmark_pages_file_items_under_topics_and_their_parents(self):
         with isolated_site() as (_, output):
-            db = site_build.BOOKMARK_DB
+            db = site_build.BOOKMARK_DAG
             (db / "topics").mkdir(parents=True)
             (db / "items").mkdir()
             (db / "topics" / "ai.md").write_text(
