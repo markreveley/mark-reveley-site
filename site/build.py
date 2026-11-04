@@ -3,8 +3,10 @@
 
 import html
 import json
+import os
 import re
 import shutil
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -21,11 +23,17 @@ ROOT = Path(__file__).resolve().parent.parent
 QUOTE_DB = ROOT / "quotes"
 POST_DB = ROOT / "posts"
 DEF_DB = ROOT / "defs"
+BOOKMARK_DB = ROOT / "bookmarks"
+ARTIFACT_DAG_URL = "https://github.com/markreveley/artifact-dag.git"
+ARTIFACT_DAG_CACHE = ROOT / ".cache" / "artifact-dag"
 OUT = ROOT / "site"
 TOPICS = OUT / "topics"
 WRITERS = OUT / "writers"
 
-NAV = [("index.html", "Posts"), ("quotes.html", "Quotes"), ("about.html", "About")]
+NAV = [
+    ("index.html", "Posts"), ("quotes.html", "Quotes"),
+    ("bookmarks.html", "Bookmarks"), ("about.html", "About"),
+]
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
@@ -1167,6 +1175,195 @@ def build_defs(records, taxonomy, category_records):
         render(f"defs/categories/{slug}.html", slug)
 
 
+def collect_bookmarks():
+    """Return (topics, items) from the artifact-dag nodes under bookmarks/."""
+    topics, items = {}, []
+    for path in sorted((BOOKMARK_DB / "topics").glob("*.md")):
+        meta, body = load_document(path)
+        if not meta or meta.get("type") != "definition":
+            continue
+        slug = str(meta["id"]).removeprefix("def:")
+        topics[meta["id"]] = {
+            "id": meta["id"], "slug": slug, "title": str(meta["title"]),
+            "parents": list(meta.get("refines") or []), "scope": body,
+        }
+    for path in sorted((BOOKMARK_DB / "items").glob("*.md")):
+        meta, body = load_document(path)
+        if not meta or meta.get("type") != "resource":
+            continue
+        url = str(meta.get("url", ""))
+        if not valid_web_url(url):
+            raise ValueError(f"{path}: url must be an absolute HTTP(S) URL")
+        items.append({
+            "slug": path.stem, "title": str(meta["title"]), "url": url,
+            "hacker_news": str(meta.get("hacker_news") or ""),
+            "added": str(meta.get("added") or ""),
+            "status": str(meta.get("status") or ""),
+            "kinds": [str(tag) for tag in meta.get("tags") or []],
+            "topics": [topic for topic in meta.get("topics") or [] if topic in topics],
+            "overview": body,
+        })
+    items.sort(key=lambda item: item["title"].casefold())
+    items.sort(key=lambda item: item["added"], reverse=True)
+    return topics, items
+
+
+def bookmark_topic_tree(topics):
+    """Place each topic under its first known parent, as bookmarks/README.md does."""
+    children = {}
+    for topic in topics.values():
+        parent = next((p for p in topic["parents"] if p in topics), "")
+        children.setdefault(parent, []).append(topic["id"])
+    for ids in children.values():
+        ids.sort(key=lambda topic_id: topics[topic_id]["title"].casefold())
+    return children
+
+
+def bookmark_topic_href(slug, depth):
+    return "../" * depth + f"bookmarks/topics/{slug}.html"
+
+
+def bookmark_card(item, topics, depth):
+    details = []
+    if item["added"]:
+        details.append(f'Added <time datetime="{item["added"]}">{pretty_date(item["added"])}</time>')
+    if item["kinds"]:
+        details.append(html.escape(", ".join(item["kinds"])))
+    if item["hacker_news"] and valid_web_url(item["hacker_news"]):
+        details.append(
+            f'<a href="{html.escape(item["hacker_news"], quote=True)}" rel="noreferrer">HN discussion</a>'
+        )
+    if item["status"] == "stub":
+        details.append("overview not written yet")
+    topic_links = "".join(
+        f'<li><a href="{bookmark_topic_href(topics[topic]["slug"], depth)}">'
+        f'{html.escape(topics[topic]["title"])}</a></li>'
+        for topic in item["topics"]
+    )
+    return f"""<article class="card bookmark" id="b-{html.escape(item['slug'], quote=True)}">
+  <h2><a href="{html.escape(item['url'], quote=True)}" rel="noreferrer">{html.escape(item['title'])}</a></h2>
+  {post_text_html(item['overview']) if item['overview'] else ''}
+  <p class="attrib">{' · '.join(details)}</p>
+  <ul class="tags">{topic_links}</ul>
+</article>"""
+
+
+def build_bookmarks(topics, items):
+    """Write bookmarks.html and one page per topic, in the site's own style."""
+    children = bookmark_topic_tree(topics)
+
+    def descendants(topic_id):
+        found = {topic_id}
+        for child in children.get(topic_id, []):
+            found |= descendants(child)
+        return found
+
+    filed = {
+        topic_id: [item for item in items if descendants(topic_id) & set(item["topics"])]
+        for topic_id in topics
+    }
+
+    def render(filename, selected=""):
+        depth = filename.count("/")
+
+        def tree(parent=""):
+            rows = []
+            for topic_id in children.get(parent, []):
+                topic = topics[topic_id]
+                current = ' aria-current="page"' if selected == topic_id else ""
+                rows.append(
+                    f'<li><a href="{bookmark_topic_href(topic["slug"], depth)}"{current}>'
+                    f'{html.escape(topic["title"])} <span class="category-count">'
+                    f'({len(filed[topic_id])})</span></a>{tree(topic_id)}</li>'
+                )
+            return f'<ul>{"".join(rows)}</ul>' if rows else ""
+
+        up = "../" * depth
+        current = ' aria-current="page"' if not selected else ""
+        all_link = f'<a href="{up}bookmarks.html"{current}>All bookmarks ({len(items)})</a>'
+        shown = filed[selected] if selected else items
+        title = topics[selected]["title"] if selected else "Bookmarks"
+        lede = topics[selected]["scope"] if selected else (
+            "Outside pages worth keeping, filed by topic, newest added first."
+        )
+        graph = f'<p class="lede"><a href="{up}bookmarks/graph.html">See them as a graph</a></p>'
+        feed = "".join(bookmark_card(item, topics, depth) for item in shown)
+        feed = feed or '<p class="empty">No bookmarks yet.</p>'
+        body = f"""<section class="hero">
+  <h1>{html.escape(title)}</h1>
+  <p class="lede">{html.escape(lede)}</p>
+  {graph}
+</section>
+<section class="defs-browser" aria-label="Bookmarks and topics">
+  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
+    <h2>Topics</h2>
+    <nav aria-label="Filter bookmarks">{all_link}{tree()}</nav>
+  </aside>
+  <div class="defs-feed">{feed}</div>
+</section>"""
+        page(filename, title, body, active="bookmarks.html", lede=lede)
+
+    topic_output = OUT / "bookmarks" / "topics"
+    if topic_output.exists():
+        shutil.rmtree(topic_output)
+    render("bookmarks.html")
+    for topic_id, topic in topics.items():
+        render(f"bookmarks/topics/{topic['slug']}.html", topic_id)
+
+
+def artifact_dag_checkout():
+    """Return a checkout of artifact-dag at the commit in bookmarks/artifact-dag.rev.
+
+    ARTIFACT_DAG_DIR overrides this with a local checkout, for trying an
+    unreleased viewer. Otherwise the pinned commit is fetched once into
+    .cache/artifact-dag, and fetched again only when the pin changes.
+    """
+    override = os.environ.get("ARTIFACT_DAG_DIR")
+    if override:
+        return Path(override).expanduser().resolve()
+    rev = (BOOKMARK_DB / "artifact-dag.rev").read_text(encoding="utf-8").strip()
+    if not re.fullmatch(r"[0-9a-f]{40}", rev):
+        raise ValueError("bookmarks/artifact-dag.rev must hold a full 40-character commit hash")
+    cache = ARTIFACT_DAG_CACHE
+
+    def git(*args):
+        return subprocess.run(
+            ["git", "-C", str(cache), *args], check=True, capture_output=True, text=True
+        ).stdout.strip()
+
+    if (cache / ".git").exists():
+        try:
+            if git("rev-parse", "HEAD") == rev:
+                return cache
+        except subprocess.CalledProcessError:
+            pass
+    else:
+        cache.mkdir(parents=True, exist_ok=True)
+        git("init", "-q")
+        git("remote", "add", "origin", ARTIFACT_DAG_URL)
+    git("fetch", "-q", "--depth", "1", "origin", rev)
+    git("checkout", "-q", "--detach", rev)
+    return cache
+
+
+def build_bookmark_graph():
+    """Validate bookmarks/ with dagcheck, then write the artifact-dag viewer page."""
+    tool = artifact_dag_checkout()
+    check = subprocess.run(
+        ["node", str(tool / "bin" / "dagcheck.js"), str(BOOKMARK_DB), "--lint"],
+        capture_output=True, text=True,
+    )
+    if check.returncode != 0:
+        raise ValueError(f"dagcheck found errors in bookmarks/:\n{check.stdout}{check.stderr}")
+    viewer = subprocess.run(
+        ["node", str(tool / "bin" / "build-viewer.js"), "--config", str(BOOKMARK_DB / "dag-viewer.json")],
+        check=True, capture_output=True, text=True,
+    )
+    destination = OUT / "bookmarks" / "graph.html"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(viewer.stdout, encoding="utf-8")
+
+
 def build_about():
     body = """<section class="hero">
   <div class="about-heading">
@@ -1207,6 +1404,10 @@ def main():
     build_quotes(records, taxonomy, source_taxonomy)
     build_writers(records, taxonomy, source_taxonomy, source_records)
     build_topics(records, taxonomy, source_taxonomy, topic_records)
+    if (BOOKMARK_DB / "items").is_dir():
+        bookmark_topics, bookmarks = collect_bookmarks()
+        build_bookmarks(bookmark_topics, bookmarks)
+        build_bookmark_graph()
     build_about()
     pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))
     sources = len({record["resource"] for record in records})

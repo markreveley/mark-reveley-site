@@ -1,6 +1,7 @@
 import contextlib
 import importlib.util
 import io
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -54,6 +55,7 @@ def isolated_site():
         def_db = root / "defs"
         def_db.mkdir()
         old_defs = site_build.DEF_DB
+        old_bookmarks = site_build.BOOKMARK_DB
         old_db, old_posts, old_out, old_topics, old_writers = (
             site_build.QUOTE_DB,
             site_build.POST_DB,
@@ -65,12 +67,14 @@ def isolated_site():
             site_build.QUOTE_DB = quote_db
             site_build.POST_DB = post_db
             site_build.DEF_DB = def_db
+            site_build.BOOKMARK_DB = root / "bookmarks"
             site_build.OUT = output
             site_build.TOPICS = output / "topics"
             site_build.WRITERS = output / "writers"
             yield quote_db, output
         finally:
             site_build.DEF_DB = old_defs
+            site_build.BOOKMARK_DB = old_bookmarks
             site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS, site_build.WRITERS = (
                 old_db,
                 old_posts,
@@ -86,6 +90,47 @@ def build():
 
 
 class SiteBuildTests(unittest.TestCase):
+    def test_bookmark_pages_file_items_under_topics_and_their_parents(self):
+        with isolated_site() as (_, output):
+            db = site_build.BOOKMARK_DB
+            (db / "topics").mkdir(parents=True)
+            (db / "items").mkdir()
+            (db / "topics" / "ai.md").write_text(
+                "---\nid: def:ai\ntype: definition\ntitle: AI\ntags: [topic]\n---\nAll of AI.\n")
+            (db / "topics" / "evals.md").write_text(
+                "---\nid: def:evals\ntype: definition\ntitle: Evals\ntags: [topic]\n"
+                "refines: [def:ai]\n---\nMeasuring models.\n")
+            (db / "items" / "bench.md").write_text(
+                "---\nid: res:bench\ntype: resource\ntitle: \"A <bench>\"\n"
+                "url: \"https://example.com/bench\"\nhacker_news: \"https://news.ycombinator.com/item?id=1\"\n"
+                "added: 2026-10-23\nstatus: unread\ntags: [paper]\ntopics: [def:evals]\n---\n"
+                "An overview with a [link](https://example.com/more).\n")
+            topics, items = site_build.collect_bookmarks()
+            site_build.build_bookmarks(topics, items)
+            index = (output / "bookmarks.html").read_text()
+            self.assertIn('href="https://example.com/bench"', index)
+            self.assertIn("A &lt;bench&gt;", index)
+            self.assertIn("HN discussion", index)
+            self.assertIn('href="bookmarks/graph.html"', index)
+            self.assertIn('href="https://example.com/more" rel="noreferrer"', index)
+            parent = (output / "bookmarks" / "topics" / "ai.html").read_text()
+            self.assertIn("A &lt;bench&gt;", parent)
+            self.assertIn('href="../../bookmarks/topics/evals.html"', parent)
+            self.assertIn("AI <span class=\"category-count\">(1)</span>", parent)
+
+    def test_artifact_dag_pin_must_be_a_full_commit_hash(self):
+        with isolated_site():
+            db = site_build.BOOKMARK_DB
+            db.mkdir()
+            (db / "artifact-dag.rev").write_text("main\n")
+            old = os.environ.pop("ARTIFACT_DAG_DIR", None)
+            try:
+                with self.assertRaises(ValueError):
+                    site_build.artifact_dag_checkout()
+            finally:
+                if old is not None:
+                    os.environ["ARTIFACT_DAG_DIR"] = old
+
     def test_paper_card_uses_department_and_preserves_author_identity(self):
         with isolated_site() as (database, output):
             write_record(database, "paper.md", source_author="Alice and Bob",

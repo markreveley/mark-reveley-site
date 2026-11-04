@@ -1,0 +1,12 @@
+---
+id: res:diamond-types
+type: resource
+title: "diamond-types"
+url: "https://github.com/josephg/diamond-types"
+added: 2026-10-23
+status: unread
+tags: [repo]
+topics: [def:version-control, def:rust]
+---
+A high-performance Rust CRDT for concurrent plain-text editing without a
+central server.

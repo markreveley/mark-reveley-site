@@ -89,13 +89,21 @@ repository-scoped skill lives at
 The former graph-engineering research bundle and its demo quotes are preserved
 under [`removed/research/`](removed/research/).
 
+## Add a bookmark
+
+Add a resource file under [`bookmarks/items/`](bookmarks/items/) in the
+artifact-dag format, filed under topics in [`bookmarks/topics/`](bookmarks/topics/),
+then rebuild. See [`bookmarks/README.md`](bookmarks/README.md) for the fields, and
+[ARCHITECTURE.md](ARCHITECTURE.md) for how the build publishes them.
+
 ## Run and rebuild the site
 
 The generated pages are committed, so they can be opened directly or served:
 
     python3 -m http.server -d site 8000
 
-To rebuild without adding a quote:
+To rebuild without adding a quote (bookmarks also need `git` and `node`; see
+[ARCHITECTURE.md](ARCHITECTURE.md)):
 
     pip install -r site/requirements.txt
     python3 site/build.py
