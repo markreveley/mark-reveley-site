@@ -14,9 +14,9 @@ The big gamble we are seeing is related to how far out you can push confusion. C
 
 Before, I talked of the three forces that enable delusion, wishful thinking and neurosis. I conveniently left out power, the underlying substrate of all three. The force made explicit in a hierarchy.
 
-An organization is a complex interconnected web of confusion processing entities. Where confusion needs to live for each depends on their role. The purpose of hierarchy is to defer and outsource confusion to those below you.
+An organization is a complex web of confusion processing entities. Where confusion needs to live depends on role. The purpose of hierarchy is to defer and outsource confusion to others.
 
-AI is allowing for the complete rupturing of the confusion calibration lattice of hierarchy. Great networks of knowledge workers have collapsed into strange new dimensions of semantic expression bundled with near instant execution.
+AI is leading to the complete rupturing of the lattice of hierarchical systems based on capability. Great networks of knowledge workers have collapsed into strange new dimensions where semantic expression is bundled with near instant execution.
 
 The problem with what people are going to build, is the same as it's always been. What people are going to build.
 
