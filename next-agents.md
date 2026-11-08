@@ -1,7 +1,7 @@
 ---
 type: handoff
 audience: agent
-updated: 2026-11-03
+updated: 2026-11-08
 ---
 
 # Next steps for the agent
@@ -10,7 +10,8 @@ Read with [`next-operator.md`](next-operator.md). Rewrite both at the end of eac
 
 ## State
 
-- `main` is at the merge of PR #11, pushed, and deployed by Cloudflare Pages, which serves the committed `site/` folder. No other branches or worktrees from the bookmarks work remain.
+- `main` is at the merge of PR #14 plus the handoff commit after it, pushed, and deployed by Cloudflare Pages, which serves the committed `site/` folder. No other branches or worktrees from the bookmarks or post work remain.
+- **Posts:** the latest is "Seek and Document Confusion" (`posts/2026-11-06-seek-confusion.md`), live. Cloudflare's check on PR #14's merge passed; the live page itself was not opened.
 - **Bookmarks:**
   - `bookmarks/dag/items/` holds 1172 published resources, under 50 topics in `bookmarks/dag/topics/`. `dagcheck` reports 0 errors and 0 warnings.
   - The site publishes them as `bookmarks.html`, one page per topic, and the artifact-dag viewer at `bookmarks/graph.html`. How the build works is in [ARCHITECTURE.md](ARCHITECTURE.md). Fields and intake history are in [bookmarks/README.md](bookmarks/README.md).
@@ -21,6 +22,8 @@ Read with [`next-operator.md`](next-operator.md). Rewrite both at the end of eac
 
 ## Environment facts
 
+- **Publishing a post:** the build reads only top-level `posts/*.md`, so `posts/drafts/` and `posts/roughs/` are never published. When formatting the operator's draft, fix plain typos, keep their phrasing, fragments and odd commas, and list the fixes in the reply.
+- **Output path:** generated pages go to `site/` at the repo root. The `site/site/` in ARCHITECTURE.md counts the repo's own folder name.
 - **Build dependencies:** PyYAML and markdown-it are not installed globally. Build and test with:
   - `uv run --no-project --with-requirements site/requirements.txt -- python site/build.py`
   - `... -- python -m unittest discover -s tests`
