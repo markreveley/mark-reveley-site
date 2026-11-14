@@ -11,7 +11,7 @@ Read with [`next-operator.md`](next-operator.md). Rewrite both at the end of eac
 ## State
 
 - `main` is at the merge of PR #14 plus the handoff commit after it, pushed, and deployed by Cloudflare Pages, which serves the committed `site/` folder. No other branches or worktrees from the bookmarks or post work remain.
-- **Posts:** the latest is "Seek and Document Confusion" (`posts/2026-11-06-seek-confusion.md`), live. Cloudflare's check on PR #14's merge passed; the live page itself was not opened.
+- **Posts:** the latest is "The Governance Spiral" (`posts/2026-11-13-the-governance-spiral.md`), pushed straight to `main` on 2026-11-13. Its text is the operator's section between the begin/end post markers in the Drive draft "2026-11-12 draft - The Governance Spiral"; the rest of that doc is unpublished notes.
 - **Bookmarks:**
   - `bookmarks/dag/items/` holds 1172 published resources, under 50 topics in `bookmarks/dag/topics/`. `dagcheck` reports 0 errors and 0 warnings.
   - The site publishes them as `bookmarks.html`, one page per topic, and the artifact-dag viewer at `bookmarks/graph.html`. How the build works is in [ARCHITECTURE.md](ARCHITECTURE.md). Fields and intake history are in [bookmarks/README.md](bookmarks/README.md).
