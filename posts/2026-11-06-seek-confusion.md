@@ -3,6 +3,7 @@ type: Post
 title: "Seek and Document Confusion"
 date_published: "2026-11-06"
 excerpt: "Documenting confusion is now a valuable act."
+tags: [comprehension, value-and-meaning]
 ---
 AI is like fame or money. It's an enabler of delusion and wishful thinking. All three forces remove limits, and without limits creativity dies. When creativity dies, sanity follows. Neurosis is a product of control. You can have too much.
 

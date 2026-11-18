@@ -1,7 +1,7 @@
 import contextlib
 import importlib.util
 import io
-import os
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,19 +13,6 @@ ROOT = Path(__file__).resolve().parent.parent
 SPEC = importlib.util.spec_from_file_location("site_build", ROOT / "site" / "build.py")
 site_build = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(site_build)
-
-
-def write_record(directory, name, **overrides):
-    record = {
-        "type": "Quote",
-        "resource": "https://example.com/article",
-        "quote": "A software quote.",
-        "date_added": "2026-08-28",
-        "tags": ["software-engineering"],
-        **overrides,
-    }
-    frontmatter = yaml.safe_dump(record, sort_keys=False)
-    (directory / name).write_text(f"---\n{frontmatter}---\n", encoding="utf-8")
 
 
 def write_post(directory, name="example-post.md", **overrides):
@@ -43,48 +30,39 @@ def write_post(directory, name="example-post.md", **overrides):
     )
 
 
+TAXONOMY = """agents:
+  label: Agents
+  children:
+    agent-failures:
+      label: Agent failures
+      tags: [agent-failures]
+    governance:
+      label: Governance
+      tags: [governance]
+philosophy:
+  label: Philosophy
+  tags: [philosophy]
+"""
+
+
 @contextlib.contextmanager
 def isolated_site():
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)
-        quote_db = root / "quotes"
         post_db = root / "posts"
-        output = root / "site"
-        quote_db.mkdir()
-        post_db.mkdir()
         def_db = root / "defs"
+        output = root / "site"
+        post_db.mkdir()
         def_db.mkdir()
-        old_defs = site_build.DEF_DB
-        old_bookmarks = site_build.BOOKMARK_DB
-        old_bookmark_dag = site_build.BOOKMARK_DAG
-        old_db, old_posts, old_out, old_topics, old_writers = (
-            site_build.QUOTE_DB,
-            site_build.POST_DB,
-            site_build.OUT,
-            site_build.TOPICS,
-            site_build.WRITERS,
-        )
+        saved = (site_build.POST_DB, site_build.DEF_DB, site_build.OUT, site_build.TAGS)
         try:
-            site_build.QUOTE_DB = quote_db
             site_build.POST_DB = post_db
             site_build.DEF_DB = def_db
-            site_build.BOOKMARK_DB = root / "bookmarks"
-            site_build.BOOKMARK_DAG = root / "bookmarks" / "dag"
             site_build.OUT = output
-            site_build.TOPICS = output / "topics"
-            site_build.WRITERS = output / "writers"
-            yield quote_db, output
+            site_build.TAGS = output / "tags"
+            yield post_db, output
         finally:
-            site_build.DEF_DB = old_defs
-            site_build.BOOKMARK_DB = old_bookmarks
-            site_build.BOOKMARK_DAG = old_bookmark_dag
-            site_build.QUOTE_DB, site_build.POST_DB, site_build.OUT, site_build.TOPICS, site_build.WRITERS = (
-                old_db,
-                old_posts,
-                old_out,
-                old_topics,
-                old_writers,
-            )
+            site_build.POST_DB, site_build.DEF_DB, site_build.OUT, site_build.TAGS = saved
 
 
 def build():
@@ -92,112 +70,11 @@ def build():
         site_build.main()
 
 
+def navigation(page):
+    return page.split('<nav class="mainnav"', 1)[1].split("</nav>", 1)[0]
+
+
 class SiteBuildTests(unittest.TestCase):
-    def test_bookmark_pages_file_items_under_topics_and_their_parents(self):
-        with isolated_site() as (_, output):
-            db = site_build.BOOKMARK_DAG
-            (db / "topics").mkdir(parents=True)
-            (db / "items").mkdir()
-            (db / "topics" / "ai.md").write_text(
-                "---\nid: def:ai\ntype: definition\ntitle: AI\ntags: [topic]\n---\nAll of AI.\n")
-            (db / "topics" / "evals.md").write_text(
-                "---\nid: def:evals\ntype: definition\ntitle: Evals\ntags: [topic]\n"
-                "refines: [def:ai]\n---\nMeasuring models.\n")
-            (db / "items" / "bench.md").write_text(
-                "---\nid: res:bench\ntype: resource\ntitle: \"A <bench>\"\n"
-                "url: \"https://example.com/bench\"\nhacker_news: \"https://news.ycombinator.com/item?id=1\"\n"
-                "added: 2026-10-23\npublished: 2026-09\nstatus: unread\ntags: [paper]\ntopics: [def:evals]\n---\n"
-                "An overview with a [link](https://example.com/more). See [[res:bench]] and [[def:ai|all AI]].\n")
-            topics, items = site_build.collect_bookmarks()
-            site_build.build_bookmarks(topics, items)
-            index = (output / "bookmarks.html").read_text()
-            self.assertIn('href="https://example.com/bench"', index)
-            self.assertIn("A &lt;bench&gt;", index)
-            self.assertIn("HN discussion", index)
-            self.assertIn('Published <time datetime="2026-09">September 2026</time>', index)
-            self.assertNotIn("Added", index)
-            self.assertIn('href="bookmarks/graph.html"', index)
-            self.assertIn('href="https://example.com/more" rel="noreferrer"', index)
-            self.assertIn('<a href="bookmarks.html#b-bench" rel="noreferrer">A &lt;bench&gt;</a>', index)
-            self.assertIn('<a href="bookmarks/topics/ai.html" rel="noreferrer">all AI</a>', index)
-            self.assertNotIn("[[", index)
-            parent = (output / "bookmarks" / "topics" / "ai.html").read_text()
-            self.assertIn("A &lt;bench&gt;", parent)
-            self.assertIn('href="../../bookmarks/topics/evals.html"', parent)
-            self.assertIn("AI <span class=\"category-count\">(1)</span>", parent)
-
-    def test_artifact_dag_pin_must_be_a_full_commit_hash(self):
-        with isolated_site():
-            db = site_build.BOOKMARK_DB
-            db.mkdir()
-            (db / "artifact-dag.rev").write_text("main\n")
-            old = os.environ.pop("ARTIFACT_DAG_DIR", None)
-            try:
-                with self.assertRaises(ValueError):
-                    site_build.artifact_dag_checkout()
-            finally:
-                if old is not None:
-                    os.environ["ARTIFACT_DAG_DIR"] = old
-
-    def test_paper_card_uses_department_and_preserves_author_identity(self):
-        with isolated_site() as (database, output):
-            write_record(database, "paper.md", source_author="Alice and Bob",
-                         source_department="Research <Lab> & University")
-            write_record(database, "solo.md", resource="https://example.com/solo",
-                         source_author="Solo Author")
-            build()
-            page = (output / "quotes.html").read_text()
-            card = page.split('id="q-paper"', 1)[1].split('</article>', 1)[0]
-            details = card.split('class="source-title">', 1)[1].split('</p>', 1)[0]
-            self.assertIn('Research &lt;Lab&gt; &amp; University', details)
-            self.assertNotIn('Alice and Bob', details)
-            self.assertIn('href="writers/alice-and-bob.html"', details)
-            self.assertTrue((output / "writers/alice-and-bob.html").exists())
-            record = next(r for r in site_build.collect_quotes() if r['slug'] == 'paper')
-            self.assertEqual(record['source_author'], 'Alice and Bob')
-            self.assertIn('>Solo Author</a>', page)
-
-    def test_discussion_quotes_stay_with_parent_across_card_views(self):
-        with isolated_site() as (database, output):
-            (database / "source-taxonomy.yml").write_text(
-                "writing:\n  label: Writing\n  hosts: [example.com]\n"
-            )
-            write_record(database, "discussion.md", source_author="Example Author",
-                         hacker_news_url="https://news.ycombinator.com/item?id=123",
-                         child_quotes=["First <script>alert(1)</script> & comment.",
-                                       "Second comment.\n\nAnother paragraph."])
-            write_record(database, "plain.md", quote="No discussion.")
-            build()
-            self.assertEqual(len(site_build.collect_quotes()), 2)
-            for filename in ("quotes.html", "quotes-expanded.html", "topics/all.html",
-                             "topics/software-engineering.html", "writers/example-author.html",
-                             "writers/types/writing.html"):
-                page = (output / filename).read_text()
-                card = page.split('id="q-discussion"', 1)[1].split('</article>', 1)[0]
-                self.assertEqual(card.count('<blockquote>'), 3)
-                self.assertIn('First &lt;script&gt;alert(1)&lt;/script&gt; &amp; comment.', card)
-                self.assertIn('<p>Second comment.</p><p>Another paragraph.</p>', card)
-                self.assertLess(card.index('Example Author</a>'), card.index('discussion-quotes'))
-                self.assertLess(card.index('First &lt;script&gt;'), card.index('Second comment.'))
-                discussion = card.split('class="discussion-quotes"', 1)[1]
-                self.assertIn('href="https://news.ycombinator.com/item?id=123"', discussion)
-                self.assertNotIn('Example Author', discussion)
-            plain = (output / "quotes.html").read_text().split('id="q-plain"', 1)[1].split('</article>', 1)[0]
-            self.assertNotIn('discussion-quotes', plain)
-
-    def test_discussion_quotes_require_valid_text_and_hn_link(self):
-        for children in (None, "comment", {}, [""], ["  "], [123], [{"quote": "text"}]):
-            with self.subTest(children=children), isolated_site() as (database, _):
-                write_record(database, "bad.md", child_quotes=children,
-                             hacker_news_url="https://news.ycombinator.com/item?id=123")
-                with self.assertRaisesRegex(ValueError, "child_quotes must"):
-                    build()
-        for url in ("", "https://example.com/discussion"):
-            with self.subTest(url=url), isolated_site() as (database, _):
-                write_record(database, "bad.md", child_quotes=["Comment"], hacker_news_url=url)
-                with self.assertRaisesRegex(ValueError, "require a Hacker News"):
-                    build()
-
     def write_definition(self, name="program", body="A definition.", **overrides):
         meta = {
             "type": "Definition", "term": name.title(),
@@ -361,11 +238,10 @@ class SiteBuildTests(unittest.TestCase):
             self.assertIn('class="about-social-links"', about)
             self.assertEqual(about.count('class="social-icon"'), len(profiles))
             self.assertNotIn("Elsewhere", about)
-
     def test_builds_posts_from_markdown_records(self):
-        with isolated_site() as (quote_db, output):
+        with isolated_site() as (posts, output):
             write_post(
-                quote_db.parent / "posts",
+                posts,
                 excerpt="A custom post-card excerpt.",
                 body=(
                     "A post body with an [example](https://example.com/path?a=1&b=2). "
@@ -385,9 +261,9 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn("[example]", post)
 
     def test_post_markdown_formats_transcript_and_keeps_html_inert(self):
-        with isolated_site() as (quote_db, output):
+        with isolated_site() as (posts, output):
             write_post(
-                quote_db.parent / "posts",
+                posts,
                 body=(
                     "## Transcript\n\n### Assistant\n\n"
                     "**History check** with *emphasis* and `git log --all`.\n\n"
@@ -412,298 +288,111 @@ class SiteBuildTests(unittest.TestCase):
             self.assertNotIn("<script>", post)
             self.assertNotIn('href="javascript:', post)
 
-    def test_builds_enriched_quotes_and_allows_a_repeated_resource(self):
-        with isolated_site() as (quote_db, output):
-            write_record(
-                quote_db,
-                "first.md",
-                source_title="An example article",
-                source_author="Example Author",
-                source_date="2026-08-20",
-                hacker_news_url="https://news.ycombinator.com/item?id=12345678",
-                verification_status="verified",
-                verification_date="2026-08-28",
-            )
-            write_record(
-                quote_db,
-                "second.md",
-                quote="Design <systems> carefully.",
-                tags=["design", "systems"],
-                speaker="Example Speaker",
-                verification_status="source-unavailable",
-                verification_date="2026-08-28",
-            )
+    def test_navigation_has_only_posts_and_about(self):
+        with isolated_site() as (posts, output):
+            write_post(posts)
             build()
+            for filename in ("index.html", "index-expanded.html", "about.html",
+                             "posts/example-post.html", "defs.html"):
+                links = re.findall(r'>([^<]+)</a>', navigation((output / filename).read_text()))
+                self.assertEqual(links, ["Posts", "About"], filename)
 
-            landing = (output / "quotes.html").read_text(encoding="utf-8")
-            tags_page = (output / "tags.html").read_text(encoding="utf-8")
-            writers_page = (output / "writers.html").read_text(encoding="utf-8")
-            writer_page = (output / "writers" / "example-author.html").read_text(encoding="utf-8")
-            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
-            topic_page = (output / "topics" / "software-engineering.html").read_text(encoding="utf-8")
-            all_quotes = (output / "topics" / "all.html").read_text(encoding="utf-8")
-            self.assertIn(
-                "A collection of decent-probability human authored quotes from selected reading, "
-                "added by hand, sorted by date added",
-                landing,
-            )
-            self.assertNotIn('<a href="tags.html">Tags</a>', landing)
-            self.assertNotIn('<a href="writers.html">Writer</a>', landing)
-            self.assertIn('class="quote-feed"', landing)
-            self.assertIn('class="random-toggle"', landing)
-            self.assertIn('data-filters="off"', landing)
-            self.assertEqual(landing.count('data-die-face="'), 6)
-            self.assertIn('src="random-quotes.js"', landing)
-            self.assertIn('class="filter-toggle"', landing)
-            self.assertIn('href="quotes-expanded.html"', landing)
-            self.assertNotIn('class="filter-rail ', landing)
-            self.assertIn('class="random-toggle"', expanded)
-            self.assertIn('data-filters="on"', expanded)
-            self.assertIn('class="filter-toggle is-on"', expanded)
-            self.assertIn('href="quotes.html"', expanded)
+    def test_retired_quote_and_bookmark_pages_are_removed(self):
+        with isolated_site() as (_, output):
+            for name in ("quotes.html", "bookmarks.html", "tags.html", "random-quotes.js"):
+                (output / name).parent.mkdir(parents=True, exist_ok=True)
+                (output / name).write_text("old")
+            for folder in ("topics", "writers", "bookmarks/topics"):
+                (output / folder).mkdir(parents=True, exist_ok=True)
+                (output / folder / "x.html").write_text("old")
+            build()
+            for name in ("quotes.html", "bookmarks.html", "tags.html", "random-quotes.js",
+                         "topics", "writers", "bookmarks"):
+                self.assertFalse((output / name).exists(), name)
+
+    def test_post_tags_build_a_rail_and_tag_pages(self):
+        with isolated_site() as (posts, output):
+            (posts / "taxonomy.yml").write_text(TAXONOMY)
+            write_post(posts, "old.md", title="Old", date_published="2026-09-01",
+                       tags=["philosophy"])
+            write_post(posts, "new.md", title="New", date_published="2026-10-01",
+                       tags=["governance", "agent-failures"])
+            write_post(posts, "untagged.md", title="Untagged", date_published="2026-08-01")
+            build()
+            landing = (output / "index.html").read_text()
+            expanded = (output / "index-expanded.html").read_text()
+            parent = (output / "tags/agents.html").read_text()
+            child = (output / "tags/governance.html").read_text()
+            post = (output / "posts/new.html").read_text()
+
+            # Cards carry their tags, broader categories first.
+            card = landing.split('id="p-new"', 1)[1].split("</article>", 1)[0]
+            self.assertLess(card.index('href="tags/agents.html">Agents'),
+                            card.index('href="tags/governance.html">Governance'))
+            self.assertIn('href="tags/agent-failures.html">Agent failures', card)
+            # The plain feed has no rail; the eye's page has it on the left, roots only.
+            self.assertNotIn("filter-rail", landing)
             self.assertIn('class="filter-rail filter-rail-tags"', expanded)
-            self.assertIn('class="filter-rail filter-rail-sources"', expanded)
-            self.assertNotIn('>all</a>', expanded)
-            self.assertLess(
-                landing.index("Design &lt;systems&gt; carefully."),
-                landing.index("A software quote."),
-            )
-            self.assertNotIn('<a href="quotes.html">Quotes</a>', tags_page)
-            self.assertIn('<ul class="topics">', tags_page)
-            self.assertIn("software-engineering", tags_page)
-            self.assertNotIn('<article class="card quote"', tags_page)
-            self.assertNotIn("A software quote.", tags_page)
-            self.assertIn('<a href="writers/example-author.html">Example Author</a>', landing)
-            self.assertIn('<a href="writers/example-author.html">Example Author</a>', writers_page)
-            self.assertIn("<h1>Example Author</h1>", writer_page)
-            self.assertIn("A software quote.", writer_page)
-            self.assertNotIn('<a href="../quotes.html">Quotes</a>', writer_page)
-            self.assertIn('class="filter-toggle is-on"', writer_page)
-            self.assertIn('data-root="../" data-filters="on"', writer_page)
-            self.assertIn('src="../random-quotes.js"', writer_page)
-            self.assertIn('aria-current="page">Example Author</a>', writer_page)
-            self.assertIn(
-                'href="../quotes-expanded.html" '
-                'aria-label="Exit software-engineering filter">software-engineering</a>',
-                topic_page,
-            )
-            self.assertIn("Design &lt;systems&gt; carefully.", all_quotes)
-            self.assertNotIn('>all</a>', all_quotes)
-            self.assertIn("Example Speaker", all_quotes)
-            self.assertIn("An example article", all_quotes)
-            self.assertIn("Example Author", all_quotes)
-            self.assertIn(
-                '<a href="https://example.com/article" rel="noreferrer">An example article</a>',
-                all_quotes,
-            )
-            source_link = '<a href="https://example.com/article" rel="noreferrer">An example article</a>'
-            hn_link = '<a href="https://news.ycombinator.com/item?id=12345678" rel="noreferrer">hn</a>'
-            author_link = '<a href="../writers/example-author.html">Example Author</a>'
-            self.assertIn(f"{source_link} · {hn_link} · {author_link}", all_quotes)
-            self.assertNotIn(">https://example.com/article</a>", all_quotes)
-            self.assertNotIn("source unavailable", all_quotes)
-            self.assertNotIn('class="record-meta"', all_quotes)
-            self.assertNotIn('<a class="self"', all_quotes)
-            self.assertTrue((output / "topics" / "software-engineering.html").exists())
-
-            random_script = (output / "random-quotes.js").read_text(encoding="utf-8")
-            self.assertIn('"first"', random_script)
-            self.assertIn('"second"', random_script)
-            self.assertIn('card.hidden = card !== selectedCard', random_script)
-            self.assertIn('showAssociatedFilters(selectedCard)', random_script)
-            self.assertIn('eye.href =', random_script)
-            self.assertIn('window.location.assign', random_script)
-            self.assertIn('quoteSlugs.filter((slug) => slug !== requestedSlug)', random_script)
-            self.assertIn('Math.floor(Math.random() * 6) + 1', random_script)
-            self.assertIn('showDieFace(rolledFace)', random_script)
-            self.assertIn('eyeParameters.set("die", String(requestedFace))', random_script)
-
-            self.assertIn('data-quote-slug="first"', landing)
-            self.assertIn('data-source-filter="Example Author"', landing)
-            self.assertIn('data-source-filter-href="writers/example-author.html"', landing)
-
-    def test_builds_a_drill_down_topic_taxonomy(self):
-        with isolated_site() as (quote_db, output):
-            write_record(
-                quote_db,
-                "architecture.md",
-                quote="Agent architecture matters.",
-                tags=["agent-architecture"],
-            )
-            write_record(
-                quote_db,
-                "instructions.md",
-                resource="https://example.com/instructions",
-                quote="Agent instructions matter.",
-                tags=["agent-instructions"],
-            )
-            (quote_db / "taxonomy.yml").write_text(
-                """agent:
-  label: agent
-  children:
-    agent-architecture:
-      label: architecture
-      tags: [agent-architecture]
-    agent-instructions:
-      label: instruction
-      tags: [agent-instructions]
-software:
-  label: software
-""",
-                encoding="utf-8",
-            )
+            rail = expanded.split('<h2>Tags</h2>', 1)[1].split("</aside>", 1)[0]
+            self.assertIn('href="tags/agents.html">Agents', rail)
+            self.assertIn('href="tags/philosophy.html">Philosophy', rail)
+            self.assertNotIn("governance", rail)
+            # Tag pages include narrower tags' posts once and drill down.
+            self.assertEqual(parent.count('id="p-new"'), 1)
+            self.assertNotIn('id="p-old"', parent)
+            self.assertIn('href="../tags/governance.html">Governance', parent.split("</aside>", 1)[0])
+            self.assertIn('href="../index-expanded.html" aria-label="Exit Agents filter"', child)
+            self.assertIn("1 post filed under <em>Agents / Governance</em>", child)
+            # A post page lists its tags.
+            self.assertIn('href="../tags/governance.html">Governance', post)
+            # Removing a tag removes its page on the next build.
+            (posts / "taxonomy.yml").write_text(TAXONOMY.replace(
+                "philosophy:\n  label: Philosophy\n  tags: [philosophy]\n", ""))
+            (posts / "old.md").unlink()
             build()
+            self.assertFalse((output / "tags/philosophy.html").exists())
 
-            landing = (output / "quotes.html").read_text(encoding="utf-8")
-            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
-            agent_page = (output / "topics" / "agent.html").read_text(encoding="utf-8")
-            architecture_page = (
-                output / "topics" / "agent-architecture.html"
-            ).read_text(encoding="utf-8")
-
-            self.assertIn(
-                '<a href="topics/agent.html">agent</a></li>'
-                '<li><a href="topics/agent-architecture.html">architecture</a>',
-                landing,
-            )
-            expanded_tags = expanded.split('class="filter-rail filter-rail-tags"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('href="topics/agent.html">agent</a>', expanded_tags)
-            self.assertIn('href="topics/software.html">software</a>', expanded_tags)
-            self.assertNotIn('>architecture</a>', expanded_tags)
-
-            agent_tags = agent_page.split('class="filter-rail filter-rail-tags"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn(
-                'href="../quotes-expanded.html" aria-label="Exit agent filter">agent</a>',
-                agent_tags,
-            )
-            self.assertEqual(agent_tags.count('class="filter-divider"'), 1)
-            self.assertIn('>architecture</a>', agent_tags)
-            self.assertIn('>instruction</a>', agent_tags)
-            self.assertNotIn('>software</a>', agent_tags)
-
-            architecture_tags = architecture_page.split(
-                'class="filter-rail filter-rail-tags"', 1
-            )[1].split("</aside>", 1)[0]
-            self.assertIn(
-                'href="../topics/agent.html" aria-label="Exit architecture filter">architecture</a>',
-                architecture_tags,
-            )
-            self.assertIn(
-                'href="../quotes-expanded.html" aria-label="Exit agent filter">agent</a>',
-                architecture_tags,
-            )
-            self.assertEqual(architecture_tags.count('class="filter-divider"'), 1)
-            self.assertNotIn('>instruction</a>', architecture_tags)
-
-    def test_builds_writers_by_source_type(self):
-        with isolated_site() as (quote_db, output):
-            write_record(
-                quote_db,
-                "paper.md",
-                resource="https://papers.example.org/one",
-                source_author="Researcher",
-            )
-            write_record(
-                quote_db,
-                "blog.md",
-                resource="https://blog.example.org/two",
-                quote="A blog quote.",
-                source_author="Blogger",
-            )
-            (quote_db / "source-taxonomy.yml").write_text(
-                """writing:
-  label: Writing
-  children:
-    blogs:
-      label: Blogs
-      hosts: [blog.example.org]
-research:
-  label: Research
-  children:
-    papers:
-      label: Papers
-      hosts: [papers.example.org]
-""",
-                encoding="utf-8",
-            )
-            build()
-
-            writers = (output / "writers.html").read_text(encoding="utf-8")
-            expanded = (output / "quotes-expanded.html").read_text(encoding="utf-8")
-            writing = (output / "writers" / "types" / "writing.html").read_text(encoding="utf-8")
-            blogs = (output / "writers" / "types" / "blogs.html").read_text(encoding="utf-8")
-            papers = (output / "writers" / "types" / "papers.html").read_text(encoding="utf-8")
-            blogger = (output / "writers" / "blogger.html").read_text(encoding="utf-8")
-            self.assertIn('href="writers/types/writing.html">Writing</a>', writers)
-            self.assertIn('href="writers/types/research.html">Research</a>', writers)
-            source_rail = expanded.split('class="filter-rail filter-rail-sources"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('href="writers/types/writing.html">Writing</a>', source_rail)
-            self.assertNotIn('>Blogs</a>', source_rail)
-            self.assertNotIn('>Blogger</a>', source_rail)
-
-            writing_rail = writing.split('class="filter-rail filter-rail-sources"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('aria-label="Exit Writing filter">Writing</a>', writing_rail)
-            self.assertIn('href="../../writers/types/blogs.html">Blogs</a>', writing_rail)
-            self.assertNotIn('>Blogger</a>', writing_rail)
-
-            blogs_rail = blogs.split('class="filter-rail filter-rail-sources"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('aria-label="Exit Writing filter">Writing</a>', blogs_rail)
-            self.assertIn('aria-label="Exit Blogs filter">Blogs</a>', blogs_rail)
-            self.assertIn('href="../../writers/blogger.html">Blogger</a>', blogs_rail)
-            self.assertIn("A blog quote.", blogs)
-
-            papers_rail = papers.split('class="filter-rail filter-rail-sources"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('href="../../writers/researcher.html">Researcher</a>', papers_rail)
-
-            blogger_rail = blogger.split('class="filter-rail filter-rail-sources"', 1)[1].split(
-                "</aside>", 1
-            )[0]
-            self.assertIn('aria-label="Exit Writing filter">Writing</a>', blogger_rail)
-            self.assertIn('aria-label="Exit Blogs filter">Blogs</a>', blogger_rail)
-            self.assertIn(
-                'href="../writers/blogger.html" aria-current="page">Blogger</a>',
-                blogger_rail,
-            )
-            self.assertNotIn('>Researcher</a>', blogger_rail)
-
-    def test_rejects_an_exact_url_and_quote_duplicate(self):
-        with isolated_site() as (quote_db, _):
-            write_record(quote_db, "first.md")
-            write_record(quote_db, "duplicate.md", tags=["another-tag"])
-            with self.assertRaisesRegex(ValueError, "duplicates the URL and quote"):
-                build()
-
-    def test_rejects_invalid_required_fields(self):
+    def test_post_tags_are_validated(self):
         cases = (
-            ({"resource": "example.com/article"}, "resource must be an absolute"),
-            ({"date_added": "2026-02-30"}, "date_added must be a valid"),
-            ({"tags": []}, "tags must be a non-empty"),
-            ({"tags": ["Software Engineering"]}, "lowercase and hyphenated"),
-            ({"hacker_news_url": "news.ycombinator.com/item?id=123"}, "hacker_news_url must be an absolute"),
+            ("Bad Tag", "lowercase and hyphenated"),
+            (["dup", "dup"], "duplicates"),
+            ("not-a-list", "list of strings"),
+            (["unmapped"], "unmapped tag"),
         )
-        for overrides, message in cases:
-            with self.subTest(overrides=overrides), isolated_site() as (quote_db, _):
-                write_record(quote_db, "invalid.md", **overrides)
+        for tags, message in cases:
+            with self.subTest(tags=tags), isolated_site() as (posts, _):
+                (posts / "taxonomy.yml").write_text("dup: {tags: [dup]}\n")
+                write_post(posts, tags=tags if isinstance(tags, list) or tags == "not-a-list" else [tags])
                 with self.assertRaisesRegex(ValueError, message):
                     build()
 
-    def test_requires_a_date_for_attempted_verification(self):
-        with isolated_site() as (quote_db, _):
-            write_record(quote_db, "missing-date.md", verification_status="verified")
-            with self.assertRaisesRegex(ValueError, "verification_date is required"):
-                build()
+    def test_dice_and_eye_are_on_posts_pages(self):
+        with isolated_site() as (posts, output):
+            (posts / "taxonomy.yml").write_text(TAXONOMY)
+            write_post(posts, "one.md", title="One", tags=["governance"])
+            write_post(posts, "two.md", title="Two")
+            build()
+            expectations = {
+                "index.html": ('href="index-expanded.html"', 'data-root=""', False),
+                "index-expanded.html": ('href="index.html"', 'data-root=""', True),
+                "tags/governance.html": ('href="../index.html"', 'data-root="../"', True),
+                "posts/one.html": ('href="../index-expanded.html"', 'data-root="../"', False),
+            }
+            for filename, (eye_href, root, on) in expectations.items():
+                with self.subTest(page=filename):
+                    page = (output / filename).read_text()
+                    self.assertIn("data-random-post", page)
+                    self.assertIn('aria-label="Load a random post"', page)
+                    self.assertIn(root, page)
+                    eye = page.split('class="filter-toggle', 1)[1].split(">", 1)[0]
+                    self.assertIn(eye_href, eye)
+                    self.assertEqual(" is-on" in eye[:7], on)
+                    self.assertIn("random-posts.js", page)
+            self.assertIn('data-post-slug="one"', (output / "posts/one.html").read_text())
+            script = (output / "random-posts.js").read_text()
+            self.assertIn('["two", "one"]', script)
+            self.assertIn("posts/${encodeURIComponent(chosen)}.html", script)
+            self.assertNotIn("random-toggle", (output / "about.html").read_text())
 
 
 if __name__ == "__main__":

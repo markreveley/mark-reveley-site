@@ -1,7 +1,7 @@
 ---
 type: handoff
 audience: agent
-updated: 2026-11-08
+updated: 2026-11-17
 ---
 
 # Next steps for the agent
@@ -10,51 +10,21 @@ Read with [`next-operator.md`](next-operator.md). Rewrite both at the end of eac
 
 ## State
 
-- `main` is at the merge of PR #14 plus the handoff commit after it, pushed, and deployed by Cloudflare Pages, which serves the committed `site/` folder. No other branches or worktrees from the bookmarks or post work remain.
-- **Posts:** the latest is "The Governance Spiral" (`posts/2026-11-13-the-governance-spiral.md`), pushed straight to `main` on 2026-11-13. Its text is the operator's section between the begin/end post markers in the Drive draft "2026-11-12 draft - The Governance Spiral"; the rest of that doc is unpublished notes.
-- **Bookmarks:**
-  - `bookmarks/dag/items/` holds 1172 published resources, under 50 topics in `bookmarks/dag/topics/`. `dagcheck` reports 0 errors and 0 warnings.
-  - The site publishes them as `bookmarks.html`, one page per topic, and the artifact-dag viewer at `bookmarks/graph.html`. How the build works is in [ARCHITECTURE.md](ARCHITECTURE.md). Fields and intake history are in [bookmarks/README.md](bookmarks/README.md).
-- **Unprocessed:** `bookmarks/unprocessed/` holds 93 entries that sit outside the graph and are never published. 19 are Reddit link posts or removed posts; most of the rest are YouTube videos and pages with too little text to describe. `inbox.md` there is empty. How to process an entry is in [bookmarks/unprocessed/README.md](bookmarks/unprocessed/README.md).
-- **Collections imported:** every resource has a private `source` list, which the site does not display. All of these are in: the Chrome tab intakes of 2026-10-23 and 2026-11-03, and elixir-mind's survey register, raw intake list and `knowledge/` references. Investigations no longer holds a bookmarks library.
-- **Pin:** artifact-dag is pinned to `e9a6c2a…` in `bookmarks/artifact-dag.rev`.
-- **Plan:** the working plan is [bookmarks/SPEC-bookmark-dag-claude-opus-5-5-effort-low.md](bookmarks/SPEC-bookmark-dag-claude-opus-5-5-effort-low.md).
+- The site has two sections, Posts and About. Definitions still build at `defs.html` but stay out of the navigation.
+- **Quotes and bookmarks moved out** on 2026-11-17, to the private [bookmarks repository](https://github.com/markreveley/bookmarks). Before removing them here, every site bookmark (1265, counting `unprocessed/`) and every quote (85, with both Hacker News excerpts) was checked against that repo by URL and quote text; the only three not matched by URL are duplicates that repo merged on purpose (listed in its `ignored.txt`). The bookmark topic tree moved to its `topics/`, and its page now keeps its own copy of the old stylesheet, so it no longer reads this repo.
+- **Posts** carry `tags`, mapped to nested categories in `posts/taxonomy.yml`. The die opens a random post; the eye shows the tag rail on the left (`index-expanded.html`). How they work is in [ARCHITECTURE.md](ARCHITECTURE.md).
+- Cloudflare Pages serves the committed `site/` folder from `main`.
 
 ## Environment facts
 
-- **Publishing a post:** the build reads only top-level `posts/*.md`, so `posts/drafts/` and `posts/roughs/` are never published. When formatting the operator's draft, fix plain typos, keep their phrasing, fragments and odd commas, and list the fixes in the reply.
-- **Output path:** generated pages go to `site/` at the repo root. The `site/site/` in ARCHITECTURE.md counts the repo's own folder name.
-- **Build dependencies:** PyYAML and markdown-it are not installed globally. Build and test with:
-  - `uv run --no-project --with-requirements site/requirements.txt -- python site/build.py`
-  - `... -- python -m unittest discover -s tests`
-
-  The bookmarks step also needs `node` and `git`. The first build fetches artifact-dag into `.cache/`.
-- **Checking the graph:** run `npm run check -- ../site/bookmarks/dag --lint` from a checkout of artifact-dag. Point it at `bookmarks/dag`, not `bookmarks`.
-- **Lint warnings:** an incidental mention of a topic word ("written in Rust") raises `unlinked_term`. Resolve it with `not_links: [def:x]` on that resource.
-- **Reading pages:**
-  - Claude in Chrome refuses reddit.com. Read Reddit posts from `https://www.reddit.com/r/<sub>/comments/<id>/.rss`. Reddit returns 429 quickly, so fetch slowly with backoff, in the background.
-  - X posts can be read in Chrome. Pull the post text and `time` from the `article` element.
-  - An X post's date can be computed from its ID: `((id >> 22) + 1288834974657)` ms.
-- **Listing Chrome tabs:** Claude in Chrome cannot see the user's own tabs. List them read-only with AppleScript (`tell application "Google Chrome"`). AppleScript variable names are case-insensitive and `tab` is a Chrome class, so don't name a variable `t` or `tab`.
-- **Visit dates:** Chrome history (`~/Library/Application Support/Google/Chrome/<profile>/History`, copied first) gives first-visit dates. The operator chose to publish `published` only.
-- **Intake exclusions** (operator's choices): own AI sessions (Perplexity, Kimi, claude.ai), Gmail, accounts and transactions, private repos, local and music news, and sensitive personal pages. Included: public repos under the operator's own accounts, and certification and career-study pages.
+- **Publishing a post:** the build reads only top-level `posts/*.md`, so `posts/drafts/` and `posts/roughs/` are never published. When formatting the operator's draft, fix plain typos, keep their phrasing, fragments and odd commas, and list the fixes in the reply. Give it `tags` from `posts/taxonomy.yml`, adding a category there if none fits.
+- **Build and test:** `python3 site/build.py` and `python3 -m unittest discover -s tests` (needs PyYAML and markdown-it-py; `uv run --no-project --with-requirements site/requirements.txt -- python site/build.py` works without installing them).
+- **Google Tasks** through `gws`: the token expired; see `next-operator.md`.
 
 ## Next, in order
 
-1. **(blocked on operator)** Discuss how to keep 1172 bookmarks from overwhelming readers before building anything. The graph page is about 750 KB, and `bookmarks.html` lists everything on one page. Options:
-   - an artifact-dag viewer mode that collapses topics and shows counts (spec, "Viewer");
-   - paging or per-topic landing on the site;
-   - splitting large topics: `ai-assisted-programming` has about 200 items, against the spec's limit of 25.
-2. Process `bookmarks/unprocessed/`. Read thin YouTube and other pages in Chrome where a fetch gave nothing, write overviews, and `git mv` them into `dag/items/`. Leave Reddit link posts until there is a way to read their targets.
-3. **(ask operator)** Point elixir-mind's `/bookmarks` skill at `site/bookmarks/unprocessed/` and freeze `elixir-mind/survey/bookmarks.md` (spec, last step). This is a change in the elixir-mind repo.
-4. The spec's remaining tidy-ups:
-   - `bookmarks/dag/lint.dl` with a closed list of kind tags, and a warn for a resource with no topics;
-   - choose 8–12 root topics and give every other topic a parent (many have none);
-   - merge topics with fewer than 3 items.
-5. **(blocked on operator)** Google Tasks through `gws`. Its token expired; see `next-operator.md`.
+1. **(blocked on operator)** Google Tasks through `gws`.
 
 ## Pending operator decisions
 
-- The overwhelm-avoiding UI approach (step 1).
-- Whether to repoint elixir-mind's `/bookmarks` (step 3).
 - Whether to publish the `dirtwire-touring-gws` OAuth consent screen, so tokens stop expiring every 7 days.

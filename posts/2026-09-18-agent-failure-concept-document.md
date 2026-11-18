@@ -3,6 +3,7 @@ type: Post
 title: "Agent Failure Games #1: Things That Never Were (but Actually Were)"
 date_published: "2026-09-18"
 excerpt: "An agent's claim to have searched all branches, an unmerged PR, and an LLM's critique of my audit."
+tags: [agent-failures]
 ---
 
 I am going to begin documenting agent failures and attempting to define the modes that underlie them.

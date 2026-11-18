@@ -1,0 +1,42 @@
+# Post categories. Each node may map post tags and nest children; a post filed
+# under a child also appears under its parents. Every tag used in a post must
+# be mapped exactly once.
+agentic-engineering:
+  label: Agentic engineering
+  children:
+    agent-failures:
+      label: Agent failures
+      tags: [agent-failures]
+    governance:
+      label: Governance
+      tags: [governance]
+    prompts-and-skills:
+      label: Prompts and skills
+      tags: [prompts-and-skills]
+    specification:
+      label: Specification
+      tags: [specification]
+understanding:
+  label: Understanding
+  children:
+    comprehension:
+      label: Comprehension
+      tags: [comprehension]
+    learning:
+      label: Learning
+      tags: [learning]
+philosophy:
+  label: Philosophy
+  children:
+    definitions:
+      label: Definitions
+      tags: [definitions]
+    value-and-meaning:
+      label: Value and meaning
+      tags: [value-and-meaning]
+work:
+  label: Work
+  children:
+    software-careers:
+      label: Software careers
+      tags: [software-careers]

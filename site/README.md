@@ -1,6 +1,7 @@
 # site/
 
-A static dev blog: HTML and CSS, with a small JavaScript random-quote control.
+A static dev blog: HTML and CSS, with a small JavaScript helper for the
+random-post die and the tag-rail eye.
 
 ## Running locally
 
@@ -14,33 +15,16 @@ Then open <http://localhost:8000/>.
 ## Posts
 
 The Markdown files in [`../posts/`](../posts/) are the canonical post source.
-`build.py` generates the Posts feed and one page under `posts/` for each
-record, newest first.
+`build.py` generates:
 
-## Quotes
+- `index.html`: the Posts feed, newest first
+- `index-expanded.html`: the same feed with the tag rail on the left (the eye)
+- `posts/<post>.html`: one page per post, with its tags under the text
+- `tags/<tag>.html`: posts filed under a tag or any narrower tag
+- `random-posts.js`: the die (opens a random post) and the eye's single-post view
 
-The OKF-style Markdown files in [`../quotes/`](../quotes/) are the canonical
-quote database. `build.py` reads their `resource`, `quote`, `date_added`, and
-`tags` attributes and generates:
-
-- `quotes.html`: every quote as a newest-first vertical feed
-- `tags.html`: multi-column index of quote tags
-- `writers.html`: index of quote writers
-- `writers/<writer>.html`: quotes by a selected writer
-- `topics/all.html`: every quote, newest added first
-- `topics/<tag>.html`: quotes grouped by assigned topic
-
-The same resource URL may occur in any number of quote records.
-
-Records with `hacker_news_url` can include an ordered `child_quotes` list of
-exact discussion excerpts. The shared card renderer displays these below the
-article details, indented and without commenter attribution. This applies to
-the quote feeds, topic and writer pages, and random quote view. See the root
-README and `../quotes/README.md` for the schema and intake instructions.
-
-Add a quote by invoking `$quote` with a resource URL and exact quote.
-The repository skill researches and authors the record, then rebuilds these
-pages automatically.
+Tags come from each post's `tags` field and the nested categories in
+`../posts/taxonomy.yml`.
 
 ## Definitions
 
@@ -53,6 +37,11 @@ smaller screens. Parent categories include definitions from their descendants.
 Definitions is intentionally omitted from the main navigation. Keep `defs.html`,
 its category pages, and existing definition links accessible; do not restore a
 menu entry unless requested.
+
+## Retired sections
+
+Quotes and bookmarks moved to the bookmarks repository on 2026-11-17. The build
+deletes their old pages (`RETIRED` in `build.py`) so none linger.
 
 ## Rebuilding
 

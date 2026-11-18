@@ -1,6 +1,13 @@
 # mark-reveley
 
-A static personal site with posts, selected quotes, definitions, and an about page.
+A static personal site with posts and an about page. Definitions are built too,
+at `defs.html`, but are left out of the navigation.
+
+Quotes and bookmarks used to be sections of this site. On 2026-11-17 they moved
+to the private [bookmarks repository](https://github.com/markreveley/bookmarks),
+which is now the only place they are kept (each quote sits on the bookmark of
+the page it came from). Their records and pages were removed from here; git
+history has them.
 
 ## Investigate a future post
 
@@ -10,92 +17,31 @@ Follow its README and AGENTS.md, including a source walkthrough that explains
 and checks each claim before drawing wider conclusions. Publish completed posts
 by adding records to this repository's `posts/` directory.
 
+## Add a post
+
+Create a Markdown record under [`posts/`](posts/) with a title, publication
+date, tags, and body, then rebuild the site. See [`posts/README.md`](posts/README.md)
+for the schema. Every tag must be mapped in [`posts/taxonomy.yml`](posts/taxonomy.yml).
+
+## Browse posts
+
+The Posts heading carries two controls:
+
+- **The die** opens a random post (never the one you are on), and shows the
+  face it rolled. It is on the Posts feed, the tag pages and every post page.
+- **The eye** shows the tag rail to the left of the feed
+  (`index-expanded.html`), in the nested format the quotes section used.
+  Pressing it again hides the rail. From a post page, the eye opens the feed
+  showing just that post's card, with the rail listing its tags.
+
+Each tag has a page, `tags/<tag>.html`, listing the posts filed under it or
+any narrower tag.
+
 ## Add a definition
 
 Create a Markdown record under [`defs/`](defs/) with a term, date added,
 categories, and definition body, then rebuild. See [`defs/README.md`](defs/README.md)
 for the schema and nested category format.
-
-## Add a post
-
-Create a Markdown record under [`posts/`](posts/) with a title, publication
-date, and body, then rebuild the site. See [`posts/README.md`](posts/README.md)
-for the schema.
-
-## Add a quote
-
-Invoke the repository skill and provide the resource URL and exact quote text:
-
-    $quote
-
-The skill asks only for whichever of those two inputs is missing. It inspects
-the source, verifies the quotation when possible, records supported source
-metadata, assigns topics, writes an OKF-style Markdown record under
-[`quotes/`](quotes/), and rebuilds and tests the site.
-
-The URL is intentionally not unique. Different quotes may point to the same
-resource; only an exact repeat of both URL and quote is rejected.
-
-Quotes with a `hacker_news_url` may also include `child_quotes`, an ordered
-list of exact excerpts from that HN discussion. Keep the article URL in
-`resource` and its excerpt in `quote`; save discussion excerpts on the same
-record, not as separate quotes. They appear below the article details on the
-card, indented under an HN discussion link, without commenter attribution.
-Preserve each excerpt verbatim and check it against the linked discussion.
-The parent verification fields describe the article quote only. Child quotes
-inherit the parent card's topics and do not count as separate quote records.
-
-```yaml
-hacker_news_url: "https://news.ycombinator.com/item?id=12345678"
-child_quotes:
-  - "An exact excerpt from the discussion."
-  - |-
-    Another discussion excerpt, with multiple paragraphs.
-
-    Its second paragraph.
-```
-
-## Quote records
-
-For formal papers with multiple authors, retain the full names in `source_author`
-and add `source_department` for the card attribution. Use the departments or
-research groups named in the paper, falling back to its institutional affiliations
-when no department is specified. Include all collaborating affiliations; do not
-infer a department from an author's current employment. Existing author indexes
-and links still use the preserved author names.
-
-The Markdown files in [`quotes/`](quotes/) are the quote database and the only
-source of truth. Each record has these YAML frontmatter attributes:
-
-```yaml
----
-type: Quote
-resource: "https://example.com/article"
-quote: "The selected passage."
-date_added: "2026-08-28"
-tags: ["example-topic"]
-source_title: "Example article"
-source_author: "Example Author"
-source_date: "2026-08-20"
-verification_status: "verified"
-verification_date: "2026-08-28"
----
-```
-
-See [`quotes/README.md`](quotes/README.md) for the complete schema. The
-repository-scoped skill lives at
-[`quote/SKILL.md`](.agents/skills/quote/SKILL.md).
-
-The former graph-engineering research bundle and its demo quotes are preserved
-under [`removed/research/`](removed/research/).
-
-## Add a bookmark
-
-Add a resource file under [`bookmarks/dag/items/`](bookmarks/dag/items/) in the
-artifact-dag format, filed under topics in [`bookmarks/dag/topics/`](bookmarks/dag/topics/),
-then rebuild. A link not ready to publish goes in
-[`bookmarks/unprocessed/`](bookmarks/unprocessed/) instead. See [`bookmarks/README.md`](bookmarks/README.md) for the fields, and
-[ARCHITECTURE.md](ARCHITECTURE.md) for how the build publishes them.
 
 ## Run and rebuild the site
 
@@ -103,8 +49,7 @@ The generated pages are committed, so they can be opened directly or served:
 
     python3 -m http.server -d site 8000
 
-To rebuild without adding a quote (bookmarks also need `git` and `node`; see
-[ARCHITECTURE.md](ARCHITECTURE.md)):
+To rebuild:
 
     pip install -r site/requirements.txt
     python3 site/build.py

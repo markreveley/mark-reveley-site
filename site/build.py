@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""Build the static site from Markdown posts, quotes, and definitions."""
+"""Build the static site from Markdown posts and definitions."""
 
 import html
 import json
-import os
 import re
 import shutil
-import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -19,29 +17,25 @@ except ImportError as exc:  # pragma: no cover
     sys.exit(f"{exc}; install the build dependencies: pip install -r site/requirements.txt")
 
 
+
 ROOT = Path(__file__).resolve().parent.parent
-QUOTE_DB = ROOT / "quotes"
 POST_DB = ROOT / "posts"
 DEF_DB = ROOT / "defs"
-BOOKMARK_DB = ROOT / "bookmarks"
-# The published graph. bookmarks/unprocessed/ sits outside it and is never built.
-BOOKMARK_DAG = BOOKMARK_DB / "dag"
-ARTIFACT_DAG_URL = "https://github.com/markreveley/artifact-dag.git"
-ARTIFACT_DAG_CACHE = ROOT / ".cache" / "artifact-dag"
 OUT = ROOT / "site"
-TOPICS = OUT / "topics"
-WRITERS = OUT / "writers"
+TAGS = OUT / "tags"
 
-NAV = [
-    ("index.html", "Posts"), ("quotes.html", "Quotes"),
-    ("bookmarks.html", "Bookmarks"), ("about.html", "About"),
-]
+NAV = [("index.html", "Posts"), ("about.html", "About")]
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
 ]
-VERIFICATION_STATUSES = {"verified", "unverified", "not-found", "source-unavailable"}
-
+# Pages from the retired quotes and bookmarks sections. The build deletes them
+# so a rebuild never leaves stale copies behind; both collections now live in
+# the bookmarks repository.
+RETIRED = (
+    "quotes.html", "quotes-expanded.html", "tags.html", "writers.html",
+    "bookmarks.html", "random-quotes.js", "topics", "writers", "bookmarks",
+)
 
 def load_document(path):
     """Return YAML frontmatter and body from a Markdown record."""
@@ -96,105 +90,9 @@ def optional_text(meta, key, path):
     return str(value).strip()
 
 
-def collect_quotes():
-    records = []
-    identities = {}
-    if not QUOTE_DB.exists():
-        return records
-    for path in sorted(QUOTE_DB.glob("*.md")):
-        meta = load_frontmatter(path)
-        if not meta or str(meta.get("type", "")).lower() != "quote":
-            continue
-        missing = [
-            key for key in ("resource", "quote", "date_added", "tags")
-            if key not in meta or meta[key] is None
-            or (isinstance(meta[key], str) and not meta[key].strip())
-        ]
-        if missing:
-            raise ValueError(f"{path}: missing required field(s): {', '.join(missing)}")
-        resource = optional_text(meta, "resource", path)
-        quote = optional_text(meta, "quote", path)
-        date_added = optional_text(meta, "date_added", path)
-        if not valid_web_url(resource):
-            raise ValueError(f"{path}: resource must be an absolute http:// or https:// URL")
-        if not valid_iso_date(date_added):
-            raise ValueError(f"{path}: date_added must be a valid YYYY-MM-DD date")
-        tags = meta["tags"]
-        if not isinstance(tags, list) or not tags or not all(isinstance(tag, str) for tag in tags):
-            raise ValueError(f"{path}: tags must be a non-empty list of strings")
-        normalized_tags = [slugify(tag) for tag in tags]
-        if any(tag != normalized for tag, normalized in zip(tags, normalized_tags)):
-            raise ValueError(f"{path}: tags must be lowercase and hyphenated")
-        if len(set(normalized_tags)) != len(normalized_tags):
-            raise ValueError(f"{path}: tags must not contain duplicates")
-
-        source_date = optional_text(meta, "source_date", path)
-        if source_date and not valid_iso_date(source_date, partial=True):
-            raise ValueError(f"{path}: source_date must be YYYY, YYYY-MM, or YYYY-MM-DD")
-        verification_status = optional_text(meta, "verification_status", path) or "unverified"
-        if verification_status not in VERIFICATION_STATUSES:
-            allowed = ", ".join(sorted(VERIFICATION_STATUSES))
-            raise ValueError(f"{path}: verification_status must be one of: {allowed}")
-        verification_date = optional_text(meta, "verification_date", path)
-        if verification_date and not valid_iso_date(verification_date):
-            raise ValueError(f"{path}: verification_date must be a valid YYYY-MM-DD date")
-        if verification_status != "unverified" and not verification_date:
-            raise ValueError(
-                f"{path}: verification_date is required when verification_status is {verification_status}"
-            )
-        hacker_news_url = optional_text(meta, "hacker_news_url", path)
-        if hacker_news_url and not valid_web_url(hacker_news_url):
-            raise ValueError(f"{path}: hacker_news_url must be an absolute http:// or https:// URL")
-        child_quotes = meta.get("child_quotes", [])
-        if not isinstance(child_quotes, list) or any(
-            not isinstance(text, str) or not text.strip() for text in child_quotes
-        ):
-            raise ValueError(f"{path}: child_quotes must be a list of non-empty strings")
-        if child_quotes and urlparse(hacker_news_url).hostname != "news.ycombinator.com":
-            raise ValueError(f"{path}: child_quotes require a Hacker News discussion URL")
-        related_links = meta.get("related_links", [])
-        if not isinstance(related_links, list):
-            raise ValueError(f"{path}: related_links must be a list")
-        links = []
-        for link in related_links:
-            if not isinstance(link, dict):
-                raise ValueError(f"{path}: each related link must be a mapping")
-            title = optional_text(link, "title", path)
-            url = optional_text(link, "url", path)
-            if not title or not valid_web_url(url):
-                raise ValueError(f"{path}: each related link needs a title and absolute HTTP(S) URL")
-            links.append({"title": title, "url": url})
-
-        identity = (resource, quote)
-        if identity in identities:
-            raise ValueError(
-                f"{path}: duplicates the URL and quote in {identities[identity]}"
-            )
-        identities[identity] = path
-        records.append({
-            "slug": path.stem,
-            "resource": resource,
-            "quote": quote,
-            "date_added": date_added,
-            "tags": normalized_tags,
-            "source_title": optional_text(meta, "source_title", path),
-            "source_author": optional_text(meta, "source_author", path),
-            "source_department": optional_text(meta, "source_department", path),
-            "source_date": source_date,
-            "speaker": optional_text(meta, "speaker", path),
-            "hacker_news_url": hacker_news_url,
-            "child_quotes": [text.strip() for text in child_quotes],
-            "related_links": links,
-            "verification_status": verification_status,
-            "verification_date": verification_date,
-        })
-    return sorted(records, key=lambda record: (record["date_added"], record["slug"]), reverse=True)
-
-
-def build_taxonomy(records, taxonomy_path=None, field="tags"):
+def build_taxonomy(records, taxonomy_path, field="tags"):
     """Load the topic hierarchy, annotate records, and aggregate each node."""
     raw_tags = {tag for record in records for tag in record[field]}
-    taxonomy_path = taxonomy_path or QUOTE_DB / "taxonomy.yml"
     if taxonomy_path.exists():
         definition = yaml.safe_load(taxonomy_path.read_text(encoding="utf-8")) or {}
     else:
@@ -247,7 +145,7 @@ def build_taxonomy(records, taxonomy_path=None, field="tags"):
     visit(definition)
     missing = sorted(raw_tags - set(tag_nodes))
     if missing:
-        label = "quote tag(s)" if field == "tags" else field
+        label = "tag(s)" if field == "tags" else field
         raise ValueError(f"{taxonomy_path}: unmapped {label}: {', '.join(missing)}")
 
     topic_records = {slug: [] for slug in nodes}
@@ -265,67 +163,6 @@ def build_taxonomy(records, taxonomy_path=None, field="tags"):
         for slug in memberships:
             topic_records[slug].append(record)
     return nodes, topic_records
-
-
-def build_source_taxonomy(records):
-    """Load the source-format hierarchy and group records by source host."""
-    taxonomy_path = QUOTE_DB / "source-taxonomy.yml"
-    if not taxonomy_path.exists():
-        return {}, {}
-    definition = yaml.safe_load(taxonomy_path.read_text(encoding="utf-8")) or {}
-    if not isinstance(definition, dict):
-        raise ValueError(f"{taxonomy_path}: taxonomy must be a mapping")
-
-    nodes = {}
-    host_nodes = {}
-
-    def visit(branch, parent="", ancestors=()):
-        if not isinstance(branch, dict):
-            raise ValueError(f"{taxonomy_path}: children must be a mapping")
-        for slug, value in branch.items():
-            if not isinstance(slug, str) or slugify(slug) != slug:
-                raise ValueError(f"{taxonomy_path}: node keys must be lowercase and hyphenated")
-            if slug in nodes:
-                raise ValueError(f"{taxonomy_path}: duplicate node key {slug}")
-            spec = value or {}
-            if not isinstance(spec, dict):
-                raise ValueError(f"{taxonomy_path}: node {slug} must be a mapping")
-            label = spec.get("label", slug)
-            if not isinstance(label, str) or not label.strip():
-                raise ValueError(f"{taxonomy_path}: node {slug} needs a text label")
-            hosts = spec.get("hosts", [])
-            if not isinstance(hosts, list) or not all(
-                isinstance(host, str) and host.strip() for host in hosts
-            ):
-                raise ValueError(f"{taxonomy_path}: node {slug} hosts must be a list of host names")
-            children = spec.get("children", {}) or {}
-            if not isinstance(children, dict):
-                raise ValueError(f"{taxonomy_path}: node {slug} children must be a mapping")
-            path = ancestors + (slug,)
-            nodes[slug] = {
-                "slug": slug,
-                "label": label.strip(),
-                "parent": parent,
-                "children": tuple(children),
-                "path": path,
-            }
-            for host in hosts:
-                hostname = host.strip().lower()
-                if hostname in host_nodes:
-                    raise ValueError(f"{taxonomy_path}: host {hostname} is mapped more than once")
-                host_nodes[hostname] = slug
-            visit(children, slug, path)
-
-    visit(definition)
-    source_records = {slug: [] for slug in nodes}
-    for record in records:
-        host = urlparse(record["resource"]).netloc.lower()
-        if host not in host_nodes:
-            raise ValueError(f"{taxonomy_path}: unmapped source host: {host}")
-        record["source_type"] = host_nodes[host]
-        for slug in nodes[record["source_type"]]["path"]:
-            source_records[slug].append(record)
-    return nodes, source_records
 
 
 def collect_posts():
@@ -350,19 +187,27 @@ def collect_posts():
             raise ValueError(f"{path}: date_published must be a valid YYYY-MM-DD date")
         if not body:
             raise ValueError(f"{path}: post body must not be empty")
+        tags = meta.get("tags", [])
+        if not isinstance(tags, list) or not all(isinstance(tag, str) for tag in tags):
+            raise ValueError(f"{path}: tags must be a list of strings")
+        if any(slugify(tag) != tag for tag in tags):
+            raise ValueError(f"{path}: tags must be lowercase and hyphenated")
+        if len(set(tags)) != len(tags):
+            raise ValueError(f"{path}: tags must not contain duplicates")
         records.append({
             "slug": path.stem,
             "title": title,
             "date_published": date_published,
             "excerpt": excerpt,
             "body": body,
+            "tags": tags,
+            "first_sentence": excerpt or re.split(r"(?<=\.)\s+", body, maxsplit=1)[0],
         })
     return sorted(
         records,
         key=lambda record: (record["date_published"], record["slug"]),
         reverse=True,
     )
-
 
 def definition_entries(meta, body, path):
     """Normalize legacy prose and validate definitions with per-entry sources."""
@@ -450,7 +295,8 @@ def pretty_date(raw):
     return f"{day} {MONTHS[month - 1]} {year}"
 
 
-def page(path, title, body, active=None, lede=None, quote_controls=False):
+
+def page(path, title, body, active=None, lede=None, random_script=False):
     depth = path.count("/")
     up = "../" * depth
     nav_items = []
@@ -466,9 +312,9 @@ def page(path, title, body, active=None, lede=None, quote_controls=False):
         f'<meta name="description" content="{html.escape(lede, quote=True)}">'
         if lede else ""
     )
-    quote_script = (
-        f'\n<script defer src="{up}random-quotes.js"></script>'
-        if quote_controls else ""
+    post_script = (
+        f'\n<script defer src="{up}random-posts.js"></script>'
+        if random_script else ""
     )
     document = f"""<!DOCTYPE html>
 <html lang="en">
@@ -477,7 +323,7 @@ def page(path, title, body, active=None, lede=None, quote_controls=False):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)} — Mark Reveley</title>
 {description}
-<link rel="stylesheet" href="{up}style.css">{quote_script}
+<link rel="stylesheet" href="{up}style.css">{post_script}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -495,72 +341,9 @@ def page(path, title, body, active=None, lede=None, quote_controls=False):
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(document, encoding="utf-8")
 
-
 def topic_href(tag, depth):
-    return "../" * depth + f"topics/{slugify(tag)}.html"
+    return "../" * depth + f"tags/{slugify(tag)}.html"
 
-
-def writer_href(writer, depth):
-    return "../" * depth + f"writers/{slugify(writer)}.html"
-
-
-def writer_type_href(source_type, depth):
-    return "../" * depth + f"writers/types/{slugify(source_type)}.html"
-
-
-def source_filter_name(record):
-    """Return the best available human-readable source identity."""
-    if record["source_author"]:
-        return record["source_author"]
-    if record["source_title"]:
-        return record["source_title"]
-    return urlparse(record["resource"]).netloc
-
-
-def quote_filter_toggle(depth, filters_on):
-    up = "../" * depth
-    href = up + ("quotes.html" if filters_on else "quotes-expanded.html")
-    label = "Hide quote filters" if filters_on else "Show quote filters"
-    state = " is-on" if filters_on else ""
-    return (
-        f'<a class="filter-toggle{state}" href="{href}" '
-        f'aria-label="{label}" title="{label}">'
-        '<svg viewBox="0 0 24 24" aria-hidden="true">'
-        '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>'
-        '<circle cx="12" cy="12" r="2.75"/></svg></a>'
-    )
-
-
-def quote_random_toggle(depth, filters_on):
-    up = "../" * depth
-    state = "on" if filters_on else "off"
-    return (
-        '<button class="random-toggle" type="button" '
-        f'data-random-quote data-root="{up}" data-filters="{state}" '
-        'aria-label="Load a random quote" title="Load a random quote">'
-        '<svg viewBox="0 0 24 24" aria-hidden="true">'
-        '<rect x="3" y="3" width="18" height="18" rx="2.5"/>'
-        '<g class="die-face" data-die-face="1"><circle cx="12" cy="12" r="1"/></g>'
-        '<g class="die-face" data-die-face="2"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="16" r="1"/></g>'
-        '<g class="die-face" data-die-face="3"><circle cx="8" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="16" r="1"/></g>'
-        '<g class="die-face" data-die-face="4"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
-        '<g class="die-face is-visible" data-die-face="5"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
-        '<g class="die-face" data-die-face="6"><circle cx="8" cy="7.5" r="1"/><circle cx="16" cy="7.5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16.5" r="1"/><circle cx="16" cy="16.5" r="1"/></g>'
-        '</svg></button>'
-    )
-
-
-def quote_hero(title, lede, depth, filters_on):
-    lede_html = f'\n  <p class="lede">{lede}</p>' if lede else ""
-    return f"""<section class="hero">
-  <div class="quote-heading">
-    <h1>{html.escape(title)}</h1>
-    <div class="quote-controls">
-      {quote_random_toggle(depth, filters_on)}
-      {quote_filter_toggle(depth, filters_on)}
-    </div>
-  </div>{lede_html}
-</section>"""
 
 
 def taxonomy_filter_rows(taxonomy, selected_slug, depth, href_builder, terminal_rows=()):
@@ -583,7 +366,7 @@ def taxonomy_filter_rows(taxonomy, selected_slug, depth, href_builder, terminal_
         parent_slug = node["parent"]
         exit_href = (
             href_builder(parent_slug, depth)
-            if parent_slug else "../" * depth + "quotes-expanded.html"
+            if parent_slug else "../" * depth + "index-expanded.html"
         )
         rows.append(
             f'<li class="filter-path"><a href="{exit_href}" '
@@ -603,90 +386,6 @@ def taxonomy_filter_rows(taxonomy, selected_slug, depth, href_builder, terminal_
         )
     rows.extend(terminal_rows)
     return rows
-
-
-def quote_filter_browser(
-    feed, records, taxonomy, source_taxonomy, depth, selected_tag="", selected_source="",
-    selected_source_type="",
-):
-    """Wrap a quote feed with static tag and source filter rails."""
-    active_tag = selected_tag if selected_tag != "all" else ""
-    tag_rows = taxonomy_filter_rows(taxonomy, active_tag, depth, topic_href)
-
-    source_rows = []
-    if source_taxonomy:
-        if selected_source_type:
-            selected = source_taxonomy[selected_source_type]
-            terminal_rows = []
-            if not selected["children"]:
-                sources = sorted(
-                    {
-                        source_filter_name(record)
-                        for record in records
-                        if record.get("source_type") == selected_source_type
-                    },
-                    key=str.casefold,
-                )
-                for source in sources:
-                    current = ' aria-current="page"' if source == selected_source else ""
-                    terminal_rows.append(
-                        f'<li><a href="{writer_href(source, depth)}"{current}>'
-                        f'{html.escape(source)}</a></li>'
-                    )
-            source_rows = taxonomy_filter_rows(
-                source_taxonomy, selected_source_type, depth, writer_type_href, terminal_rows
-            )
-        elif selected_source:
-            source_types = sorted(
-                {
-                    record.get("source_type")
-                    for record in records
-                    if source_filter_name(record) == selected_source
-                    and record.get("source_type")
-                },
-                key=lambda slug: source_taxonomy[slug]["label"].casefold(),
-            )
-            selected_row = (
-                    f'<li><a href="{writer_href(selected_source, depth)}" aria-current="page">'
-                    f'{html.escape(selected_source)}</a></li>'
-            )
-            for index, source_type in enumerate(source_types):
-                if index:
-                    source_rows.append('<li class="filter-divider" aria-hidden="true"></li>')
-                source_rows.extend(taxonomy_filter_rows(
-                    source_taxonomy, source_type, depth, writer_type_href, (selected_row,)
-                ))
-        else:
-            source_rows = taxonomy_filter_rows(
-                source_taxonomy, "", depth, writer_type_href
-            )
-    else:
-        sources = sorted({source_filter_name(record) for record in records}, key=str.casefold)
-        for source in sources:
-            current = ' aria-current="page"' if source == selected_source else ""
-            source_rows.append(
-                f'<li><a href="{writer_href(source, depth)}"{current}>{html.escape(source)}</a></li>'
-            )
-
-    return f"""<section class="quote-browser" aria-label="Quote filters and results">
-  <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
-    <h2>Tags</h2>
-    <ul>{''.join(tag_rows)}</ul>
-  </aside>
-  <div class="quote-browser-feed">{feed}</div>
-  <aside class="filter-rail filter-rail-sources" aria-label="Filter by author or source">
-    <h2>Authors / sources</h2>
-    <ul>{''.join(source_rows)}</ul>
-  </aside>
-</section>"""
-
-
-def quote_text_html(text):
-    paragraphs = []
-    for paragraph in re.split(r"\n\s*\n", text.strip()):
-        escaped = html.escape(paragraph).replace("\n", "<br>\n")
-        paragraphs.append(f"<p>{escaped}</p>")
-    return "".join(paragraphs)
 
 
 def post_inline_html(text, render_text=html.escape):
@@ -719,79 +418,105 @@ def post_text_html(text):
     return markdown.renderer.render(tokens, markdown.options, {})
 
 
-def quote_card(record, depth):
-    tags = "".join(
+
+
+def post_filter_toggle(depth, filters_on):
+    up = "../" * depth
+    href = up + ("index.html" if filters_on else "index-expanded.html")
+    label = "Hide post tags" if filters_on else "Show post tags"
+    state = " is-on" if filters_on else ""
+    return (
+        f'<a class="filter-toggle{state}" href="{href}" '
+        f'aria-label="{label}" title="{label}">'
+        '<svg viewBox="0 0 24 24" aria-hidden="true">'
+        '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>'
+        '<circle cx="12" cy="12" r="2.75"/></svg></a>'
+    )
+
+
+def post_random_toggle(depth):
+    up = "../" * depth
+    return (
+        '<button class="random-toggle" type="button" '
+        f'data-random-post data-root="{up}" '
+        'aria-label="Load a random post" title="Load a random post">'
+        '<svg viewBox="0 0 24 24" aria-hidden="true">'
+        '<rect x="3" y="3" width="18" height="18" rx="2.5"/>'
+        '<g class="die-face" data-die-face="1"><circle cx="12" cy="12" r="1"/></g>'
+        '<g class="die-face" data-die-face="2"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="3"><circle cx="8" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="4"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face is-visible" data-die-face="5"><circle cx="8" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></g>'
+        '<g class="die-face" data-die-face="6"><circle cx="8" cy="7.5" r="1"/><circle cx="16" cy="7.5" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16.5" r="1"/><circle cx="16" cy="16.5" r="1"/></g>'
+        '</svg></button>'
+    )
+
+
+def post_controls(depth, filters_on):
+    return f"""<div class="section-controls">
+      {post_random_toggle(depth)}
+      {post_filter_toggle(depth, filters_on)}
+    </div>"""
+
+
+def post_hero(title, lede, depth, filters_on):
+    lede_html = f'\n  <p class="lede">{lede}</p>' if lede else ""
+    return f"""<section class="hero">
+  <div class="section-heading">
+    <h1>{html.escape(title)}</h1>
+    {post_controls(depth, filters_on)}
+  </div>{lede_html}
+</section>"""
+
+
+def post_tag_list(record, depth):
+    return "".join(
         f'<li><a href="{topic_href(slug, depth)}">{html.escape(label)}</a></li>'
         for slug, label in record["display_topics"]
     )
-    resource = html.escape(record["resource"], quote=True)
-    attribution_html = (
-        f'  <p class="attrib">{html.escape(record["speaker"])}</p>\n'
-        if record["speaker"] else ""
-    )
-    source_link = (
-        f'<a href="{resource}" rel="noreferrer">'
-        f'{html.escape(record["source_title"] or "Source")}</a>'
-    )
-    writer_details = []
-    if record["hacker_news_url"]:
-        hacker_news_url = html.escape(record["hacker_news_url"], quote=True)
-        writer_details.append(
-            f'<a href="{hacker_news_url}" rel="noreferrer">hn</a>'
-        )
-    if record["source_department"] or record["source_author"]:
-        attribution = record["source_department"] or record["source_author"]
-        writer_details.append(
-            f'<a href="{writer_href(source_filter_name(record), depth)}">'
-            f'{html.escape(attribution)}</a>'
-        )
-    if record["source_date"]:
-        writer_details.append(pretty_date(record["source_date"]))
-    related_links = [
-        f'<a href="{html.escape(link["url"], quote=True)}" rel="noreferrer">'
-        f'{html.escape(link["title"])}</a>' for link in record["related_links"]
-    ]
-    source_details = " · ".join([source_link] + writer_details + related_links)
-    source_title_html = f'  <p class="source-title">{source_details}</p>\n'
-    record_slug = html.escape(record["slug"], quote=True)
-    source_filter = source_filter_name(record)
-    source_filter_label = html.escape(source_filter, quote=True)
-    source_filter_url = html.escape(writer_href(source_filter, depth), quote=True)
-    discussion_html = ""
-    if record["child_quotes"]:
-        children = "".join(
-            f'<blockquote>{quote_text_html(text)}</blockquote>'
-            for text in record["child_quotes"]
-        )
-        discussion_html = (
-            '<div class="discussion-quotes" role="group" aria-label="HN discussion quotes">'
-            f'<p class="discussion-label"><a href="{hacker_news_url}" rel="noreferrer">HN discussion</a></p>'
-            f'{children}</div>\n'
-        )
-    return f"""<article class="card quote" id="q-{record_slug}" data-quote-slug="{record_slug}" data-source-filter="{source_filter_label}" data-source-filter-href="{source_filter_url}">
-  <div class="said"><blockquote>{quote_text_html(record['quote'])}</blockquote></div>
-{attribution_html}{source_title_html}\
-  <ul class="tags">{tags}</ul>
-{discussion_html}\
+
+
+def post_card(record, depth):
+    up = "../" * depth
+    title = html.escape(record["title"])
+    published = html.escape(record["date_published"], quote=True)
+    slug = html.escape(record["slug"], quote=True)
+    tags = post_tag_list(record, depth)
+    tags_html = f'\n  <ul class="tags">{tags}</ul>' if tags else ""
+    return f"""<article class="card post" id="p-{slug}" data-post-slug="{slug}">
+  <h2><a href="{up}posts/{slug}.html">{title}</a></h2>
+  <p class="attrib"><time datetime="{published}">{html.escape(pretty_date(record["date_published"]))}</time></p>
+  <p>{html.escape(record["first_sentence"])}</p>{tags_html}
 </article>"""
 
 
-def build_random_quote_script(records):
-    """Write the small client-side helper used by the random quote control."""
+def post_filter_browser(feed, taxonomy, depth, selected_tag=""):
+    """Wrap a post feed with the tag rail on the left, as the quotes section had."""
+    rows = taxonomy_filter_rows(taxonomy, selected_tag, depth, topic_href)
+    return f"""<section class="post-browser" aria-label="Post tags and posts">
+  <aside class="filter-rail filter-rail-tags" aria-label="Filter by tag">
+    <h2>Tags</h2>
+    <ul>{''.join(rows)}</ul>
+  </aside>
+  <div class="post-browser-feed">{feed}</div>
+</section>"""
+
+
+def build_random_post_script(records):
+    """Write the client-side helper behind the dice and the eye."""
     OUT.mkdir(parents=True, exist_ok=True)
     slugs = json.dumps([record["slug"] for record in records], ensure_ascii=False)
     script = f"""(() => {{
   "use strict";
 
-  const quoteSlugs = {slugs};
-  const button = document.querySelector("[data-random-quote]");
-  if (!button || quoteSlugs.length === 0) return;
+  const postSlugs = {slugs};
+  const button = document.querySelector("[data-random-post]");
+  if (!button) return;
 
   const root = button.dataset.root || "";
-  const filtersOn = button.dataset.filters === "on";
-  const pageName = filtersOn ? "quotes-expanded.html" : "quotes.html";
   const parameters = new URLSearchParams(window.location.search);
-  const requestedSlug = parameters.get("quote");
+  const postBody = document.querySelector(".post-body[data-post-slug]");
+  const currentSlug = postBody ? postBody.dataset.postSlug : parameters.get("post");
   const requestedFace = Number(parameters.get("die"));
   const hasRequestedFace = Number.isInteger(requestedFace)
     && requestedFace >= 1 && requestedFace <= 6;
@@ -804,250 +529,111 @@ def build_random_quote_script(records):
 
   if (hasRequestedFace) showDieFace(requestedFace);
 
-  function showAssociatedFilters(card) {{
-    if (!filtersOn) return;
-
-    const tagList = document.querySelector(".filter-rail-tags ul");
-    if (tagList) {{
-      const rows = Array.from(card.querySelectorAll(".tags a"), (link) => {{
-        const item = document.createElement("li");
-        const associatedLink = link.cloneNode(true);
-        associatedLink.setAttribute("aria-current", "page");
-        item.append(associatedLink);
-        return item;
-      }});
-      tagList.replaceChildren(...rows);
-    }}
-
-    const sourceList = document.querySelector(".filter-rail-sources ul");
-    if (sourceList) {{
-      const item = document.createElement("li");
-      const link = document.createElement("a");
-      link.href = card.dataset.sourceFilterHref;
-      link.textContent = card.dataset.sourceFilter;
-      link.setAttribute("aria-current", "page");
-      item.append(link);
-      sourceList.replaceChildren(item);
-    }}
-  }}
-
+  // index.html?post=<slug> and index-expanded.html?post=<slug> show one post's
+  // card; with the eye on, the tag rail lists only that post's tags.
+  const requestedSlug = parameters.get("post");
   if (requestedSlug) {{
-    const cards = Array.from(document.querySelectorAll(".card.quote"));
-    const selectedCard = cards.find((card) => card.dataset.quoteSlug === requestedSlug);
+    const cards = Array.from(document.querySelectorAll(".card.post"));
+    const selectedCard = cards.find((card) => card.dataset.postSlug === requestedSlug);
     if (selectedCard) {{
       for (const card of cards) card.hidden = card !== selectedCard;
-      showAssociatedFilters(selectedCard);
-
-      const eye = document.querySelector(".filter-toggle");
-      if (eye) {{
-        const eyePage = filtersOn ? "quotes.html" : "quotes-expanded.html";
-        const eyeParameters = new URLSearchParams({{ quote: requestedSlug }});
-        if (hasRequestedFace) eyeParameters.set("die", String(requestedFace));
-        eye.href = `${{root}}${{eyePage}}?${{eyeParameters}}`;
+      const tagList = document.querySelector(".filter-rail-tags ul");
+      if (tagList) {{
+        const rows = Array.from(selectedCard.querySelectorAll(".tags a"), (link) => {{
+          const item = document.createElement("li");
+          const tagLink = link.cloneNode(true);
+          tagLink.setAttribute("aria-current", "page");
+          item.append(tagLink);
+          return item;
+        }});
+        tagList.replaceChildren(...rows);
       }}
     }}
   }}
 
+  // Carry the shown post through the eye, so toggling keeps the same post.
+  const eye = document.querySelector(".filter-toggle");
+  if (eye && currentSlug && postSlugs.includes(currentSlug)) {{
+    const eyeUrl = new URL(eye.getAttribute("href"), window.location.href);
+    eyeUrl.searchParams.set("post", currentSlug);
+    if (hasRequestedFace) eyeUrl.searchParams.set("die", String(requestedFace));
+    eye.href = eyeUrl.href;
+  }}
+
+  if (postSlugs.length === 0) {{
+    button.disabled = true;
+    return;
+  }}
+
   button.addEventListener("click", () => {{
-    const choices = quoteSlugs.length > 1
-      ? quoteSlugs.filter((slug) => slug !== requestedSlug)
-      : quoteSlugs;
+    const choices = postSlugs.length > 1
+      ? postSlugs.filter((slug) => slug !== currentSlug)
+      : postSlugs;
     const chosen = choices[Math.floor(Math.random() * choices.length)];
     const rolledFace = Math.floor(Math.random() * 6) + 1;
     showDieFace(rolledFace);
-    const nextParameters = new URLSearchParams({{
-      quote: chosen,
-      die: String(rolledFace),
-    }});
-    window.location.assign(`${{root}}${{pageName}}?${{nextParameters}}`);
+    const next = new URLSearchParams({{ die: String(rolledFace) }});
+    window.location.assign(`${{root}}posts/${{encodeURIComponent(chosen)}}.html?${{next}}`);
   }});
 }})();
 """
-    (OUT / "random-quotes.js").write_text(script, encoding="utf-8")
+    (OUT / "random-posts.js").write_text(script, encoding="utf-8")
 
 
-def build_posts(records):
-    cards = []
+def build_posts(records, taxonomy, tag_records):
+    lede = "Mark Reveley — dev blog. Posts and about."
     for record in records:
         title = html.escape(record["title"])
         published = html.escape(record["date_published"], quote=True)
         date_label = html.escape(pretty_date(record["date_published"]))
-        first_sentence = record["excerpt"] or re.split(r"(?<=\.)\s+", record["body"], maxsplit=1)[0]
-        cards.append(f"""<article class="card post">
-  <h2><a href="posts/{record['slug']}.html">{title}</a></h2>
-  <p class="attrib"><time datetime="{published}">{date_label}</time></p>
-  <p>{html.escape(first_sentence)}</p>
-</article>""")
-        post_body = f"""<article class="post-body">
+        tags = post_tag_list(record, 1)
+        tags_html = f'\n  <ul class="tags">{tags}</ul>' if tags else ""
+        post_body = f"""<article class="post-body" data-post-slug="{html.escape(record['slug'], quote=True)}">
   <header class="hero">
-    <h1>{title}</h1>
+    <div class="section-heading">
+      <h1>{title}</h1>
+      {post_controls(1, False)}
+    </div>
     <p class="attrib"><time datetime="{published}">{date_label}</time></p>
   </header>
-  {post_text_html(record['body'])}
+  {post_text_html(record['body'])}{tags_html}
 </article>"""
         page(
             f"posts/{record['slug']}.html",
             record["title"],
             post_body,
             active="index.html",
-            lede=first_sentence,
+            lede=record["first_sentence"],
+            random_script=True,
         )
 
-    post_list = "".join(cards) or '<p class="empty">No posts yet.</p>'
-    body = f"""<section class="hero">
-  <h1>Posts</h1>
-</section>
+    feed = "".join(post_card(record, 0) for record in records) or '<p class="empty">No posts yet.</p>'
+    body = f"""{post_hero("Posts", "", 0, False)}
 
 <section class="posts">
-{post_list}
+{feed}
 </section>"""
-    page("index.html", "Posts", body, active="index.html",
-         lede="Mark Reveley — dev blog. Posts, quotes, and about.")
+    page("index.html", "Posts", body, active="index.html", lede=lede, random_script=True)
 
+    expanded = f"""{post_hero("Posts", "", 0, True)}
+{post_filter_browser(feed, taxonomy, 0)}"""
+    page("index-expanded.html", "Posts", expanded, active="index.html",
+         lede=lede, random_script=True)
 
-def build_quotes(records, taxonomy, source_taxonomy):
-    roots = sorted(
-        (node for node in taxonomy.values() if not node["parent"]),
-        key=lambda node: node["label"].casefold(),
-    )
-    rows = "".join(
-        f'<li><a href="{topic_href(node["slug"], 0)}">{html.escape(node["label"])}</a></li>'
-        for node in roots
-    )
-    cards = "".join(quote_card(record, 0) for record in records)
-    feed = cards or '<p class="empty">No quotes yet.</p>'
-    lede = "A collection of decent-probability human authored quotes from selected reading, added by hand, sorted by date added"
-    body = f"""{quote_hero("Quotes", lede, 0, False)}
-<section class="quote-feed" aria-label="Quotes">{feed}</section>"""
-    page("quotes.html", "Quotes", body, active="quotes.html",
-         lede=lede, quote_controls=True)
-
-    expanded_feed = quote_filter_browser(feed, records, taxonomy, source_taxonomy, 0)
-    expanded_body = f"""{quote_hero("Quotes", lede, 0, True)}
-{expanded_feed}"""
-    page("quotes-expanded.html", "Quotes", expanded_body, active="quotes.html",
-         lede=lede, quote_controls=True)
-
-    tag_list = f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No tags yet.</p>'
-    tags_body = f"""<section class="hero">
-  <h1>Tags</h1>
-  <p class="lede">Browse the quote collection by tag.</p>
-</section>
-<section aria-label="All tags">{tag_list}</section>"""
-    page("tags.html", "Tags", tags_body, active="quotes.html",
-         lede="Browse the quote collection by tag.")
-
-
-def writer_list(records, depth):
-    writers = sorted(
-        {source_filter_name(record) for record in records}, key=str.casefold
-    )
-    rows = "".join(
-        f'<li><a href="{writer_href(writer, depth)}">{html.escape(writer)}</a></li>'
-        for writer in writers
-    )
-    return f'<ul class="topics">{rows}</ul>' if rows else '<p class="empty">No writers yet.</p>'
-
-
-def build_writers(records, taxonomy, source_taxonomy, source_records):
-    writers = {}
-    for record in records:
-        writers.setdefault(source_filter_name(record), []).append(record)
-    roots = sorted(
-        (node for node in source_taxonomy.values() if not node["parent"]),
-        key=lambda node: node["label"].casefold(),
-    )
-    category_rows = "".join(
-        f'<li><a href="writers/types/{node["slug"]}.html">{html.escape(node["label"])}</a></li>'
-        for node in roots
-    )
-    category_list = (
-        f'<ul class="topics">{category_rows}</ul>'
-        if category_rows else writer_list(records, 0)
-    )
-    index_body = f"""<section class="hero">
-  <h1>Writers</h1>
-  <p class="lede">Browse the quote collection by source format and writer.</p>
-</section>
-<section aria-label="Writer categories">{category_list}</section>"""
-    page("writers.html", "Writers", index_body, active="quotes.html",
-         lede="Browse the quote collection by source format and writer.")
-
-    for source_type, node in sorted(
-        source_taxonomy.items(), key=lambda item: (len(item[1]["path"]), item[1]["label"].casefold())
-    ):
-        records_for_type = source_records[source_type]
-        cards = "".join(quote_card(record, 2) for record in records_for_type)
-        feed = cards or '<p class="empty">No quotes yet.</p>'
-        path_label = " / ".join(source_taxonomy[item]["label"] for item in node["path"])
-        lede = (
-            f"{len(records_for_type)} quote{'' if len(records_for_type) == 1 else 's'} from "
+    for slug, node in taxonomy.items():
+        filtered = tag_records[slug]
+        count = len(filtered)
+        path_label = " / ".join(taxonomy[item]["label"] for item in node["path"])
+        tag_lede = (
+            f"{count} post{'' if count == 1 else 's'} filed under "
             f"<em>{html.escape(path_label)}</em>, newest first."
         )
-        browser = quote_filter_browser(
-            feed, records, taxonomy, source_taxonomy, 2,
-            selected_source_type=source_type,
-        )
-        body = f"""{quote_hero(node['label'], lede, 2, True)}
-{browser}"""
-        page(
-            f"writers/types/{source_type}.html", f"Writers — {node['label']}", body,
-            active="quotes.html", lede=re.sub("<[^>]+>", "", lede), quote_controls=True,
-        )
-
-    for writer, writer_records in sorted(writers.items(), key=lambda item: item[0].casefold()):
-        cards = "".join(quote_card(record, 1) for record in writer_records)
-        feed = cards or '<p class="empty">No quotes yet.</p>'
-        browser = quote_filter_browser(
-            feed, records, taxonomy, source_taxonomy, 1, selected_source=writer
-        )
-        body = f"""{quote_hero(writer, "", 1, True)}
-{browser}"""
-        page(
-            f"writers/{slugify(writer)}.html",
-            f"Writer — {writer}",
-            body,
-            active="quotes.html",
-            lede=f"Quotes by {writer}.",
-            quote_controls=True,
-        )
-
-
-def build_topic(
-    heading, filtered_records, all_records, taxonomy, source_taxonomy, filename, lede, selected_tag
-):
-    cards = "".join(quote_card(record, 1) for record in filtered_records)
-    if not cards:
-        cards = '<p class="empty">No quotes yet.</p>'
-    browser = quote_filter_browser(
-        cards, all_records, taxonomy, source_taxonomy, 1, selected_tag=selected_tag
-    )
-    body = f"""{quote_hero(heading, lede, 1, True)}
-{browser}"""
-    page(
-        f"topics/{filename}", heading, body, active="quotes.html",
-        lede=re.sub("<[^>]+>", "", lede),
-        quote_controls=True,
-    )
-
-
-def build_topics(records, taxonomy, source_taxonomy, topic_records):
-    build_topic(
-        "All quotes", records, records, taxonomy, source_taxonomy, "all.html",
-        f"Every quote in the collection, {len(records)} of them, newest first.", "all",
-    )
-    for slug, node in sorted(
-        taxonomy.items(), key=lambda item: (len(item[1]["path"]), item[1]["label"].casefold())
-    ):
-        count = len(topic_records[slug])
-        path_label = " / ".join(taxonomy[item]["label"] for item in node["path"])
-        build_topic(
-            node["label"], topic_records[slug], records, taxonomy, source_taxonomy, f"{slug}.html",
-            f"{count} quote{'' if count == 1 else 's'} filed under "
-            f"<em>{html.escape(path_label)}</em>, newest first.",
-            slug,
-        )
-
+        tag_feed = "".join(post_card(record, 1) for record in filtered)
+        tag_feed = tag_feed or '<p class="empty">No posts yet.</p>'
+        body = f"""{post_hero(node['label'], tag_lede, 1, True)}
+{post_filter_browser(tag_feed, taxonomy, 1, slug)}"""
+        page(f"tags/{slug}.html", node["label"], body, active="index.html",
+             lede=re.sub("<[^>]+>", "", tag_lede), random_script=True)
 
 def def_category_href(slug, depth):
     return "../" * depth + f"defs/categories/{slug}.html"
@@ -1177,219 +763,6 @@ def build_defs(records, taxonomy, category_records):
         render(f"defs/categories/{slug}.html", slug)
 
 
-def collect_bookmarks():
-    """Return (topics, items) from the artifact-dag nodes under bookmarks/."""
-    topics, items = {}, []
-    for path in sorted((BOOKMARK_DAG / "topics").glob("*.md")):
-        meta, body = load_document(path)
-        if not meta or meta.get("type") != "definition":
-            continue
-        slug = str(meta["id"]).removeprefix("def:")
-        topics[meta["id"]] = {
-            "id": meta["id"], "slug": slug, "title": str(meta["title"]),
-            "parents": list(meta.get("refines") or []), "scope": body,
-        }
-    for path in sorted((BOOKMARK_DAG / "items").glob("*.md")):
-        meta, body = load_document(path)
-        if not meta or meta.get("type") != "resource":
-            continue
-        url = str(meta.get("url", ""))
-        if not valid_web_url(url):
-            raise ValueError(f"{path}: url must be an absolute HTTP(S) URL")
-        published = str(meta.get("published") or "")
-        if published and not valid_iso_date(published, partial=True):
-            raise ValueError(f"{path}: published must be YYYY, YYYY-MM, or YYYY-MM-DD")
-        items.append({
-            "slug": path.stem, "title": str(meta["title"]), "url": url,
-            "published": published,
-            "hacker_news": str(meta.get("hacker_news") or ""),
-            "status": str(meta.get("status") or ""),
-            "kinds": [str(tag) for tag in meta.get("tags") or []],
-            "topics": [topic for topic in meta.get("topics") or [] if topic in topics],
-            "overview": body,
-        })
-    # Newest published first; undated last. `added` is private intake data and
-    # is not shown or used for ordering.
-    items.sort(key=lambda item: item["title"].casefold())
-    items.sort(key=lambda item: item["published"], reverse=True)
-    return topics, items
-
-
-def bookmark_topic_tree(topics):
-    """Place each topic under its first known parent, as bookmarks/README.md does."""
-    children = {}
-    for topic in topics.values():
-        parent = next((p for p in topic["parents"] if p in topics), "")
-        children.setdefault(parent, []).append(topic["id"])
-    for ids in children.values():
-        ids.sort(key=lambda topic_id: topics[topic_id]["title"].casefold())
-    return children
-
-
-def bookmark_topic_href(slug, depth):
-    return "../" * depth + f"bookmarks/topics/{slug}.html"
-
-
-def bookmark_wikilinks(text, titles, topics, depth):
-    """Turn artifact-dag wikilinks ([[res:x]], [[def:x|label]]) into Markdown links."""
-    up = "../" * depth
-
-    def link(match):
-        target, label = match.group(1), match.group(2)
-        if target.startswith("res:") and target[4:] in titles:
-            slug = target[4:]
-            return f"[{label or titles[slug]}]({up}bookmarks.html#b-{slug})"
-        if target in topics:
-            return f"[{label or topics[target]['title']}]({bookmark_topic_href(topics[target]['slug'], depth)})"
-        return label or target
-
-    return re.sub(r"\[\[((?:res|def):[a-z0-9-]+)(?:\|([^\]]+))?\]\]", link, text)
-
-
-def bookmark_card(item, topics, depth, titles=None):
-    details = []
-    if item["published"]:
-        details.append(
-            f'Published <time datetime="{item["published"]}">{pretty_date(item["published"])}</time>'
-        )
-    if item["kinds"]:
-        details.append(html.escape(", ".join(item["kinds"])))
-    if item["hacker_news"] and valid_web_url(item["hacker_news"]):
-        details.append(
-            f'<a href="{html.escape(item["hacker_news"], quote=True)}" rel="noreferrer">HN discussion</a>'
-        )
-    if item["status"] == "stub":
-        details.append("overview not written yet")
-    topic_links = "".join(
-        f'<li><a href="{bookmark_topic_href(topics[topic]["slug"], depth)}">'
-        f'{html.escape(topics[topic]["title"])}</a></li>'
-        for topic in item["topics"]
-    )
-    return f"""<article class="card bookmark" id="b-{html.escape(item['slug'], quote=True)}">
-  <h2><a href="{html.escape(item['url'], quote=True)}" rel="noreferrer">{html.escape(item['title'])}</a></h2>
-  {post_text_html(bookmark_wikilinks(item['overview'], titles or {}, topics, depth)) if item['overview'] else ''}
-  <p class="attrib">{' · '.join(details)}</p>
-  <ul class="tags">{topic_links}</ul>
-</article>"""
-
-
-def build_bookmarks(topics, items):
-    """Write bookmarks.html and one page per topic, in the site's own style."""
-    children = bookmark_topic_tree(topics)
-    titles = {item["slug"]: item["title"] for item in items}
-
-    def descendants(topic_id):
-        found = {topic_id}
-        for child in children.get(topic_id, []):
-            found |= descendants(child)
-        return found
-
-    filed = {
-        topic_id: [item for item in items if descendants(topic_id) & set(item["topics"])]
-        for topic_id in topics
-    }
-
-    def render(filename, selected=""):
-        depth = filename.count("/")
-
-        def tree(parent=""):
-            rows = []
-            for topic_id in children.get(parent, []):
-                topic = topics[topic_id]
-                current = ' aria-current="page"' if selected == topic_id else ""
-                rows.append(
-                    f'<li><a href="{bookmark_topic_href(topic["slug"], depth)}"{current}>'
-                    f'{html.escape(topic["title"])} <span class="category-count">'
-                    f'({len(filed[topic_id])})</span></a>{tree(topic_id)}</li>'
-                )
-            return f'<ul>{"".join(rows)}</ul>' if rows else ""
-
-        up = "../" * depth
-        current = ' aria-current="page"' if not selected else ""
-        all_link = f'<a href="{up}bookmarks.html"{current}>All bookmarks ({len(items)})</a>'
-        shown = filed[selected] if selected else items
-        title = topics[selected]["title"] if selected else "Bookmarks"
-        lede = topics[selected]["scope"] if selected else (
-            "Outside pages worth keeping, filed by topic, newest published first."
-        )
-        graph = f'<p class="lede"><a href="{up}bookmarks/graph.html">See them as a graph</a></p>'
-        feed = "".join(bookmark_card(item, topics, depth, titles) for item in shown)
-        feed = feed or '<p class="empty">No bookmarks yet.</p>'
-        body = f"""<section class="hero">
-  <h1>{html.escape(title)}</h1>
-  <p class="lede">{html.escape(lede)}</p>
-  {graph}
-</section>
-<section class="defs-browser" aria-label="Bookmarks and topics">
-  <aside class="filter-rail defs-categories" aria-label="Bookmark topics">
-    <h2>Topics</h2>
-    <nav aria-label="Filter bookmarks">{all_link}{tree()}</nav>
-  </aside>
-  <div class="defs-feed">{feed}</div>
-</section>"""
-        page(filename, title, body, active="bookmarks.html", lede=lede)
-
-    topic_output = OUT / "bookmarks" / "topics"
-    if topic_output.exists():
-        shutil.rmtree(topic_output)
-    render("bookmarks.html")
-    for topic_id, topic in topics.items():
-        render(f"bookmarks/topics/{topic['slug']}.html", topic_id)
-
-
-def artifact_dag_checkout():
-    """Return a checkout of artifact-dag at the commit in bookmarks/artifact-dag.rev.
-
-    ARTIFACT_DAG_DIR overrides this with a local checkout, for trying an
-    unreleased viewer. Otherwise the pinned commit is fetched once into
-    .cache/artifact-dag, and fetched again only when the pin changes.
-    """
-    override = os.environ.get("ARTIFACT_DAG_DIR")
-    if override:
-        return Path(override).expanduser().resolve()
-    rev = (BOOKMARK_DB / "artifact-dag.rev").read_text(encoding="utf-8").strip()
-    if not re.fullmatch(r"[0-9a-f]{40}", rev):
-        raise ValueError("bookmarks/artifact-dag.rev must hold a full 40-character commit hash")
-    cache = ARTIFACT_DAG_CACHE
-
-    def git(*args):
-        return subprocess.run(
-            ["git", "-C", str(cache), *args], check=True, capture_output=True, text=True
-        ).stdout.strip()
-
-    if (cache / ".git").exists():
-        try:
-            if git("rev-parse", "HEAD") == rev:
-                return cache
-        except subprocess.CalledProcessError:
-            pass
-    else:
-        cache.mkdir(parents=True, exist_ok=True)
-        git("init", "-q")
-        git("remote", "add", "origin", ARTIFACT_DAG_URL)
-    git("fetch", "-q", "--depth", "1", "origin", rev)
-    git("checkout", "-q", "--detach", rev)
-    return cache
-
-
-def build_bookmark_graph():
-    """Validate bookmarks/ with dagcheck, then write the artifact-dag viewer page."""
-    tool = artifact_dag_checkout()
-    check = subprocess.run(
-        ["node", str(tool / "bin" / "dagcheck.js"), str(BOOKMARK_DAG), "--lint"],
-        capture_output=True, text=True,
-    )
-    if check.returncode != 0:
-        raise ValueError(f"dagcheck found errors in bookmarks/dag/:\n{check.stdout}{check.stderr}")
-    viewer = subprocess.run(
-        ["node", str(tool / "bin" / "build-viewer.js"), "--config", str(BOOKMARK_DB / "dag-viewer.json")],
-        check=True, capture_output=True, text=True,
-    )
-    destination = OUT / "bookmarks" / "graph.html"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(viewer.stdout, encoding="utf-8")
-
-
 def build_about():
     body = """<section class="hero">
   <div class="about-heading">
@@ -1411,34 +784,31 @@ def build_about():
          lede="Hi I'm Mark. I'm a musician developer living in Berkeley. I'm currently working on a textual musical compiler (Beatcode) and associated benchmark (Beatbench). I'm also a member of the band Dirtwire. I write here about AI, agents, dev, and music.")
 
 
+def remove_retired_pages():
+    for name in RETIRED:
+        path = OUT / name
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.exists():
+            path.unlink()
+
+
 def main():
-    records = collect_quotes()
     posts = collect_posts()
+    post_taxonomy, tag_records = build_taxonomy(posts, POST_DB / "taxonomy.yml")
     definitions = collect_defs()
     def_taxonomy, category_records = build_taxonomy(
         definitions, DEF_DB / "taxonomy.yml", field="categories"
     )
-    taxonomy, topic_records = build_taxonomy(records)
-    source_taxonomy, source_records = build_source_taxonomy(records)
-    if TOPICS.exists():
-        shutil.rmtree(TOPICS)
-    if WRITERS.exists():
-        shutil.rmtree(WRITERS)
-    build_random_quote_script(records)
-    build_posts(posts)
+    remove_retired_pages()
+    if TAGS.exists():
+        shutil.rmtree(TAGS)
+    build_random_post_script(posts)
+    build_posts(posts, post_taxonomy, tag_records)
     build_defs(definitions, def_taxonomy, category_records)
-    build_quotes(records, taxonomy, source_taxonomy)
-    build_writers(records, taxonomy, source_taxonomy, source_records)
-    build_topics(records, taxonomy, source_taxonomy, topic_records)
-    if (BOOKMARK_DAG / "items").is_dir():
-        bookmark_topics, bookmarks = collect_bookmarks()
-        build_bookmarks(bookmark_topics, bookmarks)
-        build_bookmark_graph()
     build_about()
     pages = sorted(path.relative_to(OUT).as_posix() for path in OUT.rglob("*.html"))
-    sources = len({record["resource"] for record in records})
-    source_word = "source" if sources == 1 else "sources"
-    print(f"{len(records)} quotes · {sources} {source_word} · {len(taxonomy)} topics")
+    print(f"{len(posts)} posts · {len(post_taxonomy)} tags")
     print(f"wrote {len(pages)} pages")
 
 
