@@ -3,6 +3,7 @@ type: Post
 title: "Artifacts No Longer Have Inherent Value"
 date_published: "2026-10-30"
 excerpt: "An artifact's value is no longer bound to the qualities of its creation, or creator."
+tags: [value-and-meaning, software-careers]
 ---
 Before LLMs, media artifacts - articles, books, videos, audio, any media - had a type of inherent value. The effort it took to create them and the expertise that was needed to create them convincingly, was tied to the value of the artifact itself. An artifact could not exist otherwise.
 

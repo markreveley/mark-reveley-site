@@ -3,6 +3,7 @@ type: Post
 title: "The Governance Spiral"
 date_published: "2026-11-13"
 excerpt: "Rules about rules. Plans within plans. The problem and the solution are often indistinguishable."
+tags: [agent-failures, governance]
 ---
 The governance spiral is a state of entropic bureaucratic feedback that LLMs tend to reach without proper guardrails. Somewhat unfortunately, the only solution is, more guardrails. The governance spiral is experienced as a continuous flow of seemingly self-referential rules about rules. Plans within plans. The problem and the solution are often indistinguishable.
 

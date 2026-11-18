@@ -3,6 +3,7 @@ type: Post
 title: "The LLM Silo Paradox"
 date_published: "2026-09-09"
 excerpt: "The new substrate needs to be exposed to allow for any sort of constructive communication about it."
+tags: [prompts-and-skills]
 ---
 Developers discuss code when discussing systems. When they want to get specific about the behavior of the system, it becomes the level of communication necessary to align on.
 

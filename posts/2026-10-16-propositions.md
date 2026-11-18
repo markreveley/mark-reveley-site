@@ -3,6 +3,7 @@ type: Post
 title: "I tried to define a proposition and rediscovered programming"
 date_published: "2026-10-16"
 excerpt: "An investigation into assumptions of shared understanding between operator and agent."
+tags: [definitions, specification]
 ---
 
 This post explores the concept of a proposition. Below is a definition coined by an LLM in a discussion I am engaged in regarding expressing the essence of atomic claims. It is treated as provisional. The following exercise is an investigation into assumptions of shared understanding between operator and agent.

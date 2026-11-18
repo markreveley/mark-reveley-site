@@ -17,8 +17,7 @@ Markdown web links to references.
 All fields shown are required. Supply a non-empty body or a `definitions` list
 as described below. `date_added` must be
 a valid ISO date. The feed and category pages sort by date added, newest
-first; matching dates sort by filename in reverse alphabetical order, as
-with quotes. Editing a definition does not change its date added.
+first; matching dates sort by filename in reverse alphabetical order. Editing a definition does not change its date added.
 
 ## Multiple definitions and sources
 
@@ -65,7 +64,7 @@ not refer to multiple entries. Links work across category pages, and new
 entries become link targets throughout the collection on the next rebuild.
 
 `taxonomy.yml` defines the nested categories shown to the left of the feed
-(above it on smaller screens). It uses the same format as the quote taxonomy:
+(above it on smaller screens). It uses the same format as the post taxonomy (`../posts/taxonomy.yml`):
 stable node keys, `label`, `children`, and `tags` mapping record category slugs
 to nodes. Each assigned category must be mapped exactly once. Parent pages
 include all descendant definitions, without duplicates. Multiple categories
