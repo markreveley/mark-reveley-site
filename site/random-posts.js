@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const postSlugs = ["2026-11-13-the-governance-spiral", "2026-11-06-seek-confusion", "2026-10-30-artifacts-no-longer-have-inherent-value", "2026-10-24-llms-are-tools-maybe", "2026-10-16-propositions", "2026-09-25-letting-the-llm-drive-me", "2026-09-18-agent-failure-concept-document", "2026-09-09-the-llm-silo-paradox", "2026-09-03-complexity-escape", "arriving-has-utility"];
+  const postSlugs = ["2026-11-20-the-devil-is-in-the-spec", "2026-11-13-the-governance-spiral", "2026-11-06-seek-confusion", "2026-10-30-artifacts-no-longer-have-inherent-value", "2026-10-24-llms-are-tools-maybe", "2026-10-16-propositions", "2026-09-25-letting-the-llm-drive-me", "2026-09-18-agent-failure-concept-document", "2026-09-09-the-llm-silo-paradox", "2026-09-03-complexity-escape", "arriving-has-utility"];
   const button = document.querySelector("[data-random-post]");
   if (!button) return;
 
